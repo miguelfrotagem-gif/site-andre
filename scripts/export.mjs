@@ -1,0 +1,11 @@
+import {readFile,writeFile,mkdir} from 'node:fs/promises';
+import path from 'node:path';
+let html = await readFile('index.html','utf8');
+html = html.replace('<link rel="stylesheet" href="styles.css">', `<style>${await readFile('styles.css','utf8')}</style>`);
+for (const script of ['config.js','app.js']) html=html.replace(`<script src="${script}" defer></script>`,'');
+for (const file of new Set(html.match(/assets\/[a-z-]+\.webp/g))) html=html.replaceAll(file,`data:image/webp;base64,${(await readFile(file)).toString('base64')}`);
+html=html.replace('</body>',`<script>${await readFile('config.js','utf8')}\n${await readFile('app.js','utf8')}</script></body>`);
+const destination=process.argv[2] || 'dist/GJ-Ar-Condicionado.html';
+await mkdir(path.dirname(destination),{recursive:true});
+await writeFile(destination,html);
+console.log(`HTML independente gerado: ${destination}`);
