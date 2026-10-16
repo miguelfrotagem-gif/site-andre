@@ -20,6 +20,7 @@ assert.equal(await evaluate('document.documentElement.scrollWidth <= innerWidth'
 if(width===1440||width===390){const shot=await send('Page.captureScreenshot',{format:'png',captureBeyondViewport:false});await writeFile(`/tmp/gj-${width}.png`,Buffer.from(shot.data,'base64'));}
 }
 console.log('PASS: layouts 1440, 1024, 768, 390 e 320px sem overflow');
+await evaluate('Promise.all(Array.from(document.images).map(i=>{i.loading="eager";return i.decode()}))');
 assert.equal(await evaluate('Array.from(document.images).every(i=>i.complete && i.naturalWidth>0)'),true,'imagens');
 assert.equal(await evaluate('Array.from(document.querySelectorAll("a")).every(a=>a.hasAttribute("href") && a.getAttribute("href")!=="#")'),true,'links');
 assert.equal(await evaluate('Array.from(document.querySelectorAll("a")).filter(a=>a.hash).every(a=>document.getElementById(a.hash.slice(1)))'),true,'âncoras');
