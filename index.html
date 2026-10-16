@@ -8,9 +8,15 @@
 <link rel="stylesheet" href="styles.css"><script src="app.js" defer></script>
 </head>
 <body>
+<div class="brand-intro" id="brand-intro" hidden aria-label="Apresentação GJ Ar Condicionado">
+  <div class="intro-halo" aria-hidden="true"></div>
+  <img class="intro-logo" src="assets/logo-gj.webp" alt="" width="360" height="360">
+  <div class="intro-caption"><p>GJ AR CONDICIONADO</p><span>Ar mais limpo. Conforto de verdade.</span></div>
+  <button class="intro-skip" type="button">Pular abertura <span aria-hidden="true">→</span></button>
+</div>
 <a class="skip" href="#principal">Pular para o conteúdo</a>
 <header id="header"><div class="container header-inner">
-<a class="brand" href="#inicio" aria-label="GJ Ar Condicionado — Início"><strong>GJ<span>Ar Condicionado</span></strong></a>
+<a class="brand" href="#inicio" aria-label="GJ Ar Condicionado — Início"><img class="brand-logo" src="assets/logo-gj.webp" alt="GJ" width="86" height="86"><strong><span>GJ Ar<br>Condicionado</span></strong></a>
 <button class="menu-toggle" aria-expanded="false" aria-controls="navigation" aria-label="Abrir menu"><span></span><span></span></button>
 <nav id="navigation" aria-label="Navegação principal"><a href="#inicio" class="active">Início</a><a href="#servicos">Serviços</a><a href="#manutencao">Manutenção</a><a href="#empresa">Empresa</a><a href="#contato">Contato</a><a class="button small" data-wa="geral">Fale conosco <span aria-hidden="true"><svg class="arrow-icon" viewBox="0 0 24 24" width="19" height="19" aria-hidden="true"><path d="M5 19 19 5M5 5h14v14" fill="none" stroke="currentColor" stroke-width="1.7"/></svg></span></a></nav>
 </div></header>
@@ -34,5 +40,5 @@
 <form class="contact-form reveal" id="quote-form"><h3>Faça já seu orçamento</h3><p>Conte o que você precisa. A conversa continua no WhatsApp.</p><label for="name">Seu nome</label><input id="name" name="name" placeholder="Como podemos chamar você?" autocomplete="name" required minlength="2" maxlength="100"><label for="phone">Telefone com DDD</label><input id="phone" name="phone" type="tel" inputmode="tel" autocomplete="tel" placeholder="(61) 99999-9999" required maxlength="22" aria-describedby="phone-help"><small id="phone-help">Informe um telefone brasileiro com DDD.</small><label for="service">Qual serviço você procura?</label><select id="service" name="service" required><option value="">Selecione um serviço</option><option>Instalação de ar-condicionado</option><option>Higienização e manutenção</option><option>Encomendas urgentes Brasília × Goiânia</option></select><button class="button" type="submit">Continuar no WhatsApp <span aria-hidden="true"><svg class="arrow-icon" viewBox="0 0 24 24" width="19" height="19" aria-hidden="true"><path d="M5 19 19 5M5 5h14v14" fill="none" stroke="currentColor" stroke-width="1.7"/></svg></span></button><p class="form-note" id="form-status" role="status">Nenhum dado é enviado a um servidor. Você revisa a mensagem no WhatsApp antes de enviar.</p></form>
 </div></section>
 </main>
-<footer><div class="container footer-top"><a class="brand" href="#inicio"><strong>GJ<span>Ar Condicionado</span></strong></a><nav aria-label="Navegação do rodapé"><a href="#inicio">Início</a><a href="#servicos">Serviços</a><a href="#empresa">Empresa</a><a href="#contato">Contato</a></nav><a data-wa="geral">+55 61 9399-5799 <svg class="arrow-icon" viewBox="0 0 24 24" width="19" height="19" aria-hidden="true"><path d="M5 19 19 5M5 5h14v14" fill="none" stroke="currentColor" stroke-width="1.7"/></svg></a></div><div class="container footer-bottom"><p>Av. Oeste, nº 1897, Qd. B, Lt. 08, Setor N. Ferroviário.</p><p>© <span id="year">2026</span> GJ Ar Condicionado. Todos os direitos reservados.</p></div></footer>
+<footer><div class="container footer-top"><a class="brand" href="#inicio"><img class="brand-logo" src="assets/logo-gj.webp" alt="GJ" width="86" height="86"><strong><span>GJ Ar<br>Condicionado</span></strong></a><nav aria-label="Navegação do rodapé"><a href="#inicio">Início</a><a href="#servicos">Serviços</a><a href="#empresa">Empresa</a><a href="#contato">Contato</a></nav><a data-wa="geral">+55 61 9399-5799 <svg class="arrow-icon" viewBox="0 0 24 24" width="19" height="19" aria-hidden="true"><path d="M5 19 19 5M5 5h14v14" fill="none" stroke="currentColor" stroke-width="1.7"/></svg></a></div><div class="container footer-bottom"><p>Av. Oeste, nº 1897, Qd. B, Lt. 08, Setor N. Ferroviário.</p><p>© <span id="year">2026</span> GJ Ar Condicionado. Todos os direitos reservados.</p></div></footer>
 </body></html>

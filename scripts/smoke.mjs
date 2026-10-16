@@ -37,5 +37,18 @@ assert.equal(await evaluate('document.querySelector("#whatsapp-fallback").href==
 console.log('PASS: formulário bloqueia dados inválidos e gera mensagens corretas para climatização e encomendas');
 assert.equal(await evaluate('getComputedStyle(document.querySelector(".route-line i")).animationName'),'none');
 console.log('PASS: preferência de movimento reduzido');
+await send('Emulation.setEmulatedMedia',{features:[{name:'prefers-reduced-motion',value:'no-preference'}]});
+await evaluate('sessionStorage.removeItem("gj-intro-seen")');
+await send('Page.reload');await wait(450);
+assert.equal(await evaluate('document.querySelector("#brand-intro").hidden'),false);
+await wait(2600);
+assert.equal(await evaluate('document.querySelector("#brand-intro").hidden'),true);
+await send('Page.reload');await wait(350);
+assert.equal(await evaluate('document.querySelector("#brand-intro").hidden'),true);
+await evaluate('sessionStorage.removeItem("gj-intro-seen")');
+await send('Page.reload');await wait(350);
+await evaluate('document.querySelector(".intro-skip").click()');
+assert.equal(await evaluate('document.querySelector("#brand-intro").hidden'),true);
+console.log('PASS: abertura encerra, aparece uma vez por sessão e permite pular');
 assert.deepEqual(errors,[]);console.log('PASS: sem exceções JavaScript');
 } finally {ws.close();}

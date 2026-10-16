@@ -39,8 +39,8 @@ Use esse comando apenas em um ambiente isolado. `TEST_URL` permite testar outro 
 
 O formulário valida os campos no navegador e abre o WhatsApp com uma mensagem organizada. Não existe backend e nenhum dado é enviado a um servidor. Há um link de continuação caso a abertura de uma nova aba seja bloqueada. Todas as conversas usam `https://wa.me/556193995799`.
 
-## Logomarca pendente
+## Marca e abertura
 
-O anexo contém somente capturas de referência, sem o arquivo original da logomarca. Por isso, o cabeçalho e o rodapé exibem o nome da empresa em texto; nenhum símbolo foi inventado ou recortado das capturas. Quando o arquivo original estiver disponível, adicionar em `assets/` e substituir o conteúdo de `.brand` nas duas posições por uma imagem com texto alternativo adequado.
+O emblema enviado pelo usuário foi preparado como recorte transparente em `assets/logo-gj.webp` para uso no cabeçalho, rodapé e abertura. A abertura dura até 2,9 segundos, permite pular, aparece uma vez por sessão e é desativada com `prefers-reduced-motion`. Não bloqueia a navegação por teclado. O emblema foi isolado com ferramenta de edição de imagem a partir da imagem fornecida.
 
 Os dados da empresa foram mantidos conforme fornecidos, inclusive o número de WhatsApp e o endereço. As fotos são ilustrativas e não apresentam uma equipe ou frota real da GJ.
