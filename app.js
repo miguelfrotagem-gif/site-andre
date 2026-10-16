@@ -4,6 +4,7 @@ const messages = {
   geral: 'Olá, GJ Ar Condicionado! Gostaria de conversar sobre seus serviços.',
   orcamento: 'Olá, GJ Ar Condicionado! Gostaria de um orçamento para um serviço de ar-condicionado.',
   instalacao: 'Olá, GJ! Gostaria de saber mais e pedir um orçamento para instalação de ar-condicionado.',
+  agendamento: 'Olá, GJ Ar Condicionado! Gostaria de agendar uma avaliação, higienização ou manutenção do meu ar-condicionado. Podemos consultar a disponibilidade?',
   manutencao: 'Olá, GJ! Gostaria de saber mais sobre higienização e manutenção de ar-condicionado.',
   encomendas: 'Olá, GJ! Preciso de uma encomenda urgente entre Brasília e Goiânia. Gostaria de consultar disponibilidade e valores.'
 };
@@ -26,7 +27,7 @@ let scheduled = false;
 const reducedMotion = matchMedia('(prefers-reduced-motion: reduce)');
 function updateScroll() {
   header.classList.toggle('scrolled', scrollY > 15);
-  const sections = ['inicio', 'servicos', 'empresa', 'contato'];
+  const sections = ['inicio', 'servicos', 'manutencao', 'empresa', 'contato'];
   let current = 'inicio';
   sections.forEach(id => { if (document.getElementById(id).getBoundingClientRect().top <= 170) current = id; });
   nav.querySelectorAll('a[href^="#"]').forEach(link => { const active = link.hash === `#${current}`; link.classList.toggle('active', active); if (active) link.setAttribute('aria-current', 'location'); else link.removeAttribute('aria-current'); });
