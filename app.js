@@ -30,10 +30,12 @@ function updateScroll() {
   let current = 'inicio';
   sections.forEach(id => { if (document.getElementById(id).getBoundingClientRect().top <= 170) current = id; });
   nav.querySelectorAll('a[href^="#"]').forEach(link => { const active = link.hash === `#${current}`; link.classList.toggle('active', active); if (active) link.setAttribute('aria-current', 'location'); else link.removeAttribute('aria-current'); });
-  const photo = document.querySelector('.about-image img');
-  const bounds = photo.parentElement.getBoundingClientRect();
-  if (!reducedMotion.matches && bounds.bottom > 0 && bounds.top < innerHeight) photo.style.transform = `scale(1.045) translateY(${Math.max(-9, Math.min(9, (bounds.top - innerHeight / 2) * .02))}px)`;
-  else photo.style.transform = '';
+  const photo = document.querySelector('.company-photo img');
+  if (photo) {
+    const bounds = photo.parentElement.getBoundingClientRect();
+    if (!reducedMotion.matches && bounds.bottom > 0 && bounds.top < innerHeight) photo.style.transform = `scale(1.025) translateY(${Math.max(-6, Math.min(6, (bounds.top - innerHeight / 2) * .012))}px)`;
+    else photo.style.transform = '';
+  }
   scheduled = false;
 }
 addEventListener('scroll', () => { if (!scheduled) { requestAnimationFrame(updateScroll); scheduled = true; } }, {passive:true});
