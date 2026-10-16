@@ -44,28 +44,6 @@ if ('IntersectionObserver' in window) {
   const observer = new IntersectionObserver(entries => entries.forEach(entry => { if (entry.isIntersecting) { entry.target.classList.add('visible'); observer.unobserve(entry.target); } }), { threshold: .08 });
   document.querySelectorAll('.reveal').forEach(element => observer.observe(element));
 } else document.querySelectorAll('.reveal').forEach(element => element.classList.add('visible'));
-const form = document.querySelector('#quote-form');
-const phone = document.querySelector('#phone');
-const nameInput = document.querySelector('#name');
-phone.addEventListener('input', () => phone.setCustomValidity(''));
-nameInput.addEventListener('input', () => nameInput.setCustomValidity(''));
-form.addEventListener('submit', event => {
-  event.preventDefault();
-  const name = nameInput.value.trim();
-  let digits = phone.value.replace(/\D/g, '');
-  if (digits.startsWith('55') && digits.length > 11) digits = digits.slice(2);
-  if (name.length < 2) { nameInput.setCustomValidity('Informe seu nome com pelo menos dois caracteres.'); nameInput.reportValidity(); return; }
-  if (!/^[1-9]{2}(?:[2-5]\d{7}|9\d{8})$/.test(digits)) { phone.setCustomValidity('Informe um telefone válido com DDD, como (61) 99999-9999.'); phone.reportValidity(); return; }
-  if (!form.reportValidity()) return;
-  const service = document.querySelector('#service').value;
-  const category = service.startsWith('Encomendas') ? 'consultar uma encomenda urgente entre Brasília e Goiânia' : 'solicitar um orçamento de ar-condicionado';
-  const message = `Olá, GJ Ar Condicionado! Gostaria de ${category}.\n\nNome: ${name}\nTelefone: ${phone.value.trim()}\nServiço desejado: ${service}`;
-  window.open(whatsappURL(message), '_blank', 'noopener,noreferrer');
-  document.querySelector('#form-status').textContent = 'Mensagem preparada. Se o WhatsApp não abriu, use o link abaixo para continuar.';
-  let fallback = document.querySelector('#whatsapp-fallback');
-  if (!fallback) { fallback = document.createElement('a'); fallback.id = 'whatsapp-fallback'; fallback.className = 'text-link'; fallback.textContent = 'Abrir minha mensagem no WhatsApp ↗'; fallback.target = '_blank'; fallback.rel = 'noopener noreferrer'; form.append(fallback); }
-  fallback.href = whatsappURL(message);
-});
 document.querySelector('#year').textContent = new Date().getFullYear();
 
 // Abertura decorativa: uma vez por sessão, sem bloquear a navegação.

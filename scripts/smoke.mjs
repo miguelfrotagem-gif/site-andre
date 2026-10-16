@@ -29,13 +29,11 @@ await evaluate('document.querySelector(".menu-toggle").click()');assert.equal(aw
 await evaluate('Array.from(document.querySelectorAll("#navigation a")).find(a=>a.hash==="#contato").click()');assert.equal(await evaluate('document.querySelector(".menu-toggle").getAttribute("aria-expanded")'),'false');
 await evaluate('document.querySelector(".menu-toggle").click();document.dispatchEvent(new KeyboardEvent("keydown",{key:"Escape"}))');assert.equal(await evaluate('document.activeElement.className'),'menu-toggle');
 console.log('PASS: menu abre, fecha por navegação e Escape devolve foco');
-await evaluate('window.__opened="";window.open=(url)=>{window.__opened=url;return null};document.querySelector("#quote-form").requestSubmit()');assert.equal(await evaluate('window.__opened'),'');
-await evaluate('document.querySelector("#name").value="Maria Silva";document.querySelector("#phone").value="123";document.querySelector("#service").selectedIndex=1;document.querySelector("#quote-form").requestSubmit()');assert.equal(await evaluate('window.__opened'),'');
-await evaluate('document.querySelector("#phone").value="(61) 99999-1234";document.querySelector("#phone").dispatchEvent(new Event("input"));document.querySelector("#quote-form").requestSubmit()');
-let opened=await evaluate('window.__opened');assert.equal(new URL(opened).pathname,'/556193995799');assert.match(new URL(opened).searchParams.get('text'),/Maria Silva/);assert.match(new URL(opened).searchParams.get('text'),/Instalação/);
-await evaluate('document.querySelector("#service").selectedIndex=3;document.querySelector("#quote-form").requestSubmit()');assert.match(new URL(await evaluate('window.__opened')).searchParams.get('text'),/encomenda urgente/);
-assert.equal(await evaluate('document.querySelector("#whatsapp-fallback").href===window.__opened'),true);
-console.log('PASS: formulário bloqueia dados inválidos e gera mensagens corretas para climatização e encomendas');
+assert.equal(await evaluate('document.getElementById("orcamento") === null && document.querySelector("form") === null'),true);
+const links = await evaluate('Array.from(document.querySelectorAll("[data-wa]")).map(a=>({type:a.dataset.wa,href:a.href}))');
+for (const link of links) { const url = new URL(link.href); assert.equal(url.origin, 'https://wa.me'); assert.equal(url.pathname, '/556193995799'); assert.ok(url.searchParams.get('text')); }
+assert.notEqual(links.find(l=>l.type==='orcamento').href,links.find(l=>l.type==='encomendas').href);
+console.log('PASS: seção removida, sem âncoras órfãs e links WhatsApp com mensagens por serviço');
 assert.equal(await evaluate('getComputedStyle(document.querySelector(".route-line i")).animationName'),'none');
 console.log('PASS: preferência de movimento reduzido');
 await send('Emulation.setEmulatedMedia',{features:[{name:'prefers-reduced-motion',value:'no-preference'}]});
