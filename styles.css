@@ -64,3 +64,9 @@ header{background:rgba(255,255,255,.82)}.header-inner{height:128px}.header-inner
 @media(min-width:761px) and (max-width:1000px){.hero-visual:after{display:block;background:linear-gradient(0deg,#f5f8fa,transparent 30%)}}
 footer nav a,.footer-top>a:last-child{min-height:44px;display:inline-flex;align-items:center}
 .maintenance-features h3 a{display:inline-flex;min-height:44px;align-items:center;justify-content:center;color:inherit;text-decoration:underline;text-decoration-color:#b9d7eb;text-underline-offset:4px}.maintenance-features h3 a:hover{color:var(--blue);text-decoration-color:currentColor}
+/* A fotografia não recebe mais camadas brancas sobre o técnico. */
+.maintenance-photo::after{display:none;background:none}
+.maintenance-photo{background:#fff}
+@media(min-width:1001px){.maintenance-photo img{width:180%;height:auto;max-height:100%;right:0;top:50%;translate:0 -50%;object-fit:contain;object-position:right center}.maintenance-photo{overflow:visible}.maintenance-photo img{clip-path:inset(0 0 0 44.444%)}.maintenance-photo::before{content:'';position:absolute;left:-32px;top:0;bottom:0;width:32px;background:linear-gradient(90deg,#f8fbfd,#fff);pointer-events:none}}
+@media(max-width:1000px){.maintenance-photo{padding-bottom:22px;height:342px;background:linear-gradient(0deg,#f8fbfd,#fff 22px)}.maintenance-photo img{height:calc(100% - 22px)}}
+@media(min-width:761px) and (max-width:1000px){.maintenance-photo{height:452px}}
