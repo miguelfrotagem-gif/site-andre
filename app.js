@@ -65,3 +65,31 @@ form.addEventListener('submit', event => {
   fallback.href = whatsappURL(message);
 });
 document.querySelector('#year').textContent = new Date().getFullYear();
+
+// Abertura decorativa: uma vez por sessão, sem bloquear a navegação.
+const brandIntro = document.querySelector('#brand-intro');
+const motionPreference = matchMedia('(prefers-reduced-motion: reduce)');
+let introTimer;
+function finishIntro() {
+  if (!brandIntro || brandIntro.hidden) return;
+  const hadFocus = brandIntro.contains(document.activeElement);
+  brandIntro.hidden = true;
+  clearTimeout(introTimer);
+  if (hadFocus) document.querySelector('header .brand').focus();
+}
+let introSeen = false;
+try { introSeen = sessionStorage.getItem('gj-intro-seen') === '1'; } catch {}
+if (brandIntro && !motionPreference.matches && !introSeen) {
+  const brandMark = document.querySelector('header .brand-logo');
+  const box = brandMark.getBoundingClientRect();
+  brandIntro.style.setProperty('--logo-dx', `${box.left + box.width / 2 - innerWidth / 2}px`);
+  brandIntro.style.setProperty('--logo-dy', `${box.top + box.height / 2 - innerHeight / 2}px`);
+  brandIntro.style.setProperty('--logo-scale', String(box.width / Math.min(240, innerWidth * .55)));
+  brandIntro.hidden = false;
+  try { sessionStorage.setItem('gj-intro-seen', '1'); } catch {}
+  introTimer = setTimeout(finishIntro, 2900);
+}
+brandIntro?.querySelector('.intro-skip').addEventListener('click', finishIntro);
+document.addEventListener('keydown', event => { if (event.key === 'Escape' || event.key === 'Tab') finishIntro(); });
+motionPreference.addEventListener('change', event => { if (event.matches) finishIntro(); });
+addEventListener('resize', finishIntro);
