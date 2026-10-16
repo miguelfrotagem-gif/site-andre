@@ -34,6 +34,10 @@ const links = await evaluate('Array.from(document.querySelectorAll("[data-wa]"))
 for (const link of links) { const url = new URL(link.href); assert.equal(url.origin, 'https://wa.me'); assert.equal(url.pathname, '/556193995799'); assert.ok(url.searchParams.get('text')); }
 assert.notEqual(links.find(l=>l.type==='orcamento').href,links.find(l=>l.type==='encomendas').href);
 console.log('PASS: seção removida, sem âncoras órfãs e links WhatsApp com mensagens por serviço');
+assert.match(new URL(links.find(l=>l.type==='agendamento').href).searchParams.get('text'),/agendar/);
+await evaluate('document.getElementById("manutencao").scrollIntoView()');await wait(150);
+assert.equal(await evaluate('Array.from(document.querySelectorAll("#navigation a")).find(a=>a.hash==="#manutencao").getAttribute("aria-current")'),'location');
+console.log('PASS: seção Manutenção tem agendamento e destaque ativo no menu');
 assert.equal(await evaluate('getComputedStyle(document.querySelector(".route-line i")).animationName'),'none');
 console.log('PASS: preferência de movimento reduzido');
 await send('Emulation.setEmulatedMedia',{features:[{name:'prefers-reduced-motion',value:'no-preference'}]});
