@@ -1,0 +1,11 @@
+GJ AR CONDICIONADO — REFERÊNCIAS VISUAIS PARA CODEX
+
+Imagens de referência para montar o site desktop:
+1. Hero: entrada do site e chamada principal.
+2. Serviços: climatização e encomendas urgentes Brasília × Goiânia.
+3. Empresa: apresentação da GJ Ar Condicionado.
+4. Contato: WhatsApp e endereço informados.
+
+Use as imagens como referências visuais. Recrie os componentes em HTML/CSS responsivo; não use as capturas inteiras como uma única imagem de fundo.
+
+Identidade visual: azul-marinho, azul vivo, ciano e branco. Logomarca e nome GJ Ar Condicionado no canto superior esquerdo de cada seção.

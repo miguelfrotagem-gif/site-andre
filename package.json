@@ -1,0 +1,13 @@
+{
+  "name": "gj-ar-condicionado",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "node scripts/server.mjs",
+    "start": "node scripts/server.mjs",
+    "build": "node scripts/build.mjs",
+    "lint": "node --check app.js && node --check scripts/server.mjs && node --check scripts/build.mjs",
+    "test": "node scripts/smoke.mjs"
+  }
+}
