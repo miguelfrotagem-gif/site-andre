@@ -33,7 +33,7 @@ Manrope é servida localmente; fonte obtida do repositório Google Fonts, com li
 Com o servidor iniciado, abra outro terminal, somente neste ambiente isolado:
 
 ```sh
-chromium --headless --no-sandbox --disable-gpu --remote-debugging-address=127.0.0.1 --remote-debugging-port=9222 --user-data-dir=/tmp/auto-chrome about:blank
+chromium --headless --no-sandbox --disable-gpu --remote-debugging-address=127.0.0.1 --remote-debugging-port=9222 --user-data-dir=/tmp/auto-chrome --blink-settings=primaryHoverType=2,availableHoverTypes=2,primaryPointerType=4,availablePointerTypes=4 about:blank
 ```
 
 Depois execute:
@@ -53,3 +53,13 @@ npm run export -- /tmp/Estetica-Automotiva.html
 ```
 
 Incorpora estilos, JavaScript, imagens usadas e fonte em um único HTML. Não inclui os PNGs documentais nem instala dependências. Os assets antigos da GJ foram preservados no repositório, mas não são carregados pelo novo site.
+
+## Movimento e acabamento
+
+A entrada da hero termina em 940 ms: cabeçalho em 350 ms, título, subtítulo e ações escalonados, fotografia com 14 px de deslocamento máximo. A luz ambiente ocupa uma camada separada, com bordas suaves. O carro responde ao mouse em até 4 px na horizontal e 2 px na vertical; no desktop, a foto de Sobre tem 12 px de parallax vertical no total, com margem de segurança. Mobile não usa parallax.
+
+Títulos, descrições, fotos e cards têm revelação única por IntersectionObserver. Os cards usam intervalos de 100 ms no desktop, hover de 5 px e zoom de até 1,03 dentro da área fotográfica; foco por teclado recebe o mesmo destaque. O processo sincroniza linhas, números e descrições em 1.030 ms, com conectores adaptados às duas colunas do celular e um reflexo localizado no capô. Menu, botões e contato têm transições curtas.
+
+O botão “Pausar animações” no rodapé interrompe os efeitos; `prefers-reduced-motion` desativa movimentos e reage também a mudanças durante a sessão. A luz pausa fora da hero e quando a aba fica oculta. O parallax usa requestAnimationFrame somente quando há eventos e a seção está visível. O conteúdo permanece visível se as animações ou o JavaScript falharem. Nenhuma biblioteca foi adicionada e os arquivos de imagem, textos comerciais, ordem das seções e contato foram preservados.
+
+`npm test` inclui observação quadro a quadro da entrada em cinco viewports, limites do parallax, escalonamento dos cards, hover e foco, duração do processo, pausa, preferência dinâmica por movimento reduzido e medição local de layout shift. Os flags `--blink-settings` do Chromium acima emulam mouse/hover no headless, que nesta máquina não os anuncia por padrão. São configuração de teste, sem mudanças na detecção de dispositivos do site. Capturas dos estados de animação ficam em `/tmp/estetica-checks/`. Esses testes locais não medem fluidez em um aparelho físico nem desempenho de produção.

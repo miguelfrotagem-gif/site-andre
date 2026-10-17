@@ -135,6 +135,86 @@ try {
   await send('Emulation.setScriptExecutionDisabled',{value:false});
   assert.deepEqual(errors,[],'console limpo');
   console.log('PASS: conteúdo e navegação disponíveis sem JavaScript; sem erros de console');
+  // Motion is tested with the real browser timeline, not only static CSS.
+  await send('Page.addScriptToEvaluateOnNewDocument',{source:`
+    window.motionShifts=[];
+    new PerformanceObserver(list=>{
+      for(const entry of list.getEntries()) if(!entry.hadRecentInput) window.motionShifts.push(entry.value);
+    }).observe({type:'layout-shift',buffered:true});
+  `});
+  await send('Emulation.setEmulatedMedia',{features:[{name:'prefers-reduced-motion',value:'no-preference'}]});
+  for(const [width,height] of [[1920,1080],[1440,900],[1366,768],[390,844],[360,800]]) {
+    await viewport(width,height);
+    await send('Page.navigate',{url:base});
+    await evaluate(`new Promise(resolve=>{
+      const check=()=>document.querySelector('.hero-media img')&&document.documentElement.classList.contains('motion-active') ? resolve() : setTimeout(check,10);
+      check();
+    })`);
+    const timing=await evaluate(`document.getAnimations().filter(a=>a.id.startsWith('hero-')).map(a=>({id:a.id,delay:a.effect.getTiming().delay,duration:a.effect.getTiming().duration}))`);
+    assert.equal(timing.length,6,`entradas da hero ${width}`);
+    assert.ok(Math.max(...timing.map(t=>t.delay+t.duration))<=1000,'coreografia termina em 1s');
+    const samples=await evaluate(`new Promise(resolve=>{
+      const start=performance.now();let samples=0,overflow=false,cut=false;
+      function sample(){
+        samples++;
+        overflow ||= document.documentElement.scrollWidth>innerWidth;
+        const image=document.querySelector('.hero-media img').getBoundingClientRect();
+        const car={top:image.top+image.height*.04,bottom:image.bottom-image.height*.07,left:image.left+image.width*.07,right:image.right-image.width*.09};
+        const copy=['.site-header','h1','.hero-subtitle','.hero-actions'].map(s=>document.querySelector(s).getBoundingClientRect());
+        cut ||= car.top<0||car.bottom>innerHeight||car.left<0||car.right>innerWidth||copy.some(r=>r.top<0||r.bottom>innerHeight||r.left<0||r.right>innerWidth);
+        if(performance.now()-start<1100) requestAnimationFrame(sample);
+        else resolve({samples,overflow,cut,shifts:window.motionShifts.reduce((a,b)=>a+b,0)});
+      }
+      requestAnimationFrame(sample);
+    })`);
+    assert.equal(samples.overflow,false,`overflow durante movimento ${width}`);
+    assert.equal(samples.cut,false,`carro/copy durante movimento ${width}`);
+    assert.ok(samples.samples>10,'quadros efetivamente observados');
+    assert.ok(samples.shifts<.01,`layout shift inesperado: ${samples.shifts}`);
+    await screenshot(`movimento-${width}`);
+    console.log(`PASS: movimento ${width}x${height} — ${samples.samples} quadros sem cortes ou overflow; layout shift ${samples.shifts.toFixed(4)}`);
+  }
+  await viewport(1440,900);
+  await send('Page.navigate',{url:base});await wait(1050);
+  await send('Input.dispatchMouseEvent',{type:'mouseMoved',x:1380,y:500});await wait(450);
+  const pointer=await evaluate(`({fine:matchMedia('(min-width:901px) and (hover:hover) and (pointer:fine)').matches,x:parseFloat(document.querySelector('.hero-media img').style.getPropertyValue('--pointer-x'))||0,y:parseFloat(document.querySelector('.hero-media img').style.getPropertyValue('--pointer-y'))||0})`);
+  assert.equal(pointer.fine,true);
+  assert.ok(Math.abs(pointer.x)>0&&Math.abs(pointer.x)<=4&&Math.abs(pointer.y)<=2,'parallax leve do mouse');
+  await evaluate(`document.querySelector('.service-grid').scrollIntoView({block:'center',behavior:'instant'})`);await wait(80);
+  const cards=await evaluate(`document.getAnimations().filter(a=>a.id.startsWith('service-card-')).map(a=>a.effect.getTiming().delay).sort((a,b)=>a-b)`);
+  assert.deepEqual(cards,[0,100,200],'cards em sequência');
+  assert.equal(await evaluate(`getComputedStyle(document.querySelector('.hero-light')).animationPlayState`),'paused','luz pausada fora da tela');
+  await wait(800);
+  const cardRect=await evaluate(`document.querySelector('.service-card').getBoundingClientRect().toJSON()`);
+  await send('Input.dispatchMouseEvent',{type:'mouseMoved',x:Math.round(cardRect.x+cardRect.width/2),y:Math.round(cardRect.y+80)});await wait(720);
+  assert.match(await evaluate(`getComputedStyle(document.querySelector('.service-photo img')).transform`),/1.03/,'zoom discreto da foto');
+  assert.equal(await evaluate('document.documentElement.scrollWidth<=innerWidth'),true);
+  await screenshot('card-hover');
+  await evaluate(`document.querySelector('.service-card a').focus()`);
+  assert.equal(await evaluate(`getComputedStyle(document.activeElement).outlineStyle`),'solid');
+  await screenshot('card-foco');
+  await evaluate(`document.querySelector('.about').scrollIntoView({block:'center',behavior:'instant'})`);await wait(700);
+  const drift=await evaluate(`parseFloat(document.querySelector('.about-photo img').style.getPropertyValue('--photo-drift'))||0`);
+  assert.ok(Math.abs(drift)<=6,'parallax da foto limitado a 12px no total');
+  await screenshot('sobre-movimento');
+  await evaluate(`document.querySelector('.process-steps').scrollIntoView({block:'center',behavior:'instant'})`);await wait(80);
+  const processTiming=await evaluate(`document.getAnimations().filter(a=>a.id.startsWith('process-description-')).map(a=>a.effect.getTiming()).map(t=>t.delay+t.duration)`);
+  assert.equal(processTiming.length,4);
+  assert.ok(Math.max(...processTiming)>=800&&Math.max(...processTiming)<=1200,'processo entre .8s e 1.2s');
+  await screenshot('processo-durante');
+  await wait(1100);await screenshot('processo-final');
+  await evaluate(`document.querySelector('.service-grid').scrollIntoView({behavior:'instant'})`);await wait(50);
+  await evaluate(`document.querySelector('.process-steps').scrollIntoView({behavior:'instant'})`);await wait(80);
+  assert.equal(await evaluate(`document.getAnimations().filter(a=>a.id.startsWith('process-description-')&&a.playState==='running').length`),0,'revelação não repete');
+  await evaluate(`document.querySelector('[data-motion-toggle]').click()`);
+  assert.equal(await evaluate(`document.documentElement.classList.contains('motion-paused')`),true);
+  assert.equal(await evaluate(`document.getAnimations().filter(a=>a.playState==='running').length`),0,'pausa cancela movimentos');
+  await evaluate(`document.querySelector('[data-motion-toggle]').click()`);
+  await send('Emulation.setEmulatedMedia',{features:[{name:'prefers-reduced-motion',value:'reduce'}]});await wait(50);
+  assert.equal(await evaluate(`document.getAnimations().filter(a=>a.playState==='running').length`),0,'mudança dinâmica para movimento reduzido');
+  assert.equal(await evaluate(`getComputedStyle(document.querySelector('[data-motion-toggle]')).display`),'none');
+  assert.deepEqual(errors,[],'console limpo também com movimento');
+  console.log('PASS: parallax limitado, hover/foco, linha e etapas sincronizadas, revelação única, pausa manual e movimento reduzido dinâmico');
   console.log(`Capturas desta execução: ${output}`);
 } finally {
   await send('Page.close').catch(()=>{}); ws.close();
