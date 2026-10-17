@@ -1,55 +1,55 @@
-# GJ Ar Condicionado
+# Estética Automotiva
 
-Site responsivo em HTML, CSS e JavaScript nativos. Sem dependências de produção ou instalação de pacotes. O número exibido e os destinos dos botões são derivados de `config.js`, sem completar dígitos automaticamente. Requer Node.js 18+ (validado com Node.js 24).
+Landing page responsiva em HTML, CSS e JavaScript nativos, implementada com a skill **CodeMakers-Design v2.1.0**, instalada em `.agents/skills/codemakers-design`. A skill é local ao projeto e seu `SKILL.md` pode ser consultado nas próximas tarefas. Sem dependências npm, backend ou envio simulado de mensagens.
 
-## Executar
+## Executar e gerar
+
+Requer Node.js 24 (a suíte usa WebSocket nativo). Na pasta `/workspace/site-andre`:
 
 ```sh
-cd /workspace/site-andre
 npm run dev
-```
-
-O servidor usa a porta 3000, configurável com `PORT`. `npm start` executa o mesmo servidor.
-
-## Validar e publicar os arquivos
-
-```sh
 npm run lint
 npm run build
 ```
 
-O build gera `dist/`, pronto para hospedagem estática. Para conferir o build localmente: `SERVE_DIST=1 PORT=3001 npm start`.
+Servidor na porta 3000, configurável com `PORT`. `npm start` é equivalente. O build estático fica em `dist/`; para conferir: `SERVE_DIST=1 PORT=3001 npm start`. Nenhuma publicação externa é feita por esses comandos.
 
-`npm test` executa testes funcionais em um Chromium com depuração remota na porta 9222, com o site já rodando na porta 3000. Preparação em outro terminal:
+## Contato pendente
+
+O responsável informou que ainda não há número de WhatsApp. Preencha `window.AUTO_CONFIG.whatsapp` em `config.js` quando houver um número confirmado, incluindo DDI. O número da antiga empresa de ar-condicionado não é usado nesta página. Enquanto a configuração estiver vazia, os CTAs levam ao contato, que explica a pendência, e “Saiba mais” registra o serviço selecionado. Depois da configuração, os botões abrem o WhatsApp com a mensagem do serviço. O site não envia mensagens automaticamente.
+
+Não foram inventados endereço, telefone, preços, avaliações ou estatísticas.
+
+## Direção e enquadramento
+
+Cinco seções seguem os mockups fornecidos: início, serviços, sobre, processo e contato. As referências originais estão em `referencias/`, sem alterações. São documentos de design; nunca são carregadas como páginas ou botões. A fotografia sem textos original está em `assets/automotiva/hero-carro-sem-texto.png` e foi preservada.
+
+Fotografias de trabalho sem textos foram preparadas com edição de imagem a partir dos mockups, em WebP. São imagens ilustrativas, não evidência de instalações ou equipe reais. A hero usa uma foto panorâmica com o veículo inteiro, `object-fit: contain` e um grid que compartilha a altura disponível com o cabeçalho e a copy. No celular e em telas muito baixas a composição cresce naturalmente, sem bloquear rolagem. O CSS recorta apenas cada painel da fotografia de serviços; não mascara overflow da página.
+
+Manrope é servida localmente; fonte obtida do repositório Google Fonts, com licença em `assets/automotiva/OFL-Manrope.txt`. Sem chamadas externas necessárias para renderizar o site.
+
+## Verificação de navegador
+
+Com o servidor iniciado, abra outro terminal, somente neste ambiente isolado:
 
 ```sh
-chromium --headless --no-sandbox --disable-gpu --remote-debugging-port=9222 --user-data-dir=/tmp/gj-chrome about:blank
+chromium --headless --no-sandbox --disable-gpu --remote-debugging-address=127.0.0.1 --remote-debugging-port=9222 --user-data-dir=/tmp/auto-chrome about:blank
 ```
 
-Use esse comando apenas em um ambiente isolado. `TEST_URL` permite testar outro endereço. A suíte verifica seis larguras, imagens, âncoras, menu mobile, Escape, ausência do formulário removido, mensagens de WhatsApp e movimento reduzido. Capturas de desktop e celular são gravadas em `/tmp/gj-1440.png` e `/tmp/gj-390.png`.
+Depois execute:
 
-## Conteúdo e arquivos
+```sh
+npm test
+```
 
-- `index.html`: seções e metadados.
-- `styles.css`: identidade visual, layouts e animações.
-- `app.js`: menu, animações por scroll, navegação e WhatsApp.
-- `config.js`: única configuração do número exibido e utilizado nos botões.
-- `assets/`: fotografias ilustrativas originais geradas para o site, otimizadas em WebP (aproximadamente 276 KB no total). `servicos.webp` é uma composição de quatro fotos, enquadradas individualmente por CSS; não é uma captura de referência.
-- `references/`: quatro capturas e o texto extraídos do ZIP do usuário; não são carregados pelo site.
-- `scripts/`: servidor local, build estático e testes de navegador.
+A suíte verifica 1920×1080, 1440×900, 1366×768, 1280×720, 1024×768, 768×1024, 390×844 e 360×800. Confere limites reais do cabeçalho, textos, CTAs e foto inteira na primeira tela, proporção da imagem, ausência de overflow, menu por teclado e Escape, foco visível, navegação, seleção dos serviços, contato sem telefone, movimento reduzido e conteúdo sem JavaScript. Inclui 320 px e landscape baixo. O teste de zoom usa reflow equivalente a 200% (720×450 CSS px para uma janela física de 1440×900); não substitui teste manual em todos os navegadores nem teste com leitor de tela.
 
-Os botões abrem o WhatsApp diretamente com mensagens específicas para cada serviço. O formulário foi removido a pedido do usuário. Não existe backend. Todas as conversas usam `https://wa.me/556193995799`.
+Capturas da execução ficam em `/tmp/estetica-checks/`. `TEST_URL` e `SCREENSHOT_DIR` permitem substituir URL e diretório. Revisão visual deve abrir as capturas, não apenas gerá-las.
 
-## Marca e abertura
+## HTML independente
 
-O emblema enviado pelo usuário foi preparado como recorte transparente em `assets/logo-gj.webp` para uso no cabeçalho, rodapé e abertura. A abertura dura até 2,9 segundos, permite pular, aparece uma vez por sessão e é desativada com `prefers-reduced-motion`. Não bloqueia a navegação por teclado. O emblema foi isolado com ferramenta de edição de imagem a partir da imagem fornecida.
+```sh
+npm run export -- /tmp/Estetica-Automotiva.html
+```
 
-Os dados da empresa foram mantidos conforme fornecidos, inclusive o número de WhatsApp e o endereço. As fotos são ilustrativas e não apresentam uma equipe ou frota real da GJ.
-
-## Conferências de acabamento
-
-Validados em Chromium os tamanhos 360, 390, 768, 1366 e 1440 px, além de 320 px e telas com 600 px de altura. O CTA secundário tem 16 px e área mínima de 44 px. A manutenção usa colunas distintas no desktop e imagem seguida do texto no tablet/celular. As imagens existentes foram preservadas. O conteúdo das seções permanece visível sem IntersectionObserver e sem JavaScript; as animações são opcionais.
-
-O número `+55 61 9399-5799` foi preservado exatamente em `config.js`, derivando o destino `556193995799` sem adicionar dígitos. A estrutura e codificação dos links foram verificadas sem envio de mensagens. O responsável precisa confirmar o número completo e a abertura da conversa no WhatsApp.
-
-Para gerar uma cópia HTML independente, incluindo configuração, estilos e imagens: `npm run export -- /caminho/GJ-Ar-Condicionado.html`.
+Incorpora estilos, JavaScript, imagens usadas e fonte em um único HTML. Não inclui os PNGs documentais nem instala dependências. Os assets antigos da GJ foram preservados no repositório, mas não são carregados pelo novo site.
