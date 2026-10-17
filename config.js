@@ -1,3 +1,4 @@
 'use strict';
-// Única fonte do número informado pelo responsável. Não completar dígitos automaticamente.
-window.GJ_CONFIG = Object.freeze({ whatsapp: '+55 61 9399-5799' });
+// Única configuração de contato da estética automotiva.
+// Preencher apenas com o número confirmado pelo responsável, incluindo o DDI.
+window.AUTO_CONFIG = Object.freeze({ whatsapp: '' });
