@@ -12,4 +12,4 @@ http.createServer(async (req,res) => {
     const content = await readFile(file);
     res.writeHead(200, {'Content-Type':types[path.extname(file)] || 'application/octet-stream','X-Content-Type-Options':'nosniff'});res.end(content);
   } catch {res.writeHead(404);res.end('Não encontrado');}
-}).listen(Number(process.env.PORT || 3000),'0.0.0.0', () => console.log(`Estética Automotiva: servidor iniciado na porta ${process.env.PORT || 3000}`));
+}).listen(Number(process.env.PORT || 3000),'0.0.0.0', () => console.log(`Energia Solar: servidor iniciado na porta ${process.env.PORT || 3000}`));

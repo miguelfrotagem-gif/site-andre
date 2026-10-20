@@ -1,246 +1,159 @@
-'use strict';
-document.documentElement.classList.add('js');
-const toggle = document.querySelector('.menu-toggle');
-const navigation = document.getElementById('navigation');
-function closeMenu(returnFocus = false) {
-  toggle.setAttribute('aria-expanded', 'false');
-  navigation.classList.remove('is-open');
-  if (returnFocus) toggle.focus();
+const config = window.SOLAR_CONFIG || {};
+const $ = (s, root = document) => root.querySelector(s);
+const $$ = (s, root = document) => [...root.querySelectorAll(s)];
+const normalize = text => text.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase();
+const normalizeNumber = value => String(value || '').replace(/\D/g, '');
+const number = normalizeNumber(config.whatsappNumber);
+const validNumber = /^[1-9]\d{9,14}$/.test(number);
+let solution = 'residencial';
+let project = 'residencial';
+const messages = config.messages || {};
+let message = messages.contact || config.generalMessage || 'Olá! Gostaria de conversar sobre energia solar.';
+$$('[data-brand]').forEach(el => { el.textContent = config.brandName || 'Energia Solar'; });
+$$('[data-owner]').forEach(el => { el.textContent = config.ownerName || 'Eude Militão'; });
+if (config.logoUrl) {
+ const img = document.createElement('img'); img.src = config.logoUrl; img.alt = ''; img.width = 36; img.height = 36;
+ $('.brand .sun').replaceWith(img);
 }
-toggle.addEventListener('click', () => {
-  const open = toggle.getAttribute('aria-expanded') !== 'true';
-  toggle.setAttribute('aria-expanded', String(open));
-  navigation.classList.toggle('is-open', open);
-  if (open) playMotion(navigation, [{opacity:.3, transform:'translateY(-8px)'},{opacity:1, transform:'translateY(0)'}], {duration:220}, 'mobile-menu');
-});
-document.addEventListener('keydown', event => {
-  if (event.key === 'Escape' && toggle.getAttribute('aria-expanded') === 'true') closeMenu(true);
-});
-document.addEventListener('click', event => {
-  if (!event.target.closest('.site-header')) closeMenu();
-});
-navigation.querySelectorAll('a').forEach(link => link.addEventListener('click', () => closeMenu()));
-matchMedia('(min-width:701px)').addEventListener('change', () => closeMenu());
-
-const rawPhone = window.AUTO_CONFIG?.whatsapp || '';
-const phone = rawPhone.replace(/\D/g, '');
-const configured = /^\d{10,15}$/.test(phone);
-const whatsapp = document.querySelector('[data-whatsapp]');
-const contactStatus = document.getElementById('contact-status');
-const selectedService = document.getElementById('selected-service');
-function whatsappUrl(service) {
-  return `https://wa.me/${phone}?text=${encodeURIComponent(`Olá! Gostaria de saber mais sobre ${service.toLowerCase()} para meu carro.`)}`;
+if (config.savingsClaim?.validated === true && Number(config.savingsClaim.percentage) > 0 && Number(config.savingsClaim.percentage) <= 100) {
+ const percent = document.createElement('em');
+ percent.className = 'savings-percent';
+ percent.textContent = `${config.savingsClaim.percentage}%`;
+ const rest = document.createElement('span');
+ rest.className = 'mobile-line';
+ rest.textContent = 'na sua conta de luz.';
+ $('h1').replaceChildren(document.createTextNode('Até '), percent, document.createTextNode(' menos '), rest);
+ $('.hero-disclaimer').textContent = 'A economia varia conforme o projeto e o consumo.';
 }
-if (configured) {
-  whatsapp.href = whatsappUrl('os serviços de estética automotiva');
-  whatsapp.target = '_blank';
-  whatsapp.rel = 'noopener noreferrer';
-  contactStatus.textContent = `WhatsApp: ${rawPhone}`;
-  document.querySelectorAll('[data-contact]').forEach(link => {
-    link.href = whatsappUrl(link.dataset.contact);
-    link.target = '_blank';
-    link.rel = 'noopener noreferrer';
-  });
+function setMessage(value) {
+ message = value;
+ $('#contact-context').textContent = value;
+ const cta = $('#whatsapp-cta');
+ cta.href = validNumber ? `https://wa.me/${number}?text=${encodeURIComponent(message)}` : '#contact-status';
+ if(validNumber) { cta.target = '_blank'; cta.rel = 'noopener noreferrer'; $('#contact-status').textContent = 'Você será direcionado ao WhatsApp para iniciar a conversa. Nenhuma mensagem é enviada automaticamente.'; }
 }
-document.querySelectorAll('[data-service]').forEach(link => link.addEventListener('click', () => {
-  const service = link.dataset.service;
-  selectedService.hidden = false;
-  selectedService.textContent = `Seu interesse: ${service}.`;
-  if (configured) whatsapp.href = whatsappUrl(service);
+setMessage(message);
+$('#whatsapp-cta').addEventListener('click', () => { if(!validNumber) $('#contact-status').focus({preventScroll:true}); });
+const solutionText = {
+ residencial:'Para sua casa: uma análise do consumo, do telhado e da sua rotina.',
+ empresarial:'Para sua empresa: uma análise dos custos de energia e do perfil de operação.',
+ rural:'Para o campo: uma análise do consumo e das necessidades da sua produção.'
+};
+function chooseSolution(value) {
+ solution = value;
+ $$('[data-solution]').forEach(b => b.setAttribute('aria-pressed', String(b.dataset.solution === value)));
+ $('#solution-summary').textContent = solutionText[value];
+}
+$$('[data-solution]').forEach(b => b.addEventListener('click', () => chooseSolution(b.dataset.solution)));
+$('#solution-cta').addEventListener('click', () => setMessage(messages[solution] || `Olá! Tenho interesse em energia solar para um imóvel ${solution}.`));
+$$('[data-project]').forEach(b => b.addEventListener('click', () => {
+ project=b.dataset.project;
+ $$('[data-project]').forEach(el => el.setAttribute('aria-pressed',String(el===b)));
+ $('#project-summary').textContent = {residencial:'Residencial: explore uma solução adequada ao consumo da sua casa.',empresarial:'Empresarial: explore uma solução para o consumo e a operação da sua empresa.',rural:'Rural: explore uma solução para as necessidades da sua produção.'}[project];
 }));
-
-if ('IntersectionObserver' in window) {
-  const links = [...navigation.querySelectorAll('a:not(.header-cta)')];
-  const observer = new IntersectionObserver(entries => {
-    for (const entry of entries) {
-      if (!entry.isIntersecting) continue;
-      links.forEach(link => {
-        if (link.hash === `#${entry.target.id}`) link.setAttribute('aria-current', 'location');
-        else link.removeAttribute('aria-current');
-      });
-    }
-  }, { rootMargin: '-15% 0px -65% 0px', threshold: 0 });
-  document.querySelectorAll('#inicio, #servicos, #sobre, #contato').forEach(section => observer.observe(section));
-}
-
-// Progressive enhancement: content stays visible if motion is unavailable.
-const motionPreference = matchMedia('(prefers-reduced-motion: reduce)');
-const desktopPointer = matchMedia('(min-width:901px) and (hover:hover) and (pointer:fine)');
-const narrowScreen = matchMedia('(max-width:700px)');
-const motionControl = document.querySelector('[data-motion-toggle]');
-const activeAnimations = new Set();
-let manuallyPaused = false;
-let heroVisible = false;
-let aboutVisible = false;
-let frame = 0;
-let pointerX = 0;
-let pointerY = 0;
-const hero = document.querySelector('.first-fold');
-const heroPhoto = document.querySelector('.hero-media img');
-const about = document.querySelector('.about');
-const aboutPhoto = document.querySelector('.about-photo img');
-const supportsMotion = typeof Element.prototype.animate === 'function';
-const canMove = () => supportsMotion && !motionPreference.matches && !manuallyPaused;
-
-function playMotion(element, keyframes, options = {}, name = 'reveal') {
-  if (!element || !canMove() || document.hidden) return;
-  // WAAPI composes over the visible resting state, never requiring hidden CSS.
-  const animation = element.animate(keyframes, {
-    duration:560, easing:'cubic-bezier(.22,1,.36,1)', fill:'backwards', ...options
-  });
-  animation.id = name;
-  activeAnimations.add(animation);
-  animation.finished.then(() => activeAnimations.delete(animation), () => activeAnimations.delete(animation));
-  return animation;
-}
-function enter(element, {x=0, y=22, delay=0, duration=560, name='reveal'} = {}) {
-  const distance = narrowScreen.matches ? .6 : 1;
-  return playMotion(element, [
-    {opacity:0, transform:`translate3d(${x*distance}px,${y*distance}px,0)`},
-    {opacity:1, transform:'translate3d(0,0,0)'}
-  ], {delay,duration}, name);
-}
-
-// Every hero action remains present; all entrance effects finish by 940ms.
-playMotion(document.querySelector('.site-header'), [{opacity:.25},{opacity:1}], {duration:350}, 'hero-header');
-enter(document.querySelector('.hero-copy .eyebrow'), {y:18,delay:30,duration:420,name:'hero-eyebrow'});
-enter(document.querySelector('h1'), {y:22,delay:70,duration:580,name:'hero-title'});
-enter(document.querySelector('.hero-subtitle'), {y:18,delay:170,duration:540,name:'hero-subtitle'});
-enter(document.querySelector('.hero-actions'), {y:18,delay:270,duration:520,name:'hero-actions'});
-enter(heroPhoto, {y:14,delay:340,duration:600,name:'hero-photo'});
-
-if ('IntersectionObserver' in window) {
-  const revealActions = new WeakMap();
-  const reveal = new IntersectionObserver(entries => {
-    for (const entry of entries) {
-      if (!entry.isIntersecting) continue;
-      reveal.unobserve(entry.target);
-      entry.target.dataset.revealed = 'true';
-      revealActions.get(entry.target)?.();
-    }
-  }, {threshold:.12,rootMargin:'0px 0px -24px 0px'});
-  function once(element, action) {
-    if (!element) return;
-    revealActions.set(element, action);
-    reveal.observe(element);
-  }
-  function heading(selector) {
-    const group = document.querySelector(selector);
-    once(group, () => {
-      enter(group.querySelector('.eyebrow'), {y:18,duration:480});
-      enter(group.querySelector('h2'), {delay:80,duration:620});
-    });
-  }
-  heading('.section-heading');
-  document.querySelectorAll('.service-card').forEach((card,index) => {
-    once(card, () => enter(card, {y:26,delay:narrowScreen.matches ? 0 : index*100,duration:620,name:`service-card-${index}`}));
-  });
-  once(document.querySelector('.about-photo'), () => enter(document.querySelector('.about-photo'), {x:-22,y:0,duration:680,name:'about-photo'}));
-  once(document.querySelector('.about-copy'), () => {
-    const copy = document.querySelector('.about-copy');
-    enter(copy.querySelector('.eyebrow'), {x:18,y:0,duration:480});
-    enter(copy.querySelector('h2'), {x:22,y:0,delay:80,duration:620});
-    enter(copy.querySelector('.body-large'), {x:18,y:0,delay:160,duration:600});
-    copy.querySelectorAll('.care-values li').forEach((item,index) => enter(item, {y:16,delay:240+index*90,duration:450,name:`care-icon-${index}`}));
-  });
-  heading('.process-heading');
-  once(document.querySelector('.process-steps'), () => {
-    const steps = document.querySelector('.process-steps');
-    // Separate rows on mobile follow the same 01 → 04 timing.
-    if (canMove()) steps.classList.add('steps-animated');
-    steps.querySelectorAll('li').forEach((step,index) => {
-      step.style.setProperty('--step-delay',`${index*160}ms`);
-      enter(step.querySelector('.step-number'), {y:18,delay:index*160,duration:450,name:`process-number-${index}`});
-      enter(step.querySelector('h3'), {y:18,delay:60+index*160,duration:450,name:`process-label-${index}`});
-      enter(step.querySelector('p'), {y:16,delay:100+index*160,duration:450,name:`process-description-${index}`});
-    });
-    playMotion(document.querySelector('.process-light'), [
-      {opacity:0,transform:'translate3d(-16px,8px,0)'},
-      {opacity:.2,offset:.45,transform:'translate3d(0,0,0)'},
-      {opacity:0,transform:'translate3d(16px,-8px,0)'}
-    ], {duration:1200,easing:'ease-in-out'}, 'process-reflection');
-  });
-  once(document.querySelector('.contact-photo'), () => enter(document.querySelector('.contact-photo'), {y:14,duration:680,name:'contact-photo'}));
-  once(document.querySelector('.contact-copy'), () => {
-    const copy = document.querySelector('.contact-copy');
-    enter(copy.querySelector('.eyebrow'), {y:18,duration:480});
-    enter(copy.querySelector('h2'), {delay:80,duration:600});
-    enter(copy.querySelector('.body-large'), {delay:160,duration:560});
-    enter(copy.querySelector('.contact-button'), {y:18,delay:240,duration:520,name:'contact-action'});
-  });
-  const visibility = new IntersectionObserver(entries => {
-    for (const entry of entries) {
-      if (entry.target===hero) heroVisible=entry.isIntersecting;
-      if (entry.target===about) aboutVisible=entry.isIntersecting;
-    }
-    updateMotionState();
-    requestMotionFrame();
-  }, {threshold:0});
-  visibility.observe(hero);
-  visibility.observe(about);
-}
-
-function requestMotionFrame() {
-  if (frame || !canMove() || document.hidden || !desktopPointer.matches) return;
-  if (!heroVisible && !aboutVisible) return;
-  frame = requestAnimationFrame(() => {
-    frame = 0;
-    if (!canMove() || document.hidden || !desktopPointer.matches) return;
-    if (heroVisible) {
-      heroPhoto.style.setProperty('--pointer-x',`${pointerX.toFixed(2)}px`);
-      heroPhoto.style.setProperty('--pointer-y',`${pointerY.toFixed(2)}px`);
-    }
-    if (aboutVisible) {
-      const bounds=about.getBoundingClientRect();
-      const progress=Math.max(0,Math.min(1,(innerHeight-bounds.top)/(innerHeight+bounds.height)));
-      aboutPhoto.style.setProperty('--photo-drift',`${((progress-.5)*12).toFixed(2)}px`);
-    }
-  });
-}
-hero.addEventListener('pointermove', event => {
-  if (!desktopPointer.matches || !canMove() || !heroVisible) return;
-  pointerX=(event.clientX/innerWidth-.5)*8;
-  pointerY=(event.clientY/innerHeight-.5)*4;
-  requestMotionFrame();
-}, {passive:true});
-hero.addEventListener('pointerleave', () => {pointerX=0;pointerY=0;requestMotionFrame();}, {passive:true});
-window.addEventListener('scroll',requestMotionFrame,{passive:true});
-window.addEventListener('resize',requestMotionFrame,{passive:true});
-
-function updateMotionState() {
-  const enabled=canMove();
-  document.documentElement.classList.toggle('motion-active',enabled);
-  document.documentElement.classList.toggle('motion-paused',!enabled);
-  hero.classList.toggle('light-running',enabled && heroVisible && !document.hidden);
-  motionControl.hidden=!supportsMotion || motionPreference.matches;
-  motionControl.setAttribute('aria-pressed',String(manuallyPaused));
-  motionControl.textContent=manuallyPaused ? 'Ativar animações' : 'Pausar animações';
-  if (!enabled) {
-    for (const animation of activeAnimations) animation.cancel();
-    activeAnimations.clear();
-    if (frame) cancelAnimationFrame(frame);
-    frame=0;
-  }
-  if (!enabled || !desktopPointer.matches || !heroVisible) {
-    pointerX=0;pointerY=0;
-    heroPhoto.style.removeProperty('--pointer-x');
-    heroPhoto.style.removeProperty('--pointer-y');
-  }
-  if (!enabled || !desktopPointer.matches) aboutPhoto.style.removeProperty('--photo-drift');
-}
-motionControl.addEventListener('click', () => {
-  manuallyPaused=!manuallyPaused;
-  updateMotionState();
-  requestMotionFrame();
+$('#project-cta').addEventListener('click', () => setMessage(messages.project || 'Olá! Vi os projetos no site e gostaria de uma solução para o meu imóvel.'));
+$$('[data-message]').forEach(el => el.addEventListener('click', () => setMessage(messages[el.dataset.message] || config.generalMessage)));
+$$('[data-context]').forEach(el => el.addEventListener('click', () => setMessage(el.dataset.context)));
+const nav = $('#navigation'), menu = $('.menu-toggle');
+function closeMenu(returnFocus = false) { nav.classList.remove('open'); menu.setAttribute('aria-expanded','false'); menu.firstChild.textContent = 'Abrir menu '; if(returnFocus) menu.focus(); }
+menu.addEventListener('click', () => {
+ const open = menu.getAttribute('aria-expanded') !== 'true';
+ menu.setAttribute('aria-expanded',String(open)); nav.classList.toggle('open',open); menu.firstChild.textContent = open ? 'Fechar menu ' : 'Abrir menu ';
 });
-motionPreference.addEventListener('change',updateMotionState);
-desktopPointer.addEventListener('change',() => {updateMotionState();requestMotionFrame();});
-document.addEventListener('visibilitychange',() => {
-  for (const animation of activeAnimations) {
-    if (document.hidden) animation.pause();
-    else if (canMove()) animation.play();
-  }
-  updateMotionState();
-  requestMotionFrame();
+nav.addEventListener('click', e => {
+ if(e.target.closest('a')) { const link=e.target.closest('a'); if(link.hash === '#contato')setMessage(messages[link.dataset.message || 'contact'] || config.generalMessage); const target = $(link.getAttribute('href'));closeMenu(); target.setAttribute('tabindex','-1');target.focus({preventScroll:true}); }
 });
-updateMotionState();
+document.addEventListener('keydown',e => { if(e.key==='Escape' && menu.getAttribute('aria-expanded')==='true') closeMenu(true); });
+document.addEventListener('click',e => { if(!e.target.closest('.site-header') && menu.getAttribute('aria-expanded')==='true')closeMenu(); });
+const narrow = matchMedia('(max-width:1023px)');
+narrow.addEventListener('change',()=>closeMenu());
+if ('IntersectionObserver' in window) {
+ const navObserver = new IntersectionObserver(entries => {
+  const active=entries.filter(e=>e.isIntersecting).sort((a,b)=>b.intersectionRatio-a.intersectionRatio)[0];
+  if(active) $$('#navigation a:not(.menu-proposal)').forEach(a=> {if(a.hash===`#${active.target.id}`)a.setAttribute('aria-current','location');else a.removeAttribute('aria-current');});
+ },{rootMargin:'-15% 0px -45% 0px',threshold:[0,.1,.3,.6]});
+ $$('main>section').forEach(s=>navObserver.observe(s));
+}
+// The original artwork is one static composition. Only the HTML areas are interactive.
+const destinations = ['inicio','solucoes','como-funciona','projetos','contato'];
+function hotspot(stage,label,rect,action) {
+ const el=document.createElement(action.href?'a':'button');
+ if(action.href)el.href=action.href; else {el.type='button';el.addEventListener('click',action.run);}
+ el.className='reference-hotspot';el.setAttribute('aria-label',label);
+ const [x,y,w,h]=rect;Object.assign(el.style,{left:`${x}%`,top:`${y}%`,width:`${w}%`,height:`${h}%`});
+ stage.append(el);return el;
+}
+const dialog=$('#art-dialog'); let dialogTrigger;
+const faqSurface=$('#faq-surface'); const faqHome=faqSurface.parentNode; const faqNext=faqSurface.nextSibling;
+function showFaq(trigger,question) {
+ dialogTrigger=trigger;$('#dialog-content').append(faqSurface);dialog.showModal();
+ if(question){const b=$(`#question-${question}`);setAnswer(b,true);b.focus();}else $('#faq-search').focus();
+}
+$('#close-dialog').addEventListener('click',()=>dialog.close());
+dialog.addEventListener('keydown',e=>{if(e.key==='Escape'){e.preventDefault();dialog.close();}});
+dialog.addEventListener('close',()=>{faqHome.insertBefore(faqSurface,faqNext);dialogTrigger?.focus();});
+dialog.addEventListener('click',e=>{if(e.target===dialog){const r=dialog.getBoundingClientRect();if(e.clientX<r.left||e.clientX>r.right||e.clientY<r.top||e.clientY>r.bottom)dialog.close();}});
+$$('[data-art]').forEach(details=>{
+ const stage=$('.reference-stage',details), kind=details.dataset.art;
+ // Navigation bounds measured against each full 1672 × 941 artwork.
+ const six=kind==='duvidas'||kind==='contato';
+ const navStart=six?28.6:32.0,navWidth=six?42.7:39.1;
+ const ids=six?['inicio','solucoes','como-funciona','projetos','duvidas','contato']:destinations;
+ ids.forEach((id,i)=>hotspot(stage,`Ir para ${$('#'+id+' .eyebrow')?.textContent||id}`,[navStart+i*navWidth/ids.length,3.5,navWidth/ids.length,5.7],{href:`#${id}`}));
+ hotspot(stage,'Solicitar proposta',[81,3.3,15,6.7],{href:'#contato'});
+ if(kind==='solucoes') {
+  ['residencial','empresarial','rural'].forEach((type,i)=>hotspot(stage,`Selecionar solução ${type}`,[5.4,51+i*10.3,27.5,9],{run:()=>{chooseSolution(type);$('#solution-summary').scrollIntoView({block:'center'});}}));
+  hotspot(stage,'Encontrar minha solução',[5.5,85,23,8],{href:'#contato'}).addEventListener('click',()=>setMessage(`Olá! Tenho interesse em energia solar para um imóvel ${solution} e gostaria de uma análise.`));
+ }
+ if(kind==='processo')hotspot(stage,'Começar minha análise',[67,81.7,29.3,10],{href:'#contato'}).addEventListener('click',()=>setMessage('Olá! Gostaria de começar uma análise do meu consumo de energia.'));
+ if(kind==='contato')hotspot(stage,'Conversar pelo WhatsApp com a equipe',[5.5,69,30,9],{href:'#contato'}).addEventListener('click',()=>$('#whatsapp-cta').click());
+ if(kind==='duvidas') {
+  let search;search=hotspot(stage,'Abrir busca de dúvidas',[28,33.5,42,7.7],{run:()=>showFaq(search)});
+  for(let i=0;i<5;i++){let b;b=hotspot(stage,`Abrir pergunta ${i+1} no painel acessível`,[28.2,42+i*8.2,42,7.2],{run:()=>showFaq(b,i+1)});}
+  hotspot(stage,'Falar com especialista',[45.2,84,23,8],{href:'#contato'});
+ }
+ // Project art is reference-only; its fake count is never presented as a live carousel.
+});
+if(!narrow.matches)$$('.desktop-open').forEach(d=>d.open=true);
+const answerAnimations = new WeakMap();
+function setAnswer(button, open) {
+ const region = $('#' + button.getAttribute('aria-controls'));
+ const previous = answerAnimations.get(region);
+ const currentHeight = region.hidden ? 0 : region.getBoundingClientRect().height;
+ previous?.cancel();
+ button.setAttribute('aria-expanded', String(open));
+ $('span', button).textContent = open ? '−' : '+';
+ if (matchMedia('(prefers-reduced-motion:reduce)').matches || !region.animate) {
+  region.hidden = !open;
+  region.style.removeProperty('overflow');
+  return;
+ }
+ region.hidden = false;
+ region.style.overflow = 'hidden';
+ const targetHeight = open ? region.scrollHeight : 0;
+ const animation = region.animate([
+  { height: `${currentHeight}px`, opacity: open ? .6 : 1 },
+  { height: `${targetHeight}px`, opacity: open ? 1 : 0 }
+ ], { duration: 220, easing: 'cubic-bezier(.2,.65,.25,1)' });
+ answerAnimations.set(region, animation);
+ animation.onfinish = () => {
+  region.hidden = !open;
+  region.style.removeProperty('overflow');
+  answerAnimations.delete(region);
+ };
+}
+$$('.faq-item h3 button').forEach(b=>b.addEventListener('click',()=>setAnswer(b,b.getAttribute('aria-expanded')!=='true')));
+function filterFaq(){
+ const term=normalize($('#faq-search').value.trim());let count=0;
+ $$('.faq-item').forEach(item=>{const match=normalize(item.textContent).includes(term);if(!match&&item.contains(document.activeElement))$('#faq-search').focus();item.hidden=!match;if(match)count++;});
+ $('#no-results').hidden=count!==0;$('#search-status').textContent=`${count} ${count===1?'resposta encontrada':'respostas encontradas'}.`;
+}
+$('#faq-search').addEventListener('input',filterFaq);$('#clear-search').addEventListener('click',()=>{$('#faq-search').value='';filterFaq();$('#faq-search').focus();});filterFaq();
+const motion=matchMedia('(prefers-reduced-motion:reduce)');
+if (!motion.matches) document.documentElement.classList.add('motion-ready');
+motion.addEventListener('change', e => { if(e.matches){ document.documentElement.classList.remove('motion-ready'); document.getAnimations().forEach(a=>a.finish()); } });
+if('IntersectionObserver'in window&&!motion.matches){
+ const io=new IntersectionObserver(entries=>entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('revealed');io.unobserve(e.target);}}),{threshold:.08});
+ $$('.section-intro,.timeline li,.solution-layout').forEach(el=>{if(el.getBoundingClientRect().top>innerHeight){el.classList.add('reveal-ready');if(el.closest('.timeline'))el.style.transitionDelay=`${[...el.parentElement.children].indexOf(el)*70}ms`;io.observe(el);}});
+ motion.addEventListener('change',e=>{if(e.matches){$$('.reveal-ready').forEach(el=>el.classList.add('revealed'));io.disconnect();}});
+}
