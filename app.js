@@ -27,13 +27,25 @@ if (config.savingsClaim?.validated === true && Number(config.savingsClaim.percen
 }
 function setMessage(value) {
  message = value;
- $('#contact-context').textContent = value;
+ const status = $('#contact-status');
+ status.hidden = true;
+ status.textContent = '';
+ $('#whatsapp-cta').removeAttribute('aria-describedby');
  const cta = $('#whatsapp-cta');
  cta.href = validNumber ? `https://wa.me/${number}?text=${encodeURIComponent(message)}` : '#contact-status';
- if(validNumber) { cta.target = '_blank'; cta.rel = 'noopener noreferrer'; $('#contact-status').textContent = 'Você será direcionado ao WhatsApp para iniciar a conversa. Nenhuma mensagem é enviada automaticamente.'; }
+ if(validNumber) { cta.target = '_blank'; cta.rel = 'noopener noreferrer'; }
 }
 setMessage(message);
-$('#whatsapp-cta').addEventListener('click', () => { if(!validNumber) $('#contact-status').focus({preventScroll:true}); });
+$('#whatsapp-cta').addEventListener('click', event => {
+ if (validNumber) return;
+ event.preventDefault();
+ const status = $('#contact-status');
+ status.hidden = false;
+ status.textContent = 'O WhatsApp ainda não está disponível. Tente novamente em breve.';
+ event.currentTarget.setAttribute('aria-describedby', 'contact-status');
+ status.focus({preventScroll:true});
+ status.scrollIntoView({block:'nearest', behavior:'instant'});
+});
 const solutionText = {
  residencial:'Para sua casa: uma análise do consumo, do telhado e da sua rotina.',
  empresarial:'Para sua empresa: uma análise dos custos de energia e do perfil de operação.',
@@ -49,7 +61,7 @@ $('#solution-cta').addEventListener('click', () => setMessage(messages[solution]
 $$('[data-project]').forEach(b => b.addEventListener('click', () => {
  project=b.dataset.project;
  $$('[data-project]').forEach(el => el.setAttribute('aria-pressed',String(el===b)));
- $('#project-summary').textContent = {residencial:'Residencial: explore uma solução adequada ao consumo da sua casa.',empresarial:'Empresarial: explore uma solução para o consumo e a operação da sua empresa.',rural:'Rural: explore uma solução para as necessidades da sua produção.'}[project];
+ $('#project-summary').textContent = {residencial:'Residencial · Solução para o consumo da sua casa.',empresarial:'Empresarial · Solução para o consumo da sua empresa.',rural:'Rural · Solução para as necessidades da sua produção.'}[project];
 }));
 $('#project-cta').addEventListener('click', () => setMessage(messages.project || 'Olá! Vi os projetos no site e gostaria de uma solução para o meu imóvel.'));
 $$('[data-message]').forEach(el => el.addEventListener('click', () => setMessage(messages[el.dataset.message] || config.generalMessage)));
@@ -125,7 +137,7 @@ $('#faq-search').addEventListener('input',filterFaq);$('#clear-search').addEvent
 const motion = matchMedia('(prefers-reduced-motion:reduce)');
 const entered = new WeakSet();
 let entranceObserver;
-const entranceTargets = $$('.hero-copy > .eyebrow, .hero-copy h1, .hero-support > .lead, .hero-support .actions > a, .hero-disclaimer, .section-intro .eyebrow, .section-intro h2, .section-intro p:not(.eyebrow), .solution-options button, .solution-note, .timeline li, .process-section .actions, .project-types, .project-panel, .faq-surface, .faq-section .actions, .contact-native, .contact-portrait, #contact-context, #contact-status, .scene-visual');
+const entranceTargets = $$('.hero-copy > .eyebrow, .hero-copy h1, .hero-support > .lead, .hero-support .actions > a, .hero-disclaimer, .section-intro .eyebrow, .section-intro h2, .section-intro p:not(.eyebrow), .solution-options button, .solution-note, .timeline li, .process-section .actions, .project-types, .project-panel, .faq-surface, .faq-section .actions, .contact-native, .contact-portrait, .scene-visual');
 function enter(element) {
  if (entered.has(element) || motion.matches) return;
  entered.add(element);

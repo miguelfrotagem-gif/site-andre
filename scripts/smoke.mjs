@@ -64,6 +64,9 @@ try {
  assert.equal(await evaluate('document.querySelectorAll("h1").length'),1);
  assert.equal(await evaluate('document.querySelector("h1").textContent.includes("90%")'),false);
  assert.equal(await evaluate(`document.querySelector('#contato form')`),null,'contato sem formulário');
+ assert.equal(await evaluate(`document.querySelector('#contact-context')`),null,'mensagem contextual fora da apresentação');
+ assert.equal(await evaluate(`document.querySelector('#contact-status').hidden`),true,'sem aviso permanente');
+ assert.equal(await evaluate(`/Olá!|configuração|número oficial|será direcionado/.test(document.querySelector('#contato').innerText)`),false,'contato inicial sem mensagens internas');
  const matrix=[[320,700],[360,800],[375,812],[390,844],[430,932],[480,900],[640,900],[768,1024],[912,1368],[1023,768],[1024,768],[1100,760],[1366,768],[1440,900],[1920,1080],[2560,1080],[844,390],[1280,480],[720,450]];
  for(const [width,height] of matrix){
   await viewport(width,height);await evaluate('scrollTo(0,0)');await wait(40);
@@ -76,10 +79,15 @@ try {
   const images=await evaluate(`(()=>[...document.querySelectorAll('.scene-visual img')].filter(i=>i.getBoundingClientRect().width>0).map(i=>{const r=i.getBoundingClientRect(),s=getComputedStyle(i);return {path:i.currentSrc.split('/').pop(),ratioOK:Math.abs(r.width/r.height-i.naturalWidth/i.naturalHeight)<.003,inside:r.left>=-.5&&r.right<=innerWidth+.5,contain:s.objectFit==='contain',noZoom:s.transform==='none'}}))()`);
   for(const img of images)for(const k of ['ratioOK','inside','contain','noZoom'])assert.equal(img[k],true,`${width}: ${img.path} ${k}`);
   assert.equal(await evaluate(`document.querySelector('.hero-photo').currentSrc.includes('/mobile/')`),width<1024,'picture seleciona enquadramento próprio');
+  assert.equal(await evaluate(`(()=>{const p=document.querySelector('.owner-portrait').getBoundingClientRect(),n=document.querySelector('.owner-caption').getBoundingClientRect();return n.top>=p.bottom-.5&&n.top-p.bottom<=16})()`),true,`nome junto ao retrato, sem sobreposição ${width}`);
+
   assert.equal(await evaluate(`(()=>{const r=document.querySelector('h1').getBoundingClientRect();return r.left>=0&&r.right<=innerWidth+1})()`),true,`h1 ${width}`);
   assert.equal(await evaluate(`(()=>{const a=document.querySelector('.brand').getBoundingClientRect(),b=document.querySelector('${width<1024?'.menu-toggle':'#navigation'}').getBoundingClientRect();return a.right+5<=b.left})()`),true,`cabeçalho sem colisão ${width}`);
   assert.equal(await evaluate(`(()=>{const r=document.querySelector('.owner-portrait').getBoundingClientRect(),i=document.querySelector('.owner-portrait');return r.width>0&&r.height>0&&Math.abs(r.width/r.height-i.naturalWidth/i.naturalHeight)<.003})()`),true,`Eude inteiro e proporcional ${width}`);
   if(width>=1100&&height>=760){
+   assert.equal(await evaluate(`[...document.querySelectorAll('.scene-visual img')].every(i=>getComputedStyle(i).maskImage.includes('linear-gradient'))`),true,'transição suave somente nas bordas do cenário');
+   assert.equal(await evaluate(`parseFloat(getComputedStyle(document.querySelector('#navigation a')).fontSize)>=14`),true,'menu legível');
+   assert.equal(await evaluate(`[...document.querySelectorAll('.solution-options small,.timeline p,.project-panel p:not(.fine)')].every(e=>parseFloat(getComputedStyle(e).fontSize)>=16)`),true,'descrições legíveis');
    const fit=await evaluate(`(()=>{const header=document.querySelector('.site-header').getBoundingClientRect().height;return [...document.querySelectorAll('main>section')].map(s=>{const r=s.getBoundingClientRect(),content=[...s.querySelectorAll('h1,h2,h3,p,a,button,input,.owner-portrait,.scene-visual img')].map(e=>e.getBoundingClientRect()).filter(r=>r.height>0);return {id:s.id,fits:Math.abs(r.height-(innerHeight-header))<1,inside:content.every(c=>c.top>=r.top-.5&&c.bottom<=r.bottom+.5&&c.left>=r.left-.5&&c.right<=r.right+.5),noClipping:s.scrollHeight<=s.clientHeight+1&&!['hidden','clip','scroll','auto'].includes(getComputedStyle(s).overflowY)}})})()`);
    for(const section of fit)for(const k of ['fits','inside','noClipping'])assert.equal(section[k],true,`${width}x${height}: ${section.id} ${k}`);
   }
@@ -101,14 +109,17 @@ try {
  assert.equal(await evaluate(`document.activeElement.id`),'solucoes');
  assert.equal(await evaluate(`['hidden','clip'].includes(getComputedStyle(document.body).overflowY)`),false);
  await evaluate(`document.querySelector('.menu-toggle').click();document.querySelector('.menu-proposal').click()`);
- assert.match(await evaluate(`document.querySelector('#contact-context').textContent`),/solicitar uma proposta/);
+ assert.equal(await evaluate(`document.querySelector('#contact-status').hidden`),true,'proposta não mostra aviso técnico');
  for(const [type,fragment] of [['residencial','minha casa'],['empresarial','minha empresa'],['rural','propriedade rural']]){
   await evaluate(`document.querySelector('[data-solution="${type}"]').click();document.querySelector('#solution-cta').click()`);
-  assert.match(await evaluate(`document.querySelector('#contact-context').textContent`),new RegExp(fragment));
+  assert.equal(await evaluate(`document.querySelector('#contact-status').hidden`),true,'escolha mantém contato limpo');
   assert.equal(await evaluate(`document.querySelector('[data-solution="${type}"]').getAttribute('aria-pressed')`),'true');
  }
  await evaluate(`document.querySelector('#whatsapp-cta').click()`);
  assert.equal(await evaluate(`document.activeElement.id`),'contact-status');
+ assert.equal(await evaluate(`document.querySelector('#contact-status').hidden`),false);
+ assert.match(await evaluate(`document.querySelector('#contact-status').textContent`),/ainda não está disponível/);
+ assert.equal(await evaluate(`document.querySelector('#contact-status').textContent.includes('configuração')`),false);
  assert.equal(await evaluate(`document.querySelector('#whatsapp-cta').href.includes('wa.me')`),false);
  console.log('PASS: menu por teclado, Escape/retorno de foco, seleção/fechamento, proposta, scroll livre e três mensagens de solução');
  assert.equal(await evaluate(`document.querySelector('#answer-1').hidden`),false);
@@ -128,9 +139,9 @@ try {
  assert.equal(await evaluate(`document.querySelectorAll('.faq-item:not([hidden])').length`),5);
  await evaluate(`document.querySelector('[data-project="empresarial"]').click();document.querySelector('#project-cta').click()`);
  assert.match(await evaluate(`document.querySelector('#project-summary').textContent`),/Empresarial/);
- assert.match(await evaluate(`document.querySelector('#contact-context').textContent`),/Vi os projetos no site/);
- assert.equal(await evaluate(`document.querySelectorAll('.project-controls button:disabled').length`),2);
- assert.match(await evaluate(`document.querySelector('.project-controls').textContent`),/01 \/ 01/);
+ assert.equal(await evaluate(`document.querySelector('#contact-status').hidden`),true);
+ assert.equal(await evaluate(`document.querySelectorAll('.project-controls').length`),0,'sem carrossel fictício');
+ assert.match(await evaluate(`document.querySelector('.project-disclaimer').textContent`),/Imagens ilustrativas/);
  console.log('PASS: FAQ real, busca por respostas/acentos, foco previsível, limpar, CTA sem resultados e projeto único honesto');
  await evaluate(`document.querySelector('#question-2').click()`);
  assert.equal(await evaluate(`document.querySelectorAll('.faq-item button[aria-expanded="true"]').length`),1,'uma resposta aberta por vez');
@@ -186,10 +197,15 @@ try {
  console.log('PASS: conteúdo, navegação e respostas sem JavaScript');
  const injection=await send('Page.addScriptToEvaluateOnNewDocument',{source:`Object.defineProperty(window,'SOLAR_CONFIG',{configurable:true,set(v){v.whatsappNumber='+55 (11) 99999-9999';Object.defineProperty(window,'SOLAR_CONFIG',{value:v,configurable:true});}});`});
  await send('Page.navigate',{url:base});await wait(300);
- for(const [selector,fragment] of [['.hero-support [data-message="hero"]','potencial de economia'],['#solution-cta','minha casa'],['#project-cta','Vi os projetos'],['#duvidas [data-message="faq"]','tirar uma dúvida']]){
+ for(const [selector,fragment] of [['.hero-support [data-message="hero"]','potencial de economia'],['#solution-cta','minha casa'],['.header-cta','solicitar uma proposta'],['#project-cta','Vi os projetos'],['#duvidas [data-message="faq"]','tirar uma dúvida']]){
   await evaluate(`document.querySelector('${selector}').click()`);
   const href=await evaluate(`document.querySelector('#whatsapp-cta').getAttribute('href')`);
   assert.equal(new URL(href).pathname,'/5511999999999');assert.match(new URL(href).searchParams.get('text'),new RegExp(fragment));
+ }
+ for(const [type,fragment] of [['residencial','minha casa'],['empresarial','minha empresa'],['rural','propriedade rural']]){
+  await evaluate(`document.querySelector('[data-solution="${type}"]').click();document.querySelector('#solution-cta').click()`);
+  assert.match(await evaluate(`new URL(document.querySelector('#whatsapp-cta').href).searchParams.get('text')`),new RegExp(fragment));
+  assert.equal(await evaluate(`document.querySelector('#contact-status').hidden`),true,'número válido sem aviso técnico');
  }
  await send('Page.removeScriptToEvaluateOnNewDocument',{identifier:injection.identifier});
  await send('Page.navigate',{url:base});await wait(300);
