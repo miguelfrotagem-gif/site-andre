@@ -54,6 +54,15 @@ $$('[data-project]').forEach(b => b.addEventListener('click', () => {
 $('#project-cta').addEventListener('click', () => setMessage(messages.project || 'Olá! Vi os projetos no site e gostaria de uma solução para o meu imóvel.'));
 $$('[data-message]').forEach(el => el.addEventListener('click', () => setMessage(messages[el.dataset.message] || config.generalMessage)));
 $$('[data-context]').forEach(el => el.addEventListener('click', () => setMessage(el.dataset.context)));
+// Measure the one global header, including font/configuration changes.
+const header = $('.site-header');
+function measureHeader() {
+ document.documentElement.style.setProperty('--header-height', `${header.getBoundingClientRect().height}px`);
+}
+measureHeader();
+if ('ResizeObserver' in window) new ResizeObserver(measureHeader).observe(header);
+else window.addEventListener('resize', measureHeader);
+document.fonts?.ready.then(measureHeader);
 const nav = $('#navigation'), menu = $('.menu-toggle');
 function closeMenu(returnFocus = false) { nav.classList.remove('open'); menu.setAttribute('aria-expanded','false'); menu.firstChild.textContent = 'Abrir menu '; if(returnFocus) menu.focus(); }
 menu.addEventListener('click', () => {
@@ -101,18 +110,55 @@ function setAnswer(button, open) {
   answerAnimations.delete(region);
  };
 }
-$$('.faq-item h3 button').forEach(b=>b.addEventListener('click',()=>setAnswer(b,b.getAttribute('aria-expanded')!=='true')));
+$$('.faq-item h3 button').forEach(button => button.addEventListener('click', () => {
+ const open = button.getAttribute('aria-expanded') !== 'true';
+ if (open) $$('.faq-item h3 button[aria-expanded="true"]').filter(other => other !== button).forEach(other => setAnswer(other, false));
+ setAnswer(button, open);
+}));
 function filterFaq(){
  const term=normalize($('#faq-search').value.trim());let count=0;
  $$('.faq-item').forEach(item=>{const match=normalize(item.textContent).includes(term);if(!match&&item.contains(document.activeElement))$('#faq-search').focus();item.hidden=!match;if(match)count++;});
  $('#no-results').hidden=count!==0;$('#search-status').textContent=`${count} ${count===1?'resposta encontrada':'respostas encontradas'}.`;
 }
 $('#faq-search').addEventListener('input',filterFaq);$('#clear-search').addEventListener('click',()=>{$('#faq-search').value='';filterFaq();$('#faq-search').focus();});filterFaq();
-const motion=matchMedia('(prefers-reduced-motion:reduce)');
-if (!motion.matches) document.documentElement.classList.add('motion-ready');
-motion.addEventListener('change', e => { if(e.matches){ document.documentElement.classList.remove('motion-ready'); document.getAnimations().forEach(a=>a.finish()); } });
-if('IntersectionObserver'in window&&!motion.matches){
- const io=new IntersectionObserver(entries=>entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('revealed');io.unobserve(e.target);}}),{threshold:.08});
- $$('.section-intro,.timeline li,.solution-layout').forEach(el=>{if(el.getBoundingClientRect().top>innerHeight){el.classList.add('reveal-ready');if(el.closest('.timeline'))el.style.transitionDelay=`${[...el.parentElement.children].indexOf(el)*70}ms`;io.observe(el);}});
- motion.addEventListener('change',e=>{if(e.matches){$$('.reveal-ready').forEach(el=>el.classList.add('revealed'));io.disconnect();}});
+// Observe each real element once. No CSS hidden state, scroll interception or photo scaling.
+const motion = matchMedia('(prefers-reduced-motion:reduce)');
+const entered = new WeakSet();
+let entranceObserver;
+const entranceTargets = $$('.hero-copy > .eyebrow, .hero-copy h1, .hero-support > .lead, .hero-support .actions > a, .hero-disclaimer, .section-intro .eyebrow, .section-intro h2, .section-intro p:not(.eyebrow), .solution-options button, .solution-note, .timeline li, .process-section .actions, .project-types, .project-panel, .faq-surface, .faq-section .actions, .contact-native, .contact-portrait, #contact-context, #contact-status, .scene-visual');
+function enter(element) {
+ if (entered.has(element) || motion.matches) return;
+ entered.add(element);
+ const photo = element.matches('.scene-visual, .contact-portrait');
+ let delay = 0;
+ if (element.matches('h1, h2')) delay = 60;
+ else if (element.matches('.lead, .section-intro p:not(.eyebrow)')) delay = 120;
+ else if (element.matches('.hero-support .actions > a')) delay = 180 + $$('.hero-support .actions > a').indexOf(element) * 60;
+ else if (element.matches('.hero-disclaimer, .solution-note')) delay = 210;
+ else if (element.matches('.timeline li, .solution-options button')) delay = [...element.parentElement.children].indexOf(element) * 70;
+ const from = photo ? {opacity: 0} : {opacity: 0, translate: '0 14px'};
+ const to = photo ? {opacity: 1} : {opacity: 1, translate: '0 0'};
+ element.animate([from, to], {duration: photo ? 620 : 560, delay, easing: 'cubic-bezier(.2,.65,.25,1)', fill: 'backwards'});
 }
+function startEntrances(initial = false) {
+ if (motion.matches || !('IntersectionObserver' in window) || !Element.prototype.animate) return;
+ entranceObserver = new IntersectionObserver(entries => {
+  entries.forEach(entry => {
+   if (!entry.isIntersecting) return;
+   enter(entry.target);
+   entranceObserver.unobserve(entry.target);
+  });
+ }, {threshold: .06});
+ entranceTargets.forEach(element => {
+  if (!initial && element.getBoundingClientRect().top < innerHeight) entered.add(element);
+  if (!entered.has(element)) entranceObserver.observe(element);
+ });
+ if (initial) header.animate([{opacity: 0, translate: '0 -8px'}, {opacity: 1, translate: '0 0'}], {duration: 400, easing: 'ease-out'});
+}
+startEntrances(true);
+motion.addEventListener('change', event => {
+ if (event.matches) {
+  entranceObserver?.disconnect();
+  document.getAnimations().forEach(animation => animation.finish());
+ } else startEntrances();
+});
