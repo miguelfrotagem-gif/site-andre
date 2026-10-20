@@ -9,7 +9,7 @@ npm run lint
 npm run build
 ```
 
-Servidor na porta 3000 (`PORT` configurável), build em `dist/`. Para servir o build: `SERVE_DIST=1 PORT=3001 npm start`. Não há backend, formulário de contato ou envio automático de mensagens.
+Servidor na porta 3000 (`PORT` configurável), build em `dist/`. Para servir o build: `SERVE_DIST=1 PORT=3001 npm start`. Não há backend, formulário de contato ou envio automático de mensagens. O build inclui `.nojekyll` e versões por conteúdo nas URLs de CSS/JavaScript para evitar cache de uma publicação anterior.
 
 ## Composição desktop e mobile
 
