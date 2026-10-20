@@ -49,11 +49,11 @@ async function sectionCapture(sectionId, width) {
  await evaluate(`(async()=>{const s=document.getElementById('${sectionId}');s.scrollIntoView({block:'start'});await Promise.all([...s.querySelectorAll('img')].filter(i=>i.getBoundingClientRect().width>0).map(i=>{i.loading='eager';return i.decode()}));})()`);
  await wait(120);
  // A full-section capture excludes the sticky global header; viewport captures keep it.
- await evaluate(`document.activeElement?.blur();document.querySelector('.site-header').style.position='static'`);
+ await evaluate(`(async()=>{document.activeElement?.blur();document.querySelector('.site-header').style.position='static';await new Promise(r=>requestAnimationFrame(()=>requestAnimationFrame(r)))})()`);
  const clip=await evaluate(`(()=>{const r=document.getElementById('${sectionId}').getBoundingClientRect();return {x:r.left+scrollX,y:r.top+scrollY,width:r.width,height:r.height,scale:1}})()`);
  const shot=await send('Page.captureScreenshot',{format:'png',captureBeyondViewport:true,clip});
  await writeFile(`${output}/${sectionId}-${width}.png`,Buffer.from(shot.data,'base64'));
- await evaluate(`document.querySelector('.site-header').style.removeProperty('position')`);
+ await evaluate(`(async()=>{document.querySelector('.site-header').style.removeProperty('position');await new Promise(r=>requestAnimationFrame(()=>requestAnimationFrame(r)))})()`);
 }
 try {
  await send('Page.enable');await send('Runtime.enable');await send('Log.enable');
@@ -64,12 +64,12 @@ try {
  assert.equal(await evaluate('document.querySelectorAll("h1").length'),1);
  assert.equal(await evaluate('document.querySelector("h1").textContent.includes("90%")'),false);
  assert.equal(await evaluate(`document.querySelector('#contato form')`),null,'contato sem formulário');
- const matrix=[[320,700],[360,800],[375,812],[390,844],[430,932],[480,900],[640,900],[768,1024],[912,1368],[1023,768],[1024,768],[1366,768],[1440,900],[1920,1080],[2560,1080],[844,390],[1280,480],[720,450]];
+ const matrix=[[320,700],[360,800],[375,812],[390,844],[430,932],[480,900],[640,900],[768,1024],[912,1368],[1023,768],[1024,768],[1100,760],[1366,768],[1440,900],[1920,1080],[2560,1080],[844,390],[1280,480],[720,450]];
  for(const [width,height] of matrix){
   await viewport(width,height);await evaluate('scrollTo(0,0)');await wait(40);
   await evaluate(`Promise.all([...document.images].filter(i=>i.getBoundingClientRect().width>0).map(i=>{i.loading='eager';return i.decode()}))`);
   assert.equal(await evaluate('document.documentElement.scrollWidth<=innerWidth'),true,`overflow ${width}x${height}`);
-  const frames=await evaluate(`(()=>{const edge=document.documentElement.clientWidth;return [...document.querySelectorAll('main>section')].map(section=>{const r=section.getBoundingClientRect(),pictures=section.querySelectorAll('picture.scene-visual'),img=pictures[0]?.querySelector('img'),ir=img?.getBoundingClientRect(),style=img&&getComputedStyle(img);return {id:section.id,one:pictures.length===1,outer:Math.abs(r.left)<.5&&Math.abs(r.right-edge)<.5,photo:!!ir&&Math.abs(ir.left)<.5&&Math.abs(ir.right-edge)<.5,noFrame:style?.borderRadius==='0px',rightAsset:img?.currentSrc.includes('/mobile/')===(${width}<1024)}})})()`);
+  const frames=await evaluate(`(()=>{const edge=document.documentElement.clientWidth;return [...document.querySelectorAll('main>section')].map(section=>{const r=section.getBoundingClientRect(),pictures=section.querySelectorAll('picture.scene-visual'),img=pictures[0]?.querySelector('img'),ir=img?.getBoundingClientRect(),style=img&&getComputedStyle(img);const fit=innerWidth>=1100&&innerHeight>=760,header=document.querySelector(".site-header").getBoundingClientRect().height;return {id:section.id,one:pictures.length===1,outer:Math.abs(r.left)<.5&&Math.abs(r.right-edge)<.5,photo:!!ir&&(fit?ir.width>0&&ir.height>0&&ir.left>=-.5&&ir.right<=edge+.5&&Math.abs((ir.left+ir.right)/2-edge/2)<.5&&ir.height<=innerHeight-header+1:Math.abs(ir.left)<.5&&Math.abs(ir.right-edge)<.5),noFrame:style?.borderRadius==='0px',rightAsset:img?.currentSrc.includes('/mobile/')===(${width}<1024)}})})()`);
   for(const frame of frames)for(const check of ['one','outer','photo','noFrame','rightAsset'])assert.equal(frame[check],true,`${width}: ${frame.id} ${check}`);
   assert.equal(await evaluate(`document.querySelectorAll('details.reference,.reference-hotspot,.desktop-open,#art-dialog').length`),0,'sem visualizadores públicos');
 
@@ -78,6 +78,11 @@ try {
   assert.equal(await evaluate(`document.querySelector('.hero-photo').currentSrc.includes('/mobile/')`),width<1024,'picture seleciona enquadramento próprio');
   assert.equal(await evaluate(`(()=>{const r=document.querySelector('h1').getBoundingClientRect();return r.left>=0&&r.right<=innerWidth+1})()`),true,`h1 ${width}`);
   assert.equal(await evaluate(`(()=>{const a=document.querySelector('.brand').getBoundingClientRect(),b=document.querySelector('${width<1024?'.menu-toggle':'#navigation'}').getBoundingClientRect();return a.right+5<=b.left})()`),true,`cabeçalho sem colisão ${width}`);
+  assert.equal(await evaluate(`(()=>{const r=document.querySelector('.owner-portrait').getBoundingClientRect(),i=document.querySelector('.owner-portrait');return r.width>0&&r.height>0&&Math.abs(r.width/r.height-i.naturalWidth/i.naturalHeight)<.003})()`),true,`Eude inteiro e proporcional ${width}`);
+  if(width>=1100&&height>=760){
+   const fit=await evaluate(`(()=>{const header=document.querySelector('.site-header').getBoundingClientRect().height;return [...document.querySelectorAll('main>section')].map(s=>{const r=s.getBoundingClientRect(),content=[...s.querySelectorAll('h1,h2,h3,p,a,button,input,.owner-portrait,.scene-visual img')].map(e=>e.getBoundingClientRect()).filter(r=>r.height>0);return {id:s.id,fits:Math.abs(r.height-(innerHeight-header))<1,inside:content.every(c=>c.top>=r.top-.5&&c.bottom<=r.bottom+.5&&c.left>=r.left-.5&&c.right<=r.right+.5),noClipping:s.scrollHeight<=s.clientHeight+1&&!['hidden','clip','scroll','auto'].includes(getComputedStyle(s).overflowY)}})})()`);
+   for(const section of fit)for(const k of ['fits','inside','noClipping'])assert.equal(section[k],true,`${width}x${height}: ${section.id} ${k}`);
+  }
   if(width<1024){
    assert.equal(await evaluate(`[...document.querySelectorAll('.button,.solution-options button,.project-types button')].filter(b=>b.getBoundingClientRect().width>0).every(b=>b.getBoundingClientRect().height>=44)`),true,`toque ${width}`);
    assert.equal(await evaluate(`(()=>{const portrait=document.querySelector('.owner-portrait').getBoundingClientRect(),cta=document.querySelector('#whatsapp-cta').getBoundingClientRect(),title=document.querySelector('#contato .section-intro').getBoundingClientRect();return title.bottom<=portrait.top+1&&portrait.bottom<cta.top})()`),true,`retrato livre de texto e CTA ${width}`);
@@ -127,6 +132,9 @@ try {
  assert.equal(await evaluate(`document.querySelectorAll('.project-controls button:disabled').length`),2);
  assert.match(await evaluate(`document.querySelector('.project-controls').textContent`),/01 \/ 01/);
  console.log('PASS: FAQ real, busca por respostas/acentos, foco previsível, limpar, CTA sem resultados e projeto único honesto');
+ await evaluate(`document.querySelector('#question-2').click()`);
+ assert.equal(await evaluate(`document.querySelectorAll('.faq-item button[aria-expanded="true"]').length`),1,'uma resposta aberta por vez');
+ await evaluate(`document.querySelector('#question-2').click()`);
  // Real expansion with arbitrary content height, then a preference change during animation.
  await send('Emulation.setEmulatedMedia',{features:[{name:'prefers-reduced-motion',value:'no-preference'}]});
  await evaluate(`document.querySelector('#question-2').click()`);await wait(300);
@@ -138,12 +146,36 @@ try {
  console.log('PASS: expansão por altura real e preferência dinâmica por movimento reduzido, sem escala de fotografia');
  assert.equal(await evaluate(`document.querySelectorAll('#faq-surface').length`),1,'FAQ nativo único');
  assert.equal(await evaluate(`document.querySelectorAll('.site-header').length`),1,'cabeçalho global único');
- for(const width of [390,768,1366,1920]){
-  await viewport(width,width<480?844:1000);
-  await evaluate('scrollTo(0,0);document.activeElement?.blur()');await wait(80);await screenshot(`viewport-${width}`);
-  for(const sectionId of ['inicio','solucoes','como-funciona','projetos','duvidas','contato']) await sectionCapture(sectionId,width);
+ // All standard answers fit; an exceptional answer and enlarged text grow naturally.
+ for(const [width,height] of [[1366,768],[1440,900],[1920,1080]]){
+  await viewport(width,height);
+  for(let i=1;i<=5;i++){
+   await evaluate(`document.querySelector('#question-${i}').click()`);
+   assert.equal(await evaluate(`(()=>{const s=document.querySelector('#duvidas');return s.getBoundingClientRect().height<=innerHeight-document.querySelector('.site-header').getBoundingClientRect().height+1&&s.scrollHeight<=s.clientHeight+1})()`),true,`FAQ ${i} completo ${width}x${height}`);
+  }
  }
- console.log('PASS: seis composições únicas de ponta a ponta; sem referências/hotspots/modais; capturas em 390, 768, 1366 e 1920 px');
+ await viewport(1366,768);
+ const originalAnswer=await evaluate(`document.querySelector('#answer-1 p').textContent`);
+ await evaluate(`document.querySelector('#answer-1 p').textContent=${JSON.stringify('Resposta longa de teste: todo o conteúdo precisa continuar disponível, com leitura natural e sem corte. '.repeat(35))};if(document.querySelector('#answer-1').hidden)document.querySelector('#question-1').click()`);
+ assert.equal(await evaluate(`(()=>{const s=document.querySelector('#duvidas'),r=document.querySelector('#answer-1');return s.getBoundingClientRect().height>innerHeight&&r.getBoundingClientRect().height>=r.scrollHeight-.5&&s.scrollHeight<=s.clientHeight+1})()`),true,'FAQ longo aumenta a seção sem corte');
+ await evaluate(`document.querySelector('#answer-1 p').textContent=${JSON.stringify(originalAnswer)}`);
+ await evaluate(`document.documentElement.style.fontSize='32px'`);await wait(100);
+ assert.equal(await evaluate('document.documentElement.scrollWidth<=innerWidth'),true,'texto ampliado 200% sem scroll horizontal');
+ assert.equal(await evaluate(`document.querySelector('#solucoes').getBoundingClientRect().height>innerHeight-document.querySelector('.site-header').getBoundingClientRect().height`),true,'seção cresce com texto 200%');
+ assert.equal(await evaluate(`[...document.querySelectorAll('main>section')].every(s=>s.scrollHeight<=s.clientHeight+1)`),true,'texto ampliado sem cortes');
+ await sectionCapture('solucoes','texto-200');await sectionCapture('duvidas','texto-200');
+ await evaluate(`document.documentElement.style.removeProperty('font-size')`);await wait(100);
+ // A real viewport capture retains the sticky header and all essential controls.
+ for(const [width,height] of [[360,800],[390,844],[768,1024],[1366,768],[1440,900],[1920,1080],[1280,480],[720,450]]){
+  await viewport(width,height);await wait(80);
+  for(const sectionId of ['inicio','solucoes','como-funciona','projetos','duvidas','contato']){
+   await evaluate(`document.activeElement?.blur();document.getElementById('${sectionId}').scrollIntoView({block:'start',behavior:'instant'})`);await wait(30);
+   if(width>=1100&&height>=760)assert.equal(await evaluate(`(()=>{const s=document.getElementById('${sectionId}').getBoundingClientRect(),h=document.querySelector('.site-header').getBoundingClientRect();return Math.abs(s.top-h.bottom)<1&&s.bottom<=innerHeight+1})()`),true,`âncora/cabeçalho ${sectionId} ${width}x${height}`);
+   await screenshot(`viewport-${sectionId}-${width}x${height}`);
+   if(height>=760||width<1024)await sectionCapture(sectionId,width);
+  }
+ }
+ console.log('PASS: seções e cinco respostas completas em 1366x768, 1440x900 e 1920x1080; crescimento com resposta longa/texto 200%; capturas mobile, tablet, desktop, baixa altura e reflow');
  await viewport(390,844);
  await send('Emulation.setScriptExecutionDisabled',{value:true});await send('Page.navigate',{url:base});await wait(400);
  assert.equal(await evaluate(`document.querySelector('#answer-2').getBoundingClientRect().height>0`),true);
@@ -163,6 +195,24 @@ try {
  await send('Page.navigate',{url:base});await wait(300);
  assert.equal(await evaluate(`document.querySelector('#whatsapp-cta').href.includes('wa.me')`),false);
  console.log('PASS: número normalizado e mensagens hero/solução/projeto/FAQ, com configuração exclusiva de teste e sem navegação externa');
+ // Record native animation calls without changing their behavior, then verify entry once.
+ const animationProbe=await send('Page.addScriptToEvaluateOnNewDocument',{source:`const nativeAnimate=Element.prototype.animate;window.__animationLog=[];Element.prototype.animate=function(frames,options){window.__animationLog.push({tag:this.tagName,classes:this.className,photo:this.matches('.scene-visual,.contact-portrait'),frames,options});return nativeAnimate.call(this,frames,options);};`});
+ await send('Emulation.setEmulatedMedia',{features:[{name:'prefers-reduced-motion',value:'no-preference'}]});
+ await viewport(1366,768);await send('Page.navigate',{url:base});await wait(200);
+ assert.equal(await evaluate(`window.__animationLog.some(a=>a.classes==='site-header'&&a.options.duration===400&&a.frames[0].translate==='0 -8px')`),true,'entrada do cabeçalho');
+ assert.equal(await evaluate(`window.__animationLog.some(a=>a.tag==='H1'&&a.options.duration===560&&a.frames[0].translate==='0 14px')`),true,'entrada do título');
+ await evaluate(`document.querySelector('#solucoes').scrollIntoView({behavior:'instant'})`);await wait(150);
+ assert.deepEqual(await evaluate(`window.__animationLog.filter(a=>a.tag==='BUTTON').map(a=>a.options.delay)`),[0,70,140],'opções sequenciais em 70 ms');
+ assert.equal(await evaluate(`window.__animationLog.filter(a=>a.photo).every(a=>a.frames.every(f=>Object.keys(f).every(k=>k==='opacity')))`),true,'fotografias animam só a opacidade');
+ const arrivals=await evaluate(`window.__animationLog.filter(a=>a.tag==='BUTTON').length`);
+ await evaluate(`document.querySelector('#inicio').scrollIntoView({behavior:'instant'})`);await wait(100);
+ await evaluate(`document.querySelector('#solucoes').scrollIntoView({behavior:'instant'})`);await wait(100);
+ assert.equal(await evaluate(`window.__animationLog.filter(a=>a.tag==='BUTTON').length`),arrivals,'não repetir/desaparecer ao voltar');
+ await send('Emulation.setEmulatedMedia',{features:[{name:'prefers-reduced-motion',value:'reduce'}]});await wait(50);
+ assert.equal(await evaluate(`document.getAnimations().length`),0,'movimento reduzido termina as entradas em andamento');
+ assert.equal(await evaluate(`[...document.querySelectorAll('.scene-visual,.hero-copy h1,.solution-options button')].every(e=>getComputedStyle(e).opacity==='1'&&getComputedStyle(e).translate==='none')`),true,'conteúdo imediatamente visível com movimento reduzido');
+ await send('Page.removeScriptToEvaluateOnNewDocument',{identifier:animationProbe.identifier});
+ console.log('PASS: entradas reais de cabeçalho/título, sequência 70 ms, fotos só por opacidade, entrada única e interrupção por movimento reduzido');
  if (process.env.EXPORT_URL) {
   await viewport(390,844);
   await send('Page.navigate',{url:process.env.EXPORT_URL});await wait(400);
