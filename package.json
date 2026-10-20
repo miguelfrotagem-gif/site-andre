@@ -7,8 +7,8 @@
     "dev": "node scripts/server.mjs",
     "start": "node scripts/server.mjs",
     "build": "node scripts/build.mjs",
-    "lint": "node --check config.js && node --check app.js && node --check scripts/server.mjs && node --check scripts/build.mjs && node --check scripts/export.mjs",
-    "test": "node scripts/smoke.mjs",
+    "lint": "node --check config.js && node --check app.js && node --check scripts/server.mjs && node --check scripts/build.mjs && node --check scripts/export.mjs && node --check scripts/interactions.mjs",
+    "test": "node scripts/smoke.mjs && node scripts/interactions.mjs",
     "export": "node scripts/export.mjs"
   }
 }

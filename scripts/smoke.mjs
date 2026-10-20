@@ -85,7 +85,7 @@ try {
   assert.equal(await evaluate(`(()=>{const a=document.querySelector('.brand').getBoundingClientRect(),b=document.querySelector('${width<1024?'.menu-toggle':'#navigation'}').getBoundingClientRect();return a.right+5<=b.left})()`),true,`cabeçalho sem colisão ${width}`);
   assert.equal(await evaluate(`(()=>{const r=document.querySelector('.owner-portrait').getBoundingClientRect(),i=document.querySelector('.owner-portrait');return r.width>0&&r.height>0&&Math.abs(r.width/r.height-i.naturalWidth/i.naturalHeight)<.003})()`),true,`Eude inteiro e proporcional ${width}`);
   if(width>=1100&&height>=760){
-   assert.equal(await evaluate(`[...document.querySelectorAll('.scene-visual img')].every(i=>getComputedStyle(i).maskImage.includes('linear-gradient'))`),true,'transição suave somente nas bordas do cenário');
+   assert.equal(await evaluate(`[...document.querySelectorAll('.scene-visual img')].every(i=>(getComputedStyle(i).maskImage.includes('linear-gradient')||i.matches('.solution-camera')&&getComputedStyle(i.parentElement).maskImage.includes('linear-gradient')))`),true,'transição suave somente nas bordas do cenário');
    assert.equal(await evaluate(`parseFloat(getComputedStyle(document.querySelector('#navigation a')).fontSize)>=14`),true,'menu legível');
    assert.equal(await evaluate(`[...document.querySelectorAll('.solution-options small,.timeline p,.project-panel p:not(.fine)')].every(e=>parseFloat(getComputedStyle(e).fontSize)>=16)`),true,'descrições legíveis');
    const fit=await evaluate(`(()=>{const header=document.querySelector('.site-header').getBoundingClientRect().height;return [...document.querySelectorAll('main>section')].map(s=>{const r=s.getBoundingClientRect(),content=[...s.querySelectorAll('h1,h2,h3,p,a,button,input,.owner-portrait,.scene-visual img')].map(e=>e.getBoundingClientRect()).filter(r=>r.height>0);return {id:s.id,fits:Math.abs(r.height-(innerHeight-header))<1,inside:content.every(c=>c.top>=r.top-.5&&c.bottom<=r.bottom+.5&&c.left>=r.left-.5&&c.right<=r.right+.5),noClipping:s.scrollHeight<=s.clientHeight+1&&!['hidden','clip','scroll','auto'].includes(getComputedStyle(s).overflowY)}})})()`);
@@ -146,6 +146,7 @@ try {
  await evaluate(`document.querySelector('#question-2').click()`);
  assert.equal(await evaluate(`document.querySelectorAll('.faq-item button[aria-expanded="true"]').length`),1,'uma resposta aberta por vez');
  await evaluate(`document.querySelector('#question-2').click()`);
+ await evaluate(`document.querySelector('#solution-overview').click()`);
  // Real expansion with arbitrary content height, then a preference change during animation.
  await send('Emulation.setEmulatedMedia',{features:[{name:'prefers-reduced-motion',value:'no-preference'}]});
  await evaluate(`document.querySelector('#question-2').click()`);await wait(300);
@@ -197,7 +198,7 @@ try {
  console.log('PASS: conteúdo, navegação e respostas sem JavaScript');
  const injection=await send('Page.addScriptToEvaluateOnNewDocument',{source:`Object.defineProperty(window,'SOLAR_CONFIG',{configurable:true,set(v){v.whatsappNumber='+55 (11) 99999-9999';Object.defineProperty(window,'SOLAR_CONFIG',{value:v,configurable:true});}});`});
  await send('Page.navigate',{url:base});await wait(300);
- for(const [selector,fragment] of [['.hero-support [data-message="hero"]','potencial de economia'],['#solution-cta','minha casa'],['.header-cta','solicitar uma proposta'],['#project-cta','Vi os projetos'],['#duvidas [data-message="faq"]','tirar uma dúvida']]){
+ for(const [selector,fragment] of [['.hero-support [data-message="hero"]','potencial de economia'],['#solution-cta','falar com a equipe'],['.header-cta','solicitar uma proposta'],['#project-cta','Vi os projetos'],['#duvidas [data-message="faq"]','tirar uma dúvida']]){
   await evaluate(`document.querySelector('${selector}').click()`);
   const href=await evaluate(`document.querySelector('#whatsapp-cta').getAttribute('href')`);
   assert.equal(new URL(href).pathname,'/5511999999999');assert.match(new URL(href).searchParams.get('text'),new RegExp(fragment));
@@ -243,4 +244,4 @@ try {
  }
  assert.deepEqual(errors,[],'erros de execução ou console');
  console.log(`PASS: suíte solar concluída; capturas em ${output}`);
-} finally {ws.close();}
+} finally {ws.close();await fetch('http://127.0.0.1:9222/json/close/'+target.id).catch(()=>{});}
