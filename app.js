@@ -5,7 +5,7 @@ const normalize = text => text.normalize('NFD').replace(/[\u0300-\u036f]/g, '').
 const normalizeNumber = value => String(value || '').replace(/\D/g, '');
 const number = normalizeNumber(config.whatsappNumber);
 const validNumber = /^[1-9]\d{9,14}$/.test(number);
-let solution = 'residencial';
+let solution = null;
 let project = 'residencial';
 const messages = config.messages || {};
 let message = messages.contact || config.generalMessage || 'Olá! Gostaria de conversar sobre energia solar.';
@@ -47,17 +47,99 @@ $('#whatsapp-cta').addEventListener('click', event => {
  status.scrollIntoView({block:'nearest', behavior:'instant'});
 });
 const solutionText = {
- residencial:'Para sua casa: uma análise do consumo, do telhado e da sua rotina.',
- empresarial:'Para sua empresa: uma análise dos custos de energia e do perfil de operação.',
- rural:'Para o campo: uma análise do consumo e das necessidades da sua produção.'
+ overview: 'Escolha casa, empresa ou campo para conhecer a solução para o seu imóvel.',
+ residencial: 'Para sua casa: uma análise do consumo, do telhado e da sua rotina.',
+ empresarial: 'Para sua empresa: uma análise dos custos de energia e do perfil de operação.',
+ rural: 'Para o campo: uma análise do consumo e das necessidades da sua produção.'
 };
-function chooseSolution(value) {
- solution = value;
- $$('[data-solution]').forEach(b => b.setAttribute('aria-pressed', String(b.dataset.solution === value)));
- $('#solution-summary').textContent = solutionText[value];
+const scene = $('#solution-scene'), camera = $('.solution-camera', scene);
+const overviewAlt = camera.alt;
+const solutionAlt = {
+ residencial: 'Casa com os painéis solares no telhado em destaque.',
+ empresarial: 'Edifício empresarial e seu telhado com painéis solares em destaque.',
+ rural: 'Propriedade rural com painéis solares e silos em destaque.'
+};
+const cameraMotion = matchMedia('(prefers-reduced-motion:reduce)');
+scene.style.setProperty('--camera-duration', `${config.solutionScene.duration}ms`);
+const clamp = (value, min, max) => Math.min(max, Math.max(min, value));
+let instantFrame;
+function updateCamera(instant = false) {
+ if (instant) {
+  cancelAnimationFrame(instantFrame);
+  scene.classList.add('camera-instant');
+ }
+ if (!solution) camera.style.removeProperty('transform');
+ else {
+  const layout = config.solutionScene[matchMedia('(max-width:1023px)').matches ? 'mobile' : 'desktop'];
+  const target = layout.targets[solution];
+  const windowRect = scene.getBoundingClientRect(), imageStyle = getComputedStyle(camera);
+  const w = windowRect.width, h = windowRect.height;
+  const iw = parseFloat(imageStyle.width), ih = parseFloat(imageStyle.height);
+  if (!w || !h || !iw || !ih) return;
+  const bx = (w - iw) / 2, by = (h - ih) / 2;
+  const [x0, y0, x1, y1] = target.region;
+  const focus = target.focus || layout.focus;
+  // Fit the full target region, keep the image covering the visual window,
+  // then place its interest point in the area unobstructed by HTML controls.
+  const cover = Math.max(w / iw, h / ih);
+  const scale = Math.max(cover, Math.min(target.zoom, w / (iw * (x1 - x0)), h / (ih * (y1 - y0))));
+  const minX = Math.max(w - iw * scale - bx, -bx - x0 * iw * scale);
+  const maxX = Math.min(-bx, w - bx - x1 * iw * scale);
+  const minY = Math.max(h - ih * scale - by, -by - y0 * ih * scale);
+  const maxY = Math.min(-by, h - by - y1 * ih * scale);
+  const x = clamp(w * focus[0] - bx - target.center[0] * iw * scale, minX, maxX);
+  const y = clamp(h * focus[1] - by - target.center[1] * ih * scale, minY, maxY);
+  camera.style.transform = `translate(${x}px, ${y}px) scale(${scale})`;
+ }
+ if (instant) instantFrame = requestAnimationFrame(() => {
+  // Commit the recalculated frame before allowing the next user transition.
+  camera.getBoundingClientRect();
+  instantFrame = requestAnimationFrame(() => scene.classList.remove('camera-instant'));
+ });
 }
-$$('[data-solution]').forEach(b => b.addEventListener('click', () => chooseSolution(b.dataset.solution)));
-$('#solution-cta').addEventListener('click', () => setMessage(messages[solution] || `Olá! Tenho interesse em energia solar para um imóvel ${solution}.`));
+function reserveSolutionCopy() {
+ const summary = $('#solution-summary'), style = getComputedStyle(summary);
+ const measure = document.createElement('p');
+ Object.assign(measure.style, {position:'absolute', visibility:'hidden', pointerEvents:'none', width:`${summary.clientWidth}px`, font:style.font, lineHeight:style.lineHeight, letterSpacing:style.letterSpacing, margin:'0', padding:'0'});
+ measure.setAttribute('aria-hidden', 'true');
+ summary.parentElement.append(measure);
+ let height = 0;
+ Object.values(solutionText).forEach(text => {measure.textContent = text; height = Math.max(height, measure.getBoundingClientRect().height);});
+ measure.remove();
+ summary.style.minBlockSize = `${Math.ceil(height)}px`;
+}
+function chooseSolution(value, event) {
+ solution = value;
+ scene.dataset.focus = value || 'overview';
+ camera.alt = value ? solutionAlt[value] : overviewAlt;
+ $$('[data-solution]').forEach(b => b.setAttribute('aria-pressed', String(b.dataset.solution === value)));
+ $('#solution-summary').textContent = solutionText[value || 'overview'];
+ updateCamera(cameraMotion.matches);
+ if (value && event?.detail > 0 && matchMedia('(max-width:1023px)').matches) {
+  const rect = scene.getBoundingClientRect();
+  const reference = header.getBoundingClientRect().height;
+  if (rect.bottom < reference + (innerHeight - reference) * .4) {
+   scene.scrollIntoView({block:'start', behavior:cameraMotion.matches ? 'instant' : 'smooth'});
+  }
+ }
+}
+$$('[data-solution]').forEach(b => b.addEventListener('click', event => chooseSolution(b.dataset.solution, event)));
+$('#solution-overview').addEventListener('click', () => chooseSolution(null));
+$('#solution-cta').addEventListener('click', () => setMessage(solution ? messages[solution] || `Olá! Tenho interesse em energia solar para um imóvel ${solution}.` : config.generalMessage));
+let cameraResizeFrame;
+function refreshScene() {
+ cancelAnimationFrame(cameraResizeFrame);
+ cameraResizeFrame = requestAnimationFrame(() => { reserveSolutionCopy(); updateCamera(true); });
+}
+if ('ResizeObserver' in window) {
+ const sceneObserver = new ResizeObserver(refreshScene);
+ sceneObserver.observe(scene);
+ sceneObserver.observe($('.solution-note'));
+} else window.addEventListener('resize', refreshScene);
+camera.addEventListener('load', refreshScene);
+document.fonts?.ready.then(refreshScene);
+cameraMotion.addEventListener('change', () => updateCamera(true));
+refreshScene();
 $$('[data-project]').forEach(b => b.addEventListener('click', () => {
  project=b.dataset.project;
  $$('[data-project]').forEach(el => el.setAttribute('aria-pressed',String(el===b)));
@@ -82,19 +164,65 @@ menu.addEventListener('click', () => {
  menu.setAttribute('aria-expanded',String(open)); nav.classList.toggle('open',open); menu.firstChild.textContent = open ? 'Fechar menu ' : 'Abrir menu ';
 });
 nav.addEventListener('click', e => {
- if(e.target.closest('a')) { const link=e.target.closest('a'); if(link.hash === '#contato')setMessage(messages[link.dataset.message || 'contact'] || config.generalMessage); const target = $(link.getAttribute('href'));closeMenu(); target.setAttribute('tabindex','-1');target.focus({preventScroll:true}); }
+ if(e.target.closest('a')) { const link=e.target.closest('a'); if(link.hash === '#contato')setMessage(messages[link.dataset.message || 'contact'] || config.generalMessage); const target = $(link.getAttribute('href'));closeMenu(); activateNavigation(target); target.setAttribute('tabindex','-1');target.focus({preventScroll:true}); }
 });
 document.addEventListener('keydown',e => { if(e.key==='Escape' && menu.getAttribute('aria-expanded')==='true') closeMenu(true); });
 document.addEventListener('click',e => { if(!e.target.closest('.site-header') && menu.getAttribute('aria-expanded')==='true')closeMenu(); });
 const narrow = matchMedia('(max-width:1023px)');
 narrow.addEventListener('change',()=>closeMenu());
-if ('IntersectionObserver' in window) {
- const navObserver = new IntersectionObserver(entries => {
-  const active=entries.filter(e=>e.isIntersecting).sort((a,b)=>b.intersectionRatio-a.intersectionRatio)[0];
-  if(active) $$('#navigation a:not(.menu-proposal)').forEach(a=> {if(a.hash===`#${active.target.id}`)a.setAttribute('aria-current','location');else a.removeAttribute('aria-current');});
- },{rootMargin:'-15% 0px -45% 0px',threshold:[0,.1,.3,.6]});
- $$('main>section').forEach(s=>navObserver.observe(s));
+// One scrollspy writer: the section crossing the first quarter below the header.
+const sections = $$('main > section');
+const sectionLinks = $$('#navigation a:not(.menu-proposal)');
+let spyFrame = 0, pendingNavigation = null, navigationTimer;
+function setActiveSection(id) {
+ sectionLinks.forEach(link => {
+  if (link.hash === `#${id}`) link.setAttribute('aria-current', 'location');
+  else link.removeAttribute('aria-current');
+ });
 }
+function updateScrollspy() {
+ spyFrame = 0;
+ const top = header.getBoundingClientRect().height;
+ const line = top + Math.max(0, innerHeight - top) * .25;
+ const positions = sections.map(section => ({section, rect:section.getBoundingClientRect()}));
+ const current = positions.find(({rect}) => rect.top <= line && rect.bottom > line)
+  || (positions[0].rect.top > line ? positions[0] : positions.at(-1));
+ if (pendingNavigation) {
+  if (current.section === pendingNavigation.section || performance.now() >= pendingNavigation.until) pendingNavigation = null;
+  else { setActiveSection(pendingNavigation.section.id); return; }
+ }
+ setActiveSection(current.section.id);
+}
+function scheduleScrollspy() {
+ if (!spyFrame) spyFrame = requestAnimationFrame(updateScrollspy);
+}
+function releaseNavigation() {
+ pendingNavigation = null;
+ clearTimeout(navigationTimer);
+ scheduleScrollspy();
+}
+function activateNavigation(section) {
+ pendingNavigation = {section, until: performance.now() + 1400};
+ clearTimeout(navigationTimer);
+ navigationTimer = setTimeout(releaseNavigation, 1400);
+ setActiveSection(section.id);
+}
+window.addEventListener('scroll', scheduleScrollspy, {passive:true});
+window.addEventListener('resize', releaseNavigation);
+window.addEventListener('hashchange', scheduleScrollspy);
+window.addEventListener('pageshow', scheduleScrollspy);
+window.addEventListener('popstate', releaseNavigation);
+window.addEventListener('scrollend', releaseNavigation);
+['wheel', 'touchstart', 'pointerdown'].forEach(type => window.addEventListener(type, releaseNavigation, {passive:true}));
+document.addEventListener('keydown', event => {
+ if (['ArrowUp','ArrowDown','PageUp','PageDown','Home','End',' '].includes(event.key)) releaseNavigation();
+});
+if ('ResizeObserver' in window) {
+ const spyObserver = new ResizeObserver(scheduleScrollspy);
+ [header, ...sections].forEach(element => spyObserver.observe(element));
+}
+document.fonts?.ready.then(scheduleScrollspy);
+scheduleScrollspy();
 const answerAnimations = new WeakMap();
 function setAnswer(button, open) {
  const region = $('#' + button.getAttribute('aria-controls'));
@@ -133,7 +261,7 @@ function filterFaq(){
  $('#no-results').hidden=count!==0;$('#search-status').textContent=`${count} ${count===1?'resposta encontrada':'respostas encontradas'}.`;
 }
 $('#faq-search').addEventListener('input',filterFaq);$('#clear-search').addEventListener('click',()=>{$('#faq-search').value='';filterFaq();$('#faq-search').focus();});filterFaq();
-// Observe each real element once. No CSS hidden state, scroll interception or photo scaling.
+// Entrances run once, without hidden CSS states, scroll interception or photo scaling.
 const motion = matchMedia('(prefers-reduced-motion:reduce)');
 const entered = new WeakSet();
 let entranceObserver;
