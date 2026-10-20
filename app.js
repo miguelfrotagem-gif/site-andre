@@ -20,7 +20,7 @@ if (config.savingsClaim?.validated === true && Number(config.savingsClaim.percen
  percent.className = 'savings-percent';
  percent.textContent = `${config.savingsClaim.percentage}%`;
  const rest = document.createElement('span');
- rest.className = 'mobile-line';
+ rest.className = 'line';
  rest.textContent = 'na sua conta de luz.';
  $('h1').replaceChildren(document.createTextNode('Até '), percent, document.createTextNode(' menos '), rest);
  $('.hero-disclaimer').textContent = 'A economia varia conforme o projeto e o consumo.';
@@ -74,47 +74,6 @@ if ('IntersectionObserver' in window) {
  },{rootMargin:'-15% 0px -45% 0px',threshold:[0,.1,.3,.6]});
  $$('main>section').forEach(s=>navObserver.observe(s));
 }
-// The original artwork is one static composition. Only the HTML areas are interactive.
-const destinations = ['inicio','solucoes','como-funciona','projetos','contato'];
-function hotspot(stage,label,rect,action) {
- const el=document.createElement(action.href?'a':'button');
- if(action.href)el.href=action.href; else {el.type='button';el.addEventListener('click',action.run);}
- el.className='reference-hotspot';el.setAttribute('aria-label',label);
- const [x,y,w,h]=rect;Object.assign(el.style,{left:`${x}%`,top:`${y}%`,width:`${w}%`,height:`${h}%`});
- stage.append(el);return el;
-}
-const dialog=$('#art-dialog'); let dialogTrigger;
-const faqSurface=$('#faq-surface'); const faqHome=faqSurface.parentNode; const faqNext=faqSurface.nextSibling;
-function showFaq(trigger,question) {
- dialogTrigger=trigger;$('#dialog-content').append(faqSurface);dialog.showModal();
- if(question){const b=$(`#question-${question}`);setAnswer(b,true);b.focus();}else $('#faq-search').focus();
-}
-$('#close-dialog').addEventListener('click',()=>dialog.close());
-dialog.addEventListener('keydown',e=>{if(e.key==='Escape'){e.preventDefault();dialog.close();}});
-dialog.addEventListener('close',()=>{faqHome.insertBefore(faqSurface,faqNext);dialogTrigger?.focus();});
-dialog.addEventListener('click',e=>{if(e.target===dialog){const r=dialog.getBoundingClientRect();if(e.clientX<r.left||e.clientX>r.right||e.clientY<r.top||e.clientY>r.bottom)dialog.close();}});
-$$('[data-art]').forEach(details=>{
- const stage=$('.reference-stage',details), kind=details.dataset.art;
- // Navigation bounds measured against each full 1672 × 941 artwork.
- const six=kind==='duvidas'||kind==='contato';
- const navStart=six?28.6:32.0,navWidth=six?42.7:39.1;
- const ids=six?['inicio','solucoes','como-funciona','projetos','duvidas','contato']:destinations;
- ids.forEach((id,i)=>hotspot(stage,`Ir para ${$('#'+id+' .eyebrow')?.textContent||id}`,[navStart+i*navWidth/ids.length,3.5,navWidth/ids.length,5.7],{href:`#${id}`}));
- hotspot(stage,'Solicitar proposta',[81,3.3,15,6.7],{href:'#contato'});
- if(kind==='solucoes') {
-  ['residencial','empresarial','rural'].forEach((type,i)=>hotspot(stage,`Selecionar solução ${type}`,[5.4,51+i*10.3,27.5,9],{run:()=>{chooseSolution(type);$('#solution-summary').scrollIntoView({block:'center'});}}));
-  hotspot(stage,'Encontrar minha solução',[5.5,85,23,8],{href:'#contato'}).addEventListener('click',()=>setMessage(`Olá! Tenho interesse em energia solar para um imóvel ${solution} e gostaria de uma análise.`));
- }
- if(kind==='processo')hotspot(stage,'Começar minha análise',[67,81.7,29.3,10],{href:'#contato'}).addEventListener('click',()=>setMessage('Olá! Gostaria de começar uma análise do meu consumo de energia.'));
- if(kind==='contato')hotspot(stage,'Conversar pelo WhatsApp com a equipe',[5.5,69,30,9],{href:'#contato'}).addEventListener('click',()=>$('#whatsapp-cta').click());
- if(kind==='duvidas') {
-  let search;search=hotspot(stage,'Abrir busca de dúvidas',[28,33.5,42,7.7],{run:()=>showFaq(search)});
-  for(let i=0;i<5;i++){let b;b=hotspot(stage,`Abrir pergunta ${i+1} no painel acessível`,[28.2,42+i*8.2,42,7.2],{run:()=>showFaq(b,i+1)});}
-  hotspot(stage,'Falar com especialista',[45.2,84,23,8],{href:'#contato'});
- }
- // Project art is reference-only; its fake count is never presented as a live carousel.
-});
-if(!narrow.matches)$$('.desktop-open').forEach(d=>d.open=true);
 const answerAnimations = new WeakMap();
 function setAnswer(button, open) {
  const region = $('#' + button.getAttribute('aria-controls'));
