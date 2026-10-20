@@ -48,9 +48,12 @@ async function key(key, code = key, text) {
 async function sectionCapture(sectionId, width) {
  await evaluate(`(async()=>{const s=document.getElementById('${sectionId}');s.scrollIntoView({block:'start'});await Promise.all([...s.querySelectorAll('img')].filter(i=>i.getBoundingClientRect().width>0).map(i=>{i.loading='eager';return i.decode()}));})()`);
  await wait(120);
+ // A full-section capture excludes the sticky global header; viewport captures keep it.
+ await evaluate(`document.activeElement?.blur();document.querySelector('.site-header').style.position='static'`);
  const clip=await evaluate(`(()=>{const r=document.getElementById('${sectionId}').getBoundingClientRect();return {x:r.left+scrollX,y:r.top+scrollY,width:r.width,height:r.height,scale:1}})()`);
  const shot=await send('Page.captureScreenshot',{format:'png',captureBeyondViewport:true,clip});
  await writeFile(`${output}/${sectionId}-${width}.png`,Buffer.from(shot.data,'base64'));
+ await evaluate(`document.querySelector('.site-header').style.removeProperty('position')`);
 }
 try {
  await send('Page.enable');await send('Runtime.enable');await send('Log.enable');
@@ -66,7 +69,11 @@ try {
   await viewport(width,height);await evaluate('scrollTo(0,0)');await wait(40);
   await evaluate(`Promise.all([...document.images].filter(i=>i.getBoundingClientRect().width>0).map(i=>{i.loading='eager';return i.decode()}))`);
   assert.equal(await evaluate('document.documentElement.scrollWidth<=innerWidth'),true,`overflow ${width}x${height}`);
-  const images=await evaluate(`(()=>[...document.querySelectorAll('.hero-photo,.mobile-visual img')].filter(i=>i.getBoundingClientRect().width>0).map(i=>{const r=i.getBoundingClientRect(),s=getComputedStyle(i);return {path:i.currentSrc.split('/').pop(),ratioOK:Math.abs(r.width/r.height-i.naturalWidth/i.naturalHeight)<.003,inside:r.left>=-.5&&r.right<=innerWidth+.5,contain:s.objectFit==='contain',noZoom:s.transform==='none'}}))()`);
+  const frames=await evaluate(`(()=>{const edge=document.documentElement.clientWidth;return [...document.querySelectorAll('main>section')].map(section=>{const r=section.getBoundingClientRect(),pictures=section.querySelectorAll('picture.scene-visual'),img=pictures[0]?.querySelector('img'),ir=img?.getBoundingClientRect(),style=img&&getComputedStyle(img);return {id:section.id,one:pictures.length===1,outer:Math.abs(r.left)<.5&&Math.abs(r.right-edge)<.5,photo:!!ir&&Math.abs(ir.left)<.5&&Math.abs(ir.right-edge)<.5,noFrame:style?.borderRadius==='0px',rightAsset:img?.currentSrc.includes('/mobile/')===(${width}<1024)}})})()`);
+  for(const frame of frames)for(const check of ['one','outer','photo','noFrame','rightAsset'])assert.equal(frame[check],true,`${width}: ${frame.id} ${check}`);
+  assert.equal(await evaluate(`document.querySelectorAll('details.reference,.reference-hotspot,.desktop-open,#art-dialog').length`),0,'sem visualizadores públicos');
+
+  const images=await evaluate(`(()=>[...document.querySelectorAll('.scene-visual img')].filter(i=>i.getBoundingClientRect().width>0).map(i=>{const r=i.getBoundingClientRect(),s=getComputedStyle(i);return {path:i.currentSrc.split('/').pop(),ratioOK:Math.abs(r.width/r.height-i.naturalWidth/i.naturalHeight)<.003,inside:r.left>=-.5&&r.right<=innerWidth+.5,contain:s.objectFit==='contain',noZoom:s.transform==='none'}}))()`);
   for(const img of images)for(const k of ['ratioOK','inside','contain','noZoom'])assert.equal(img[k],true,`${width}: ${img.path} ${k}`);
   assert.equal(await evaluate(`document.querySelector('.hero-photo').currentSrc.includes('/mobile/')`),width<1024,'picture seleciona enquadramento próprio');
   assert.equal(await evaluate(`(()=>{const r=document.querySelector('h1').getBoundingClientRect();return r.left>=0&&r.right<=innerWidth+1})()`),true,`h1 ${width}`);
@@ -127,23 +134,16 @@ try {
  await evaluate(`document.querySelector('#question-2').click()`);
  await send('Emulation.setEmulatedMedia',{features:[{name:'prefers-reduced-motion',value:'reduce'}]});await wait(30);
  assert.equal(await evaluate(`document.querySelector('#answer-2').hidden`),true);
- assert.equal(await evaluate(`[...document.querySelectorAll('.hero-photo,.mobile-visual img')].every(i=>getComputedStyle(i).transform==='none')`),true);
+ assert.equal(await evaluate(`[...document.querySelectorAll('.scene-visual img')].every(i=>getComputedStyle(i).transform==='none')`),true);
  console.log('PASS: expansão por altura real e preferência dinâmica por movimento reduzido, sem escala de fotografia');
- // Keep the existing desktop reference FAQ panel covered as a regression check.
- await viewport(1440,1000);
- await evaluate(`document.querySelector('[data-art="duvidas"]').open=true;document.querySelector('[data-art="duvidas"] .reference-hotspot[aria-label="Abrir busca de dúvidas"]').click()`);
- assert.equal(await evaluate(`document.querySelector('#art-dialog').open`),true);
- assert.equal(await evaluate(`document.activeElement.id`),'faq-search');
- await key('Escape');await wait(50);
- assert.equal(await evaluate(`document.querySelector('#art-dialog').open`),false);
- assert.match(await evaluate(`document.activeElement.getAttribute('aria-label')`),/Abrir busca/);
- for(const width of [1440,320,390,768]){
+ assert.equal(await evaluate(`document.querySelectorAll('#faq-surface').length`),1,'FAQ nativo único');
+ assert.equal(await evaluate(`document.querySelectorAll('.site-header').length`),1,'cabeçalho global único');
+ for(const width of [390,768,1366,1920]){
   await viewport(width,width<480?844:1000);
+  await evaluate('scrollTo(0,0);document.activeElement?.blur()');await wait(80);await screenshot(`viewport-${width}`);
   for(const sectionId of ['inicio','solucoes','como-funciona','projetos','duvidas','contato']) await sectionCapture(sectionId,width);
  }
- await viewport(1440,1000);await evaluate(`document.querySelectorAll('.reference').forEach(d=>d.open=true)`);
- assert.equal(await evaluate(`[...document.querySelectorAll('.reference-stage')].every(s=>{const r=s.getBoundingClientRect(),i=s.querySelector('img'),ir=i.getBoundingClientRect();return Math.abs(r.width/r.height-1672/941)<.003&&Math.abs(ir.width/ir.height-1672/941)<.003})`),true);
- console.log('PASS: regressão desktop, modal/Escape, originais preservados e capturas integrais das seis seções em 320, 390, 768 e 1440 px');
+ console.log('PASS: seis composições únicas de ponta a ponta; sem referências/hotspots/modais; capturas em 390, 768, 1366 e 1920 px');
  await viewport(390,844);
  await send('Emulation.setScriptExecutionDisabled',{value:true});await send('Page.navigate',{url:base});await wait(400);
  assert.equal(await evaluate(`document.querySelector('#answer-2').getBoundingClientRect().height>0`),true);

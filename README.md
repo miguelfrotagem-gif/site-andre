@@ -13,15 +13,13 @@ Servidor na porta 3000 (`PORT` configurável), build em `dist/`. Para servir o b
 
 ## Composição desktop e mobile
 
-As seis seções mantêm a ordem: início, soluções, como funciona, projetos, dúvidas e contato. O cabeçalho global usa menu compacto até 1023 px, com navegação por teclado, Escape, retorno de foco e CTA de proposta. O menu é uma expansão não modal: a página continua rolável e não há bloqueio de scroll ou foco aprisionado.
+O site mantém os componentes existentes e as seis seções na ordem original. Cada seção contém uma única composição: cenário limpo e conteúdo HTML real. Não existem visualizadores de referências, hotspots transparentes, cabeçalhos duplicados ou modais de demonstração na página pública. Os originais permanecem em `referencias/solar/` e `referencias/solar-mobile/` como documentação.
 
-A versão mobile é **interface em camadas**, com fotografias limpas, títulos selecionáveis e controles HTML reais. As cenas foram preparadas por edição de imagem a partir das referências mobile e conferidas visualmente. Não são recortes da foto desktop. As fotografias são exibidas inteiras e sem zoom; em telas compactas a seção cresce para preservar leitura e enquadramento. No tablet, blocos limitam a largura em 680 px. A hero usa `picture` para escolher a composição própria do dispositivo; imagens têm dimensões explícitas e as inferiores usam carregamento lazy.
+Todas as seções externas ocupam 100% da largura, sem limite máximo, margens ou padding lateral. Fotografias alcançam as duas bordas, sem moldura, cantos arredondados, recorte, zoom ou distorção. `picture` seleciona a cena desktop a partir de 1024 px e a composição mobile abaixo disso. A altura das fotos respeita suas dimensões intrínsecas; o conteúdo pode aumentar a seção quando precisa de espaço. Somente textos e controles recebem margens e largura máxima. O CSS foi consolidado em regras de base e breakpoints, substituindo as camadas anteriores de sobrescrita.
 
-O retrato de Eude utiliza os **pixels do PNG original**, sem geração de rosto, alteração de pele ou braços. Uma máscara SVG com cópia WebP sem perdas (pixels conferidos como idênticos ao PNG) contorna a silhueta, preservando cabelo, rosto, uniforme, relógio e braços cruzados. O retrato também tem carregamento lazy. O fundo fotográfico é separado. Nome, identificação e WhatsApp ficam abaixo do retrato no celular. A fonte Manrope é local; licença em `assets/automotiva/OFL-Manrope.txt`.
+As cenas desktop sem interface estão em `assets/solar/desktop/`, derivadas das referências preservando o enquadramento. A hero mantém sua fotografia limpa existente e o contato reutiliza o cenário de projetos. As cenas mobile existentes foram mantidas. Menus, textos e botões incorporados aos screenshots não são apresentados como parte da interface.
 
-O desktop conserva sua apresentação: hero com cena limpa e texto HTML e demais artes integrais expansíveis, com controles HTML associados e conteúdo nativo separado. As palavras e pessoas embutidas nessas artes continuam estáticas. As referências de desktop não são a interface mobile e não aparecem no fluxo do celular.
-
-Os PNGs originais estão preservados em `referencias/solar/` (desktop) e `referencias/solar-mobile/` (mobile). As referências mobile têm dimensões próprias: 934×1684, 934×1683, 933×1686, 934×1683, 934×1684 e 934×1685. Os derivados limpos têm, respectivamente, 934×1685, 934×1684, 933×1686, 935×1683 e 934×1685; os atributos do HTML usam essas dimensões reais. Ativos anteriores permanecem no repositório.
+O retrato de Eude permanece no mesmo SVG sem perdas, com pixels idênticos ao original e máscara apenas na silhueta. Cabeça, braços, relógio e uniforme foram preservados. Nome e CTA continuam como HTML; no celular ficam abaixo do retrato. O contato não possui formulário. A fonte Manrope é local, com licença em `assets/automotiva/OFL-Manrope.txt`.
 
 ## Configuração e pendências
 
@@ -40,9 +38,9 @@ chromium --headless --no-sandbox --disable-gpu --remote-debugging-address=127.0.
 npm test
 ```
 
-A suíte cobre 320–2560 px, tablet até 1023, desktop a partir de 1024, landscape baixo e reflow equivalente a 200%. Verifica enquadramento de cada ativo, ausência de overflow e colisões, áreas de toque, posição do retrato/CTA, menu por teclado, proposta, mensagens dos três perfis, FAQ e busca nas respostas sem acentos, foco ao filtrar, altura variável sem cortes, mudança dinâmica de movimento reduzido, projeto único, modal desktop e funcionamento sem JavaScript. Testa normalização e mensagens de WhatsApp com configuração exclusiva de teste, sem navegar externamente.
+A suíte cobre 320–2560 px, tablet até 1023, desktop a partir de 1024, landscape baixo e reflow equivalente a 200%. Verifica enquadramento de cada ativo, ausência de overflow e colisões, áreas de toque, posição do retrato/CTA, menu por teclado, proposta, mensagens dos três perfis, FAQ e busca nas respostas sem acentos, foco ao filtrar, altura variável sem cortes, mudança dinâmica de movimento reduzido, projeto único e funcionamento sem JavaScript. A suíte verifica que existem exatamente seis cenários, um cabeçalho e um FAQ, sem visualizadores públicos; cada cena deve tocar as duas bordas e usar o ativo apropriado para a largura. Testa normalização e mensagens de WhatsApp com configuração exclusiva de teste, sem navegar externamente.
 
-Capturas integrais das seis seções em 320, 390, 768 e 1440 px ficam em `/tmp/solar-checks/`. `SCREENSHOT_DIR` substitui esse diretório; `TEST_URL` permite usar o servidor de build. Em uma verificação local com latência artificial de 180 ms e vazão de 300 kB/s, o layout shift acumulado foi 0,0007; isso não é uma medição de produção. A revisão não substitui testes com leitor de tela e dispositivos físicos. A entrada usa opacidade e deslocamento curto, sem alterar escala; etapas têm defasagem de 70 ms. A preferência de movimento reduzido desativa os efeitos.
+Capturas integrais das seis seções e capturas de viewport em 390, 768, 1366 e 1920 px ficam em `/tmp/solar-checks/`. `SCREENSHOT_DIR` substitui esse diretório; `TEST_URL` permite usar o servidor de build. A revisão não substitui testes com leitor de tela e dispositivos físicos. A entrada usa opacidade e deslocamento curto, sem alterar escala; etapas têm defasagem de 70 ms. A preferência de movimento reduzido desativa os efeitos.
 
 HTML independente:
 
