@@ -1,69 +1,67 @@
-# Energia Solar
+# HENSEC — Monitoramento 24hs
 
-Site estático em HTML, CSS e JavaScript, sem dependências npm. Node.js 24 e Chromium já estão disponíveis no ambiente.
+Site estático em HTML semântico, CSS responsivo e JavaScript, sem dependências npm. Usa Node.js 24 e Chromium para testes.
+
+## Desenvolvimento
 
 ```sh
 cd /workspace/site-andre
 npm run dev
-npm run lint
-npm run build
 ```
 
-Servidor na porta 3000 (`PORT` configurável), build em `dist/`. Para servir o build: `SERVE_DIST=1 PORT=3001 npm start`. Não há backend, formulário de contato ou envio automático de mensagens. O build inclui `.nojekyll` e versões por conteúdo nas URLs de CSS/JavaScript para evitar cache de uma publicação anterior.
+Servidor na porta 3000; `PORT` permite alterar a porta. Use o checkout existente: cada tarefa de nuvem já é isolada, sem necessidade de worktree.
 
-## Composição desktop e mobile
+```sh
+npm run lint
+npm run build
+SERVE_DIST=1 PORT=3001 npm start
+```
 
-O site mantém os componentes existentes e as seis seções na ordem original. Cada seção contém uma única composição: cenário limpo e conteúdo HTML real. Não existem visualizadores de referências, hotspots transparentes, cabeçalhos duplicados ou modais de demonstração na página pública. Os originais permanecem em `referencias/solar/` e `referencias/solar-mobile/` como documentação.
+O build em `dist/` inclui assets locais e versões de cache em CSS/JS. `npm run export` gera `dist/HENSEC.html`, independente, com assets incorporados. Não há backend nem envio automático de mensagens.
 
-Todas as seções externas ocupam 100% da largura, sem limite máximo, margens ou padding lateral. No fluxo natural, fotografias alcançam as duas bordas, sem moldura, cantos arredondados ou distorção. O estado inicial mantém a fotografia completa. A única exceção de aproximação/recorte é a câmera de Soluções, acionada por escolha explícita do visitante. `picture` seleciona a cena desktop a partir de 1024 px e a composição mobile abaixo disso. A altura das fotos respeita suas dimensões intrínsecas; o conteúdo pode aumentar a seção quando precisa de espaço. No modo desktop de uma tela, a foto inteira é limitada à área disponível, centralizada e integrada ao fundo azul por transições graduais apenas nas bordas do cenário. Isso remove o limite retangular quando as proporções diferem; não duplica fotografias, não desfoca o fundo e não afeta textos, controles ou o retrato. As outras fotografias não recebem zoom automático ou de interação. Somente textos e controles recebem margens e largura máxima. O CSS foi consolidado em regras de base e breakpoints, substituindo as camadas anteriores de sobrescrita.
+## Referência e composição
 
-As cenas desktop sem interface estão em `assets/solar/desktop/`, derivadas das referências preservando o enquadramento. A hero mantém sua fotografia limpa existente e o contato reutiliza o cenário de projetos. As cenas mobile existentes foram mantidas. A hero mantém a copy aprovada, com título mais próximo do telhado e relevo discreto. Como os ativos aprovados não incluem um recorte separado do telhado, foi preservada a alternativa de tipografia limpa, sem máscara grosseira ou texto sobre os painéis. Menus, textos e botões incorporados aos screenshots não são apresentados como parte da interface.
+Quatro seções na ordem do PDF `HENSEC_Referencia_Desktop_Cinematografica.pdf`: Início, Soluções, Sobre e Contato. As imagens em `assets/hensec/` foram limpas com edição generativa a partir da referência para remover interface/textos incorporados. São composições ilustrativas, sem representar instalações comprovadas. Os produtos usam regiões da imagem limpa de soluções; todo título, descrição, numeração, navegação e CTA é HTML real. O cabeçalho utiliza a logomarca enviada pelo usuário, preparada com fundo transparente em `assets/hensec/logo-oficial.png`, com o escudo, a câmera e a assinatura completos.
 
-O retrato em `assets/solar/mobile/eude-portrait-refined.svg` mantém a mesma imagem WebP sem perdas embutida no SVG, byte a byte. O SVG anterior também permanece no projeto. A máscara foi redesenhada para acompanhar cabelo, rosto, pescoço, ombros e braços, removendo trechos do cenário que sobravam no recorte anterior. Erosão de 1,8 px e suavização de 0,55 px são aplicadas somente à máscara alfa, sem blur ou mudança de cor no rosto ou uniforme. Uma transição alfa na base, abaixo dos braços, suaviza a borda inferior da roupa contra o cenário. O nome e a identificação ficam em um `figcaption` logo abaixo da pessoa, sem cruzar corpo ou mãos. O título, apoio e CTA ocupam a outra coluna no desktop; no celular seguem o fluxo natural. Não é usada nenhuma versão regenerada da pessoa. O contato não possui formulário. A fonte Manrope é local, com licença em `assets/automotiva/OFL-Manrope.txt`.
+Desktop: seções full-bleed com `min-height:100svh`, fundos `cover`, escala tipográfica fluida e espaçamento adaptado também à altura. Mobile: fluxo natural, cards empilhados e enquadramentos próprios; conteúdo pode exceder a viewport. Não há scroll-snap ou rolagem interna. Navbar fixa, menu móvel com Escape e indicação da seção ativa por IntersectionObserver e medição da posição. Reveal com Web Animations, stagger de 110ms e parallax limitado a 20px. `prefers-reduced-motion` cancela movimentos inclusive ao mudar com a página aberta. Conteúdo permanece visível sem animações e sem JavaScript.
 
-## Seções completas e movimento
+## WhatsApp — pendente de número oficial
 
-A partir de **1100 × 760 px**, cada seção tem altura mínima igual à viewport visível menos a altura real do cabeçalho. O limite de 760 px foi escolhido após medir o conteúdo de Soluções; telas mais baixas usam altura natural. `ResizeObserver` atualiza `--header-height` quando fontes, tamanho do texto ou configuração alteram o cabeçalho. O valor só é descontado uma vez.
-
-O desktop ajusta títulos também pela altura disponível e reduz espaços verticais, com menu entre 14–16 px, descrições principais entre 16–18 px, informações secundárias a partir de 14 px e títulos de seção entre 44–60 px quando há espaço. Os botões têm aproximadamente 54–56 px e largura proporcional ao texto no desktop; no celular mantêm largura útil completa. As quatro etapas e as três soluções permanecem visíveis. O FAQ apresenta título/CTA à esquerda e busca/perguntas à direita, com uma resposta aberta por vez. Respostas excepcionalmente longas, texto ampliado e conteúdo sem JavaScript podem aumentar a seção: não existem altura máxima, corte de texto, scroll interno ou scroll snap obrigatório. O cabeçalho pode quebrar em linhas com texto ampliado. O retrato mantém proporção e enquadramento.
-
-As entradas são executadas uma única vez por elemento via IntersectionObserver e Web Animations: cabeçalho em 400 ms, textos em 560 ms com até 14 px de deslocamento e etapas/opções com intervalo de 70 ms. Fotografias e retrato usam apenas opacidade. CTAs têm atrasos curtos; a seta desloca no máximo 2 px. Rolagem e cliques continuam livres. Não há estado CSS que esconda o conteúdo aguardando JavaScript. Movimento reduzido interrompe entradas, remove deslocamentos e desativa rolagem suave, inclusive quando a preferência muda com a página aberta.
-
-## Menu ativo e câmera de Soluções
-
-O scrollspy usa uma linha a 25% da área útil abaixo da altura real do cabeçalho. A seção atravessada por essa linha recebe o único `aria-current="location"`. Scroll, redimensionamento, mudança de altura das seções/cabeçalho, fontes e histórico atualizam o cálculo por requestAnimationFrame; não existe seleção por porcentagem de interseção nem um segundo observador escrevendo no menu. O clique destaca o destino imediatamente durante a rolagem suave. A prioridade temporária termina ao alcançar o destino, ao terminar a rolagem, na primeira intervenção por roda/toque/teclado/ponteiro ou, no máximo, em 1,4 s.
-
-`solutionScene` em `config.js` centraliza centro de interesse, região a preservar, limite de zoom e ponto de apresentação de cada alvo. Os valores são normalizados em relação ao arquivo original: desktop **1672×941**, mobile **934×1684**. Na imagem desktop, a casa ocupa a frente à direita, a empresa fica no centro e o campo/painéis com silos ficam ao fundo à direita; na mobile, a empresa aparece à esquerda e os outros dois alvos têm posições verticais próprias. A região de cada objeto limita escala e deslocamento para permanecer visível. A translação também é limitada à cobertura da janela, evitando bordas vazias.
-
-A primeira visita mostra a visão geral, sem opção marcada ou zoom. Apenas a imagem dentro de `.solution-scene` se transforma; textos, controles, cabeçalho e demais seções permanecem imóveis. A janela mantém suas dimensões. A reserva de altura do resumo considera as quatro mensagens no tamanho de texto atual para evitar deslocar o CTA. “Ver visão geral” restaura a foto e limpa a seleção, sem trocar de seção. Sem seleção, o CTA usa a mensagem geral; com seleção, mantém as mensagens de casa, empresa e campo.
-
-A câmera usa uma transição CSS de 780 ms, que parte do enquadramento corrente quando o visitante troca de opção, inclusive em cliques rápidos. Não cria fila de animações, não faz zoom na entrada/rolagem e não usa rotação. ResizeObserver, carregamento do ativo e fontes recalculam o alvo após redimensionamento. Movimento reduzido aplica o enquadramento imediatamente, inclusive se a preferência mudar durante uma transição. No mobile, um clique/toque real pode alinhar a cena na área visível quando ela ficou acima da tela; a rolagem continua nativa e o foco permanece no controle, sem mover o teclado para a foto.
-
-## Configuração e pendências
-
-Em `config.js`: marca provisória, logotipo, nome do proprietário, `whatsappNumber`, mensagens por origem e alegação de economia. O número oficial continua pendente (`whatsappNumber` vazio). A apresentação inicial não mostra aviso de configuração nem a mensagem preparada para o atendimento. Ao clicar no CTA sem número, surge apenas “O WhatsApp ainda não está disponível. Tente novamente em breve.” em uma região de status com foco acessível; não há navegação externa ou falso sucesso. A escolha de um novo contexto limpa esse aviso. A mensagem contextual existe somente na configuração/estado e no link quando há número válido. Com o número oficial, use dígitos com código do país; os links são normalizados e usam `encodeURIComponent`. Mensagens variam entre hero, casa, empresa, campo, projeto e contato.
-
-A promessa de 90% está desativada (`savingsClaim.validated: false`). O título utiliza “Menos gastos na sua conta de luz.”. Só habilitar o percentual depois de validação comercial; a ressalva de variação por consumo e projeto muda junto. Antes de publicar, confirmar marca/logotipo, WhatsApp e respostas da FAQ com a empresa.
-
-Há apenas uma cena de projeto conceitual, com “Imagens ilustrativas” discreto e legível. A contagem e as setas inativas foram removidas. O grande painel opaco foi substituído por texto e um gradiente radial localizado e transparente nas extremidades, preservando a arquitetura. As abas selecionam o perfil de solução; não simulam outras fotos ou instalações entregues. Não existe carrossel fictício.
+Em `config.js`, preencher `HENSEC_CONFIG.whatsappNumber` com o número oficial (país + DDD + número). O valor está vazio porque não havia número Hensec nos arquivos/configuração; números sintéticos dos testes anteriores não são contatos reais. Mensagens por solução são centralizadas em `messages`. Com número válido, os links usam `https://wa.me/` e mensagem codificada; sem número, o clique exibe aviso acessível sem navegar para um contato inventado. A navegação dos cards direciona ao contato e prepara o assunto escolhido.
 
 ## Validação
 
-Com o servidor ativo, inicie Chromium em outra sessão, somente neste ambiente isolado:
+Com o servidor ativo, inicie Chromium no ambiente isolado:
 
 ```sh
-chromium --headless --no-sandbox --disable-gpu --remote-debugging-address=127.0.0.1 --remote-debugging-port=9222 --user-data-dir=/tmp/auto-chrome --blink-settings=primaryHoverType=2,availableHoverTypes=2,primaryPointerType=4,availablePointerTypes=4 about:blank
+chromium --headless --no-sandbox --disable-gpu --remote-debugging-address=127.0.0.1 --remote-debugging-port=9222 --user-data-dir=/tmp/hensec-chrome about:blank
 npm test
 ```
 
-A suíte cobre 320–2560 px, tablet até 1023, desktop a partir de 1024, landscape baixo e reflow equivalente a 200%. Verifica enquadramento de cada ativo, transição nas bordas do cenário, tamanhos mínimos de leitura, ausência de overflow e colisões, áreas de toque, legenda próxima ao retrato/CTA, contato inicial limpo e aviso acessível somente após o clique, menu por teclado, proposta, mensagens dos três perfis, FAQ e busca nas respostas sem acentos, foco ao filtrar, altura variável sem cortes, mudança dinâmica de movimento reduzido, projeto único e funcionamento sem JavaScript. A suíte verifica que existem exatamente seis cenários, um cabeçalho e um FAQ, sem visualizadores públicos; cada cena usa o ativo apropriado. No fluxo natural, as fotos tocam as bordas; no desktop compatível, ficam centralizadas, inteiras e dentro da área disponível. Mede todos os elementos das seis seções, `scrollHeight`/`clientHeight`, alinhamento das âncoras com o cabeçalho e cada uma das cinco respostas do FAQ. Também injeta uma resposta longa e amplia o texto em 200% para conferir crescimento sem corte. Testa normalização e mensagens de WhatsApp com configuração exclusiva de teste, sem navegar externamente.
+A suíte CDP testa 1920×1080, 1600×900, 1440×900, 1366×768, 1280×720, 768×1024, 390×844 e 320×700. Verifica ordem semântica, viewport desktop, conteúdo seguro, ausência de overflow horizontal, âncoras, menu ativo/móvel, status acessível do contato ausente, URL e mensagens WhatsApp com número sintético injetado apenas no navegador, cancelamento de animações e erros de console. Capturas atuais são salvas em `/tmp/hensec-checks`.
 
-Capturas integrais e de viewport das seis seções em 360×800, 390×844, 768×1024, 1366×768, 1440×900 e 1920×1080, além de 1280×480 e reflow em 720×450 (equivalente a 1440×900 com zoom de 200%), ficam em `/tmp/solar-checks/`. Há também capturas de Soluções/FAQ com texto ampliado em 200%. `SCREENSHOT_DIR` substitui esse diretório; `TEST_URL` permite usar o servidor de build. A revisão não substitui testes com leitor de tela e dispositivos físicos. As verificações de entrada incluem execução única, deslocamento máximo, fotos somente por opacidade e preferência reduzida dinâmica. A câmera de Soluções tem sua suíte específica em `scripts/interactions.mjs`, executada junto com `npm test`: descida/subida, limites da linha de leitura, clique, roda/toque, enquadramentos/ROI, cobertura sem vazio, ausência de salto, teclado, visão geral, troca rápida e redimensionamento. As capturas `camera-*.png` mostram as três seleções em 1100×760, 1366×768, 1440×900, 1920×1080, 360×800, 390×844, 768×1024 e 1280×480.
+Os scripts `interactions.mjs` e arquivos de imagens anteriores permanecem como histórico da versão solar e não integram a suíte Hensec. A publicação e o contato real dependem de configurar o número oficial.
 
-HTML independente:
+## Cada detalhe, sob proteção
 
-```sh
-npm run export -- /tmp/Energia-Solar.html
-```
+Narrativa **Etapas**, `#etapas`, inserida imediatamente antes de Contato, preservando Hero, Soluções e Sobre. Três momentos: Prevenção, Inteligência e Tranquilidade. Reutiliza a foto de arquitetura existente e adiciona duas imagens ilustrativas locais em `assets/hensec/story-camera.webp` e `story-calm.webp`, produzidas para manter a direção de arte. Não representa instalação comprovada nem monitoramento real.
 
-A exportação inclui CSS, JavaScript, fontes, cenas mobile/desktop e retrato sem perdas. Depois de `npm run export` (saída padrão `dist/Energia-Solar.html`), use `EXPORT_URL=http://127.0.0.1:3001/Energia-Solar.html npm test` com o servidor de build ativo para testar também a interatividade do HTML único. Nenhum desses comandos publica o site ou cria uma URL pública.
+Em desktop com movimento habilitado, a seção ocupa 300svh e mantém uma composição sticky com texto em 34% e fotografia em 66%. O progresso real da rolagem controla crossfade, deslocamento de texto de até 14px, escala fotográfica de até 1,2% e linha fina de progresso. Não há wheel/touch interception, scroll-snap, temporizador ou dependências adicionais. Os controles 01/02/03 permitem acessar os momentos também por teclado; o CTA final aponta para `#solucoes`. O menu tem a entrada Etapas, com indicação ativa durante a narrativa.
+
+Mobile, tablet, JavaScript ausente ou `prefers-reduced-motion:reduce` usam os três momentos em fluxo natural, com texto separado da fotografia. Mudanças de viewport/preferência atualizam o modo e removem inert/aria-hidden das etapas estáticas. Listeners são removidos em pagehide e restaurados ao retornar pelo bfcache.
+
+A suíte tem 248 verificações, incluindo progressão para frente/para trás, crossfade intermediário, sticky, três fontes de imagem distintas, teclado no CTA, fluxo mobile, movimento reduzido, redimensionamento e preservação dos testes das quatro seções existentes. Capturas da narrativa são salvas em `/tmp/hensec-checks/narrativa-*`.
+
+
+### Fluidez e imagem do contato
+
+As transições de Etapas ocupam faixas mais amplas do scroll, com suavização exponencial curta (65ms), opacidade das imagens independente dos textos e uma base fotográfica opaca para evitar escurecimento no crossfade. O movimento continua reversível e respeita movimento reduzido. A imagem `contato-mensagem.webp` preserva a composição e adiciona apenas a conversa ilustrativa na tela do celular: “Olá! Quero mais segurança para meu imóvel.”. O número real de WhatsApp continua sem configuração, conforme decisão do usuário.
+
+
+### Entrada da marca
+
+A logo substitui o símbolo provisório do cabeçalho. O cabeçalho entra em 1100ms; a logo e o nome HENSEG entram em 2100–2400ms depois da decodificação da imagem com opacidade e deslocamento discreto, sem bloquear a navegação ou exibir uma tela de espera. As dimensões ficam reservadas para evitar deslocamento de layout. `prefers-reduced-motion` desativa a entrada, inclusive quando muda com a página aberta.
+
+## GitHub Pages
+
+O workflow `.github/workflows/pages.yml` compila e publica `dist/` a cada push na branch `main`. Em Settings → Pages, a origem deve estar configurada como **GitHub Actions**. O resultado de cada publicação fica na aba Actions. Endereço esperado: https://miguelfrotagem-gif.github.io/site-andre/ . A existência desse endereço não confirma uma publicação bem-sucedida.

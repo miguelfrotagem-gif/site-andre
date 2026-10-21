@@ -22,7 +22,7 @@ for (const script of ['config.js', 'app.js']) {
 }
 html = await embed(html);
 html = html.replace('</body>', () => `<script>${scripts.join('\n')}</script></body>`);
-const destination = process.argv[2] || 'dist/Energia-Solar.html';
+const destination = process.argv[2] || 'dist/HENSEC.html';
 await mkdir(path.dirname(destination), {recursive:true});
 await writeFile(destination, html);
 console.log(`HTML independente gerado: ${destination}`);
