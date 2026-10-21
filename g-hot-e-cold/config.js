@@ -1,5 +1,5 @@
-// Contatos confirmados, em formato internacional (somente dígitos).
-// Deixe vazio até receber os dados reais. Nunca coloque credenciais neste arquivo público.
+// Contatos fornecidos no cartão, com DDI e DDD. Arquivo público, sem credenciais.
 window.GHC_CONFIG = Object.freeze({
-  whatsapp: '', julio: '', adriano: '', email: '', formEndpoint: ''
+  whatsapp: '5511977804318', julio: '5511977804318', gil: '5511913039943',
+  email: '', formEndpoint: ''
 });

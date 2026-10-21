@@ -70,18 +70,34 @@
   function refreshChannel(){
     $('#channel-note').hidden = !!destination();
     $('#recipient').hidden = !person;
-    $('#recipient').textContent = person ? `Sua conversa: ${person==='julio'?'Júlio · Técnico':'Adriano · Engenheiro'}` : '';
+    $('#recipient').textContent = person ? `Sua conversa: ${person==='julio'?'Júlio · Técnico':'Gil · Técnico'}` : '';
   }
   refreshChannel();
   document.querySelectorAll('[data-interest]').forEach(a=>a.addEventListener('click',()=>{ $('#interest').value=a.dataset.interest; person='';refreshChannel(); }));
-  document.querySelectorAll('[data-person]').forEach(a=>a.addEventListener('click',()=>{person=a.dataset.person;$('#interest').value='Quero conversar com a equipe';refreshChannel();setTimeout(()=>$('#name').focus({preventScroll:true}),250);}));
+  document.querySelectorAll('[data-person]').forEach(a => {
+    const target = number(a.dataset.person);
+    if (target) {
+      a.href = `https://wa.me/${target}?text=${encodeURIComponent('Olá! Gostaria de conversar sobre refrigeração e climatização.')}`;
+      a.target = '_blank'; a.rel = 'noopener noreferrer';
+    }
+    if (!target) { a.href = '#contato'; a.removeAttribute('target'); }
+    a.addEventListener('click', event => {
+      if (target) return;
+      event.preventDefault();
+      $('#contato').scrollIntoView();
+      person = a.dataset.person;
+      $('#interest').value = 'Quero conversar com a equipe';
+      refreshChannel();
+      setTimeout(() => $('#name').focus({preventScroll:true}), 250);
+    });
+  });
   const validators={name:v=>v.trim().length>=2?'':'Informe seu nome com pelo menos 2 caracteres.',phone:v=>/^\+?[\d\s().-]+$/.test(v)&&v.replace(/\D/g,'').length>=10&&v.replace(/\D/g,'').length<=15?'':'Informe um WhatsApp com DDD válido.',interest:v=>v?'':'Escolha o assunto da conversa.',message:v=>v.trim().length>=5?'':'Conte um pouco mais, com pelo menos 5 caracteres.'};
   function validate(id){const field=$(`#${id}`),error=validators[id](field.value);$(`#${id}-error`).textContent=error;field.setAttribute('aria-invalid',String(!!error));return !error;}
   Object.keys(validators).forEach(id=>{const field=$(`#${id}`);field.addEventListener('input',()=>{if(field.getAttribute('aria-invalid')==='true')validate(id);if(!$('#review').hidden){$('#review').hidden=true;status.textContent='Os dados foram alterados. Prepare a mensagem novamente.';}});});
   form.addEventListener('submit',e=>{
     e.preventDefault(); const results=Object.keys(validators).map(id=>[id,validate(id)]);const invalid=results.find(([,ok])=>!ok);
     if(invalid){$(`#${invalid[0]}`).focus();status.textContent='Confira os campos indicados. Seus dados foram mantidos.';return;}
-    const message=`Olá, ${person==='julio'?'Júlio':person==='adriano'?'Adriano':'equipe G Hot e Cold'}!\nMeu nome é ${$('#name').value.trim()}.\nWhatsApp: ${$('#phone').value.trim()}\nInteresse: ${$('#interest').value}\n\n${$('#message').value.trim()}`;
+    const message=`Olá, ${person==='julio'?'Júlio':person==='gil'?'Gil':'equipe G Hot e Cold'}!\nMeu nome é ${$('#name').value.trim()}.\nWhatsApp: ${$('#phone').value.trim()}\nInteresse: ${$('#interest').value}\n\n${$('#message').value.trim()}`;
     const target=destination();
     if(target){const link=document.createElement('a');link.href=`https://wa.me/${target}?text=${encodeURIComponent(message)}`;link.target='_blank';link.rel='noopener noreferrer';link.click();status.textContent='Abrindo a conversa no WhatsApp. Revise e envie sua mensagem por lá.';}
     else {$('#prepared').value=message;$('#review').hidden=false;status.textContent='Mensagem preparada para revisão. O canal de contato ainda precisa ser confirmado; nada foi enviado.';$('#prepared').focus();}
