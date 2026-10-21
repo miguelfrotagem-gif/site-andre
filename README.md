@@ -54,3 +54,7 @@ Código-fonte na branch `g-hot-e-cold`. O site é publicado em `https://miguelfr
 Antes de publicar, execute lint, build e a suíte de navegador. Copie para `g-hot-e-cold/` o HTML, CSS, scripts, `assets/ghc/`, a fonte Manrope e sua licença. Use versões de conteúdo nas URLs do CSS e dos scripts para evitar cache antigo.
 
 A abertura e superfícies usam grafite neutro; o azul-gelo continua como destaque da marca, com fotografias sem filtros de cor e contato com opacidade integral para preservar a iluminação âmbar.
+
+## SEO e Google Search Console
+
+SEO local para ar-condicionado e refrigeração em São Paulo, com conteúdo visível dos serviços confirmados, canonical, compartilhamento social, dados estruturados e sitemap. Execute `npm run check:seo`. A configuração de propriedade, verificação e envio do sitemap está documentada em [SEARCH-CONSOLE.md](SEARCH-CONSOLE.md). A verificação ainda depende da tag pública da conta Google do responsável; nenhuma posição nas buscas é garantida.
