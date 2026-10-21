@@ -17,6 +17,7 @@
   --content-width: 1600px;
   --header-height: 84px;
   --screen-height: calc(100svh - var(--header-height));
+  --support-scene: url('assets/solar/panels-dusk-background.webp');
   --scene-edge-mask: linear-gradient(to right, transparent, #000 52px, #000 calc(100% - 52px), transparent), linear-gradient(to bottom, transparent, #000 56px, #000 calc(100% - 56px), transparent);
   color-scheme: dark;
   font-family: Manrope, Arial, sans-serif;
@@ -26,7 +27,11 @@
 }
 
 * { box-sizing: border-box; }
-body { margin: 0; }
+body {
+  margin: 0;
+  /* A shared photograph joins the contact ending and footer without a seam. */
+  background: linear-gradient(#071a2a99, #071a2a99), var(--support-scene) center bottom / max(100vw, 1950px) auto no-repeat;
+}
 button, input { font: inherit; }
 a { color: inherit; text-decoration: none; }
 button { color: inherit; cursor: pointer; }
@@ -202,7 +207,11 @@ em { color: var(--cyan); font-style: normal; }
   margin-inline: 0;
   padding-inline: 0;
   scroll-margin-top: var(--header-height);
-  background: var(--bg);
+  background-color: var(--bg);
+  background-image: linear-gradient(#071a2ad9, #071a2ad9), var(--support-scene);
+  background-position: center bottom;
+  background-size: cover;
+  background-repeat: no-repeat;
 }
 .scene-visual {
   display: block;
@@ -333,6 +342,7 @@ em { color: var(--cyan); font-style: normal; }
 #no-results { color: #354f63; }
 .faq-section .actions { justify-content: center; text-align: center; }
 
+.contact-section { background: none; }
 .contact-section .section-content { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); grid-template-rows: auto auto auto; align-content: center; gap: 24px 6%; }
 .contact-section .section-intro { grid-area: 1 / 1; align-self: end; margin-bottom: 0; }
 .contact-section .section-intro p:not(.eyebrow) { max-width: 530px; }
@@ -346,9 +356,21 @@ em { color: var(--cyan); font-style: normal; }
 .contact-native .fine { margin-bottom: 0; text-align: left; }
 #contact-status { grid-area: 3 / 1; align-self: start; margin: 0; font-size: 1rem; color: var(--text); line-height: 1.5; text-shadow: 0 2px 6px #071a2a; }
 
-footer { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 24px; padding: 40px var(--gutter); border-top: 1px solid var(--line); }
+/* The decorative panel photograph also supports content below the main scenes.
+   It may crop freely; the complete scenery and portrait retain their own ratio. */
+footer {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 20px 32px;
+  padding: 28px var(--gutter);
+  background: transparent;
+  text-shadow: 0 2px 6px #071a2a;
+}
 footer p, footer a:last-of-type { font-size: 0.875rem; margin: 0; }
-footer > .fine { width: 100%; padding-top: 20px; border-top: 1px solid var(--line); }
+footer > p:not(.fine) { justify-self: center; text-align: center; }
+footer > .fine { grid-column: 1 / -1; max-width: 1000px; color: #d6e3ed; }
+footer > a { min-height: 44px; display: inline-flex; align-items: center; }
 .noscript-note { padding: 20px var(--gutter); }
 
 /* Entrances use the Web Animations API. Content stays visible without JavaScript. */
@@ -464,7 +486,11 @@ footer > .fine { width: 100%; padding-top: 20px; border-top: 1px solid var(--lin
   #navigation a { min-height: 48px; padding: 13px 16px; font-size: 1rem; }
   #navigation .menu-proposal { display: flex; margin-top: 12px; color: var(--bg); }
   .section .section-content { display: contents; }
+  .section:not(.contact-section) { background-image: linear-gradient(#071a2a99, #071a2a99), var(--support-scene); }
   .scene-visual { grid-area: 1 / 1 / 3 / 2; }
+  .scene-visual:not(.solution-scene) > img, .solution-scene {
+    mask-image: linear-gradient(#000 calc(100% - 80px), transparent);
+  }
   .section-intro, .solution-layout, .timeline, .process-section .actions, .project-types, .project-panel, .faq-surface, .faq-section .actions, .contact-native, #contact-status {
     z-index: 1;
     width: min(720px, calc(100% - var(--gutter) - var(--gutter)));
@@ -514,7 +540,9 @@ footer > .fine { width: 100%; padding-top: 20px; border-top: 1px solid var(--lin
   .contact-native .whatsapp { width: 100%; font-size: clamp(0.875rem, 4vw, 1rem); gap: 10px; padding-left: 14px; }
   .contact-native .whatsapp-icon { width: 22px; height: 22px; flex-basis: 22px; }
   #contact-status { grid-area: 4 / 1; margin-block: 0 48px; }
-  footer { padding-block: 32px; }
+  footer { grid-template-columns: minmax(0, 1fr); justify-items: center; gap: 16px; padding-block: 28px; }
+  footer .brand { justify-self: center; }
+  footer > .fine { text-align: center; }
 }
 
 @media (max-width: 359px) {
@@ -525,7 +553,7 @@ footer > .fine { width: 100%; padding-top: 20px; border-top: 1px solid var(--lin
   .section-intro h2 { font-size: 2.1875rem; }
   .button { font-size: 0.875rem; padding-left: 14px; }
   .scene-visual, .hero-picture { grid-row: 2; }
-  .section-intro { padding-bottom: 24px; background: var(--bg); }
+  .section-intro { padding-bottom: 24px; }
   .projects-section .scene-visual { grid-row: 3; }
   .project-types { margin-block: 0 20px; }
   .faq-section .scene-visual, .contact-background { grid-row: 1 / 4; }
