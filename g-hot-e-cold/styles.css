@@ -70,3 +70,12 @@ html{scroll-padding-top:0}#contact-form{scroll-margin-top:calc(var(--header) + 1
   .service-areas ul { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px 16px; margin-top: 20px; }
   .service-areas li { font-size: 14px; }
 }
+
+.service-description { max-width: 1040px; margin: 34px auto 0; padding-top: 28px; border-top: 1px solid var(--line); }
+.service-description h3 { font-size: clamp(23px, 2.3vw, 32px); line-height: 1.2; }
+.service-description p { margin-top: 14px; color: var(--muted); font-size: 16px; }
+.service-description .text-link { margin-top: 16px; line-height: 1.6; }
+@media (max-width: 480px) {
+  .service-description { margin-top: 28px; padding-top: 22px; }
+  .service-description p, .service-description .text-link { font-size: 14px; }
+}
