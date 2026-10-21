@@ -11,7 +11,7 @@ html=html.replace('<link rel="stylesheet" href="styles.css">',`<style>${await em
 for(const script of ['config.js','app.js']) html=html.replace(`<script src="${script}" defer></script>`,'');
 html=await embed(html);
 html=html.replace('</body>',`<script>${await readFile('config.js','utf8')}\n${await readFile('app.js','utf8')}</script></body>`);
-const destination=process.argv[2]||'dist/Estetica-Automotiva.html';
+const destination=process.argv[2]||'dist/G-Hot-e-Cold.html';
 await mkdir(path.dirname(destination),{recursive:true});
 await writeFile(destination,html);
 console.log(`HTML independente gerado: ${destination}`);

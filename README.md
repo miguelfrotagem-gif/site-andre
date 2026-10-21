@@ -1,10 +1,10 @@
-# Estética Automotiva
+# G Hot e Cold
 
-Landing page responsiva em HTML, CSS e JavaScript nativos, implementada com a skill **CodeMakers-Design v2.1.0**, instalada em `.agents/skills/codemakers-design`. A skill é local ao projeto e seu `SKILL.md` pode ser consultado nas próximas tarefas. Sem dependências npm, backend ou envio simulado de mensagens.
+Site institucional em HTML, CSS e JavaScript nativos. Sem dependências npm, backend, chamadas externas para renderização ou coleta automática de dados do formulário.
 
-## Executar e gerar
+## Desenvolvimento
 
-Requer Node.js 24 (a suíte usa WebSocket nativo). Na pasta `/workspace/site-andre`:
+Requer Node.js 24. Em `/workspace/site-andre`:
 
 ```sh
 npm run dev
@@ -12,54 +12,45 @@ npm run lint
 npm run build
 ```
 
-Servidor na porta 3000, configurável com `PORT`. `npm start` é equivalente. O build estático fica em `dist/`; para conferir: `SERVE_DIST=1 PORT=3001 npm start`. Nenhuma publicação externa é feita por esses comandos.
+O servidor usa a porta 3000, configurável por `PORT`. `npm start` é equivalente. O build fica em `dist/`; para validar: `SERVE_DIST=1 PORT=3001 npm start`. Estes comandos não publicam o site.
 
-## Contato pendente
+## Contatos pendentes
 
-O responsável informou que ainda não há número de WhatsApp. Preencha `window.AUTO_CONFIG.whatsapp` em `config.js` quando houver um número confirmado, incluindo DDI. O número da antiga empresa de ar-condicionado não é usado nesta página. Enquanto a configuração estiver vazia, os CTAs levam ao contato, que explica a pendência, e “Saiba mais” registra o serviço selecionado. Depois da configuração, os botões abrem o WhatsApp com a mensagem do serviço. O site não envia mensagens automaticamente.
+Preencha `config.js` somente com dados confirmados. `whatsapp` é o canal geral; `julio` e `adriano` são destinos específicos. Use números internacionais, incluindo DDI e DDD. Campos vazios mantêm a revisão e cópia da mensagem, com aviso de canal indisponível. Um contato específico ausente usa o geral quando disponível. Nenhuma mensagem é enviada automaticamente: o WhatsApp abre com o texto preparado para o visitante revisar e enviar.
 
-Não foram inventados endereço, telefone, preços, avaliações ou estatísticas.
+`email` e `formEndpoint` são reservas documentadas, sem integração ativa. Não basta preenchê-los para ativar envio; um futuro serviço requer implementação e validação de contrato, erros e segurança. Não coloque tokens ou credenciais neste arquivo público. Telefones, e-mail e endpoint não foram fornecidos.
 
-## Direção e enquadramento
+O formulário valida nome, telefone, assunto e mensagem, preserva os valores em caso de erro e não usa localStorage. Sem JavaScript, conteúdo e navegação permanecem disponíveis; a preparação interativa requer JavaScript.
 
-Cinco seções seguem os mockups fornecidos: início, serviços, sobre, processo e contato. As referências originais estão em `referencias/`, sem alterações. São documentos de design; nunca são carregadas como páginas ou botões. A fotografia sem textos original está em `assets/automotiva/hero-carro-sem-texto.png` e foi preservada.
+## Referência e imagens
 
-Fotografias de trabalho sem textos foram preparadas com edição de imagem a partir dos mockups, em WebP. São imagens ilustrativas, não evidência de instalações ou equipe reais. A hero usa uma foto panorâmica com o veículo inteiro, `object-fit: contain` e um grid que compartilha a altura disponível com o cabeçalho e a copy. No celular e em telas muito baixas a composição cresce naturalmente, sem bloquear rolagem. O CSS recorta apenas cada painel da fotografia de serviços; não mascara overflow da página.
+Quatro seções seguem as páginas aprovadas do PDF fornecido: Início, Soluções, Nossa equipe e Contato. As cenas limpas foram preparadas por edição de imagem a partir das referências; são aproximações fotográficas da composição, não evidência de instalações, produtos disponíveis ou retratos dos profissionais. Texto, links e formulário são HTML real. A marca foi redesenhada em SVG a partir da referência, com aproximação do símbolo.
 
-Manrope é servida localmente; fonte obtida do repositório Google Fonts, com licença em `assets/automotiva/OFL-Manrope.txt`. Sem chamadas externas necessárias para renderizar o site.
+Imagens em `assets/ghc/` são WebP, sem zoom, parallax de fotografia ou ampliação no hover. `object-fit: contain` preserva o enquadramento; em telas estreitas as fotografias das seções são reorganizadas abaixo do conteúdo. Manrope é servida localmente; licença em `assets/automotiva/OFL-Manrope.txt`. Os assets antigos foram preservados, mas não são carregados na página nova.
 
-## Verificação de navegador
+## Verificação
 
-Com o servidor iniciado, abra outro terminal, somente neste ambiente isolado:
-
-```sh
-chromium --headless --no-sandbox --disable-gpu --remote-debugging-address=127.0.0.1 --remote-debugging-port=9222 --user-data-dir=/tmp/auto-chrome --blink-settings=primaryHoverType=2,availableHoverTypes=2,primaryPointerType=4,availablePointerTypes=4 about:blank
-```
-
-Depois execute:
+Inicie o servidor e, em outro terminal deste ambiente isolado:
 
 ```sh
+chromium --headless --no-sandbox --disable-gpu --remote-debugging-address=127.0.0.1 --remote-debugging-port=9222 --user-data-dir=/tmp/ghc-chrome --blink-settings=primaryHoverType=2,availableHoverTypes=2,primaryPointerType=4,availablePointerTypes=4 about:blank
 npm test
 ```
 
-A suíte verifica 1920×1080, 1440×900, 1366×768, 1280×720, 1024×768, 768×1024, 390×844 e 360×800. Confere limites reais do cabeçalho, textos, CTAs e foto inteira na primeira tela, proporção da imagem, ausência de overflow, menu por teclado e Escape, foco visível, navegação, seleção dos serviços, contato sem telefone, movimento reduzido e conteúdo sem JavaScript. Inclui 320 px e landscape baixo. O teste de zoom usa reflow equivalente a 200% (720×450 CSS px para uma janela física de 1440×900); não substitui teste manual em todos os navegadores nem teste com leitor de tela.
+A suíte usa o WebSocket nativo do Node 24 e o protocolo DevTools. Verifica oito viewports, ausência de overflow, carregamento das imagens, contain, ausência de escala, menu e Escape, seleção de interesse/profissional, validação e preservação dos dados, revisão honesta, geração de URL do WhatsApp sem acesso externo, movimento reduzido e conteúdo sem JavaScript. Capturas em `/tmp/ghc-checks/`, substituível por `SCREENSHOT_DIR`; `TEST_URL` configura o destino. Inspecione as imagens além dos checks automáticos. Não substitui teste com leitor de tela ou aparelho físico.
 
-Capturas da execução ficam em `/tmp/estetica-checks/`. `TEST_URL` e `SCREENSHOT_DIR` permitem substituir URL e diretório. Revisão visual deve abrir as capturas, não apenas gerá-las.
-
-## HTML independente
+## Exportação
 
 ```sh
-npm run export -- /tmp/Estetica-Automotiva.html
+npm run export -- /tmp/G-Hot-e-Cold.html
 ```
 
-Incorpora estilos, JavaScript, imagens usadas e fonte em um único HTML. Não inclui os PNGs documentais nem instala dependências. Os assets antigos da GJ foram preservados no repositório, mas não são carregados pelo novo site.
+Produz HTML independente com fonte, estilos, scripts e imagens incorporados.
 
-## Movimento e acabamento
+## Publicação da G Hot e Cold
 
-A entrada da hero termina em 940 ms: cabeçalho em 350 ms, título, subtítulo e ações escalonados, fotografia com 14 px de deslocamento máximo. A luz ambiente ocupa uma camada separada, com bordas suaves. O carro responde ao mouse em até 4 px na horizontal e 2 px na vertical; no desktop, a foto de Sobre tem 12 px de parallax vertical no total, com margem de segurança. Mobile não usa parallax.
+Código-fonte na branch `g-hot-e-cold`. O site é publicado em `https://miguelfrotagem-gif.github.io/site-andre/g-hot-e-cold/`, em uma subpasta da branch `gh-pages`. A raiz dessa branch contém outro projeto e deve ser preservada. Não substitua a raiz do Pages nem a branch `main` ao atualizar este site.
 
-Títulos, descrições, fotos e cards têm revelação única por IntersectionObserver. Os cards usam intervalos de 100 ms no desktop, hover de 5 px e zoom de até 1,03 dentro da área fotográfica; foco por teclado recebe o mesmo destaque. O processo sincroniza linhas, números e descrições em 1.030 ms, com conectores adaptados às duas colunas do celular e um reflexo localizado no capô. Menu, botões e contato têm transições curtas.
+Antes de publicar, execute lint, build e a suíte de navegador. Copie para `g-hot-e-cold/` o HTML, CSS, scripts, `assets/ghc/`, a fonte Manrope e sua licença. Use versões de conteúdo nas URLs do CSS e dos scripts para evitar cache antigo.
 
-O botão “Pausar animações” no rodapé interrompe os efeitos; `prefers-reduced-motion` desativa movimentos e reage também a mudanças durante a sessão. A luz pausa fora da hero e quando a aba fica oculta. O parallax usa requestAnimationFrame somente quando há eventos e a seção está visível. O conteúdo permanece visível se as animações ou o JavaScript falharem. Nenhuma biblioteca foi adicionada e os arquivos de imagem, textos comerciais, ordem das seções e contato foram preservados.
-
-`npm test` inclui observação quadro a quadro da entrada em cinco viewports, limites do parallax, escalonamento dos cards, hover e foco, duração do processo, pausa, preferência dinâmica por movimento reduzido e medição local de layout shift. Os flags `--blink-settings` do Chromium acima emulam mouse/hover no headless, que nesta máquina não os anuncia por padrão. São configuração de teste, sem mudanças na detecção de dispositivos do site. Capturas dos estados de animação ficam em `/tmp/estetica-checks/`. Esses testes locais não medem fluidez em um aparelho físico nem desempenho de produção.
+A abertura e superfícies usam grafite neutro; o azul-gelo continua como destaque da marca, com fotografias sem filtros de cor e contato com opacidade integral para preservar a iluminação âmbar.
