@@ -50,6 +50,10 @@ try {
   assert.match(await evaluate('document.title'),/G Hot e Cold/);
   assert.equal(await evaluate('document.querySelectorAll("h1").length'),1);
   assert.equal(await evaluate('document.querySelectorAll("header").length'),1);
+  assert.equal(await evaluate('/adriano|engenheir/i.test(document.body.innerText)'), false);
+  assert.equal(await evaluate('window.GHC_CONFIG.julio'), '5511977804318');
+  assert.equal(await evaluate('window.GHC_CONFIG.gil'), '5511913039943');
+  await evaluate(`window.__opened='';const nativeClick=HTMLAnchorElement.prototype.click;HTMLAnchorElement.prototype.click=function(){if(this.href.startsWith('https://wa.me/'))window.__opened=this.href;else nativeClick.call(this)}`);
   const matrix=[[1440,900],[1366,768],[1024,768],[768,1024],[390,844],[360,800],[320,700],[844,390]];
   for(const [w,h] of matrix){
     await viewport(w,h);await evaluate('scrollTo(0,0)');await wait(120);
@@ -81,23 +85,28 @@ try {
   assert.equal(await evaluate('document.querySelectorAll("[aria-invalid=true]").length'),3);
   assert.equal(await evaluate('document.activeElement.id'),'name');
   await evaluate(`document.querySelector('#name').value='Teste de navegação';document.querySelector('#phone').value='11912345678';document.querySelector('#message').value='Gostaria de conversar sobre meu ambiente.';document.querySelector('form').requestSubmit()`);
-  assert.equal(await evaluate('document.querySelector("#review").hidden'),false);
-  assert.match(await evaluate('document.querySelector("#prepared").value'),/Refrigeração/);
-  assert.match(await evaluate('document.querySelector("#form-status").textContent'),/nada foi enviado/);
-  await evaluate('document.querySelector("[data-person=adriano]").click();document.querySelector("form").requestSubmit()');
-  assert.match(await evaluate('document.querySelector("#prepared").value'),/Adriano/);
+  assert.match(await evaluate('window.__opened'), /^https:\/\/wa\.me\/5511977804318\?text=/);
+  assert.match(await evaluate('decodeURIComponent(window.__opened)'), /Refrigeração/);
+  assert.match(await evaluate('document.querySelector("#form-status").textContent'), /Abrindo a conversa/);
+  assert.equal(await evaluate('document.querySelector("#channel-note").hidden'),true);
+  await evaluate('document.querySelector("[data-person=gil]").click()');
+  assert.match(await evaluate('window.__opened'), /^https:\/\/wa\.me\/5511913039943\?text=/);
+  await evaluate('document.querySelector("[data-person=julio]").click()');
+  assert.match(await evaluate('window.__opened'), /^https:\/\/wa\.me\/5511977804318\?text=/);
   await evaluate('document.querySelector("#name").value="";document.querySelector("form").requestSubmit()');
   assert.equal(await evaluate('document.querySelector("#phone").value'),'11912345678');
   assert.equal(await evaluate('Object.keys(localStorage).length'),0);
-  console.log('PASS: menu por teclado e Escape, soluções e profissionais, validação, preservação dos dados, revisão sem envio');
-  // Testa a construção do destino configurado sem abrir um canal externo.
-  await evaluate(`window.GHC_CONFIG={whatsapp:'5511987654321'};window.__opened='';HTMLAnchorElement.prototype.click=function(){window.__opened=this.href}`);
-  // Recarrega somente o script, mantendo a configuração controlada no contexto de teste.
+  console.log('PASS: telefones confirmados, links diretos Júlio/Gil, formulário no WhatsApp sem envio externo, remoção da engenharia');
+  // A alternativa de revisão deve continuar disponível se os contatos forem removidos.
+  await evaluate(`window.GHC_CONFIG={};`);
   await evaluate(`fetch(${JSON.stringify(new URL('app.js', base).href)}).then(r=>r.text()).then(source=>{document.querySelector('#name').value='Teste';document.querySelector('form').replaceWith(document.querySelector('form').cloneNode(true));document.querySelector('#interest').value='Refrigeração';(0,eval)(source)})`);
   await evaluate('document.querySelector("form").requestSubmit()');
-  assert.match(await evaluate('window.__opened'),/^https:\/\/wa\.me\/5511987654321\?text=/);
-  assert.match(await evaluate('decodeURIComponent(window.__opened)'),/Gostaria de conversar/);
-  console.log('PASS: destino WhatsApp configurado e mensagem codificada, sem envio externo');
+  assert.equal(await evaluate('document.querySelector("#review").hidden'),false);
+  assert.match(await evaluate('document.querySelector("#prepared").value'), /Refrigeração/);
+  assert.match(await evaluate('document.querySelector("#form-status").textContent'),/nada foi enviado/);
+  await evaluate('document.querySelector("[data-person=gil]").click();document.querySelector("form").requestSubmit()');
+  assert.match(await evaluate('document.querySelector("#prepared").value'), /Gil/);
+  console.log('PASS: alternativa sem contato, revisão e escolha de profissional');
   await send('Page.navigate',{url:base});await wait(300);
   await send('Emulation.setEmulatedMedia',{features:[{name:'prefers-reduced-motion',value:'no-preference'}]});
   await viewport(1440,900);await send('Page.navigate',{url:base});await wait(450);

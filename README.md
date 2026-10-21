@@ -14,11 +14,11 @@ npm run build
 
 O servidor usa a porta 3000, configurável por `PORT`. `npm start` é equivalente. O build fica em `dist/`; para validar: `SERVE_DIST=1 PORT=3001 npm start`. Estes comandos não publicam o site.
 
-## Contatos pendentes
+## Contatos confirmados
 
-Preencha `config.js` somente com dados confirmados. `whatsapp` é o canal geral; `julio` e `adriano` são destinos específicos. Use números internacionais, incluindo DDI e DDD. Campos vazios mantêm a revisão e cópia da mensagem, com aviso de canal indisponível. Um contato específico ausente usa o geral quando disponível. Nenhuma mensagem é enviada automaticamente: o WhatsApp abre com o texto preparado para o visitante revisar e enviar.
+Preencha `config.js` somente com dados confirmados. `whatsapp` é o canal geral; `julio` e `gil` são destinos específicos. Use números internacionais, incluindo DDI e DDD. Campos vazios mantêm a revisão e cópia da mensagem, com aviso de canal indisponível. Um contato específico ausente usa o geral quando disponível. Nenhuma mensagem é enviada automaticamente: o WhatsApp abre com o texto preparado para o visitante revisar e enviar.
 
-`email` e `formEndpoint` são reservas documentadas, sem integração ativa. Não basta preenchê-los para ativar envio; um futuro serviço requer implementação e validação de contrato, erros e segurança. Não coloque tokens ou credenciais neste arquivo público. Telefones, e-mail e endpoint não foram fornecidos.
+`email` e `formEndpoint` são reservas documentadas, sem integração ativa. Não basta preenchê-los para ativar envio; um futuro serviço requer implementação e validação de contrato, erros e segurança. Não coloque tokens ou credenciais neste arquivo público. Telefones confirmados no cartão: Júlio — (11) 97780-4318; Gil — (11) 91303-9943. O canal geral usa o número do Júlio. E-mail e endpoint não estão integrados.
 
 O formulário valida nome, telefone, assunto e mensagem, preserva os valores em caso de erro e não usa localStorage. Sem JavaScript, conteúdo e navegação permanecem disponíveis; a preparação interativa requer JavaScript.
 
