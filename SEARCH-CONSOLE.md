@@ -1,45 +1,39 @@
 # Google Search Console — G Hot e Cold
 
-O SEO e o sitemap podem ser publicados sem acessar uma conta Google. A criação e verificação da propriedade ainda dependem da conta do responsável. Não há conta do Search Console conectada a esta conversa. Nenhuma propriedade foi verificada nem sitemap enviado por esta tarefa.
+Endereço principal: https://arcondicionadoegeladeira.vercel.app/
 
-## Propriedade correta
+O responsável forneceu o arquivo público de verificação do Google. Ele foi incluído no projeto e na lista de arquivos copiados para `dist/`. A confirmação da propriedade ainda precisa ser feita pelo responsável no Search Console. Não há sessão da conta Google nem acesso à gestão de deployments da Vercel disponíveis nesta conversa.
 
-No https://search.google.com/search-console adicione uma propriedade **Prefixo do URL** exatamente com:
+## Publicar na Vercel
+
+O código está no GitHub, branch `g-hot-e-cold` do repositório `miguelfrotagem-gif/site-andre`. Na Vercel, o projeto desse domínio deve usar essa branch como Production Branch e este diretório como raiz. `vercel.json` define o build `npm run build` e a pasta de saída `dist`.
+
+Depois do push, aguarde um deployment de produção com status Ready. Se não houver deploy automático, confira a integração Git e a Production Branch e publique o commit mais recente da branch `g-hot-e-cold`. Não altere o outro site da branch `main`.
+
+## Verificar a propriedade
+
+1. Abra https://arcondicionadoegeladeira.vercel.app/google0fb09980fc195192.html
+2. A página deve retornar status 200 e mostrar exatamente `google-site-verification: google0fb09980fc195192.html`.
+3. Volte à janela de verificação do Google, que deve mostrar a propriedade `https://arcondicionadoegeladeira.vercel.app/`, e clique em **Verificar**.
+4. Mantenha esse arquivo nas publicações futuras, inclusive depois da verificação bem-sucedida.
+
+Se o endereço do arquivo mostrar 404, outra página ou proteção por login, a Vercel ainda não está servindo o novo build publicamente. Corrija a publicação antes de tentar verificar novamente. Um push no GitHub não confirma, por si só, que a Vercel publicou o site.
+
+## Sitemap e indexação
+
+Depois de verificar a propriedade, em **Sitemaps**, envie:
 
 ```
-https://miguelfrotagem-gif.github.io/site-andre/g-hot-e-cold/
+https://arcondicionadoegeladeira.vercel.app/sitemap.xml
 ```
 
-Não use o tipo Domínio para `github.io`: o DNS desse domínio é administrado pelo GitHub. O prefixo acima separa este site dos outros projetos da mesma conta.
+Em **Inspeção de URL**, inspecione `https://arcondicionadoegeladeira.vercel.app/`, execute o teste ao vivo e solicite indexação. Canonical, compartilhamento e dados estruturados usam o mesmo endereço. `robots.txt` é publicado na raiz da Vercel e aponta para o sitemap.
 
-## Verificação
+O rastreamento e o posicionamento dependem do Google. Verificação e envio do sitemap não garantem indexação imediata ou primeira posição.
 
-Escolha **Tag HTML** e copie a tag pública fornecida pelo Google, por exemplo uma tag cujo nome é `google-site-verification`. Envie somente essa tag nesta conversa. Ela será inserida no `<head>` do HTML-fonte e publicada no mesmo endereço. Não envie senha, código de login, cookies ou credenciais Google. Não há código fictício ou placeholder publicado.
+## Conteúdo e validação
 
-Depois que a tag estiver visível no site público, volte ao Search Console e clique em **Verificar**. Mantenha a tag publicada nas próximas atualizações.
-
-## Sitemap e inspeção
-
-Depois de verificar a propriedade, em **Sitemaps** envie:
-
-```
-https://miguelfrotagem-gif.github.io/site-andre/g-hot-e-cold/sitemap.xml
-```
-
-Em **Inspeção de URL**, inspecione a URL canônica acima, execute o teste ao vivo e solicite indexação. O sitemap contém somente a página real; âncoras como `#contato` não são páginas separadas.
-
-O rastreamento e o posicionamento dependem do Google. Verificar uma propriedade, enviar sitemap e solicitar indexação não garantem indexação imediata nem primeira posição. Acompanhe as consultas e páginas em Desempenho e a cobertura em Indexação.
-
-## Decisões de SEO
-
-- Título e descrição destacam ar-condicionado em São Paulo; conteúdo visível apresenta os serviços confirmados no cartão e os bairros fornecidos.
-- URL canônica única, metadados de compartilhamento e dados estruturados `HVACBusiness`, `WebSite` e `WebPage`.
-- Telefones e regiões nos dados estruturados correspondem ao conteúdo visível. Não foram criados horários, avaliações, preços, certificações ou promessas de atendimento.
-- Não foi acrescentado endereço completo ao schema: o CEP do cartão diverge do CEP fornecido anteriormente. Localidade e estado confirmados são suficientes para a descrição geográfica, mas não garantem elegibilidade a resultados enriquecidos de empresa local.
-- Neste GitHub Pages de projeto não controlamos o `/robots.txt` da raiz do domínio `miguelfrotagem-gif.github.io`. Um robots.txt em subpasta não controla o rastreamento. Usamos meta robots e envio direto do sitemap. O rastreamento real deve ser conferido no teste ao vivo do Search Console.
-- Não foram criadas páginas repetidas por bairro nem palavras-chave ocultas.
-
-## Validar antes de publicar
+Os serviços e bairros são confirmados pelo usuário. Não foram criados horários, avaliações, preços ou certificações. O endereço completo não foi acrescentado ao schema porque há divergência entre o CEP inicial e o cartão; são usadas apenas cidade, estado e país confirmados.
 
 ```sh
 npm run check:seo
@@ -47,4 +41,4 @@ npm run build
 SEO_ROOT=dist npm run check:seo
 ```
 
-O build deve copiar `sitemap.xml`. Na publicação, preservar o restante da branch `gh-pages` e copiar o sitemap para a subpasta `g-hot-e-cold/`. Caso seja adicionada a tag de verificação, executar novamente as validações e publicar o HTML com a tag intacta.
+Preserve o site existente na raiz da branch `gh-pages` ao atualizar o espelho da G Hot e Cold. O arquivo nessa subpasta do GitHub Pages não verifica a propriedade da Vercel; a verificação precisa acessar o arquivo no domínio exato informado acima.
