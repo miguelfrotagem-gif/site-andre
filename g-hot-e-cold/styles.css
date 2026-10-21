@@ -57,3 +57,16 @@ html{scroll-padding-top:0}#contact-form{scroll-margin-top:calc(var(--header) + 1
   .brand-intro { display: none; }
   .intro-brand path { stroke-dashoffset: 0; }
 }
+
+/* Principais regiões de atendimento informadas pela equipe. */
+.service-areas { max-width: 870px; margin: 38px auto 0; padding-top: 26px; border-top: 1px solid var(--line); text-align: center; }
+.service-areas h3 { font-size: clamp(23px, 2.3vw, 30px); letter-spacing: -.03em; }
+.service-areas > p { margin-top: 10px; color: var(--muted); font-size: 15px; }
+.service-areas ul { list-style: none; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px 24px; padding: 0; margin: 24px 0 0; }
+.service-areas li { color: var(--text); font-size: 15px; line-height: 1.5; }
+@media (max-width: 480px) {
+  .service-areas { margin-top: 28px; padding-top: 22px; }
+  .service-areas > p { font-size: 14px; }
+  .service-areas ul { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px 16px; margin-top: 20px; }
+  .service-areas li { font-size: 14px; }
+}
