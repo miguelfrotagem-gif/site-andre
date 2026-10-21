@@ -64,4 +64,4 @@ A logo substitui o símbolo provisório do cabeçalho. O cabeçalho entra em 110
 
 ## GitHub Pages
 
-O workflow `.github/workflows/pages.yml` compila e publica `dist/` a cada push na branch `main`. Em Settings → Pages, a origem deve estar configurada como **GitHub Actions**. O resultado de cada publicação fica na aba Actions. Endereço esperado: https://miguelfrotagem-gif.github.io/site-andre/ . A existência desse endereço não confirma uma publicação bem-sucedida.
+O repositório já publica a branch `gh-pages`, na raiz, por meio do Pages nativo. As regras do ambiente `github-pages` permitem essa branch e impedem a publicação direta pela `main`. O código-fonte fica em `main`; após `npm run lint` e `npm run build`, o conteúdo de `dist/` deve ser enviado para `gh-pages`, preservando `.nojekyll` e um eventual CNAME. A aba Actions mostra o resultado de “pages build and deployment”. Endereço: https://miguelfrotagem-gif.github.io/site-andre/ .
