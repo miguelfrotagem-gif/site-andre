@@ -49,7 +49,7 @@ Produz HTML independente com fonte, estilos, scripts e imagens incorporados.
 
 ## Publicação da G Hot e Cold
 
-Código-fonte na branch `g-hot-e-cold`. O endereço principal é `https://arcondicionadoegeladeira.vercel.app/`. O espelho do GitHub Pages fica em `https://miguelfrotagem-gif.github.io/site-andre/g-hot-e-cold/`, em uma subpasta da branch `gh-pages`. A raiz dessa branch contém outro projeto e deve ser preservada. Não substitua a raiz do Pages nem a branch `main` ao atualizar este site.
+Código-fonte na branch `g-hot-e-cold`. O endereço principal é `https://arcondicionadoegeladeira1.vercel.app/`. O espelho do GitHub Pages fica em `https://miguelfrotagem-gif.github.io/site-andre/g-hot-e-cold/`, em uma subpasta da branch `gh-pages`. A raiz dessa branch contém outro projeto e deve ser preservada. Não substitua a raiz do Pages nem a branch `main` ao atualizar este site.
 
 Antes de publicar, execute lint, build e a suíte de navegador. Copie para `g-hot-e-cold/` o HTML, CSS, scripts, `assets/ghc/`, a fonte Manrope e sua licença. Use versões de conteúdo nas URLs do CSS e dos scripts para evitar cache antigo.
 
@@ -61,4 +61,4 @@ SEO local para ar-condicionado e refrigeração em São Paulo, com conteúdo vis
 
 ## Verificação do Google na Vercel
 
-O arquivo público `google0fb09980fc195192.html` é preservado na raiz e no build em `dist/`. A Vercel deve publicar a branch `g-hot-e-cold`, com a raiz do projeto neste diretório. `vercel.json` configura o build e a saída `dist`. Canonical, sitemap e dados estruturados usam `https://arcondicionadoegeladeira.vercel.app/`. A confirmação da propriedade deve ser concluída na conta do responsável, depois de conferir o arquivo no site público.
+O arquivo público `google0fb09980fc195192.html` é preservado na raiz e no build em `dist/`. A Vercel deve publicar a branch `g-hot-e-cold`, com a raiz do projeto neste diretório. `vercel.json` configura o build e a saída `dist`. Canonical, sitemap e dados estruturados usam `https://arcondicionadoegeladeira1.vercel.app/`. A confirmação da propriedade deve ser concluída na conta do responsável, depois de conferir o arquivo no site público.

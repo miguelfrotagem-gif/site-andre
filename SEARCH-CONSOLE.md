@@ -1,6 +1,6 @@
 # Google Search Console — G Hot e Cold
 
-Endereço principal: https://arcondicionadoegeladeira.vercel.app/
+Endereço principal: https://arcondicionadoegeladeira1.vercel.app/
 
 O responsável forneceu o arquivo público de verificação do Google. Ele foi incluído no projeto e na lista de arquivos copiados para `dist/`. A confirmação da propriedade ainda precisa ser feita pelo responsável no Search Console. Não há sessão da conta Google nem acesso à gestão de deployments da Vercel disponíveis nesta conversa.
 
@@ -12,9 +12,9 @@ Depois do push, aguarde um deployment de produção com status Ready. Se não ho
 
 ## Verificar a propriedade
 
-1. Abra https://arcondicionadoegeladeira.vercel.app/google0fb09980fc195192.html
+1. Abra https://arcondicionadoegeladeira1.vercel.app/google0fb09980fc195192.html
 2. A página deve retornar status 200 e mostrar exatamente `google-site-verification: google0fb09980fc195192.html`.
-3. Volte à janela de verificação do Google, que deve mostrar a propriedade `https://arcondicionadoegeladeira.vercel.app/`, e clique em **Verificar**.
+3. Volte à janela de verificação do Google, que deve mostrar a propriedade `https://arcondicionadoegeladeira1.vercel.app/`, e clique em **Verificar**.
 4. Mantenha esse arquivo nas publicações futuras, inclusive depois da verificação bem-sucedida.
 
 Se o endereço do arquivo mostrar 404, outra página ou proteção por login, a Vercel ainda não está servindo o novo build publicamente. Corrija a publicação antes de tentar verificar novamente. Um push no GitHub não confirma, por si só, que a Vercel publicou o site.
@@ -24,10 +24,10 @@ Se o endereço do arquivo mostrar 404, outra página ou proteção por login, a 
 Depois de verificar a propriedade, em **Sitemaps**, envie:
 
 ```
-https://arcondicionadoegeladeira.vercel.app/sitemap.xml
+https://arcondicionadoegeladeira1.vercel.app/sitemap.xml
 ```
 
-Em **Inspeção de URL**, inspecione `https://arcondicionadoegeladeira.vercel.app/`, execute o teste ao vivo e solicite indexação. Canonical, compartilhamento e dados estruturados usam o mesmo endereço. `robots.txt` é publicado na raiz da Vercel e aponta para o sitemap.
+Em **Inspeção de URL**, inspecione `https://arcondicionadoegeladeira1.vercel.app/`, execute o teste ao vivo e solicite indexação. Canonical, compartilhamento e dados estruturados usam o mesmo endereço. `robots.txt` é publicado na raiz da Vercel e aponta para o sitemap.
 
 O rastreamento e o posicionamento dependem do Google. Verificação e envio do sitemap não garantem indexação imediata ou primeira posição.
 
