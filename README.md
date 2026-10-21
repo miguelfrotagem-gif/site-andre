@@ -75,3 +75,8 @@ Ao abrir ou recarregar o site, uma introdução em tela inteira apresenta a logo
 ## Contato oficial atualizado
 
 WhatsApp configurado com o número fornecido pelo usuário: **+55 11 94554-9849** (`5511945549849`). O CTA de contato usa mensagens por solução; o botão flutuante abre diretamente `wa.me` com a mensagem geral. O botão flutuante usa o verde tradicional do WhatsApp, ícone branco, sombra discreta e estados de hover/foco. A disponibilidade do atendimento e o envio da mensagem dependem do WhatsApp; o site apenas prepara a conversa.
+
+
+### Abertura com deslocamento da marca
+
+A abertura atual substitui a composição anterior: primeiro aparece a logo sobre fundo escuro, depois a linha dourada e “Monitoramento 24 horas para sua segurança.”. Após 2,2 segundos de sequência, o fundo revela a hero em 1,6 segundo e a mesma imagem da marca percorre a distância até a posição real da logo no cabeçalho (medida no início). No encaixe, a logo fixa assume sem repetir a animação. Redimensionar, pular, Escape ou movimento reduzido encerram com segurança. O foco retorna ao conteúdo, evitando o retângulo de foco automático sobre a marca. A duração da sequência é aproximadamente 3,8 segundos, com limite de segurança de 5 segundos.

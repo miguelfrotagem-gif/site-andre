@@ -87,8 +87,14 @@ check(await evaluate(`!!document.querySelector('.brand-intro')&&document.querySe
 check(await evaluate(`document.activeElement.classList.contains('intro-skip')`),'pular introdução recebe foco');
 await wait(1600);
 check(await evaluate(`!!document.querySelector('.brand-intro')`),'introdução continua visível após 1,8 segundos');
+check(await evaluate(`(()=>{const logo=document.querySelector('.intro-center img').getBoundingClientRect(),line=document.querySelector('.intro-line').getBoundingClientRect(),text=document.querySelector('.intro-center p').getBoundingClientRect();return logo.bottom<line.top&&line.bottom<text.top&&text.width>300})()`),'logo, linha e mensagem não se sobrepõem');
 {const shot=await send('Page.captureScreenshot',{format:'png'});await writeFile(`${output}/abertura-henseg.png`,Buffer.from(shot.data,'base64'))}
-await wait(2800);
+const initialLogo=await evaluate(`(()=>{const r=document.querySelector('.intro-center img').getBoundingClientRect();return {left:r.left,top:r.top}})()`);
+await wait(1100);
+check(await evaluate(`(()=>{const logo=document.querySelector('.intro-center img').getBoundingClientRect();return logo.left<${initialLogo['left']}&&logo.top<${initialLogo['top']}})()`),'logo se desloca em direção ao cabeçalho');
+check(await evaluate(`Number(getComputedStyle(document.querySelector('.intro-backdrop')).opacity)<1&&Number(getComputedStyle(document.querySelector('.intro-backdrop')).opacity)>0`),'hero é revelada gradualmente durante o deslocamento');
+{const shot=await send('Page.captureScreenshot',{format:'png'});await writeFile(`${output}/abertura-deslocamento.png`,Buffer.from(shot.data,'base64'))}
+await wait(1700);
 check(await evaluate(`!document.querySelector('.brand-intro')&&!document.querySelector('main').inert`),'abertura termina e libera o site');
 await send('Page.navigate',{url:base});await wait(200);
 await evaluate(`document.querySelector('.intro-skip').click()`);
