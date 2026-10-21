@@ -460,6 +460,7 @@ footer > a { min-height: 44px; display: inline-flex; align-items: center; }
     grid-template-rows: auto auto;
     align-content: center;
     gap: 24px 6%;
+    padding-block: 8px calc(2 * var(--screen-padding) - 8px);
   }
   .faq-section .section-intro { grid-area: 1 / 1; align-self: end; text-align: left; margin: 0; }
   .faq-section .actions { grid-area: 2 / 1; align-self: start; flex-direction: column; align-items: flex-start; gap: 14px; text-align: left; }
@@ -526,12 +527,13 @@ footer > a { min-height: 44px; display: inline-flex; align-items: center; }
   .project-types button { padding-inline: 7px; }
   .project-panel { grid-area: 4 / 1; margin-block: 28px 48px; padding: 0; background: none; }
   .project-panel h3 { font-size: 1.625rem; }
-  .faq-section .scene-visual { grid-area: 1 / 1 / 4 / 2; }
-  .faq-section .section-intro { padding-top: 40px; }
+  .faq-section { grid-template-rows: auto auto auto minmax(0, 1fr); }
+  .faq-section .scene-visual { grid-area: 1 / 1 / 5 / 2; }
+  .faq-section .section-intro { padding-top: 24px; }
   .faq-section .section-intro h2 { font-size: clamp(2rem, 8vw, 2.875rem); }
-  .faq-surface { grid-area: 2 / 1; align-self: start; margin-block: 32px 0; padding: 20px 16px; }
+  .faq-surface { grid-area: 2 / 1; align-self: start; margin-block: 20px 0; padding: 20px 16px; }
   .search-row > span { display: none; }
-  .faq-section .actions { grid-area: 3 / 1; display: grid; justify-content: stretch; gap: 16px; margin-block: 28px 48px; }
+  .faq-section .actions { grid-area: 3 / 1; display: grid; justify-content: stretch; gap: 16px; margin-block: 20px 32px; }
   .contact-background { grid-area: 1 / 1 / 4 / 2; }
   .contact-section .section-intro { grid-area: 1 / 1; padding-top: 36px; }
   .contact-section .section-intro h2 { font-size: clamp(2.1875rem, 9vw, 3.25rem); }
@@ -556,7 +558,7 @@ footer > a { min-height: 44px; display: inline-flex; align-items: center; }
   .section-intro { padding-bottom: 24px; }
   .projects-section .scene-visual { grid-row: 3; }
   .project-types { margin-block: 0 20px; }
-  .faq-section .scene-visual, .contact-background { grid-row: 1 / 4; }
+  .contact-background { grid-row: 1 / 4; }
   .faq-surface { padding-inline: 12px; }
 }
 
