@@ -93,7 +93,7 @@ try {
   // Testa a construção do destino configurado sem abrir um canal externo.
   await evaluate(`window.GHC_CONFIG={whatsapp:'5511987654321'};window.__opened='';HTMLAnchorElement.prototype.click=function(){window.__opened=this.href}`);
   // Recarrega somente o script, mantendo a configuração controlada no contexto de teste.
-  await evaluate(`fetch('/app.js').then(r=>r.text()).then(source=>{document.querySelector('#name').value='Teste';document.querySelector('form').replaceWith(document.querySelector('form').cloneNode(true));document.querySelector('#interest').value='Refrigeração';(0,eval)(source)})`);
+  await evaluate(`fetch(${JSON.stringify(new URL('app.js', base).href)}).then(r=>r.text()).then(source=>{document.querySelector('#name').value='Teste';document.querySelector('form').replaceWith(document.querySelector('form').cloneNode(true));document.querySelector('#interest').value='Refrigeração';(0,eval)(source)})`);
   await evaluate('document.querySelector("form").requestSubmit()');
   assert.match(await evaluate('window.__opened'),/^https:\/\/wa\.me\/5511987654321\?text=/);
   assert.match(await evaluate('decodeURIComponent(window.__opened)'),/Gostaria de conversar/);
