@@ -136,36 +136,32 @@ if (story) {
  configureStory();
 }
 
-// A real branded opening, independent of the small navigation-logo animation.
+// Branded opening: a single logo moves from the center into its real header slot.
 const brandImage = document.querySelector('.brand-logo');
 if (brandImage && !reduced.matches) {
  const intro = document.createElement('div');
  intro.className = 'brand-intro';
- intro.setAttribute('role','dialog');
- intro.setAttribute('aria-modal','true');
+ intro.setAttribute('role','dialog');intro.setAttribute('aria-modal','true');
  intro.setAttribute('aria-label','Apresentação Henseg — Monitoramento 24hs');
- intro.innerHTML = `<div class="intro-center"><img src="${brandImage.getAttribute('src')}" alt="Henseg — Monitoramento 24hs" width="691" height="724"><p>Sua paz merece proteção.</p><span class="intro-line" aria-hidden="true"><i></i></span></div><button class="intro-skip" type="button">Pular introdução <span aria-hidden="true">→</span></button>`;
- const background = [...document.body.children].filter(el => el instanceof HTMLElement && !['SCRIPT','STYLE'].includes(el.tagName));
- const previousInert = background.map(el => el.inert);
- background.forEach(el => {el.inert=true;});
- document.body.append(intro);
- const skip = intro.querySelector('button');
- const introAnimations = [];
- let done=false, deadline;
- function finishIntro() {
-  if(done)return;done=true;
-  clearTimeout(deadline);
-  introAnimations.forEach(animation=>animation.cancel());
+ intro.innerHTML = `<div class="intro-backdrop"></div><div class="intro-center"><img src="${brandImage.getAttribute('src')}" alt="Henseg — Monitoramento 24hs" width="1374" height="1145"><span class="intro-line" aria-hidden="true"><i></i></span><p>Monitoramento 24 horas<br><span>para sua segurança.</span></p></div><button class="intro-skip" type="button">Pular introdução <span aria-hidden="true">→</span></button>`;
+ const background=[...document.body.children].filter(el=>el instanceof HTMLElement&&!['SCRIPT','STYLE'].includes(el.tagName));
+ const previousInert=background.map(el=>el.inert);
+ background.forEach(el=>{el.inert=true;});
+ document.body.classList.add('intro-running');document.body.append(intro);
+ const skip=intro.querySelector('button'), logo=intro.querySelector('img');
+ const introAnimations=[];
+ let done=false,deadline;
+ const animate=(element,keyframes,options)=>{
+  const animation=element.animate(keyframes,options);introAnimations.push(animation);return animation;
+ };
+ function finishIntro(){
+  if(done)return;done=true;clearTimeout(deadline);
   const restoreFocus=intro.contains(document.activeElement);
-  intro.remove();
+  introAnimations.forEach(animation=>animation.cancel());intro.remove();
+  document.body.classList.remove('intro-running');document.body.classList.add('brand-ready');
   background.forEach((el,i)=>{el.inert=previousInert[i];});
-  reduced.removeEventListener('change',reduceIntro);
-  document.body.classList.add('brand-ready');
-  if(restoreFocus)document.querySelector('.brand').focus({preventScroll:true});
-  if(!reduced.matches)document.querySelectorAll('.hero .reveal').forEach((el,i)=>{
-   const animation=el.animate([{opacity:0,transform:'translateY(12px)'},{opacity:1,transform:'translateY(0)'}],{duration:650,delay:i*80,fill:'backwards',easing:'cubic-bezier(.2,.65,.3,1)'});
-   animations.add(animation);animation.finished.then(()=>animations.delete(animation)).catch(()=>{});
-  });
+  reduced.removeEventListener('change',reduceIntro);removeEventListener('resize',finishIntro);
+  if(restoreFocus){const content=document.querySelector('#conteudo');content.setAttribute('tabindex','-1');content.focus({preventScroll:true});}
  }
  function reduceIntro(){if(reduced.matches)finishIntro();}
  skip.addEventListener('click',finishIntro);
@@ -173,18 +169,25 @@ if (brandImage && !reduced.matches) {
   if(event.key==='Escape')finishIntro();
   if(event.key==='Tab'){event.preventDefault();skip.focus();}
  });
- reduced.addEventListener('change',reduceIntro);
- addEventListener('pagehide',finishIntro,{once:true});
- skip.focus({preventScroll:true});
- // A hard timeout also releases the page if decoding or animation is interrupted.
- deadline=setTimeout(finishIntro,4500);
+ reduced.addEventListener('change',reduceIntro);addEventListener('resize',finishIntro,{once:true});
+ addEventListener('pagehide',finishIntro,{once:true});skip.focus({preventScroll:true});
+ deadline=setTimeout(finishIntro,5000);
  Promise.race([brandImage.decode().catch(()=>{}),new Promise(resolve=>setTimeout(resolve,600))]).then(()=>{
   if(done)return;
-  introAnimations.push(intro.querySelector('.intro-center').animate([{opacity:0,transform:'translateY(18px) scale(.94)'},{opacity:1,transform:'translateY(0) scale(1)'}],{duration:1000,fill:'both',easing:'cubic-bezier(.2,.65,.3,1)'}));
-  introAnimations.push(intro.querySelector('.intro-line i').animate([{transform:'scaleX(0)'},{transform:'scaleX(1)'}],{duration:2900,fill:'both',easing:'cubic-bezier(.25,.1,.25,1)'}));
-  const exit=intro.animate([{opacity:1,offset:0},{opacity:1,offset:.79},{opacity:0,offset:1}],{duration:3400,fill:'forwards',easing:'linear'});
-  introAnimations.push(exit);exit.finished.then(finishIntro).catch(()=>{});
+  const source=logo.getBoundingClientRect(), target=brandImage.getBoundingClientRect();
+  Object.assign(logo.style,{position:'fixed',left:`${source.left}px`,top:`${source.top}px`,width:`${source.width}px`,height:`${source.height}px`,maxHeight:'none',margin:'0',transformOrigin:'top left'});
+  const easing='cubic-bezier(.22,.65,.3,1)';
+  animate(logo,[{opacity:.12},{opacity:1}],{duration:900,fill:'both',easing});
+  animate(intro.querySelector('.intro-line i'),[{transform:'scaleX(0)'},{transform:'scaleX(1)'}],{duration:800,delay:600,fill:'both',easing});
+  animate(intro.querySelector('.intro-center p'),[{opacity:0,transform:'translateY(10px)'},{opacity:1,transform:'translateY(0)'}],{duration:800,delay:1050,fill:'both',easing});
+  animate(intro.querySelector('.intro-center p'),[{opacity:1},{opacity:0}],{duration:600,delay:2200,fill:'forwards'});
+  animate(intro.querySelector('.intro-line'),[{opacity:1},{opacity:0}],{duration:600,delay:2200,fill:'forwards'});
+  animate(intro.querySelector('.intro-skip'),[{opacity:1},{opacity:0}],{duration:600,delay:2600,fill:'forwards'});
+  animate(intro.querySelector('.intro-backdrop'),[{opacity:1},{opacity:0}],{duration:1600,delay:2200,fill:'both',easing});
+  animate(document.querySelector('.site-header'),[{opacity:0},{opacity:1}],{duration:1600,delay:2200,fill:'both',easing});
+  animate(document.querySelector('.brand-wordmark'),[{opacity:0},{opacity:1}],{duration:500,delay:3300,fill:'both',easing});
+  document.querySelectorAll('.hero .reveal').forEach((element,i)=>animate(element,[{opacity:0,transform:'translateY(16px)'},{opacity:1,transform:'translateY(0)'}],{duration:1100,delay:2200+i*90,fill:'both',easing}));
+  const flight=animate(logo,[{transform:'translate(0,0) scale(1,1)'},{transform:`translate(${target.left-source.left}px,${target.top-source.top}px) scale(${target.width/source.width},${target.height/source.height})`}],{duration:1600,delay:2200,fill:'both',easing});
+  flight.finished.then(finishIntro).catch(()=>{});
  });
-} else {
- document.body.classList.add('brand-ready');
-}
+} else { document.body.classList.add('brand-ready'); }
