@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://arcondicionadoegeladeira.vercel.app/sitemap.xml
+Sitemap: https://arcondicionadoegeladeira1.vercel.app/sitemap.xml
