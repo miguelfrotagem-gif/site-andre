@@ -113,3 +113,13 @@
 .intro-skip:hover { background: #e8c67815; }
 @media (max-width: 650px) { .intro-center p { letter-spacing: .08em; } }
 @media (prefers-reduced-motion: reduce) { .brand-intro { display: none; } }
+
+/* Familiar WhatsApp action, available on every screen. */
+.floating-contact { width: 60px; height: 60px; right: 24px; bottom: 24px; padding: 14px; color: #fff; background: #25d366; border: 1px solid #ffffff45; box-shadow: 0 5px 22px #0005, inset 0 1px 0 #ffffff35; align-items: center; justify-content: center; backdrop-filter: none; transition: background .2s, transform .2s, box-shadow .2s; }
+.floating-contact svg { width: 32px; height: 32px; flex-shrink: 0; }
+.floating-contact:hover { background: #1ebe5d; transform: translateY(-3px); box-shadow: 0 8px 28px #0006; }
+.floating-contact:active { transform: translateY(0); }
+.floating-tooltip { position: absolute; right: calc(100% + 12px); white-space: nowrap; padding: 10px 14px; border: 1px solid #ffffff20; border-radius: 6px; background: #13251d; color: #fff; font-size: 12px; opacity: 0; visibility: hidden; transform: translateX(4px); transition: opacity .2s, transform .2s, visibility .2s; pointer-events: none; }
+.floating-contact:hover .floating-tooltip,.floating-contact:focus-visible .floating-tooltip { opacity: 1; visibility: visible; transform: none; }
+@media (max-width: 650px) { .floating-contact { width: 56px; height: 56px; right: 16px; bottom: max(16px,env(safe-area-inset-bottom)); padding: 12px; } }
+@media (prefers-reduced-motion: reduce) { .floating-contact:hover { transform: none; } }

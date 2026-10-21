@@ -25,9 +25,9 @@ Quatro seções na ordem do PDF `HENSEC_Referencia_Desktop_Cinematografica.pdf`:
 
 Desktop: seções full-bleed com `min-height:100svh`, fundos `cover`, escala tipográfica fluida e espaçamento adaptado também à altura. Mobile: fluxo natural, cards empilhados e enquadramentos próprios; conteúdo pode exceder a viewport. Não há scroll-snap ou rolagem interna. Navbar fixa, menu móvel com Escape e indicação da seção ativa por IntersectionObserver e medição da posição. Reveal com Web Animations, stagger de 110ms e parallax limitado a 20px. `prefers-reduced-motion` cancela movimentos inclusive ao mudar com a página aberta. Conteúdo permanece visível sem animações e sem JavaScript.
 
-## WhatsApp — pendente de número oficial
+## WhatsApp
 
-Em `config.js`, preencher `HENSEC_CONFIG.whatsappNumber` com o número oficial (país + DDD + número). O valor está vazio porque não havia número Hensec nos arquivos/configuração; números sintéticos dos testes anteriores não são contatos reais. Mensagens por solução são centralizadas em `messages`. Com número válido, os links usam `https://wa.me/` e mensagem codificada; sem número, o clique exibe aviso acessível sem navegar para um contato inventado. A navegação dos cards direciona ao contato e prepara o assunto escolhido.
+Em `config.js`, `HENSEC_CONFIG.whatsappNumber` contém `5511945549849`, o número oficial informado pelo usuário (+55 11 94554-9849). Números sintéticos dos testes não são contatos reais. Mensagens por solução são centralizadas em `messages`. Com número válido, os links usam `https://wa.me/` e mensagem codificada; sem número, o clique exibe aviso acessível sem navegar para um contato inventado. A navegação dos cards direciona ao contato e prepara o assunto escolhido.
 
 ## Validação
 
@@ -40,7 +40,7 @@ npm test
 
 A suíte CDP testa 1920×1080, 1600×900, 1440×900, 1366×768, 1280×720, 768×1024, 390×844 e 320×700. Verifica ordem semântica, viewport desktop, conteúdo seguro, ausência de overflow horizontal, âncoras, menu ativo/móvel, status acessível do contato ausente, URL e mensagens WhatsApp com número sintético injetado apenas no navegador, cancelamento de animações e erros de console. Capturas atuais são salvas em `/tmp/hensec-checks`.
 
-Os scripts `interactions.mjs` e arquivos de imagens anteriores permanecem como histórico da versão solar e não integram a suíte Hensec. A publicação e o contato real dependem de configurar o número oficial.
+Os scripts `interactions.mjs` e arquivos de imagens anteriores permanecem como histórico da versão solar e não integram a suíte Hensec. O contato oficial já está configurado.
 
 ## Cada detalhe, sob proteção
 
@@ -55,7 +55,7 @@ A suíte tem 248 verificações, incluindo progressão para frente/para trás, c
 
 ### Fluidez e imagem do contato
 
-As transições de Etapas ocupam faixas mais amplas do scroll, com suavização exponencial curta (65ms), opacidade das imagens independente dos textos e uma base fotográfica opaca para evitar escurecimento no crossfade. O movimento continua reversível e respeita movimento reduzido. A imagem `contato-mensagem.webp` preserva a composição e adiciona apenas a conversa ilustrativa na tela do celular: “Olá! Quero mais segurança para meu imóvel.”. O número real de WhatsApp continua sem configuração, conforme decisão do usuário.
+As transições de Etapas ocupam faixas mais amplas do scroll, com suavização exponencial curta (65ms), opacidade das imagens independente dos textos e uma base fotográfica opaca para evitar escurecimento no crossfade. O movimento continua reversível e respeita movimento reduzido. A imagem `contato-mensagem.webp` preserva a composição e adiciona apenas a conversa ilustrativa na tela do celular: “Olá! Quero mais segurança para meu imóvel.”. O número oficial de WhatsApp foi configurado posteriormente, conforme a seção Contato oficial atualizado.
 
 
 ### Entrada da marca
@@ -70,3 +70,8 @@ O repositório já publica a branch `gh-pages`, na raiz, por meio do Pages nativ
 ## Abertura de entrada
 
 Ao abrir ou recarregar o site, uma introdução em tela inteira apresenta a logomarca em tamanho grande, a frase “Sua paz merece proteção.” e uma linha dourada discreta. A marca entra em 1 segundo, permanece visível e o fundo desaparece suavemente, revelando o site em aproximadamente 3,4 segundos após preparar a imagem. O botão “Pular introdução” e Escape encerram imediatamente; o foco é preservado e o conteúdo abaixo fica inert temporariamente. Há um limite máximo de 4,5 segundos para liberar o conteúdo mesmo se a animação for interrompida. Movimento reduzido ignora a abertura; sem JavaScript não existe overlay. A abertura é repetida em novas visitas completas, sem bloqueio por localStorage.
+
+
+## Contato oficial atualizado
+
+WhatsApp configurado com o número fornecido pelo usuário: **+55 11 94554-9849** (`5511945549849`). O CTA de contato usa mensagens por solução; o botão flutuante abre diretamente `wa.me` com a mensagem geral. O botão flutuante usa o verde tradicional do WhatsApp, ícone branco, sombra discreta e estados de hover/foco. A disponibilidade do atendimento e o envio da mensagem dependem do WhatsApp; o site apenas prepara a conversa.

@@ -1,5 +1,5 @@
 window.HENSEC_CONFIG = {
-  whatsappNumber: '', // Número oficial com país e DDD. Nunca usar número de demonstração.
+  whatsappNumber: '5511945549849', // Número oficial com país e DDD. Nunca usar número de demonstração.
   messages: {
     geral: 'Olá! Quero mais segurança para meu imóvel. Gostaria de conversar com a Henseg.',
     cameras: 'Olá! Tenho interesse em câmeras de segurança para meu imóvel.',

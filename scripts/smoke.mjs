@@ -20,6 +20,8 @@ for(const [width,height] of [[1920,1080],[1600,900],[1440,900],[1366,768],[1280,
  check(await evaluate('document.documentElement.scrollWidth<=innerWidth'),`sem overflow ${width}`);
  assert.deepEqual(await evaluate('[...document.querySelectorAll("main>section")].map(e=>e.id)'),['inicio','solucoes','sobre','etapas','contato']);checks++;
  check(await evaluate('document.querySelectorAll("h1").length===1'),'h1 único');
+ check(await evaluate(`document.querySelector('#whatsapp-cta').href.startsWith('https://wa.me/5511945549849?text=')&&document.querySelector('.floating-contact').href.startsWith('https://wa.me/5511945549849?text=')`),'número oficial em ambos os CTAs');
+ check(await evaluate(`getComputedStyle(document.querySelector('.floating-contact')).backgroundColor==='rgb(37, 211, 102)'`),'WhatsApp verde');
  check(await evaluate(`(()=>{const img=document.querySelector('.brand-logo'),header=document.querySelector('.site-header').getBoundingClientRect(),r=img.getBoundingClientRect();return img.complete&&img.naturalWidth>0&&r.top>=header.top&&r.bottom<=header.bottom&&r.left>=header.left&&r.right<=header.right})()`),`logo carregada sem cortes ${width}`);
  for(const section of ['inicio','solucoes','sobre','contato']){
   await evaluate(`document.querySelector('#${section}').scrollIntoView({behavior:'instant'})`);await wait(90);
@@ -65,6 +67,9 @@ for(const [width,height] of [[1920,1080],[1600,900],[1440,900],[1366,768],[1280,
  }
 }
 await send('Emulation.setEmulatedMedia',{features:[{name:'prefers-reduced-motion',value:'reduce'}]});
+// Keep missing-number coverage by removing the number only in the test browser.
+await send('Page.addScriptToEvaluateOnNewDocument',{source:`Object.defineProperty(window,'HENSEC_CONFIG',{configurable:true,set(v){v.whatsappNumber='';Object.defineProperty(window,'HENSEC_CONFIG',{value:v,configurable:true})}})`});
+await send('Page.navigate',{url:base});await wait(200);
 await evaluate(`document.querySelector('#contato').scrollIntoView();document.querySelector('#whatsapp-cta').click()`);
 check(await evaluate(`!document.querySelector('#contact-status').hidden&&document.activeElement.id==='contact-status'`),'número ausente tem status acessível');
 check(await evaluate(`!document.querySelector('#whatsapp-cta').href.includes('wa.me')`),'nenhum número inventado');
