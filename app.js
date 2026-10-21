@@ -16,6 +16,13 @@ function updateContact(context) {
  if(validNumber){cta.target='_blank';cta.rel='noopener noreferrer';}
 }
 updateContact(selected);
+const floatingContact = document.querySelector('.floating-contact');
+if (validNumber && floatingContact) {
+ floatingContact.href = `https://wa.me/${number}?text=${encodeURIComponent(config.messages.geral || '')}`;
+ floatingContact.target = '_blank';
+ floatingContact.rel = 'noopener noreferrer';
+ floatingContact.setAttribute('aria-label','Conversar com a Henseg pelo WhatsApp');
+}
 function unavailable(event) {
  if(validNumber)return;
  event.preventDefault();
