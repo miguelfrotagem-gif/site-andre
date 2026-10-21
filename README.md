@@ -57,7 +57,7 @@ A abertura e superfícies usam grafite neutro; o azul-gelo continua como destaqu
 
 ## SEO e Google Search Console
 
-SEO local para ar-condicionado e refrigeração em São Paulo, com conteúdo visível dos serviços confirmados, canonical, compartilhamento social, dados estruturados e sitemap. Execute `npm run check:seo`. A configuração de propriedade, verificação e envio do sitemap está documentada em [SEARCH-CONSOLE.md](SEARCH-CONSOLE.md). A verificação ainda depende da tag pública da conta Google do responsável; nenhuma posição nas buscas é garantida.
+SEO local para ar-condicionado e refrigeração em São Paulo, com conteúdo visível dos serviços confirmados, canonical, compartilhamento social, dados estruturados e sitemap. Execute `npm run check:seo`. A configuração de propriedade, verificação e envio do sitemap está documentada em [SEARCH-CONSOLE.md](SEARCH-CONSOLE.md). O arquivo HTML de verificação já está incluído; a conclusão depende da publicação na Vercel e da confirmação na conta Google do responsável. Nenhuma posição nas buscas é garantida.
 
 ## Verificação do Google na Vercel
 
