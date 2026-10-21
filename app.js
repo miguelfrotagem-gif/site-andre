@@ -129,10 +129,55 @@ if (story) {
  configureStory();
 }
 
-// Start the brand reveal after the actual image is decoded, including cold loads.
+// A real branded opening, independent of the small navigation-logo animation.
 const brandImage = document.querySelector('.brand-logo');
-if (brandImage) {
- brandImage.decode().catch(() => {}).then(() => {
-  requestAnimationFrame(() => document.body.classList.add('brand-ready'));
+if (brandImage && !reduced.matches) {
+ const intro = document.createElement('div');
+ intro.className = 'brand-intro';
+ intro.setAttribute('role','dialog');
+ intro.setAttribute('aria-modal','true');
+ intro.setAttribute('aria-label','Apresentação Henseg — Monitoramento 24hs');
+ intro.innerHTML = `<div class="intro-center"><img src="${brandImage.getAttribute('src')}" alt="Henseg — Monitoramento 24hs" width="691" height="724"><p>Sua paz merece proteção.</p><span class="intro-line" aria-hidden="true"><i></i></span></div><button class="intro-skip" type="button">Pular introdução <span aria-hidden="true">→</span></button>`;
+ const background = [...document.body.children].filter(el => el instanceof HTMLElement && !['SCRIPT','STYLE'].includes(el.tagName));
+ const previousInert = background.map(el => el.inert);
+ background.forEach(el => {el.inert=true;});
+ document.body.append(intro);
+ const skip = intro.querySelector('button');
+ const introAnimations = [];
+ let done=false, deadline;
+ function finishIntro() {
+  if(done)return;done=true;
+  clearTimeout(deadline);
+  introAnimations.forEach(animation=>animation.cancel());
+  const restoreFocus=intro.contains(document.activeElement);
+  intro.remove();
+  background.forEach((el,i)=>{el.inert=previousInert[i];});
+  reduced.removeEventListener('change',reduceIntro);
+  document.body.classList.add('brand-ready');
+  if(restoreFocus)document.querySelector('.brand').focus({preventScroll:true});
+  if(!reduced.matches)document.querySelectorAll('.hero .reveal').forEach((el,i)=>{
+   const animation=el.animate([{opacity:0,transform:'translateY(12px)'},{opacity:1,transform:'translateY(0)'}],{duration:650,delay:i*80,fill:'backwards',easing:'cubic-bezier(.2,.65,.3,1)'});
+   animations.add(animation);animation.finished.then(()=>animations.delete(animation)).catch(()=>{});
+  });
+ }
+ function reduceIntro(){if(reduced.matches)finishIntro();}
+ skip.addEventListener('click',finishIntro);
+ intro.addEventListener('keydown',event=>{
+  if(event.key==='Escape')finishIntro();
+  if(event.key==='Tab'){event.preventDefault();skip.focus();}
  });
+ reduced.addEventListener('change',reduceIntro);
+ addEventListener('pagehide',finishIntro,{once:true});
+ skip.focus({preventScroll:true});
+ // A hard timeout also releases the page if decoding or animation is interrupted.
+ deadline=setTimeout(finishIntro,4500);
+ Promise.race([brandImage.decode().catch(()=>{}),new Promise(resolve=>setTimeout(resolve,600))]).then(()=>{
+  if(done)return;
+  introAnimations.push(intro.querySelector('.intro-center').animate([{opacity:0,transform:'translateY(18px) scale(.94)'},{opacity:1,transform:'translateY(0) scale(1)'}],{duration:1000,fill:'both',easing:'cubic-bezier(.2,.65,.3,1)'}));
+  introAnimations.push(intro.querySelector('.intro-line i').animate([{transform:'scaleX(0)'},{transform:'scaleX(1)'}],{duration:2900,fill:'both',easing:'cubic-bezier(.25,.1,.25,1)'}));
+  const exit=intro.animate([{opacity:1,offset:0},{opacity:1,offset:.79},{opacity:0,offset:1}],{duration:3400,fill:'forwards',easing:'linear'});
+  introAnimations.push(exit);exit.finished.then(finishIntro).catch(()=>{});
+ });
+} else {
+ document.body.classList.add('brand-ready');
 }

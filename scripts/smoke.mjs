@@ -75,6 +75,22 @@ for(const [solution,word] of [['cameras','câmeras'],['alarmes','alarme'],['aces
  await evaluate(`document.querySelector('[data-solution="${solution}"]').click()`);
  const href=await evaluate(`document.querySelector('#whatsapp-cta').href`);check(href.startsWith('https://wa.me/5511000000000?text='),'wa.me válido');check(new URL(href).searchParams.get('text').includes(word),'mensagem da solução');
 }
+await send('Emulation.setDeviceMetricsOverride',{width:1440,height:900,deviceScaleFactor:1,mobile:false});
+await send('Emulation.setEmulatedMedia',{features:[{name:'prefers-reduced-motion',value:'no-preference'}]});
+await send('Page.navigate',{url:base});await wait(200);
+check(await evaluate(`!!document.querySelector('.brand-intro')&&document.querySelector('main').inert`),'introdução real aparece e protege o foco');
+check(await evaluate(`document.activeElement.classList.contains('intro-skip')`),'pular introdução recebe foco');
+await wait(1600);
+check(await evaluate(`!!document.querySelector('.brand-intro')`),'introdução continua visível após 1,8 segundos');
+{const shot=await send('Page.captureScreenshot',{format:'png'});await writeFile(`${output}/abertura-henseg.png`,Buffer.from(shot.data,'base64'))}
+await wait(2800);
+check(await evaluate(`!document.querySelector('.brand-intro')&&!document.querySelector('main').inert`),'abertura termina e libera o site');
+await send('Page.navigate',{url:base});await wait(200);
+await evaluate(`document.querySelector('.intro-skip').click()`);
+check(await evaluate(`!document.querySelector('.brand-intro')&&!document.querySelector('main').inert`),'botão pular encerra imediatamente');
+await send('Emulation.setEmulatedMedia',{features:[{name:'prefers-reduced-motion',value:'reduce'}]});
+await send('Page.navigate',{url:base});await wait(200);
+check(await evaluate(`!document.querySelector('.brand-intro')&&!document.querySelector('main').inert`),'movimento reduzido não recebe abertura');
 await send('Emulation.setEmulatedMedia',{features:[{name:'prefers-reduced-motion',value:'no-preference'}]});await send('Page.navigate',{url:base});await wait(100);
 await send('Emulation.setEmulatedMedia',{features:[{name:'prefers-reduced-motion',value:'reduce'}]});await wait(100);
 check(await evaluate(`document.getAnimations().every(a=>a.playState!=='running')`),'movimento reduzido interrompe animações');

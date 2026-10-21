@@ -65,3 +65,8 @@ A logo substitui o símbolo provisório do cabeçalho. O cabeçalho entra em 110
 ## GitHub Pages
 
 O repositório já publica a branch `gh-pages`, na raiz, por meio do Pages nativo. As regras do ambiente `github-pages` permitem essa branch e impedem a publicação direta pela `main`. O código-fonte fica em `main`; após `npm run lint` e `npm run build`, o conteúdo de `dist/` deve ser enviado para `gh-pages`, preservando `.nojekyll` e um eventual CNAME. A aba Actions mostra o resultado de “pages build and deployment”. Endereço: https://miguelfrotagem-gif.github.io/site-andre/ .
+
+
+## Abertura de entrada
+
+Ao abrir ou recarregar o site, uma introdução em tela inteira apresenta a logomarca em tamanho grande, a frase “Sua paz merece proteção.” e uma linha dourada discreta. A marca entra em 1 segundo, permanece visível e o fundo desaparece suavemente, revelando o site em aproximadamente 3,4 segundos após preparar a imagem. O botão “Pular introdução” e Escape encerram imediatamente; o foco é preservado e o conteúdo abaixo fica inert temporariamente. Há um limite máximo de 4,5 segundos para liberar o conteúdo mesmo se a animação for interrompida. Movimento reduzido ignora a abertura; sem JavaScript não existe overlay. A abertura é repetida em novas visitas completas, sem bloqueio por localStorage.
