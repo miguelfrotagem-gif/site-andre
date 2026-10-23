@@ -153,22 +153,7 @@ em { color: var(--cyan); font-style: normal; }
   font-size: 0;
   transition: translate .18s;
 }
-.button > span::after {
-  content: '';
-  display: block;
-  width: 12px;
-  height: 12px;
-  border-top: 1.5px solid currentColor;
-  border-right: 1.5px solid currentColor;
-}
-.button > span::before {
-  content: '';
-  position: absolute;
-  width: 15px;
-  height: 1.5px;
-  background: currentColor;
-  rotate: -45deg;
-}
+.button > span > svg { display: block; width: 20px; height: 20px; }
 .button:active { background: #c6e7f5; box-shadow: inset 0 2px 4px #071a2a26; }
 .whatsapp {
   gap: 12px;
@@ -193,7 +178,6 @@ em { color: var(--cyan); font-style: normal; }
   transition: background .18s ease-out, border-color .18s ease-out;
 }
 .secondary-button:active { background: #21465e; }
-.secondary-button > span { display: none; }
 .actions { display: flex; align-items: center; flex-wrap: wrap; gap: 20px; }
 
 /* Full-width scenes follow their intrinsic ratio in the natural document flow. */
@@ -285,7 +269,8 @@ em { color: var(--cyan); font-style: normal; }
 .solution-options button > span:nth-child(2) { min-width: 0; padding-left: 18px; border-left: 1px solid #8ca9c366; }
 .solution-options strong { display: block; font-size: 1.4375rem; margin-bottom: 5px; }
 .solution-options small { display: block; color: var(--muted); font-size: 1rem; line-height: 1.45; }
-.solution-options button > span:last-child { width: 12px; height: 12px; flex-shrink: 0; margin-left: auto; border-top: 1px solid currentColor; border-right: 1px solid currentColor; color: var(--cyan); font-size: 0; }
+.solution-options button > span:last-child { display: grid; place-items: center; width: 20px; height: 20px; flex-shrink: 0; margin-left: auto; color: var(--cyan); }
+.solution-options button > span:last-child > svg { display: block; width: 20px; height: 20px; }
 .solution-options button[aria-pressed=true] { border-bottom-color: var(--cyan); }
 .solution-options button[aria-pressed=true] strong { color: var(--cyan); }
 .solution-options button[aria-pressed=true] > span:last-child { color: var(--light); }
@@ -540,7 +525,6 @@ footer > a { min-height: 44px; display: inline-flex; align-items: center; }
   .contact-portrait { grid-area: 2 / 1; justify-self: center; align-self: end; z-index: 1; width: min(480px, calc(100% - 24px)); margin-top: 16px; }
   .contact-native { grid-area: 3 / 1; margin-block: 24px 48px; }
   .contact-native .whatsapp { width: 100%; font-size: clamp(0.875rem, 4vw, 1rem); gap: 10px; padding-left: 14px; }
-  .contact-native .whatsapp-icon { width: 22px; height: 22px; flex-basis: 22px; }
   #contact-status { grid-area: 4 / 1; margin-block: 0 48px; }
   footer { grid-template-columns: minmax(0, 1fr); justify-items: center; gap: 16px; padding-block: 28px; }
   footer .brand { justify-self: center; }
