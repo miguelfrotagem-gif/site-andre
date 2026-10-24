@@ -1,0 +1,179 @@
+{
+  "origem": "Extração sem redimensionamento dos PDFs fornecidos; manifesto original não fornecido.",
+  "imagens": [
+    {
+      "pagina": 1,
+      "arquivo": "assets/aprovadas/01_hero.png",
+      "largura": 1672,
+      "altura": 941,
+      "sha256": "03bf290761b5e65890ae11d54e2657c4d68d2741936c12ec802130ec04d80c6e",
+      "pdf": "ADEMICON_Referencias_01-09.pdf",
+      "pagina_pdf": 1
+    },
+    {
+      "pagina": 2,
+      "arquivo": "assets/aprovadas/02_sobre.png",
+      "largura": 1672,
+      "altura": 941,
+      "sha256": "54c339a1d7a143a92f99da2bb4b6e1f741e24e37c8246de3137c3f3cd30b38b9",
+      "pdf": "ADEMICON_Referencias_01-09.pdf",
+      "pagina_pdf": 2
+    },
+    {
+      "pagina": 3,
+      "arquivo": "assets/aprovadas/03_consorcios_visao_geral.png",
+      "largura": 1672,
+      "altura": 941,
+      "sha256": "acabe776c2a89e103afc3237ca4118fc44c1d2d17c0368d2f12564393ef214e1",
+      "pdf": "ADEMICON_Referencias_01-09.pdf",
+      "pagina_pdf": 3
+    },
+    {
+      "pagina": 4,
+      "arquivo": "assets/aprovadas/04_veiculos.png",
+      "largura": 1672,
+      "altura": 941,
+      "sha256": "ae43212b16ff6e485428ca7778a82fa895fe857aca309383654a851355e3e6c8",
+      "pdf": "ADEMICON_Referencias_01-09.pdf",
+      "pagina_pdf": 4
+    },
+    {
+      "pagina": 5,
+      "arquivo": "assets/aprovadas/05_imoveis_01.png",
+      "largura": 1672,
+      "altura": 941,
+      "sha256": "5a5804822b76260a3a70c73d554b8a1acc998d6b74c8b78053251ea8318afee6",
+      "pdf": "ADEMICON_Referencias_01-09.pdf",
+      "pagina_pdf": 5
+    },
+    {
+      "pagina": 6,
+      "arquivo": "assets/aprovadas/06_imoveis_02.png",
+      "largura": 1672,
+      "altura": 941,
+      "sha256": "5f1da81dd0165723316e9934fdced96c291a2ad52620ad1c2ff6a1432ee8fd51",
+      "pdf": "ADEMICON_Referencias_01-09.pdf",
+      "pagina_pdf": 6
+    },
+    {
+      "pagina": 7,
+      "arquivo": "assets/aprovadas/07_servicos_01.png",
+      "largura": 1672,
+      "altura": 941,
+      "sha256": "891edce063c0fca6d18d2444885dfeabe15c13e60fe4505c35c80b8aa09c0198",
+      "pdf": "ADEMICON_Referencias_01-09.pdf",
+      "pagina_pdf": 7
+    },
+    {
+      "pagina": 8,
+      "arquivo": "assets/aprovadas/08_servicos_02.png",
+      "largura": 1672,
+      "altura": 941,
+      "sha256": "57bf3c834f0c9b0ca711c4a65a2cbe45fdadc12cf01f28b2f88a0c26e9234f8d",
+      "pdf": "ADEMICON_Referencias_01-09.pdf",
+      "pagina_pdf": 8
+    },
+    {
+      "pagina": 9,
+      "arquivo": "assets/aprovadas/09_outros_bens_moveis.png",
+      "largura": 1672,
+      "altura": 941,
+      "sha256": "8299ebb168e54156d239c5209571f9d323806933659f0259e4a82027d2bec4e5",
+      "pdf": "ADEMICON_Referencias_01-09.pdf",
+      "pagina_pdf": 9
+    },
+    {
+      "pagina": 10,
+      "arquivo": "assets/aprovadas/10_como_funciona.png",
+      "largura": 1672,
+      "altura": 941,
+      "sha256": "a79dd273510dc86136515466996b5dbe368f6ee60368017b0354d541f37176d9",
+      "pdf": "ADEMICON_Referencias_10-18.pdf",
+      "pagina_pdf": 1
+    },
+    {
+      "pagina": 11,
+      "arquivo": "assets/aprovadas/11_diferenciais.png",
+      "largura": 1672,
+      "altura": 941,
+      "sha256": "20e2f3cc6ca4dd63b09a495ec07df34b972acc93fbc665c2934be4911ee803d0",
+      "pdf": "ADEMICON_Referencias_10-18.pdf",
+      "pagina_pdf": 2
+    },
+    {
+      "pagina": 12,
+      "arquivo": "assets/aprovadas/12_historias.png",
+      "largura": 1672,
+      "altura": 941,
+      "sha256": "ea1999143ac756d9ce77521ec8887f9d8bc7e0f48c90e94aab3891dd21d34779",
+      "pdf": "ADEMICON_Referencias_10-18.pdf",
+      "pagina_pdf": 3
+    },
+    {
+      "pagina": 13,
+      "arquivo": "assets/aprovadas/13_comparacao.png",
+      "largura": 1672,
+      "altura": 941,
+      "sha256": "7a03befdae384c76cd89efaa1f7d2c93cc15a3b17b6dedcdbfff4a4af4fa3cba",
+      "pdf": "ADEMICON_Referencias_10-18.pdf",
+      "pagina_pdf": 4
+    },
+    {
+      "pagina": 14,
+      "arquivo": "assets/aprovadas/14_blog.png",
+      "largura": 1672,
+      "altura": 941,
+      "sha256": "92b9b03b864077c63180491456717f8b214809cb9c28a6a553e1ac95bfb7c78a",
+      "pdf": "ADEMICON_Referencias_10-18.pdf",
+      "pagina_pdf": 5
+    },
+    {
+      "pagina": 15,
+      "arquivo": "assets/aprovadas/15_duvidas.png",
+      "largura": 1672,
+      "altura": 941,
+      "sha256": "c5aa7642bb79c580e8d0a1623b6aa0afdfb5a5c05be42e918fd5f29ac5b3e3a8",
+      "pdf": "ADEMICON_Referencias_10-18.pdf",
+      "pagina_pdf": 6
+    },
+    {
+      "pagina": 16,
+      "arquivo": "assets/aprovadas/16_qualificacao.png",
+      "largura": 1672,
+      "altura": 941,
+      "sha256": "bbee8517b7eb7e52956128b414d6a34ee6aa04912542dbb878032b8b9eee0eea",
+      "pdf": "ADEMICON_Referencias_10-18.pdf",
+      "pagina_pdf": 7
+    },
+    {
+      "pagina": 17,
+      "arquivo": "assets/aprovadas/17_contato.png",
+      "largura": 1672,
+      "altura": 941,
+      "sha256": "55eefe412ec0a38db2e782467c08b0df237e99fa7b2df8ba140255ed5cbd9b0a",
+      "pdf": "ADEMICON_Referencias_10-18.pdf",
+      "pagina_pdf": 8
+    },
+    {
+      "pagina": 18,
+      "arquivo": "assets/aprovadas/18_rodape.png",
+      "largura": 1672,
+      "altura": 941,
+      "sha256": "e5a8ab0dd05d9d96acd18e684f82c1ee2bd8c82149114fda8a382359a5288131",
+      "pdf": "ADEMICON_Referencias_10-18.pdf",
+      "pagina_pdf": 9
+    }
+  ],
+  "pdfs": [
+    {
+      "arquivo": "ADEMICON_Referencias_01-09.pdf",
+      "sha256": "6642082bb1dac8c90e6393396ebf720f62f6af6975dbc9582f9b7897b28d5d19",
+      "paginas": 9
+    },
+    {
+      "arquivo": "ADEMICON_Referencias_10-18.pdf",
+      "sha256": "c559ce372e7c1af20adaf37c7fc9f330f408c500575d3d84c0b89bd20d224ec1",
+      "paginas": 9
+    }
+  ]
+}

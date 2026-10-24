@@ -11,7 +11,7 @@ async function embed(text) {
   return text;
 }
 
-let html = await readFile('index.html', 'utf8');
+let html = await readFile('hensec.html', 'utf8');
 const styles = await embed(await readFile('styles.css', 'utf8'));
 // Replacement callbacks preserve literal $$, $& and other JavaScript characters.
 html = html.replace('<link rel="stylesheet" href="styles.css">', () => `<style>${styles}</style>`);

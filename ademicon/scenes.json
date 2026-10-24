@@ -1,0 +1,2706 @@
+{
+  "01": {
+    "title": "Seu próximo sonho merece um plano.",
+    "description": "Carros, motos e energia solar. Conte com orientação para encontrar o consórcio alinhado aos seus objetivos.",
+    "hotspots": [
+      {
+        "label": "Ademicon — voltar ao início",
+        "action": "navigate",
+        "target": "inicio",
+        "rect": [
+          93,
+          46,
+          300,
+          68
+        ]
+      },
+      {
+        "label": "Início",
+        "action": "navigate",
+        "target": "inicio",
+        "rect": [
+          519,
+          49,
+          165,
+          63
+        ]
+      },
+      {
+        "label": "Quem Somos",
+        "action": "navigate",
+        "target": "sobre",
+        "rect": [
+          687,
+          49,
+          217,
+          63
+        ]
+      },
+      {
+        "label": "Consórcios",
+        "action": "dropdown",
+        "target": "consorcios",
+        "rect": [
+          906,
+          49,
+          219,
+          63
+        ]
+      },
+      {
+        "label": "Blog",
+        "action": "navigate",
+        "target": "blog",
+        "rect": [
+          1146,
+          50,
+          133,
+          62
+        ]
+      },
+      {
+        "label": "Simular agora",
+        "action": "simulate",
+        "rect": [
+          1327,
+          48,
+          264,
+          65
+        ]
+      },
+      {
+        "label": "Conhecer as opções",
+        "action": "navigate",
+        "rect": [
+          72,
+          620,
+          394,
+          68
+        ],
+        "target": "consorcios"
+      },
+      {
+        "label": "O que você quer conquistar?",
+        "action": "simulate",
+        "rect": [
+          1184,
+          352,
+          407,
+          57
+        ]
+      },
+      {
+        "label": "Planejar por parcela",
+        "action": "simulate",
+        "rect": [
+          1185,
+          460,
+          206,
+          45
+        ],
+        "mode": "parcela"
+      },
+      {
+        "label": "Planejar por crédito",
+        "action": "simulate",
+        "rect": [
+          1392,
+          460,
+          200,
+          45
+        ],
+        "mode": "credito"
+      },
+      {
+        "label": "Informar valor desejado",
+        "action": "simulate",
+        "rect": [
+          1184,
+          556,
+          409,
+          58
+        ]
+      },
+      {
+        "label": "Ajustar valor desejado",
+        "action": "simulate",
+        "rect": [
+          1184,
+          623,
+          408,
+          22
+        ]
+      },
+      {
+        "label": "Selecionar carro",
+        "action": "simulate",
+        "rect": [
+          1183,
+          669,
+          129,
+          55
+        ],
+        "category": "veiculos",
+        "product": "Carros"
+      },
+      {
+        "label": "Selecionar moto",
+        "action": "simulate",
+        "rect": [
+          1319,
+          669,
+          121,
+          55
+        ],
+        "category": "veiculos",
+        "product": "Motos"
+      },
+      {
+        "label": "Selecionar energia solar",
+        "action": "simulate",
+        "rect": [
+          1448,
+          669,
+          145,
+          55
+        ],
+        "category": "servicos",
+        "product": "Energia solar"
+      },
+      {
+        "label": "Simular meu consórcio",
+        "action": "simulate",
+        "rect": [
+          1182,
+          742,
+          410,
+          62
+        ]
+      }
+    ],
+    "id": "inicio",
+    "file": "01_hero"
+  },
+  "02": {
+    "title": "Uma história que inspira novas conquistas.",
+    "description": "Há mais de 35 anos, a Ademicon conecta os planos de brasileiros a novas possibilidades de conquista. Uma trajetória de presença nacional, experiência em consórcios e planejamento para diferentes momentos da vida.",
+    "hotspots": [
+      {
+        "label": "Ademicon — voltar ao início",
+        "action": "navigate",
+        "target": "inicio",
+        "rect": [
+          93,
+          46,
+          300,
+          68
+        ]
+      },
+      {
+        "label": "Início",
+        "action": "navigate",
+        "target": "inicio",
+        "rect": [
+          519,
+          49,
+          165,
+          63
+        ]
+      },
+      {
+        "label": "Quem Somos",
+        "action": "navigate",
+        "target": "sobre",
+        "rect": [
+          687,
+          49,
+          217,
+          63
+        ]
+      },
+      {
+        "label": "Consórcios",
+        "action": "dropdown",
+        "target": "consorcios",
+        "rect": [
+          906,
+          49,
+          219,
+          63
+        ]
+      },
+      {
+        "label": "Blog",
+        "action": "navigate",
+        "target": "blog",
+        "rect": [
+          1146,
+          50,
+          133,
+          62
+        ]
+      },
+      {
+        "label": "Simular agora",
+        "action": "simulate",
+        "rect": [
+          1327,
+          48,
+          264,
+          65
+        ]
+      },
+      {
+        "label": "Conheça nossas soluções",
+        "action": "navigate",
+        "rect": [
+          967,
+          826,
+          347,
+          64
+        ],
+        "target": "consorcios"
+      },
+      {
+        "label": "Entenda o consórcio",
+        "action": "navigate",
+        "rect": [
+          1342,
+          840,
+          183,
+          39
+        ],
+        "target": "como-funciona"
+      }
+    ],
+    "id": "sobre",
+    "file": "02_sobre"
+  },
+  "03": {
+    "title": "Diferentes sonhos. Um plano para cada um.",
+    "products": [
+      "Consórcio de carros",
+      "Consórcio de motos",
+      "Consórcio de imóveis",
+      "Consórcio de energia solar"
+    ],
+    "hotspots": [
+      {
+        "label": "Ademicon — voltar ao início",
+        "action": "navigate",
+        "target": "inicio",
+        "rect": [
+          93,
+          46,
+          300,
+          68
+        ]
+      },
+      {
+        "label": "Início",
+        "action": "navigate",
+        "target": "inicio",
+        "rect": [
+          519,
+          49,
+          165,
+          63
+        ]
+      },
+      {
+        "label": "Quem Somos",
+        "action": "navigate",
+        "target": "sobre",
+        "rect": [
+          687,
+          49,
+          217,
+          63
+        ]
+      },
+      {
+        "label": "Consórcios",
+        "action": "dropdown",
+        "target": "consorcios",
+        "rect": [
+          906,
+          49,
+          219,
+          63
+        ]
+      },
+      {
+        "label": "Blog",
+        "action": "navigate",
+        "target": "blog",
+        "rect": [
+          1146,
+          50,
+          133,
+          62
+        ]
+      },
+      {
+        "label": "Simular agora",
+        "action": "simulate",
+        "rect": [
+          1327,
+          48,
+          264,
+          65
+        ]
+      },
+      {
+        "label": "Explorar opções: carros",
+        "action": "planning",
+        "rect": [
+          68,
+          776,
+          275,
+          47
+        ],
+        "category": "veiculos",
+        "product": "Carros"
+      },
+      {
+        "label": "Explorar opções: motos",
+        "action": "planning",
+        "rect": [
+          476,
+          776,
+          283,
+          47
+        ],
+        "category": "veiculos",
+        "product": "Motos"
+      },
+      {
+        "label": "Explorar opções: imóveis",
+        "action": "planning",
+        "rect": [
+          874,
+          776,
+          283,
+          47
+        ],
+        "category": "imoveis",
+        "product": "Moradia"
+      },
+      {
+        "label": "Explorar opções: energia solar",
+        "action": "planning",
+        "rect": [
+          1277,
+          776,
+          290,
+          47
+        ],
+        "category": "servicos",
+        "product": "Energia solar"
+      },
+      {
+        "label": "Receber orientação personalizada",
+        "action": "planning",
+        "rect": [
+          1110,
+          878,
+          285,
+          41
+        ]
+      }
+    ],
+    "id": "consorcios",
+    "file": "03_consorcios_visao_geral"
+  },
+  "04": {
+    "title": "Seu próximo destino, começa com um plano.",
+    "category": "veiculos",
+    "products": [
+      "Carros",
+      "Motos",
+      "Caminhões",
+      "Maquinário agrícola"
+    ],
+    "descriptions": [
+      "Novos ou usados, elétricos ou híbridos.",
+      "Para trabalhar, passear ou viajar.",
+      "Modelos leves e pesados para seus objetivos.",
+      "Planeje a renovação dos seus equipamentos."
+    ],
+    "hotspots": [
+      {
+        "label": "Ademicon — voltar ao início",
+        "action": "navigate",
+        "target": "inicio",
+        "rect": [
+          93,
+          46,
+          300,
+          68
+        ]
+      },
+      {
+        "label": "Início",
+        "action": "navigate",
+        "target": "inicio",
+        "rect": [
+          519,
+          49,
+          165,
+          63
+        ]
+      },
+      {
+        "label": "Quem Somos",
+        "action": "navigate",
+        "target": "sobre",
+        "rect": [
+          687,
+          49,
+          217,
+          63
+        ]
+      },
+      {
+        "label": "Consórcios",
+        "action": "dropdown",
+        "target": "consorcios",
+        "rect": [
+          906,
+          49,
+          219,
+          63
+        ]
+      },
+      {
+        "label": "Blog",
+        "action": "navigate",
+        "target": "blog",
+        "rect": [
+          1146,
+          50,
+          133,
+          62
+        ]
+      },
+      {
+        "label": "Simular agora",
+        "action": "simulate",
+        "rect": [
+          1327,
+          48,
+          264,
+          65
+        ]
+      },
+      {
+        "label": "Veículos",
+        "action": "category",
+        "category": "veiculos",
+        "rect": [
+          413,
+          141,
+          182,
+          50
+        ]
+      },
+      {
+        "label": "Imóveis",
+        "action": "category",
+        "category": "imoveis",
+        "rect": [
+          612,
+          141,
+          170,
+          50
+        ]
+      },
+      {
+        "label": "Serviços",
+        "action": "category",
+        "category": "servicos",
+        "rect": [
+          800,
+          141,
+          173,
+          50
+        ]
+      },
+      {
+        "label": "Outros bens móveis",
+        "action": "category",
+        "category": "outros",
+        "rect": [
+          991,
+          141,
+          267,
+          50
+        ]
+      },
+      {
+        "label": "Conhecer opções: Carros",
+        "action": "planning",
+        "rect": [
+          68,
+          756,
+          277,
+          51
+        ],
+        "category": "veiculos",
+        "product": "Carros"
+      },
+      {
+        "label": "Conhecer opções: Motos",
+        "action": "planning",
+        "rect": [
+          475,
+          756,
+          279,
+          51
+        ],
+        "category": "veiculos",
+        "product": "Motos"
+      },
+      {
+        "label": "Conhecer opções: Caminhões",
+        "action": "planning",
+        "rect": [
+          873,
+          756,
+          279,
+          51
+        ],
+        "category": "veiculos",
+        "product": "Caminhões"
+      },
+      {
+        "label": "Conhecer opções: Maquinário agrícola",
+        "action": "planning",
+        "rect": [
+          1276,
+          756,
+          294,
+          51
+        ],
+        "category": "veiculos",
+        "product": "Maquinário agrícola"
+      },
+      {
+        "label": "Explorar possibilidades: outros bens móveis",
+        "action": "category",
+        "rect": [
+          1110,
+          864,
+          213,
+          43
+        ],
+        "category": "outros"
+      }
+    ],
+    "id": "veiculos",
+    "file": "04_veiculos"
+  },
+  "05": {
+    "title": "Seu patrimônio, novas possibilidades.",
+    "category": "imoveis",
+    "page": 1,
+    "products": [
+      "Moradia",
+      "Sala comercial",
+      "Aposentadoria imobiliária",
+      "Construção ou reforma"
+    ],
+    "descriptions": [
+      "Casa ou apartamento para os seus planos.",
+      "Um espaço para seus projetos profissionais.",
+      "Planejamento patrimonial para o futuro.",
+      "Novos espaços para a sua vida."
+    ],
+    "hotspots": [
+      {
+        "label": "Ademicon — voltar ao início",
+        "action": "navigate",
+        "target": "inicio",
+        "rect": [
+          93,
+          46,
+          300,
+          68
+        ]
+      },
+      {
+        "label": "Início",
+        "action": "navigate",
+        "target": "inicio",
+        "rect": [
+          519,
+          49,
+          165,
+          63
+        ]
+      },
+      {
+        "label": "Quem Somos",
+        "action": "navigate",
+        "target": "sobre",
+        "rect": [
+          687,
+          49,
+          217,
+          63
+        ]
+      },
+      {
+        "label": "Consórcios",
+        "action": "dropdown",
+        "target": "consorcios",
+        "rect": [
+          906,
+          49,
+          219,
+          63
+        ]
+      },
+      {
+        "label": "Blog",
+        "action": "navigate",
+        "target": "blog",
+        "rect": [
+          1146,
+          50,
+          133,
+          62
+        ]
+      },
+      {
+        "label": "Simular agora",
+        "action": "simulate",
+        "rect": [
+          1327,
+          48,
+          264,
+          65
+        ]
+      },
+      {
+        "label": "Veículos",
+        "action": "category",
+        "category": "veiculos",
+        "rect": [
+          413,
+          141,
+          182,
+          50
+        ]
+      },
+      {
+        "label": "Imóveis",
+        "action": "category",
+        "category": "imoveis",
+        "rect": [
+          612,
+          141,
+          170,
+          50
+        ]
+      },
+      {
+        "label": "Serviços",
+        "action": "category",
+        "category": "servicos",
+        "rect": [
+          800,
+          141,
+          173,
+          50
+        ]
+      },
+      {
+        "label": "Outros bens móveis",
+        "action": "category",
+        "category": "outros",
+        "rect": [
+          991,
+          141,
+          267,
+          50
+        ]
+      },
+      {
+        "label": "Conhecer opções: Moradia",
+        "action": "planning",
+        "rect": [
+          68,
+          756,
+          277,
+          51
+        ],
+        "category": "imoveis",
+        "product": "Moradia"
+      },
+      {
+        "label": "Conhecer opções: Sala comercial",
+        "action": "planning",
+        "rect": [
+          475,
+          756,
+          279,
+          51
+        ],
+        "category": "imoveis",
+        "product": "Sala comercial"
+      },
+      {
+        "label": "Conhecer opções: Aposentadoria imobiliária",
+        "action": "planning",
+        "rect": [
+          873,
+          756,
+          279,
+          51
+        ],
+        "category": "imoveis",
+        "product": "Aposentadoria imobiliária"
+      },
+      {
+        "label": "Conhecer opções: Construção ou reforma",
+        "action": "planning",
+        "rect": [
+          1276,
+          756,
+          294,
+          51
+        ],
+        "category": "imoveis",
+        "product": "Construção ou reforma"
+      },
+      {
+        "label": "Próxima página: imóveis 5 a 8",
+        "action": "page",
+        "rect": [
+          1581,
+          867,
+          47,
+          43
+        ],
+        "category": "imoveis",
+        "page": 2
+      }
+    ],
+    "id": "imoveis-1",
+    "file": "05_imoveis_01"
+  },
+  "06": {
+    "title": "Estratégias para novos projetos.",
+    "category": "imoveis",
+    "page": 2,
+    "products": [
+      "Quitar financiamento",
+      "Assunção de dívida",
+      "Consórcio para leilão",
+      "Projeto estruturado"
+    ],
+    "descriptions": [
+      "Avalie essa finalidade para o seu imóvel.",
+      "Conheça as condições dessa operação.",
+      "Explore possibilidades no mercado imobiliário.",
+      "Planejamento para operações imobiliárias."
+    ],
+    "hotspots": [
+      {
+        "label": "Ademicon — voltar ao início",
+        "action": "navigate",
+        "target": "inicio",
+        "rect": [
+          93,
+          46,
+          300,
+          68
+        ]
+      },
+      {
+        "label": "Início",
+        "action": "navigate",
+        "target": "inicio",
+        "rect": [
+          519,
+          49,
+          165,
+          63
+        ]
+      },
+      {
+        "label": "Quem Somos",
+        "action": "navigate",
+        "target": "sobre",
+        "rect": [
+          687,
+          49,
+          217,
+          63
+        ]
+      },
+      {
+        "label": "Consórcios",
+        "action": "dropdown",
+        "target": "consorcios",
+        "rect": [
+          906,
+          49,
+          219,
+          63
+        ]
+      },
+      {
+        "label": "Blog",
+        "action": "navigate",
+        "target": "blog",
+        "rect": [
+          1146,
+          50,
+          133,
+          62
+        ]
+      },
+      {
+        "label": "Simular agora",
+        "action": "simulate",
+        "rect": [
+          1327,
+          48,
+          264,
+          65
+        ]
+      },
+      {
+        "label": "Veículos",
+        "action": "category",
+        "category": "veiculos",
+        "rect": [
+          413,
+          141,
+          182,
+          50
+        ]
+      },
+      {
+        "label": "Imóveis",
+        "action": "category",
+        "category": "imoveis",
+        "rect": [
+          612,
+          141,
+          170,
+          50
+        ]
+      },
+      {
+        "label": "Serviços",
+        "action": "category",
+        "category": "servicos",
+        "rect": [
+          800,
+          141,
+          173,
+          50
+        ]
+      },
+      {
+        "label": "Outros bens móveis",
+        "action": "category",
+        "category": "outros",
+        "rect": [
+          991,
+          141,
+          267,
+          50
+        ]
+      },
+      {
+        "label": "Conhecer opções: Quitar financiamento",
+        "action": "planning",
+        "rect": [
+          68,
+          756,
+          277,
+          51
+        ],
+        "category": "imoveis",
+        "product": "Quitar financiamento"
+      },
+      {
+        "label": "Conhecer opções: Assunção de dívida",
+        "action": "planning",
+        "rect": [
+          475,
+          756,
+          279,
+          51
+        ],
+        "category": "imoveis",
+        "product": "Assunção de dívida"
+      },
+      {
+        "label": "Conhecer opções: Consórcio para leilão",
+        "action": "planning",
+        "rect": [
+          873,
+          756,
+          279,
+          51
+        ],
+        "category": "imoveis",
+        "product": "Consórcio para leilão"
+      },
+      {
+        "label": "Conhecer opções: Projeto estruturado",
+        "action": "planning",
+        "rect": [
+          1276,
+          756,
+          294,
+          51
+        ],
+        "category": "imoveis",
+        "product": "Projeto estruturado"
+      },
+      {
+        "label": "Página anterior: imóveis 1 a 4",
+        "action": "page",
+        "rect": [
+          1392,
+          867,
+          44,
+          43
+        ],
+        "category": "imoveis",
+        "page": 1
+      }
+    ],
+    "id": "imoveis-2",
+    "file": "06_imoveis_02"
+  },
+  "07": {
+    "title": "Planos que fazem parte da sua vida.",
+    "category": "servicos",
+    "page": 1,
+    "products": [
+      "Cirurgia plástica",
+      "Viagens",
+      "Casamento",
+      "Odontologia",
+      "Oftalmologia"
+    ],
+    "descriptions": [
+      "Planejamento para procedimentos estéticos.",
+      "Destinos nacionais e internacionais.",
+      "Celebre o seu grande dia.",
+      "Planeje cuidados com a saúde bucal.",
+      "Conheça as possibilidades de atendimento."
+    ],
+    "hotspots": [
+      {
+        "label": "Ademicon — voltar ao início",
+        "action": "navigate",
+        "target": "inicio",
+        "rect": [
+          93,
+          46,
+          300,
+          68
+        ]
+      },
+      {
+        "label": "Início",
+        "action": "navigate",
+        "target": "inicio",
+        "rect": [
+          519,
+          49,
+          165,
+          63
+        ]
+      },
+      {
+        "label": "Quem Somos",
+        "action": "navigate",
+        "target": "sobre",
+        "rect": [
+          687,
+          49,
+          217,
+          63
+        ]
+      },
+      {
+        "label": "Consórcios",
+        "action": "dropdown",
+        "target": "consorcios",
+        "rect": [
+          906,
+          49,
+          219,
+          63
+        ]
+      },
+      {
+        "label": "Blog",
+        "action": "navigate",
+        "target": "blog",
+        "rect": [
+          1146,
+          50,
+          133,
+          62
+        ]
+      },
+      {
+        "label": "Simular agora",
+        "action": "simulate",
+        "rect": [
+          1327,
+          48,
+          264,
+          65
+        ]
+      },
+      {
+        "label": "Veículos",
+        "action": "category",
+        "category": "veiculos",
+        "rect": [
+          413,
+          141,
+          182,
+          50
+        ]
+      },
+      {
+        "label": "Imóveis",
+        "action": "category",
+        "category": "imoveis",
+        "rect": [
+          612,
+          141,
+          170,
+          50
+        ]
+      },
+      {
+        "label": "Serviços",
+        "action": "category",
+        "category": "servicos",
+        "rect": [
+          800,
+          141,
+          173,
+          50
+        ]
+      },
+      {
+        "label": "Outros bens móveis",
+        "action": "category",
+        "category": "outros",
+        "rect": [
+          991,
+          141,
+          267,
+          50
+        ]
+      },
+      {
+        "label": "Saiba mais: Cirurgia plástica",
+        "action": "planning",
+        "rect": [
+          66,
+          756,
+          243,
+          51
+        ],
+        "category": "servicos",
+        "product": "Cirurgia plástica"
+      },
+      {
+        "label": "Saiba mais: Viagens",
+        "action": "planning",
+        "rect": [
+          390,
+          756,
+          241,
+          51
+        ],
+        "category": "servicos",
+        "product": "Viagens"
+      },
+      {
+        "label": "Saiba mais: Casamento",
+        "action": "planning",
+        "rect": [
+          712,
+          756,
+          242,
+          51
+        ],
+        "category": "servicos",
+        "product": "Casamento"
+      },
+      {
+        "label": "Saiba mais: Odontologia",
+        "action": "planning",
+        "rect": [
+          1030,
+          756,
+          242,
+          51
+        ],
+        "category": "servicos",
+        "product": "Odontologia"
+      },
+      {
+        "label": "Saiba mais: Oftalmologia",
+        "action": "planning",
+        "rect": [
+          1350,
+          756,
+          242,
+          51
+        ],
+        "category": "servicos",
+        "product": "Oftalmologia"
+      },
+      {
+        "label": "Próxima página: serviços 6 a 10",
+        "action": "page",
+        "rect": [
+          1575,
+          867,
+          44,
+          44
+        ],
+        "category": "servicos",
+        "page": 2
+      }
+    ],
+    "id": "servicos-1",
+    "file": "07_servicos_01"
+  },
+  "08": {
+    "title": "Novas experiências, novas conquistas.",
+    "category": "servicos",
+    "page": 2,
+    "products": [
+      "Intercâmbio",
+      "Festas de aniversário",
+      "Energia solar",
+      "Educação",
+      "Formatura"
+    ],
+    "descriptions": [
+      "Experiências profissionais e de estudo.",
+      "Prepare momentos para celebrar.",
+      "Compra e instalação do sistema fotovoltaico.",
+      "Graduação, pós e outros cursos.",
+      "Planeje essa etapa da sua história."
+    ],
+    "hotspots": [
+      {
+        "label": "Ademicon — voltar ao início",
+        "action": "navigate",
+        "target": "inicio",
+        "rect": [
+          93,
+          46,
+          300,
+          68
+        ]
+      },
+      {
+        "label": "Início",
+        "action": "navigate",
+        "target": "inicio",
+        "rect": [
+          519,
+          49,
+          165,
+          63
+        ]
+      },
+      {
+        "label": "Quem Somos",
+        "action": "navigate",
+        "target": "sobre",
+        "rect": [
+          687,
+          49,
+          217,
+          63
+        ]
+      },
+      {
+        "label": "Consórcios",
+        "action": "dropdown",
+        "target": "consorcios",
+        "rect": [
+          906,
+          49,
+          219,
+          63
+        ]
+      },
+      {
+        "label": "Blog",
+        "action": "navigate",
+        "target": "blog",
+        "rect": [
+          1146,
+          50,
+          133,
+          62
+        ]
+      },
+      {
+        "label": "Simular agora",
+        "action": "simulate",
+        "rect": [
+          1327,
+          48,
+          264,
+          65
+        ]
+      },
+      {
+        "label": "Veículos",
+        "action": "category",
+        "category": "veiculos",
+        "rect": [
+          413,
+          141,
+          182,
+          50
+        ]
+      },
+      {
+        "label": "Imóveis",
+        "action": "category",
+        "category": "imoveis",
+        "rect": [
+          612,
+          141,
+          170,
+          50
+        ]
+      },
+      {
+        "label": "Serviços",
+        "action": "category",
+        "category": "servicos",
+        "rect": [
+          800,
+          141,
+          173,
+          50
+        ]
+      },
+      {
+        "label": "Outros bens móveis",
+        "action": "category",
+        "category": "outros",
+        "rect": [
+          991,
+          141,
+          267,
+          50
+        ]
+      },
+      {
+        "label": "Saiba mais: Intercâmbio",
+        "action": "planning",
+        "rect": [
+          66,
+          767,
+          243,
+          51
+        ],
+        "category": "servicos",
+        "product": "Intercâmbio"
+      },
+      {
+        "label": "Saiba mais: Festas de aniversário",
+        "action": "planning",
+        "rect": [
+          390,
+          767,
+          241,
+          51
+        ],
+        "category": "servicos",
+        "product": "Festas de aniversário"
+      },
+      {
+        "label": "Saiba mais: Energia solar",
+        "action": "planning",
+        "rect": [
+          712,
+          767,
+          242,
+          51
+        ],
+        "category": "servicos",
+        "product": "Energia solar"
+      },
+      {
+        "label": "Saiba mais: Educação",
+        "action": "planning",
+        "rect": [
+          1030,
+          767,
+          242,
+          51
+        ],
+        "category": "servicos",
+        "product": "Educação"
+      },
+      {
+        "label": "Saiba mais: Formatura",
+        "action": "planning",
+        "rect": [
+          1350,
+          767,
+          242,
+          51
+        ],
+        "category": "servicos",
+        "product": "Formatura"
+      },
+      {
+        "label": "Página anterior: serviços 1 a 5",
+        "action": "page",
+        "rect": [
+          1108,
+          866,
+          178,
+          45
+        ],
+        "category": "servicos",
+        "page": 1
+      }
+    ],
+    "id": "servicos-2",
+    "file": "08_servicos_02"
+  },
+  "09": {
+    "title": "Equipamentos para novos projetos.",
+    "category": "outros",
+    "description": "Conte qual bem pretende adquirir. Um consultor verifica o enquadramento e as condições disponíveis para o seu objetivo. Qual equipamento? O que você deseja adquirir. Para qual objetivo? Como o bem fará parte dos seus planos. Qual planejamento? Valor pretendido e parcela confortável.",
+    "hotspots": [
+      {
+        "label": "Ademicon — voltar ao início",
+        "action": "navigate",
+        "target": "inicio",
+        "rect": [
+          93,
+          46,
+          300,
+          68
+        ]
+      },
+      {
+        "label": "Início",
+        "action": "navigate",
+        "target": "inicio",
+        "rect": [
+          519,
+          49,
+          165,
+          63
+        ]
+      },
+      {
+        "label": "Quem Somos",
+        "action": "navigate",
+        "target": "sobre",
+        "rect": [
+          687,
+          49,
+          217,
+          63
+        ]
+      },
+      {
+        "label": "Consórcios",
+        "action": "dropdown",
+        "target": "consorcios",
+        "rect": [
+          906,
+          49,
+          219,
+          63
+        ]
+      },
+      {
+        "label": "Blog",
+        "action": "navigate",
+        "target": "blog",
+        "rect": [
+          1146,
+          50,
+          133,
+          62
+        ]
+      },
+      {
+        "label": "Simular agora",
+        "action": "simulate",
+        "rect": [
+          1327,
+          48,
+          264,
+          65
+        ]
+      },
+      {
+        "label": "Veículos",
+        "action": "category",
+        "rect": [
+          66,
+          148,
+          103,
+          58
+        ],
+        "category": "veiculos"
+      },
+      {
+        "label": "Imóveis",
+        "action": "category",
+        "rect": [
+          183,
+          148,
+          87,
+          58
+        ],
+        "category": "imoveis"
+      },
+      {
+        "label": "Serviços",
+        "action": "category",
+        "rect": [
+          298,
+          148,
+          94,
+          58
+        ],
+        "category": "servicos"
+      },
+      {
+        "label": "Outros bens móveis",
+        "action": "category",
+        "rect": [
+          408,
+          148,
+          231,
+          58
+        ],
+        "category": "outros"
+      },
+      {
+        "label": "Consultar meu objetivo",
+        "action": "planning",
+        "rect": [
+          70,
+          829,
+          395,
+          70
+        ],
+        "category": "outros"
+      }
+    ],
+    "id": "outros",
+    "file": "09_outros_bens_moveis"
+  },
+  "10": {
+    "title": "Seu objetivo ganha um caminho.",
+    "description": "Escolha seu objetivo. Defina o bem ou serviço e conheça as condições do plano. Contribua mensalmente. Acompanhe seus pagamentos e o andamento do grupo. Acompanhe as assembleias. A contemplação ocorre por sorteio ou lance, conforme as regras do grupo. Utilize o crédito. Após a contemplação, cumpra os requisitos para realizar a aquisição. A contemplação não tem data garantida.",
+    "content": [
+      "Escolha seu objetivo. Defina o bem ou serviço e conheça as condições do plano.",
+      "Contribua mensalmente. Acompanhe seus pagamentos e o andamento do grupo.",
+      "Acompanhe as assembleias. A contemplação ocorre por sorteio ou lance, conforme as regras do grupo.",
+      "Utilize o crédito. Após a contemplação, cumpra os requisitos para realizar a aquisição.",
+      "A contemplação não tem data garantida."
+    ],
+    "hotspots": [
+      {
+        "label": "Ademicon — voltar ao início",
+        "action": "navigate",
+        "target": "inicio",
+        "rect": [
+          93,
+          46,
+          300,
+          68
+        ]
+      },
+      {
+        "label": "Início",
+        "action": "navigate",
+        "target": "inicio",
+        "rect": [
+          519,
+          49,
+          165,
+          63
+        ]
+      },
+      {
+        "label": "Quem Somos",
+        "action": "navigate",
+        "target": "sobre",
+        "rect": [
+          687,
+          49,
+          217,
+          63
+        ]
+      },
+      {
+        "label": "Consórcios",
+        "action": "dropdown",
+        "target": "consorcios",
+        "rect": [
+          906,
+          49,
+          219,
+          63
+        ]
+      },
+      {
+        "label": "Blog",
+        "action": "navigate",
+        "target": "blog",
+        "rect": [
+          1146,
+          50,
+          133,
+          62
+        ]
+      },
+      {
+        "label": "Simular agora",
+        "action": "simulate",
+        "rect": [
+          1327,
+          48,
+          264,
+          65
+        ]
+      },
+      {
+        "label": "Encontrar meu consórcio",
+        "rect": [
+          434,
+          826,
+          398,
+          66
+        ],
+        "action": "navigate",
+        "target": "consorcios"
+      }
+    ],
+    "id": "como-funciona",
+    "file": "10_como_funciona"
+  },
+  "11": {
+    "title": "Confiança se constrói com presença.",
+    "description": "Informação, acompanhamento e canais oficiais para planejar sua conquista. Apoio especializado: orientação para escolher e acompanhar seu plano. Acompanhamento: informação ao longo das etapas do consórcio. Canais oficiais: pagamentos destinados à administradora, sem intermediários. Presença nacional: uma marca que acompanha planos em todo o Brasil.",
+    "content": [
+      "Informação, acompanhamento e canais oficiais para planejar sua conquista.",
+      "Apoio especializado: orientação para escolher e acompanhar seu plano.",
+      "Acompanhamento: informação ao longo das etapas do consórcio.",
+      "Canais oficiais: pagamentos destinados à administradora, sem intermediários.",
+      "Presença nacional: uma marca que acompanha planos em todo o Brasil."
+    ],
+    "hotspots": [
+      {
+        "label": "Ademicon — voltar ao início",
+        "action": "navigate",
+        "target": "inicio",
+        "rect": [
+          93,
+          46,
+          300,
+          68
+        ]
+      },
+      {
+        "label": "Início",
+        "action": "navigate",
+        "target": "inicio",
+        "rect": [
+          519,
+          49,
+          165,
+          63
+        ]
+      },
+      {
+        "label": "Quem Somos",
+        "action": "navigate",
+        "target": "sobre",
+        "rect": [
+          687,
+          49,
+          217,
+          63
+        ]
+      },
+      {
+        "label": "Consórcios",
+        "action": "dropdown",
+        "target": "consorcios",
+        "rect": [
+          906,
+          49,
+          219,
+          63
+        ]
+      },
+      {
+        "label": "Blog",
+        "action": "navigate",
+        "target": "blog",
+        "rect": [
+          1146,
+          50,
+          133,
+          62
+        ]
+      },
+      {
+        "label": "Simular agora",
+        "action": "simulate",
+        "rect": [
+          1327,
+          48,
+          264,
+          65
+        ]
+      },
+      {
+        "label": "Quero receber orientação",
+        "rect": [
+          939,
+          821,
+          427,
+          68
+        ],
+        "action": "planning"
+      }
+    ],
+    "id": "diferenciais",
+    "file": "11_diferenciais"
+  },
+  "12": {
+    "title": "Planos que se tornaram histórias reais.",
+    "description": "Conheça relatos publicados pela Ademicon e descubra diferentes jornadas de conquista. Letícia — A conquista do primeiro carro. Uma compra planejada que ganhou forma com o consórcio. Francelize — Uma chácara nos seus planos. Um projeto de aquisição de terreno e patrimônio. Cleverson e Lilian — O projeto de construir um lar. Planejamento e acompanhamento ao longo da jornada. Relatos publicados pela Ademicon. Imagens ilustrativas.",
+    "content": [
+      "Conheça relatos publicados pela Ademicon e descubra diferentes jornadas de conquista.",
+      "Letícia — A conquista do primeiro carro. Uma compra planejada que ganhou forma com o consórcio.",
+      "Francelize — Uma chácara nos seus planos. Um projeto de aquisição de terreno e patrimônio.",
+      "Cleverson e Lilian — O projeto de construir um lar. Planejamento e acompanhamento ao longo da jornada.",
+      "Relatos publicados pela Ademicon. Imagens ilustrativas."
+    ],
+    "hotspots": [
+      {
+        "label": "Ademicon — voltar ao início",
+        "action": "navigate",
+        "target": "inicio",
+        "rect": [
+          93,
+          46,
+          300,
+          68
+        ]
+      },
+      {
+        "label": "Início",
+        "action": "navigate",
+        "target": "inicio",
+        "rect": [
+          519,
+          49,
+          165,
+          63
+        ]
+      },
+      {
+        "label": "Quem Somos",
+        "action": "navigate",
+        "target": "sobre",
+        "rect": [
+          687,
+          49,
+          217,
+          63
+        ]
+      },
+      {
+        "label": "Consórcios",
+        "action": "dropdown",
+        "target": "consorcios",
+        "rect": [
+          906,
+          49,
+          219,
+          63
+        ]
+      },
+      {
+        "label": "Blog",
+        "action": "navigate",
+        "target": "blog",
+        "rect": [
+          1146,
+          50,
+          133,
+          62
+        ]
+      },
+      {
+        "label": "Simular agora",
+        "action": "simulate",
+        "rect": [
+          1327,
+          48,
+          264,
+          65
+        ]
+      },
+      {
+        "label": "História anterior",
+        "rect": [
+          1476,
+          205,
+          61,
+          62
+        ],
+        "action": "historyPrevious"
+      },
+      {
+        "label": "Próxima história",
+        "rect": [
+          1553,
+          205,
+          62,
+          62
+        ],
+        "action": "historyNext"
+      },
+      {
+        "label": "Assistir à história de Letícia",
+        "rect": [
+          59,
+          327,
+          514,
+          503
+        ],
+        "action": "video",
+        "key": "historia_leticia"
+      },
+      {
+        "label": "Assistir à história de Francelize",
+        "rect": [
+          588,
+          327,
+          502,
+          503
+        ],
+        "action": "video",
+        "key": "historia_francelize"
+      },
+      {
+        "label": "Assistir à história de Cleverson e Lilian",
+        "rect": [
+          1105,
+          327,
+          509,
+          503
+        ],
+        "action": "video",
+        "key": "historia_cleverson_lilian"
+      },
+      {
+        "label": "Conhecer outras histórias",
+        "rect": [
+          1264,
+          849,
+          350,
+          64
+        ],
+        "action": "stories"
+      }
+    ],
+    "id": "historias",
+    "file": "12_historias"
+  },
+  "13": {
+    "title": "Decisões diferentes. Planos diferentes.",
+    "description": "Comparação qualitativa entre consórcio e financiamento. Compare as condições completas antes de contratar. Consórcio: aquisição após contemplação e cumprimento dos requisitos; taxa de administração e encargos previstos no contrato; considera sorteios, lances e prazo do grupo; condições variam conforme o plano e o grupo. Financiamento: aquisição após análise, aprovação e contratação; juros e demais custos da operação; considera crédito aprovado e condições contratadas; condições variam conforme a instituição e a análise de crédito.",
+    "content": [
+      "Comparação qualitativa entre consórcio e financiamento. Compare as condições completas antes de contratar.",
+      "Consórcio: aquisição após contemplação e cumprimento dos requisitos; taxa de administração e encargos previstos no contrato; considera sorteios, lances e prazo do grupo; condições variam conforme o plano e o grupo.",
+      "Financiamento: aquisição após análise, aprovação e contratação; juros e demais custos da operação; considera crédito aprovado e condições contratadas; condições variam conforme a instituição e a análise de crédito."
+    ],
+    "hotspots": [
+      {
+        "label": "Ademicon — voltar ao início",
+        "action": "navigate",
+        "target": "inicio",
+        "rect": [
+          93,
+          46,
+          300,
+          68
+        ]
+      },
+      {
+        "label": "Início",
+        "action": "navigate",
+        "target": "inicio",
+        "rect": [
+          519,
+          49,
+          165,
+          63
+        ]
+      },
+      {
+        "label": "Quem Somos",
+        "action": "navigate",
+        "target": "sobre",
+        "rect": [
+          687,
+          49,
+          217,
+          63
+        ]
+      },
+      {
+        "label": "Consórcios",
+        "action": "dropdown",
+        "target": "consorcios",
+        "rect": [
+          906,
+          49,
+          219,
+          63
+        ]
+      },
+      {
+        "label": "Blog",
+        "action": "navigate",
+        "target": "blog",
+        "rect": [
+          1146,
+          50,
+          133,
+          62
+        ]
+      },
+      {
+        "label": "Simular agora",
+        "action": "simulate",
+        "rect": [
+          1327,
+          48,
+          264,
+          65
+        ]
+      },
+      {
+        "label": "Quero entender minhas opções",
+        "rect": [
+          426,
+          849,
+          438,
+          65
+        ],
+        "action": "planning"
+      }
+    ],
+    "id": "comparacao",
+    "file": "13_comparacao"
+  },
+  "14": {
+    "title": "Conhecimento para planejar melhor.",
+    "description": "Artigos e vídeos da Ademicon para entender o consórcio e explorar novas possibilidades. Conheça a Ademicon: história, presença e possibilidades de conquista. Energia solar: dá para pagar com consórcio? Entenda a relação entre energia solar e a compra planejada. Como funciona o consórcio de veículos? Conheça as etapas e as possibilidades dessa modalidade. Entrevista à EXAME: o crescimento do consórcio no Brasil.",
+    "content": [
+      "Artigos e vídeos da Ademicon para entender o consórcio e explorar novas possibilidades.",
+      "Conheça a Ademicon: história, presença e possibilidades de conquista.",
+      "Energia solar: dá para pagar com consórcio? Entenda a relação entre energia solar e a compra planejada.",
+      "Como funciona o consórcio de veículos? Conheça as etapas e as possibilidades dessa modalidade.",
+      "Entrevista à EXAME: o crescimento do consórcio no Brasil."
+    ],
+    "hotspots": [
+      {
+        "label": "Ademicon — voltar ao início",
+        "action": "navigate",
+        "target": "inicio",
+        "rect": [
+          93,
+          46,
+          300,
+          68
+        ]
+      },
+      {
+        "label": "Início",
+        "action": "navigate",
+        "target": "inicio",
+        "rect": [
+          519,
+          49,
+          165,
+          63
+        ]
+      },
+      {
+        "label": "Quem Somos",
+        "action": "navigate",
+        "target": "sobre",
+        "rect": [
+          687,
+          49,
+          217,
+          63
+        ]
+      },
+      {
+        "label": "Consórcios",
+        "action": "dropdown",
+        "target": "consorcios",
+        "rect": [
+          906,
+          49,
+          219,
+          63
+        ]
+      },
+      {
+        "label": "Blog",
+        "action": "navigate",
+        "target": "blog",
+        "rect": [
+          1146,
+          50,
+          133,
+          62
+        ]
+      },
+      {
+        "label": "Simular agora",
+        "action": "simulate",
+        "rect": [
+          1327,
+          48,
+          264,
+          65
+        ]
+      },
+      {
+        "label": "Todos os conteúdos",
+        "rect": [
+          996,
+          273,
+          118,
+          49
+        ],
+        "action": "blogFilter",
+        "filter": "todos"
+      },
+      {
+        "label": "Artigos",
+        "rect": [
+          1126,
+          273,
+          123,
+          49
+        ],
+        "action": "blogFilter",
+        "filter": "artigos"
+      },
+      {
+        "label": "Vídeos",
+        "rect": [
+          1260,
+          273,
+          124,
+          49
+        ],
+        "action": "blogFilter",
+        "filter": "videos"
+      },
+      {
+        "label": "Assistir Conheça a Ademicon",
+        "rect": [
+          39,
+          357,
+          788,
+          490
+        ],
+        "action": "video",
+        "key": "video_institucional"
+      },
+      {
+        "label": "Ler artigo de energia solar",
+        "rect": [
+          844,
+          357,
+          387,
+          490
+        ],
+        "action": "external",
+        "key": "artigo_solar"
+      },
+      {
+        "label": "Ler artigo de veículos",
+        "rect": [
+          1247,
+          357,
+          388,
+          490
+        ],
+        "action": "external",
+        "key": "artigo_veiculos"
+      },
+      {
+        "label": "Ler entrevista à EXAME",
+        "rect": [
+          1314,
+          881,
+          148,
+          41
+        ],
+        "action": "external",
+        "key": "entrevista_exame"
+      }
+    ],
+    "id": "blog",
+    "file": "14_blog"
+  },
+  "15": {
+    "title": "Informação para decidir melhor.",
+    "description": "Entenda os pontos essenciais antes de escolher seu consórcio. Como acontece a contemplação? Por sorteio ou lance, conforme as regras e os recursos do grupo. Não há garantia de uma data específica.",
+    "content": [
+      "Entenda os pontos essenciais antes de escolher seu consórcio.",
+      "Como acontece a contemplação? Por sorteio ou lance, conforme as regras e os recursos do grupo. Não há garantia de uma data específica."
+    ],
+    "hotspots": [
+      {
+        "label": "Ademicon — voltar ao início",
+        "action": "navigate",
+        "target": "inicio",
+        "rect": [
+          93,
+          46,
+          300,
+          68
+        ]
+      },
+      {
+        "label": "Início",
+        "action": "navigate",
+        "target": "inicio",
+        "rect": [
+          519,
+          49,
+          165,
+          63
+        ]
+      },
+      {
+        "label": "Quem Somos",
+        "action": "navigate",
+        "target": "sobre",
+        "rect": [
+          687,
+          49,
+          217,
+          63
+        ]
+      },
+      {
+        "label": "Consórcios",
+        "action": "dropdown",
+        "target": "consorcios",
+        "rect": [
+          906,
+          49,
+          219,
+          63
+        ]
+      },
+      {
+        "label": "Blog",
+        "action": "navigate",
+        "target": "blog",
+        "rect": [
+          1146,
+          50,
+          133,
+          62
+        ]
+      },
+      {
+        "label": "Simular agora",
+        "action": "simulate",
+        "rect": [
+          1327,
+          48,
+          264,
+          65
+        ]
+      },
+      {
+        "label": "Geral",
+        "rect": [
+          797,
+          185,
+          180,
+          50
+        ],
+        "action": "faqFilter",
+        "filter": "geral"
+      },
+      {
+        "label": "Contemplação",
+        "rect": [
+          987,
+          185,
+          205,
+          50
+        ],
+        "action": "faqFilter",
+        "filter": "contemplacao"
+      },
+      {
+        "label": "Parcelas",
+        "rect": [
+          1204,
+          185,
+          191,
+          50
+        ],
+        "action": "faqFilter",
+        "filter": "parcelas"
+      },
+      {
+        "label": "Contrato",
+        "rect": [
+          1405,
+          185,
+          191,
+          50
+        ],
+        "action": "faqFilter",
+        "filter": "contrato"
+      },
+      {
+        "label": "Como acontece a contemplação?",
+        "rect": [
+          789,
+          255,
+          821,
+          166
+        ],
+        "action": "faq",
+        "index": 0
+      },
+      {
+        "label": "O que é um lance?",
+        "rect": [
+          789,
+          433,
+          821,
+          68
+        ],
+        "action": "faq",
+        "index": 1
+      },
+      {
+        "label": "Quais custos compõem o plano?",
+        "rect": [
+          789,
+          510,
+          821,
+          69
+        ],
+        "action": "faq",
+        "index": 2
+      },
+      {
+        "label": "As parcelas podem ser reajustadas?",
+        "rect": [
+          789,
+          587,
+          821,
+          68
+        ],
+        "action": "faq",
+        "index": 3
+      },
+      {
+        "label": "O que posso adquirir com o crédito?",
+        "rect": [
+          789,
+          665,
+          821,
+          68
+        ],
+        "action": "faq",
+        "index": 4
+      },
+      {
+        "label": "O que acontece se eu cancelar?",
+        "rect": [
+          789,
+          742,
+          821,
+          69
+        ],
+        "action": "faq",
+        "index": 5
+      },
+      {
+        "label": "Consultar os regulamentos oficiais",
+        "rect": [
+          1303,
+          835,
+          293,
+          38
+        ],
+        "action": "regulations"
+      },
+      {
+        "label": "Conversar com um consultor",
+        "rect": [
+          42,
+          837,
+          402,
+          62
+        ],
+        "action": "planning"
+      }
+    ],
+    "id": "duvidas",
+    "file": "15_duvidas"
+  },
+  "16": {
+    "title": "Sua conquista, do seu jeito.",
+    "description": "Conte o que procura para prepararmos um atendimento alinhado ao seu momento. Três etapas: Seu objetivo, Contato e Revisão. O que você quer conquistar? Responda no seu ritmo. Se ainda não souber, tudo bem. Objetivo, valor aproximado, parcela confortável, prazo desejado e um pouco mais sobre seu plano.",
+    "content": [
+      "Conte o que procura para prepararmos um atendimento alinhado ao seu momento.",
+      "Três etapas: Seu objetivo, Contato e Revisão.",
+      "O que você quer conquistar? Responda no seu ritmo. Se ainda não souber, tudo bem.",
+      "Objetivo, valor aproximado, parcela confortável, prazo desejado e um pouco mais sobre seu plano."
+    ],
+    "hotspots": [
+      {
+        "label": "Ademicon — voltar ao início",
+        "action": "navigate",
+        "target": "inicio",
+        "rect": [
+          93,
+          46,
+          300,
+          68
+        ]
+      },
+      {
+        "label": "Início",
+        "action": "navigate",
+        "target": "inicio",
+        "rect": [
+          519,
+          49,
+          165,
+          63
+        ]
+      },
+      {
+        "label": "Quem Somos",
+        "action": "navigate",
+        "target": "sobre",
+        "rect": [
+          687,
+          49,
+          217,
+          63
+        ]
+      },
+      {
+        "label": "Consórcios",
+        "action": "dropdown",
+        "target": "consorcios",
+        "rect": [
+          906,
+          49,
+          219,
+          63
+        ]
+      },
+      {
+        "label": "Blog",
+        "action": "navigate",
+        "target": "blog",
+        "rect": [
+          1146,
+          50,
+          133,
+          62
+        ]
+      },
+      {
+        "label": "Simular agora",
+        "action": "simulate",
+        "rect": [
+          1327,
+          48,
+          264,
+          65
+        ]
+      },
+      {
+        "label": "Iniciar planejamento demonstrativo",
+        "rect": [
+          710,
+          150,
+          927,
+          761
+        ],
+        "action": "planning"
+      }
+    ],
+    "id": "planejamento",
+    "file": "16_qualificacao"
+  },
+  "17": {
+    "title": "Vamos conversar sobre seus planos.",
+    "description": "Conte o que você deseja conquistar e receba orientação para conhecer as possibilidades de consórcio. Atendimento em Alphaville: Alameda Grajaú, 129, Alphaville Ind., Barueri, SP, CEP 06454-050, Brasil. Seu objetivo é o ponto de partida. Fotografia do consultor e sala: ilustrações aprovadas, sem comprovação do interior do endereço.",
+    "content": [
+      "Conte o que você deseja conquistar e receba orientação para conhecer as possibilidades de consórcio.",
+      "Atendimento em Alphaville: Alameda Grajaú, 129, Alphaville Ind., Barueri, SP, CEP 06454-050, Brasil.",
+      "Seu objetivo é o ponto de partida.",
+      "Fotografia do consultor e sala: ilustrações aprovadas, sem comprovação do interior do endereço."
+    ],
+    "hotspots": [
+      {
+        "label": "Ademicon — voltar ao início",
+        "action": "navigate",
+        "target": "inicio",
+        "rect": [
+          93,
+          46,
+          300,
+          68
+        ]
+      },
+      {
+        "label": "Início",
+        "action": "navigate",
+        "target": "inicio",
+        "rect": [
+          519,
+          49,
+          165,
+          63
+        ]
+      },
+      {
+        "label": "Quem Somos",
+        "action": "navigate",
+        "target": "sobre",
+        "rect": [
+          687,
+          49,
+          217,
+          63
+        ]
+      },
+      {
+        "label": "Consórcios",
+        "action": "dropdown",
+        "target": "consorcios",
+        "rect": [
+          906,
+          49,
+          219,
+          63
+        ]
+      },
+      {
+        "label": "Blog",
+        "action": "navigate",
+        "target": "blog",
+        "rect": [
+          1146,
+          50,
+          133,
+          62
+        ]
+      },
+      {
+        "label": "Simular agora",
+        "action": "simulate",
+        "rect": [
+          1327,
+          48,
+          264,
+          65
+        ]
+      },
+      {
+        "label": "Traçar rota",
+        "rect": [
+          171,
+          692,
+          136,
+          40
+        ],
+        "action": "external",
+        "key": "rota_endereco"
+      },
+      {
+        "label": "Solicitar atendimento",
+        "rect": [
+          59,
+          770,
+          369,
+          65
+        ],
+        "action": "planning"
+      },
+      {
+        "label": "Como chegar",
+        "rect": [
+          442,
+          770,
+          247,
+          65
+        ],
+        "action": "external",
+        "key": "rota_endereco"
+      }
+    ],
+    "id": "contato",
+    "file": "17_contato"
+  },
+  "18": {
+    "title": "O próximo capítulo começa com um plano.",
+    "description": "Conte seu objetivo e conheça as possibilidades de consórcio. Planejamento para transformar objetivos em conquistas. Contemplação por sorteio ou lance, conforme as regras do grupo, sem garantia de data.",
+    "content": [
+      "Conte seu objetivo e conheça as possibilidades de consórcio.",
+      "Planejamento para transformar objetivos em conquistas.",
+      "Contemplação por sorteio ou lance, conforme as regras do grupo, sem garantia de data."
+    ],
+    "hotspots": [
+      {
+        "label": "Começar meu planejamento",
+        "rect": [
+          911,
+          182,
+          440,
+          80
+        ],
+        "action": "planning"
+      },
+      {
+        "label": "Voltar ao início",
+        "rect": [
+          1046,
+          282,
+          154,
+          40
+        ],
+        "action": "navigate",
+        "target": "inicio"
+      },
+      {
+        "label": "ADEMICON — voltar ao início",
+        "rect": [
+          65,
+          500,
+          407,
+          101
+        ],
+        "action": "navigate",
+        "target": "inicio"
+      },
+      {
+        "label": "Início",
+        "rect": [
+          565,
+          531,
+          170,
+          34
+        ],
+        "action": "navigate",
+        "target": "inicio"
+      },
+      {
+        "label": "Quem Somos",
+        "rect": [
+          565,
+          568,
+          170,
+          34
+        ],
+        "action": "navigate",
+        "target": "sobre"
+      },
+      {
+        "label": "Consórcios",
+        "rect": [
+          565,
+          606,
+          170,
+          34
+        ],
+        "action": "navigate",
+        "target": "consorcios"
+      },
+      {
+        "label": "Blog",
+        "rect": [
+          565,
+          645,
+          170,
+          34
+        ],
+        "action": "navigate",
+        "target": "blog"
+      },
+      {
+        "label": "Contato",
+        "rect": [
+          565,
+          683,
+          170,
+          34
+        ],
+        "action": "navigate",
+        "target": "contato"
+      },
+      {
+        "label": "Veículos",
+        "rect": [
+          835,
+          531,
+          205,
+          32
+        ],
+        "action": "category",
+        "category": "veiculos"
+      },
+      {
+        "label": "Imóveis",
+        "rect": [
+          835,
+          562,
+          205,
+          29
+        ],
+        "action": "category",
+        "category": "imoveis"
+      },
+      {
+        "label": "Serviços",
+        "rect": [
+          835,
+          591,
+          205,
+          29
+        ],
+        "action": "category",
+        "category": "servicos"
+      },
+      {
+        "label": "Outros bens móveis",
+        "rect": [
+          835,
+          621,
+          205,
+          32
+        ],
+        "action": "category",
+        "category": "outros"
+      },
+      {
+        "label": "Área do cliente",
+        "rect": [
+          835,
+          722,
+          202,
+          38
+        ],
+        "action": "external",
+        "key": "area_cliente"
+      },
+      {
+        "label": "Traçar rota",
+        "rect": [
+          1185,
+          630,
+          133,
+          35
+        ],
+        "action": "external",
+        "key": "rota_endereco"
+      },
+      {
+        "label": "Privacidade Ademicon",
+        "rect": [
+          69,
+          804,
+          192,
+          32
+        ],
+        "action": "external",
+        "key": "privacidade"
+      },
+      {
+        "label": "Regulamento de imóveis",
+        "rect": [
+          319,
+          804,
+          193,
+          32
+        ],
+        "action": "external",
+        "key": "regulamento_imoveis"
+      },
+      {
+        "label": "Regulamento de veículos",
+        "rect": [
+          573,
+          804,
+          201,
+          32
+        ],
+        "action": "external",
+        "key": "regulamento_veiculos"
+      },
+      {
+        "label": "Regulamento de serviços",
+        "rect": [
+          843,
+          804,
+          200,
+          32
+        ],
+        "action": "external",
+        "key": "regulamento_servicos"
+      }
+    ],
+    "id": "rodape",
+    "file": "18_rodape"
+  }
+}

@@ -1,15 +1,15 @@
-# HENSEC — Monitoramento 24hs
+# Ademicon — prévia demonstrativa
 
-Site estático em HTML semântico, CSS responsivo e JavaScript, sem dependências npm. Usa Node.js 24 e Chromium para testes.
+Prévia navegável baseada nas 18 composições aprovadas fornecidas em dois PDFs. Sem dependências npm, backend, cadastro, analytics ou envio de dados. Node.js 24 e Chromium são os únicos pré-requisitos.
 
-## Desenvolvimento
+## Executar
 
 ```sh
 cd /workspace/site-andre
 npm run dev
 ```
 
-Servidor na porta 3000; `PORT` permite alterar a porta. Use o checkout existente: cada tarefa de nuvem já é isolada, sem necessidade de worktree.
+O servidor usa a porta 3000 (`PORT` altera a porta). O endereço raiz abre a prévia Ademicon. Use o checkout existente: tarefas de nuvem já são isoladas, sem necessidade de worktree.
 
 ```sh
 npm run lint
@@ -17,66 +17,58 @@ npm run build
 SERVE_DIST=1 PORT=3001 npm start
 ```
 
-O build em `dist/` inclui assets locais e versões de cache em CSS/JS. `npm run export` gera `dist/HENSEC.html`, independente, com assets incorporados. Não há backend nem envio automático de mensagens.
+O build copia a aplicação e os assets para `dist/`; não é uma publicação. Rotas por hash funcionam também em hospedagem estática e sobrevivem à recarga.
 
-## Referência e composição
+## O que está navegável
 
-Quatro seções na ordem do PDF `HENSEC_Referencia_Desktop_Cinematografica.pdf`: Início, Soluções, Sobre e Contato. As imagens em `assets/hensec/` foram limpas com edição generativa a partir da referência para remover interface/textos incorporados. São composições ilustrativas, sem representar instalações comprovadas. Os produtos usam regiões da imagem limpa de soluções; todo título, descrição, numeração, navegação e CTA é HTML real. O cabeçalho utiliza a logomarca enviada pelo usuário, preparada com fundo transparente em `assets/hensec/logo-oficial.png`, com o escudo, a câmera e a assinatura completos.
+- Doze cenas principais: Início, Sobre, Consórcios, Como funciona, Diferenciais, Histórias, Comparação, Blog, Dúvidas, Planejamento, Contato e Rodapé.
+- Catálogo no mesmo painel: Veículos; Imóveis, páginas 1 e 2; Serviços, páginas 1 e 2; Outros bens móveis. Exemplo direto: `#consorcios/imoveis/2`. Voltar/avançar do navegador preserva o estado da URL. O menu também permite retornar à visão geral.
+- CTAs dos produtos abrem planejamento com o produto selecionado. Os campos da hero abrem um simulador demonstrativo, sem cálculo de condições comerciais.
+- Planejamento em três etapas, com voltar, editar, revisão e confirmação: “Demonstração concluída. Nenhum dado foi enviado.” As respostas existem somente na memória do diálogo, são descartadas ao fechar e não entram no endereço nem no armazenamento do navegador. Use dados de teste. Limite de texto inicial: 1.000 caracteres Unicode, configurável por `textLimit` em `openPlanning`.
+- Vídeos só são incorporados após clique, sem autoplay e com alternativa “Abrir no YouTube”. Os três relatos fornecidos também estão disponíveis pelas setas e pelo painel de histórias; não foram inventados relatos extras.
+- Filtros de blog e FAQ abrem painéis contendo apenas os conteúdos existentes. Artigos, EXAME, rota, área do cliente, privacidade e regulamentos usam os destinos exatos de `LINKS_CONTEUDOS.json`.
+- Dropdown e diálogos operam por teclado, fecham com Escape e devolvem foco. Há foco visível, conteúdo semântico, entrada breve da marca real e preferência de movimento reduzido.
 
-Desktop: seções full-bleed com `min-height:100svh`, fundos `cover`, escala tipográfica fluida e espaçamento adaptado também à altura. Mobile: fluxo natural, cards empilhados e enquadramentos próprios; conteúdo pode exceder a viewport. Não há scroll-snap ou rolagem interna. Navbar fixa, menu móvel com Escape e indicação da seção ativa por IntersectionObserver e medição da posição. Reveal com Web Animations, stagger de 110ms e parallax limitado a 20px. `prefers-reduced-motion` cancela movimentos inclusive ao mudar com a página aberta. Conteúdo permanece visível sem animações e sem JavaScript.
+## Referências e fidelidade
 
-## WhatsApp
+Os ZIPs, PNGs mestres e o manifesto original mencionados nos pedidos não foram anexados. Os dois PDFs recebidos contêm nove imagens cada. Foram extraídas sem renderização ou redimensionamento para `assets/aprovadas/`, em 1672 × 941. `MANIFESTO_EXTRAIDO.json` registra origem, dimensões e SHA-256 dos arquivos extraídos; **não substitui um manifesto de aprovação original**.
 
-Em `config.js`, `HENSEC_CONFIG.whatsappNumber` contém `5511945549849`, o número oficial informado pelo usuário (+55 11 94554-9849). Números sintéticos dos testes não são contatos reais. Mensagens por solução são centralizadas em `messages`. Com número válido, os links usam `https://wa.me/` e mensagem codificada; sem número, o clique exibe aviso acessível sem navegar para um contato inventado. A navegação dos cards direciona ao contato e prepara o assunto escolhido.
+Os derivados de cena em `assets/ademicon/` são WebP lossless, conferidos pixel a pixel contra os PNGs. A proporção desktop é exatamente 1672/941, sem `cover`, zoom ou lacunas entre cenas. O conteúdo tem altura natural pela largura; em outros formatos de viewport pode aparecer parte da próxima cena. Os PNGs são o fallback. A hero tem prioridade e as demais imagens carregam progressivamente.
 
-## Validação
+O desktop é a referência aprovada. As únicas correções localizadas nas composições são o estado ativo real da navegação (com os ícones e textos rasterizados originais) e a opção de retornar à visão geral do catálogo. A marca da entrada também é um recorte fiel. Nenhum mestre foi editado.
 
-Com o servidor ativo, inicie Chromium no ambiente isolado:
+Mobile até 760 px é uma **adaptação complementar**, com texto e controles HTML legíveis e recortes fotográficos das referências. Não é uma arte mobile aprovada. As capas de histórias continuam identificadas como ilustrativas; consultor e sala não são apresentados como comprovação do interior do endereço.
+
+## Verificar no navegador
+
+Com o servidor ativo, abra Chromium em outra sessão:
 
 ```sh
-chromium --headless --no-sandbox --disable-gpu --remote-debugging-address=127.0.0.1 --remote-debugging-port=9222 --user-data-dir=/tmp/hensec-chrome about:blank
+chromium --headless --no-sandbox --disable-gpu \
+  --remote-debugging-address=127.0.0.1 --remote-debugging-port=9222 \
+  --user-data-dir=/tmp/hensec-chrome about:blank
 npm test
 ```
 
-A suíte CDP testa 1920×1080, 1600×900, 1440×900, 1366×768, 1280×720, 768×1024, 390×844 e 320×700. Verifica ordem semântica, viewport desktop, conteúdo seguro, ausência de overflow horizontal, âncoras, menu ativo/móvel, status acessível do contato ausente, URL e mensagens WhatsApp com número sintético injetado apenas no navegador, cancelamento de animações e erros de console. Capturas atuais são salvas em `/tmp/hensec-checks`.
+A suíte usa CDP sem bibliotecas adicionais. Verifica as três dimensões desktop (1672×941, 1440×900, 1366×768), mobile (390×844 e 320×700), proporções, hotspots, 18 estados, categorias, histórico, recarga, diálogos, formulário completo, filtros, links, foco, ausência de transmissão e armazenamento de respostas. Capturas e relatório ficam em `/tmp/ademicon-checks`. O valor `TEST_URL` permite apontar para o servidor do build.
 
-Os scripts `interactions.mjs` e arquivos de imagens anteriores permanecem como histórico da versão solar e não integram a suíte Hensec. O contato oficial já está configurado.
+Os 13 destinos externos foram tentados com verificação TLS normal. O proxy do ambiente respondeu `403 Forbidden` ao túnel para todos eles, antes de alcançar os sites. Portanto, os endereços e comportamentos locais foram conferidos, mas a disponibilidade do conteúdo e a incorporação de vídeos **não puderam ser validadas nesta rede**. Nenhuma política de acesso foi alterada. Os domínios dos destinos são `www.youtube.com`, `www.youtube-nocookie.com` (player), `www.ademicon.com.br`, `exame.com` e `www.google.com`.
 
-## Cada detalhe, sob proteção
+## Projeto anterior preservado
 
-Narrativa **Etapas**, `#etapas`, inserida imediatamente antes de Contato, preservando Hero, Soluções e Sobre. Três momentos: Prevenção, Inteligência e Tranquilidade. Reutiliza a foto de arquitetura existente e adiciona duas imagens ilustrativas locais em `assets/hensec/story-camera.webp` e `story-calm.webp`, produzidas para manter a direção de arte. Não representa instalação comprovada nem monitoramento real.
+O site HENSEC permanece em `hensec.html`, com `styles.css`, `app.js`, `config.js`, assets e testes originais. Sua documentação está em `README-HENSEC.md`. Para servir a versão anterior na raiz e executar sua suíte:
 
-Em desktop com movimento habilitado, a seção ocupa 300svh e mantém uma composição sticky com texto em 34% e fotografia em 66%. O progresso real da rolagem controla crossfade, deslocamento de texto de até 14px, escala fotográfica de até 1,2% e linha fina de progresso. Não há wheel/touch interception, scroll-snap, temporizador ou dependências adicionais. Os controles 01/02/03 permitem acessar os momentos também por teclado; o CTA final aponta para `#solucoes`. O menu tem a entrada Etapas, com indicação ativa durante a narrativa.
+```sh
+SITE=hensec PORT=3002 npm start
+TEST_URL=http://127.0.0.1:3002 npm run test:hensec
+```
 
-Mobile, tablet, JavaScript ausente ou `prefers-reduced-motion:reduce` usam os três momentos em fluxo natural, com texto separado da fotografia. Mudanças de viewport/preferência atualizam o modo e removem inert/aria-hidden das etapas estáticas. Listeners são removidos em pagehide e restaurados ao retornar pelo bfcache.
+`npm run export` continua produzindo o HTML independente **HENSEC**, usando `hensec.html`. A prévia Ademicon é distribuída pela pasta `dist/` completa.
 
-A suíte tem 248 verificações, incluindo progressão para frente/para trás, crossfade intermediário, sticky, três fontes de imagem distintas, teclado no CTA, fluxo mobile, movimento reduzido, redimensionamento e preservação dos testes das quatro seções existentes. Capturas da narrativa são salvas em `/tmp/hensec-checks/narrativa-*`.
+## Fora desta etapa
 
-
-### Fluidez e imagem do contato
-
-As transições de Etapas ocupam faixas mais amplas do scroll, com suavização exponencial curta (65ms), opacidade das imagens independente dos textos e uma base fotográfica opaca para evitar escurecimento no crossfade. O movimento continua reversível e respeita movimento reduzido. A imagem `contato-mensagem.webp` preserva a composição e adiciona apenas a conversa ilustrativa na tela do celular: “Olá! Quero mais segurança para meu imóvel.”. O número oficial de WhatsApp foi configurado posteriormente, conforme a seção Contato oficial atualizado.
-
-
-### Entrada da marca
-
-A logo substitui o símbolo provisório do cabeçalho. O cabeçalho entra em 1100ms; a logo e o nome HENSEG entram em 2100–2400ms depois da decodificação da imagem com opacidade e deslocamento discreto, sem bloquear a navegação ou exibir uma tela de espera. As dimensões ficam reservadas para evitar deslocamento de layout. `prefers-reduced-motion` desativa a entrada, inclusive quando muda com a página aberta.
+Não há CRM, scoring, cálculo comercial, promessa de contemplação, WhatsApp da unidade, contas conectadas, coleta real de leads ou envio de formulário. Esses recursos precisam de definições e integrações futuras. A publicação estática não habilita nenhuma integração.
 
 ## GitHub Pages
 
-O repositório já publica a branch `gh-pages`, na raiz, por meio do Pages nativo. As regras do ambiente `github-pages` permitem essa branch e impedem a publicação direta pela `main`. O código-fonte fica em `main`; após `npm run lint` e `npm run build`, o conteúdo de `dist/` deve ser enviado para `gh-pages`, preservando `.nojekyll` e um eventual CNAME. A aba Actions mostra o resultado de “pages build and deployment”. Endereço: https://miguelfrotagem-gif.github.io/site-andre/ .
-
-
-## Abertura de entrada
-
-Ao abrir ou recarregar o site, uma introdução em tela inteira apresenta a logomarca em tamanho grande, a frase “Sua paz merece proteção.” e uma linha dourada discreta. A marca entra em 1 segundo, permanece visível e o fundo desaparece suavemente, revelando o site em aproximadamente 3,4 segundos após preparar a imagem. O botão “Pular introdução” e Escape encerram imediatamente; o foco é preservado e o conteúdo abaixo fica inert temporariamente. Há um limite máximo de 4,5 segundos para liberar o conteúdo mesmo se a animação for interrompida. Movimento reduzido ignora a abertura; sem JavaScript não existe overlay. A abertura é repetida em novas visitas completas, sem bloqueio por localStorage.
-
-
-## Contato oficial atualizado
-
-WhatsApp configurado com o número fornecido pelo usuário: **+55 11 94554-9849** (`5511945549849`). O CTA de contato usa mensagens por solução; o botão flutuante abre diretamente `wa.me` com a mensagem geral. O botão flutuante usa o verde tradicional do WhatsApp, ícone branco, sombra discreta e estados de hover/foco. A disponibilidade do atendimento e o envio da mensagem dependem do WhatsApp; o site apenas prepara a conversa.
-
-
-### Abertura com deslocamento da marca
-
-A abertura atual substitui a composição anterior: primeiro aparece a logo sobre fundo escuro, depois a linha dourada e “Monitoramento 24 horas para sua segurança.”. Após 2,2 segundos de sequência, o fundo revela a hero em 1,6 segundo e a mesma imagem da marca percorre a distância até a posição real da logo no cabeçalho (medida no início). No encaixe, a logo fixa assume sem repetir a animação. Redimensionar, pular, Escape ou movimento reduzido encerram com segurança. O foco retorna ao conteúdo, evitando o retângulo de foco automático sobre a marca. A duração da sequência é aproximadamente 3,8 segundos, com limite de segurança de 5 segundos.
+A publicação usa a branch `gh-pages`, na raiz. A prévia Ademicon fica em https://miguelfrotagem-gif.github.io/site-andre/ e o HENSEC preservado em https://miguelfrotagem-gif.github.io/site-andre/hensec.html . O código-fonte fica em `main`. Publicar requer autorização explícita; `npm run build` apenas prepara `dist/`. Ao atualizar `gh-pages`, preserve os outros projetos existentes na branch, `.nojekyll` e um eventual `CNAME`.
