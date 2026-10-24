@@ -1,0 +1,60 @@
+body.ademicon-dialog-open { overflow: hidden; }
+.ademicon-dialog { --ad-red:#b9081a; --ad-ink:#29241f; --ad-muted:#71675e; --ad-line:#ded7cd; color:var(--ad-ink); background:#faf7f1; border:1px solid #e4dace; border-radius:22px; padding:0; width:min(640px,calc(100% - 32px)); max-width:900px; max-height:calc(100dvh - 40px); overflow:auto; box-shadow:0 24px 100px #28120d50; font:15px/1.55 Arial,sans-serif; overscroll-behavior:contain; }
+.ademicon-dialog[open] { animation:ad-dialog-in 220ms ease-out both; }
+.ademicon-dialog::backdrop { background:rgb(29 20 15 / .58); backdrop-filter:blur(4px); }
+.ademicon-dialog--wide { width:min(900px,calc(100% - 32px)); }
+.ad-dialog-shell { padding:32px; }
+.ad-dialog-header { position:relative; padding-right:34px; }
+.ad-preview-label { display:inline-block; color:#8d1020; font-size:10px; line-height:1.6; letter-spacing:.13em; text-transform:uppercase; margin-bottom:10px; }
+.ad-dialog-header h2 { margin:0 0 18px; font:normal clamp(28px,4vw,38px)/1.12 Georgia,'Times New Roman',serif; letter-spacing:-.025em; outline:none; }
+.ad-dialog-close { position:absolute; top:-12px; right:-14px; width:44px; height:44px; border:0; background:transparent; color:var(--ad-ink); font:30px/1 Arial,sans-serif; cursor:pointer; border-radius:50%; }
+.ad-dialog-close:hover { background:#eee6dc; }
+.ad-dialog-intro { color:var(--ad-muted); margin:0 0 22px; }
+.ad-flow-form { display:grid; gap:15px; }
+.ad-flow-form label { display:grid; gap:6px; color:var(--ad-ink); font-size:13px; font-weight:600; }
+.ad-flow-form input,.ad-flow-form select,.ad-flow-form textarea { box-sizing:border-box; min-width:0; width:100%; padding:12px 13px; min-height:46px; font:normal 16px/1.35 Arial,sans-serif; color:var(--ad-ink); border:1px solid #d8cec0; border-radius:8px; background:#fffdfa; }
+.ad-flow-form textarea { resize:vertical; min-height:100px; }
+.ad-flow-form input::placeholder,.ad-flow-form textarea::placeholder { color:#8b8074; }
+.ad-flow-form :is(input,select,textarea):focus { border-color:var(--ad-red); outline:2px solid #b9081a22; outline-offset:1px; }
+.ademicon-dialog button { cursor:pointer; }
+.ademicon-dialog :is(button,a):focus-visible { outline:3px solid #365d9b; outline-offset:3px; }
+.ad-field-row { display:grid; grid-template-columns:1fr 1fr; gap:14px; }
+.ad-mode { border:0; margin:0; padding:0; display:flex; gap:20px; }
+.ad-mode legend { margin-bottom:9px; font-size:13px; font-weight:600; }
+.ad-mode label { display:flex; align-items:center; gap:8px; min-height:40px; }
+.ad-mode input { width:18px; height:18px; min-height:0; accent-color:var(--ad-red); }
+.ad-form-note,.ad-demo-note { font-size:12px; color:var(--ad-muted); line-height:1.6; margin:0; }
+.ad-demo-note { margin:0 0 20px; padding:11px 13px; background:#f0eae0; border-radius:7px; }
+.ad-optional { font-weight:400; }
+.ad-character-count { margin:-9px 0 0; font-size:11px; color:var(--ad-muted); text-align:right; }
+.ad-actions { display:flex; flex-wrap:wrap; align-items:center; justify-content:flex-end; gap:10px; margin-top:13px; }
+.ad-primary,.ad-secondary { min-height:46px; border-radius:8px; padding:12px 18px; font:600 13px/1.3 Arial,sans-serif; transition:background-color 160ms,box-shadow 160ms; }
+.ad-primary { color:white; background:var(--ad-red); border:1px solid var(--ad-red); box-shadow:0 3px 8px #b9081a12; }
+.ad-primary:hover { background:#950516; box-shadow:0 4px 14px #b9081a24; }
+.ad-secondary { color:var(--ad-ink); background:transparent; border:1px solid #cfc4b6; }
+.ad-secondary:hover { background:#eee6dc; }
+.ad-step-list { list-style:none; display:flex; padding:0; margin:2px 0 20px; gap:16px; border-bottom:1px solid var(--ad-line); padding-bottom:17px; }
+.ad-step-list li { display:flex; align-items:center; gap:7px; color:#817468; font-size:11px; }
+.ad-step-list li span { width:23px; height:23px; border-radius:50%; display:grid; place-items:center; border:1px solid #d7cbbd; flex-shrink:0; }
+.ad-step-list [aria-current] { color:var(--ad-red); font-weight:700; }
+.ad-step-list [aria-current] span { background:var(--ad-red); color:white; border-color:var(--ad-red); }
+.ad-review { margin:5px 0 8px; }
+.ad-review > div { padding:10px 0; border-bottom:1px solid var(--ad-line); display:grid; grid-template-columns:38% 1fr; gap:12px; }
+.ad-review dt { color:var(--ad-muted); font-size:12px; }
+.ad-review dd { margin:0; overflow-wrap:anywhere; white-space:pre-wrap; }
+.ad-edit-links { display:flex; gap:16px; }
+.ad-edit-links button { border:0; background:transparent; color:var(--ad-red); text-decoration:underline; padding:7px 0; font:13px/1.5 Arial,sans-serif; }
+.ad-completion-mark { margin:18px 0; color:var(--ad-red); font-size:38px; }
+.ad-completion { font:25px/1.3 Georgia,'Times New Roman',serif; }
+.ad-text-link { color:var(--ad-red); text-decoration-thickness:1px; text-underline-offset:4px; font-size:14px; display:inline-block; padding:8px 0; }
+.ad-regulations { border-top:1px solid var(--ad-line); margin-top:25px; padding-top:16px; display:flex; gap:20px; flex-wrap:wrap; }
+.ad-regulations h3 { flex:0 0 100%; margin:0; font:20px/1.3 Georgia,'Times New Roman',serif; }
+.ad-answer { font-size:17px; line-height:1.75; }
+.ad-video-frame { width:100%; aspect-ratio:16/9; margin:18px 0; background:#201d18; }
+.ad-video-frame iframe { display:block; width:100%; height:100%; border:0; }
+.ad-content-list article { padding:18px 0; border-bottom:1px solid var(--ad-line); }
+.ad-content-list h3 { margin:0 0 6px; font:24px/1.3 Georgia,'Times New Roman',serif; }
+.ad-content-list p { color:var(--ad-muted); }
+@keyframes ad-dialog-in { from { opacity:0; transform:translateY(8px); } to { opacity:1; transform:translateY(0); } }
+@media(max-width:560px) { .ad-dialog-shell { padding:25px 20px; } .ad-field-row { grid-template-columns:1fr; } .ad-step-list { gap:10px; } .ad-step-list li { gap:4px; font-size:10px; } .ad-step-list li span { width:20px; height:20px; } .ad-actions > * { flex:1 1 auto; text-align:center; } .ad-review > div { grid-template-columns:1fr; gap:3px; } .ad-dialog-close { right:-12px; } }
+@media(prefers-reduced-motion:reduce) { .ademicon-dialog[open] { animation:none; } .ademicon-dialog * { transition:none!important; } }
