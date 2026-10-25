@@ -1,42 +1,13 @@
-const config = window.HENSEC_CONFIG || {messages:{}};
-const reduced = matchMedia('(prefers-reduced-motion: reduce)');
-const nav = document.querySelector('#navigation');
-const toggle = document.querySelector('.menu-toggle');
-const sections = [...document.querySelectorAll('main > section')];
-const links = [...nav.querySelectorAll('a')];
-let selected = 'geral';
-const number = String(config.whatsappNumber || '').replace(/\D/g, '');
-const validNumber = /^[1-9]\d{9,14}$/.test(number);
-const cta = document.querySelector('#whatsapp-cta');
-const status = document.querySelector('#contact-status');
-function updateContact(context) {
- selected = context;
- status.hidden = true;
- cta.href = validNumber ? `https://wa.me/${number}?text=${encodeURIComponent(config.messages[context] || config.messages.geral || '')}` : '#contact-status';
- if(validNumber){cta.target='_blank';cta.rel='noopener noreferrer';}
-}
-updateContact(selected);
-const floatingContact = document.querySelector('.floating-contact');
-if (validNumber && floatingContact) {
- floatingContact.href = `https://wa.me/${number}?text=${encodeURIComponent(config.messages.geral || '')}`;
- floatingContact.target = '_blank';
- floatingContact.rel = 'noopener noreferrer';
- floatingContact.setAttribute('aria-label','Conversar com a Henseg pelo WhatsApp');
-}
-function unavailable(event) {
- if(validNumber)return;
- event.preventDefault();
- status.textContent = 'O WhatsApp ainda não está disponível. Tente novamente em breve.';
- status.hidden = false;
- status.focus({preventScroll:true});
-}
-cta.addEventListener('click', unavailable);
-document.querySelector('[data-question]').addEventListener('click', event => {
- updateContact('duvidas');
- if(validNumber){event.preventDefault();cta.click();}else unavailable(event);
-});
-document.querySelectorAll('[data-solution]').forEach(link => link.addEventListener('click',()=>updateContact(link.dataset.solution)));
-document.querySelectorAll('a[href="#contato"]:not([data-solution])').forEach(link => link.addEventListener('click',()=>updateContact('geral')));
+const config=window.HENSEC_CONFIG||{messages:{}};
+const reduced=matchMedia('(prefers-reduced-motion: reduce)');
+const mobileLayout=matchMedia('(max-width: 767px), (max-width: 1023px) and (max-height: 500px)');
+const nav=document.querySelector('#navigation');
+const toggle=document.querySelector('.menu-toggle');
+const sections=[...document.querySelectorAll('main > section')];
+const links=[...nav.querySelectorAll('a')];
+const number=String(config.whatsappNumber||'').replace(/\D/g,'');
+const floatingContact=document.querySelector('.floating-contact');
+if(/^[1-9]\d{9,14}$/.test(number)&&floatingContact){floatingContact.href=`https://wa.me/${number}?text=${encodeURIComponent(config.messages.geral||'Olá! Gostaria de conversar com a Henseg.')}`;floatingContact.target='_blank';floatingContact.rel='noopener noreferrer';floatingContact.setAttribute('aria-label','Conversar com a Henseg pelo WhatsApp');}
 toggle.addEventListener('click',()=>{
  const open=toggle.getAttribute('aria-expanded')!=='true';
  toggle.setAttribute('aria-expanded',String(open));nav.classList.toggle('open',open);
@@ -50,14 +21,16 @@ const siteHeader=document.querySelector('.site-header');
 const menuHashes=new Set(links.map(link=>link.hash));
 let frame=0, pendingNavigation=null, navigationDeadline=0, activeHash='';
 function sectionHash(section){
- const hash=`#${section.dataset.navSection || section.id}`;
+ const group=!mobileLayout.matches&&section.dataset.desktopNav;
+ const hash=`#${group || section.dataset.navSection || section.id}`;
  return menuHashes.has(hash)?hash:null;
 }
 function markSection(section){
  const hash=sectionHash(section);
- if(!hash||hash===activeHash)return;
- activeHash=hash;
- links.forEach(link=>link.hash===hash?link.setAttribute('aria-current','location'):link.removeAttribute('aria-current'));
+ const state=`${mobileLayout.matches}:${hash}`;
+ if(!hash||state===activeHash)return;
+ activeHash=state;
+ links.forEach(link=>{const visibleGroup=mobileLayout.matches===link.classList.contains('mobile-nav');link.hash===hash&&visibleGroup?link.setAttribute('aria-current','location'):link.removeAttribute('aria-current')});
 }
 function clearNavigationIntent(){
  pendingNavigation=null;clearTimeout(navigationDeadline);syncSection();
@@ -106,7 +79,7 @@ for(const event of ['wheel','touchstart','pointerdown'])addEventListener(event,(
 addEventListener('keydown',event=>{if(pendingNavigation&&['ArrowUp','ArrowDown','PageUp','PageDown','Home','End',' ','Escape','Tab'].includes(event.key))clearNavigationIntent();});
 addEventListener('scroll',syncSection,{passive:true});
 addEventListener('scrollend',()=>{if(pendingNavigation&&performance.now()-pendingNavigation.startedAt>100)clearNavigationIntent();else syncSection();});
-addEventListener('resize',clearNavigationIntent);
+addEventListener('resize',clearNavigationIntent);mobileLayout.addEventListener('change',clearNavigationIntent);
 addEventListener('hashchange',syncSection);addEventListener('popstate',syncSection);
 addEventListener('pageshow',event=>event.persisted?clearNavigationIntent():syncSection());
 document.addEventListener('load',syncSection,true);

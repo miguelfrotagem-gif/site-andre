@@ -2,32 +2,15 @@
  'use strict';
  const mobile=matchMedia('(max-width: 767px), (max-width: 1023px) and (max-height: 500px)');
  const header=document.querySelector('.site-header');
- const brand=header.querySelector('.brand');
- const headerContact=header.querySelector('.header-cta');
  const menu=header.querySelector('#navigation');
  const toggle=header.querySelector('.menu-toggle');
  const floating=document.querySelector('.floating-contact');
  const notice=document.querySelector('#cookie-notice');
- const form=document.querySelector('#mobile-contact-form');
+ const form=document.querySelector('#contact-form');
  const number=String(window.HENSEC_CONFIG?.whatsappNumber||'').replace(/\D/g,'');
- const desktopHashes={inicio:'inicio',solucoes:'solucoes',alarmes:'tecnologia-alarmes',cameras:'tecnologia-cameras',facial:'tecnologia-facial',cerca:'solucoes',interfone:'tecnologias',sobre:'sobre',etapas:'sobre',duvidas:'duvidas',contato:'contato'};
- function responsiveLinks(){
-  brand.hash=mobile.matches?'mobile-inicio':'inicio';
-  headerContact.hash=mobile.matches?'mobile-contato':'contato';
-  if(!mobile.matches){toggle.setAttribute('aria-expanded','false');menu.classList.remove('open');}
- }
- responsiveLinks();mobile.addEventListener('change',()=>{responsiveLinks();syncFloating();});
- // Direct links and browser history keep working across both compositions.
- function resolveHiddenAnchor(){
-  const id=decodeURIComponent(location.hash.slice(1));
-  const target=document.getElementById(id);
-  if(!target||target.getClientRects().length)return;
-  const match=mobile.matches?Object.entries(desktopHashes).find(([,desktop])=>desktop===id)?.[0]:desktopHashes[id.replace(/^mobile-/,'')];
-  const replacement=match&&document.getElementById(mobile.matches?`mobile-${match}`:match);
-  if(replacement){replacement.scrollIntoView({behavior:'instant'});history.replaceState(null,'',`#${replacement.id}`);}
- }
- addEventListener('hashchange',resolveHiddenAnchor);addEventListener('pageshow',resolveHiddenAnchor);
- mobile.addEventListener('change',resolveHiddenAnchor);
+ const explore=document.querySelector('[data-hero-explore]');
+ function responsiveLinks(){explore.hash=mobile.matches?'solucoes':'tecnologias';syncFloating();}
+ mobile.addEventListener('change',responsiveLinks);
  // Close the menu before its destination receives focus; Escape is handled in app.js.
  menu.addEventListener('click',event=>{
   const link=event.target.closest('.mobile-nav');if(!link)return;
@@ -52,15 +35,16 @@
   phone.setCustomValidity(/^[1-9]\d{9,10}$/.test(digits)?'':'Informe um WhatsApp válido com DDD.');
   if(!form.reportValidity())return;
   if(!/^[1-9]\d{9,14}$/.test(number)){document.querySelector('#m-form-status').textContent='Não foi possível abrir o contato. Tente novamente em breve.';return;}
-  const message=`Olá! Meu nome é ${name.value.trim()}. Gostaria de conversar sobre um projeto de segurança para ${form.elements.ambiente.value.toLowerCase()}. Meu WhatsApp com DDD: ${phone.value.trim()}.`;
+  const detail=form.elements.projeto.value.trim();
+  const message=`Olá! Meu nome é ${name.value.trim()}. Gostaria de conversar sobre um projeto de segurança para ${form.elements.ambiente.value.toLowerCase()}. Meu WhatsApp com DDD: ${phone.value.trim()}.${detail?' Meu projeto: '+detail:''}`;
   window.open(`https://wa.me/${number}?text=${encodeURIComponent(message)}`,'_blank','noopener,noreferrer');
   document.querySelector('#m-form-status').textContent='Continue no WhatsApp para revisar e enviar sua mensagem. Seus campos continuam preenchidos aqui.';
  });
+ document.querySelectorAll('.m-faq-item,.m-complementary').forEach(item=>{const sync=()=>item.querySelector('summary').setAttribute('aria-expanded',String(item.open));item.addEventListener('toggle',sync);sync();});
  // Never cover a field, button, footer, open menu or privacy control with the bubble.
  let floatingFrame=0;
  function syncFloating(){if(!floatingFrame)floatingFrame=requestAnimationFrame(()=>{
   floatingFrame=0;
-  if(!mobile.matches){floating.removeAttribute('data-mobile-obscured');return;}
   const r=floating.getBoundingClientRect();
   const overlaps=[...document.querySelectorAll('.mobile-section .m-button,.m-contact-form,.mobile-footer,.m-solution-link,.m-faq-item summary')].some(el=>{
    const b=el.getBoundingClientRect();return b.width&&b.top<r.bottom+8&&b.bottom>r.top-8&&b.left<r.right+8&&b.right>r.left-8;
@@ -72,5 +56,5 @@
  new MutationObserver(syncFloating).observe(menu,{attributes:true,attributeFilter:['class']});
  new MutationObserver(syncFloating).observe(document.querySelector('#privacy-dialog'),{attributes:true,attributeFilter:['open']});
  const layoutObserver=new ResizeObserver(syncFloating);
- [form,document.querySelector('main'),document.querySelector('.mobile-footer')].forEach(el=>layoutObserver.observe(el));syncFloating();
+ [form,document.querySelector('main'),document.querySelector('.mobile-footer')].forEach(el=>layoutObserver.observe(el));responsiveLinks();
 })();
