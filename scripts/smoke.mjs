@@ -13,7 +13,7 @@ let checks=0;function check(v,message){assert.ok(v,message);checks++}
 try {
  await send('Page.enable');await send('Page.bringToFront');await send('Runtime.enable');await send('Log.enable');await send('Network.enable');
  const external=[],legacyMedia=[];
- ws.addEventListener('message',event=>{const d=JSON.parse(event.data);if(d.method==='Network.requestWillBeSent'){const u=d.params.request.url;if(/^https?:/.test(u)&&!u.startsWith(new URL(base).origin))external.push(u);if(u.includes('/assets/hensec/')&&!u.includes('/produtos/')&&!u.includes('/logo-oficial.png')&&!u.includes('/favicon.svg'))legacyMedia.push(u);}});
+ ws.addEventListener('message',event=>{const d=JSON.parse(event.data);if(d.method==='Network.requestWillBeSent'){const u=d.params.request.url;if(/^https?:/.test(u)&&!u.startsWith(new URL(base).origin))external.push(u);if(u.includes('/assets/hensec/')&&!u.includes('/produtos/')&&!u.includes('/logo-oficial.png')&&!u.includes('/favicon.svg')&&!u.includes('/mobile/'))legacyMedia.push(u);}});
  await send('Emulation.setEmulatedMedia',{features:[{name:'prefers-reduced-motion',value:'reduce'}]});
  await send('Emulation.setDeviceMetricsOverride',{width:390,height:844,deviceScaleFactor:1,mobile:false});
  await send('Page.navigate',{url:base});await wait(250);
@@ -21,27 +21,27 @@ try {
  check(await evaluate(`!document.querySelector('#cookie-notice').hidden`),'aviso aparece sem preferência');
  check(await evaluate(`document.cookie===''`),'site não define cookies');
  check(await evaluate(`!document.querySelector('input[type=checkbox]')`),'sem categorias fictícias de consentimento');
- check(await evaluate(`(()=>{const n=document.querySelector('#cookie-notice').getBoundingClientRect(),w=document.querySelector('.floating-contact').getBoundingClientRect();return n.right<=innerWidth&&n.left>=0&&(n.bottom<=w.top||n.right<=w.left)})()`),'aviso não sobrepõe WhatsApp no celular');
+ check(await evaluate(`(()=>{const n=document.querySelector('#cookie-notice').getBoundingClientRect(),w=document.querySelector('.floating-contact').getBoundingClientRect();return n.right<=innerWidth&&n.left>=0&&(getComputedStyle(document.querySelector('.floating-contact')).visibility==='hidden'||n.bottom<=w.top||n.right<=w.left)})()`),'aviso não sobrepõe WhatsApp no celular');
  {const shot=await send('Page.captureScreenshot',{format:'png'});await writeFile(`${output}/cookies-mobile.png`,Buffer.from(shot.data,'base64'));}
  await evaluate(`document.querySelector('#cookie-notice [data-confirm-privacy]').click()`);
  check(await evaluate(`document.querySelector('#cookie-notice').hidden`),'confirmar fecha aviso');
  check(await evaluate(`(()=>{const c=JSON.parse(localStorage.getItem('henseg_privacy_v1'));return c.version===1&&c.acknowledged&&c.expiresAt>Date.now()&&c.expiresAt-Date.now()<=180*86400000})()`),'escolha versionada, mínima e limitada a 180 dias');
- for(const [width,height] of [[1920,1080],[1600,900],[1440,900],[1366,768],[1280,720],[1280,600],[768,1024],[430,932],[390,844],[360,800],[320,700]]) {
+ for(const [width,height] of [[1920,1080],[1600,900],[1440,900],[1366,768],[1280,720],[1280,600],[768,1024]]) {
   await send('Emulation.setDeviceMetricsOverride',{width,height,deviceScaleFactor:1,mobile:false});
   await send('Page.navigate',{url:base});await wait(180);await evaluate('document.fonts.ready');
   check(await evaluate('document.title.includes("HENSEG")'),'marca correta');
   check(await evaluate(`document.querySelector('.footer-bottom').textContent.includes('61.285.070/0001-28')&&window.HENSEC_CONFIG.portfolio.brand==='Intelbras'`),'CNPJ e marca de equipamentos confirmados');
   check(await evaluate('document.documentElement.scrollWidth<=innerWidth'),`sem overflow ${width}×${height}`);
-  assert.deepEqual(await evaluate('[...document.querySelectorAll("main>section")].map(s=>s.id)'),['inicio','tecnologias','solucoes','ambientes','sobre','galeria','duvidas','contato']);checks++;
+  assert.deepEqual(await evaluate('[...document.querySelectorAll("main>.desktop-section")].map(s=>s.id)'),['inicio','tecnologias','solucoes','ambientes','sobre','galeria','duvidas','contato']);checks++;
   check(await evaluate(`!document.querySelector('.brand-intro')&&!document.querySelector('main').inert`),'hero disponível sem abertura longa');
-  check(await evaluate(`document.querySelectorAll('h1').length===1&&document.querySelector('h1').textContent.includes('A segurança')`),'headline de acesso');
+  check(await evaluate(`[...document.querySelectorAll('h1')].filter(el=>el.getClientRects().length).length===1&&document.querySelector('h1').textContent.includes('A segurança')`),'headline de acesso');
   check(await evaluate(`document.querySelector('.access-hero-visual img').complete&&document.querySelector('.access-hero-visual img').naturalWidth>0`),'hero carrega imagem');
   check(await evaluate(`document.querySelector('.access-hero .button').href.startsWith('https://wa.me/5511945549849?text=')&&document.querySelector('.floating-contact').href.startsWith('https://wa.me/5511945549849?text=')`),'WhatsApp oficial nos CTAs');
   check(await evaluate(`getComputedStyle(document.querySelector('.floating-contact')).backgroundColor==='rgb(37, 211, 102)'`),'botão WhatsApp verde');
   check(await evaluate(`(()=>{const r=document.querySelector('.site-header').getBoundingClientRect();return [...document.querySelectorAll('.site-header a')].filter(e=>e.getBoundingClientRect().width).every(e=>{const b=e.getBoundingClientRect();return b.left>=r.left&&b.right<=r.right})})()`),`cabeçalho cabe ${width}`);
   check(await evaluate(`document.querySelector('#cookie-notice').hidden`),'escolha persiste');
-  await evaluate(`Promise.all([...document.querySelectorAll('main img[src]')].map(i=>{i.loading='eager';return i.decode()}))`);
-  check(await evaluate(`(()=>[...document.querySelectorAll('main img[src]')].filter(i=>i.getBoundingClientRect().width>0).every(i=>{const r=i.getBoundingClientRect(),s=getComputedStyle(i);return r.width<=i.naturalWidth+1&&r.height<=i.naturalHeight+1&&s.objectFit==='contain'&&s.filter==='none'}))()`),`produtos inteiros, sem filtros e sem ampliar além da resolução ${width}`);
+  await evaluate(`Promise.all([...document.querySelectorAll('.desktop-section img[src]')].map(i=>{i.loading='eager';return i.decode()}))`);
+  check(await evaluate(`(()=>[...document.querySelectorAll('.desktop-section img[src]')].filter(i=>i.getBoundingClientRect().width>0).every(i=>{const r=i.getBoundingClientRect(),s=getComputedStyle(i);return r.width<=i.naturalWidth+1&&r.height<=i.naturalHeight+1&&s.objectFit==='contain'&&s.filter==='none'}))()`),`produtos inteiros, sem filtros e sem ampliar além da resolução ${width}`);
 
   for(const [section,current] of [['inicio','inicio'],['tecnologias','tecnologias'],['solucoes','solucoes'],['ambientes','solucoes'],['sobre','sobre'],['galeria','tecnologias'],['duvidas','contato'],['contato','contato']]) {
    await evaluate(`document.querySelector('#${section}').scrollIntoView({behavior:'instant'})`);await wait(65);
@@ -63,7 +63,7 @@ try {
  // Every shown device comes from the supplied ZIP, with category/model matching.
  check(await evaluate(`document.querySelectorAll('#tecnologias .technology-step').length===4&&document.querySelectorAll('#tecnologias .technology-extra').length===2`),'quatro etapas e dois blocos complementares');
  check(await evaluate(`document.querySelector('#technology-title').textContent==='Tecnologia que transforma a sua segurança.'`),'título preservado');
- check(await evaluate(`new Set([...document.querySelectorAll('main img[src]')].map(i=>i.getAttribute('src'))).size===6&&[...document.querySelectorAll('main img[src]')].every(i=>i.getAttribute('src').startsWith('assets/hensec/produtos/'))`),'todos os equipamentos visuais vêm dos seis arquivos fornecidos');
+ check(await evaluate(`new Set([...document.querySelectorAll('.desktop-section img[src]')].map(i=>i.getAttribute('src'))).size===6&&[...document.querySelectorAll('.desktop-section img[src]')].every(i=>i.getAttribute('src').startsWith('assets/hensec/produtos/'))`),'todos os equipamentos visuais vêm dos seis arquivos fornecidos');
  check(await evaluate(`(()=>{const r=window.HENSEC_CONFIG.technologyReferences;return r.length===6&&r.find(x=>x.id==='biometria').model==='SS 3430 MF BIO'&&r.filter(x=>x.id!=='biometria').every(x=>x.model===null)})()`),'modelo biométrico corrigido e outros códigos não inferidos');
  check(await evaluate(`(()=>{const refs=window.HENSEC_CONFIG.technologyReferences;return refs.every(r=>{const a=document.querySelector('[data-technology-reference="'+r.id+'"]');return a.querySelector('[data-reference-model]').textContent===r.identification&&a.querySelector('[data-whatsapp]').href.startsWith('https://wa.me/5511945549849?text=')})&&new Set(refs.map(r=>window.HENSEC_CONFIG.messages[r.messageKey])).size===6})()`),'seis identificações e mensagens próprias');
  check(await evaluate(`!document.querySelector('[data-technology-reference="cameras"]').textContent.toLowerCase().includes('inteligência artificial')&&!document.querySelector('[data-technology-reference="cameras"]').textContent.toLowerCase().includes('reconhecimento facial')`),'câmera sem recursos não confirmados');
@@ -108,7 +108,7 @@ try {
  check(await evaluate(`document.querySelector('#gallery-modal').open&&document.querySelector('#gallery-modal img').naturalWidth>0`),'ampliação funcional');
  await send('Input.dispatchKeyEvent',{type:'keyDown',key:'Escape',code:'Escape',windowsVirtualKeyCode:27,nativeVirtualKeyCode:27});await send('Input.dispatchKeyEvent',{type:'keyUp',key:'Escape',code:'Escape',windowsVirtualKeyCode:27,nativeVirtualKeyCode:27});
  check(await evaluate(`!document.querySelector('#gallery-modal').open&&document.activeElement.hasAttribute('data-gallery-expand')`),'Escape fecha zoom e devolve foco');
- await send('Emulation.setDeviceMetricsOverride',{width:390,height:844,deviceScaleFactor:1,mobile:true});await send('Emulation.setTouchEmulationEnabled',{enabled:true});await wait(100);
+ await send('Emulation.setDeviceMetricsOverride',{width:768,height:1024,deviceScaleFactor:1,mobile:true});await send('Emulation.setTouchEmulationEnabled',{enabled:true});await wait(100);
  await evaluate(`document.querySelector('.gallery-track').scrollIntoView({block:'center',behavior:'instant'})`);await wait(80);
  const touch=await evaluate(`(()=>{const r=document.querySelector('.gallery-track').getBoundingClientRect();return {x:r.left+r.width*.85,y:Math.max(140,Math.min(innerHeight-150,r.top+r.height*.35)),width:r.width}})()`);
  await send('Input.dispatchTouchEvent',{type:'touchStart',touchPoints:[{x:touch.x,y:touch.y}]});

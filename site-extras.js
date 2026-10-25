@@ -32,7 +32,7 @@
     dialog.close();
     syncNotice();
     // The banner disappears after confirming: return focus to a durable control.
-    const target = opener && !opener.closest('[hidden]') ? opener : document.querySelector('.footer-bottom [data-open-privacy],.policy-footer [data-open-privacy]');
+    const target = opener && opener.getClientRects().length && !opener.closest('[hidden]') ? opener : [...document.querySelectorAll('.mobile-footer [data-open-privacy],.footer-bottom [data-open-privacy],.policy-footer [data-open-privacy]')].find(el=>el.getClientRects().length);
     target?.focus({preventScroll: true});
   }
   function confirmChoice() {

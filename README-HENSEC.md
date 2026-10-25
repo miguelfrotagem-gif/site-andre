@@ -74,3 +74,9 @@ A suíte verifica 320–1920 px, incluindo 360, 390, 430, 768, 1280 e 1440, desk
 ## Indicação da seção no menu
 
 O scrollspy da HENSEG mantém um único `aria-current=location` no menu principal. A seleção considera a maior área realmente visível abaixo do cabeçalho fixo; as áreas secundárias continuam nos seus grupos de navegação, e o rodapé mantém Contato. O clique em uma âncora destaca o destino durante o scroll suave nativo, com liberação ao chegar, ao interromper por gesto/teclado ou no limite de segurança. Não altera o scroll do navegador. Um único requestAnimationFrame coalesce os eventos, sem cancelamentos contínuos. ResizeObserver e eventos de carga/fontes/histórico atualizam as medidas quando o conteúdo muda de altura. Hover não cria um segundo sublinhado de seção ativa.
+
+## Composição mobile do kit
+
+A versão mobile segue as 12 composições fornecidas, com as cinco soluções na ordem comercial solicitada, cabeçalho compartilhado, fotos de produtos e formulário para continuar pelo WhatsApp. O desktop mantém sua composição. Implementação em `mobile.css`, `mobile.js` e seções responsivas de `hensec.html`; detalhes de origem dos materiais, breakpoints e contato em [docs/henseg-mobile.md](docs/henseg-mobile.md).
+
+Execute `npm run test:mobile` para a suíte das novas telas. `npm run test:hensec` verifica a composição desktop e os recursos compartilhados; `npm run test:navigation` verifica a navegação desktop. As verificações mobile incluem telas baixas, horizontal, texto ampliado, teclado, validação e conteúdo real da mensagem de WhatsApp.

@@ -16,7 +16,7 @@ async function clickNav(id){
 }
 try{
  await send('Page.enable');await send('Page.bringToFront');await send('Runtime.enable');
- for(const [width,height] of [[1440,900],[1280,720],[390,844],[360,800]]){
+ for(const [width,height] of [[1440,900],[1280,720]]){
   await send('Emulation.setDeviceMetricsOverride',{width,height,deviceScaleFactor:1,mobile:false});
   await send('Emulation.setEmulatedMedia',{features:[{name:'prefers-reduced-motion',value:'no-preference'}]});
   await send('Page.navigate',{url:base});await wait(300);await evaluate('document.fonts.ready');
