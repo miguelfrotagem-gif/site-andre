@@ -2,12 +2,12 @@ import {cp, mkdir, rm, readFile, writeFile} from 'node:fs/promises';
 import {createHash} from 'node:crypto';
 await rm('dist',{recursive:true,force:true});
 await mkdir('dist',{recursive:true});
-for(const file of ['index.html','hensec.html','privacidade.html','cookies.html','styles.css','mobile.css','desktop.css','mobile.js','app.js','config.js','site-extras.js','assets','.nojekyll','ademicon','LINKS_CONTEUDOS.json','MANIFESTO_EXTRAIDO.json']) {
+for(const file of ['index.html','hensec.html','privacidade.html','cookies.html','styles.css','mobile.css','desktop.css','contact.css','mobile.js','app.js','config.js','site-extras.js','assets','.nojekyll','ademicon','LINKS_CONTEUDOS.json','MANIFESTO_EXTRAIDO.json']) {
   await cp(file,`dist/${file}`,{recursive:true});
 }
 const pages={
   'index.html':['ademicon/styles.css','ademicon/dialogs.css','ademicon/app.js'],
-  'hensec.html':['styles.css','mobile.css','desktop.css','mobile.js','config.js','app.js','site-extras.js'],
+  'hensec.html':['styles.css','mobile.css','desktop.css','contact.css','mobile.js','config.js','app.js','site-extras.js'],
   'privacidade.html':['styles.css','site-extras.js'],
   'cookies.html':['styles.css','site-extras.js']
 };

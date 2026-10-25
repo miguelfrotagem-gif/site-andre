@@ -10,20 +10,23 @@ const buffers=new Map();
 const styles=await readFile('styles.css','utf8');
 const mobileStyles=await readFile('mobile.css','utf8');
 const desktopStyles=await readFile('desktop.css','utf8');
+const contactStyles=await readFile('contact.css','utf8');
 const sourceFiles=['hensec.html','privacidade.html','cookies.html'];
 const sources=await Promise.all(sourceFiles.map(file=>readFile(file,'utf8')));
-for(const source of [styles,mobileStyles,desktopStyles,...sources]) {
+for(const source of [styles,mobileStyles,desktopStyles,contactStyles,...sources]) {
   for(const file of new Set(source.match(/assets\/[A-Za-z0-9_./-]+\.(?:webp|svg|ttf|png|jpg)/g)))if(!buffers.has(file))buffers.set(file,(await readFile(file)).toString('base64'));
 }
 const awaitableStyles=await embed(styles);
 const embeddedMobileStyles=await embed(mobileStyles);
 const embeddedDesktopStyles=await embed(desktopStyles);
+const embeddedContactStyles=await embed(contactStyles);
 const destination=process.argv[2]||'dist/HENSEG.html';
 await mkdir(path.dirname(destination),{recursive:true});
 for(let i=0;i<sources.length;i++) {
   let html=sources[i].replace('<link rel="stylesheet" href="styles.css">',()=>`<style>${awaitableStyles}</style>`);
   html=html.replace('<link rel="stylesheet" href="mobile.css">',()=>`<style>${embeddedMobileStyles}</style>`);
   html=html.replace('<link rel="stylesheet" href="desktop.css">',()=>`<style>${embeddedDesktopStyles}</style>`);
+  html=html.replace('<link rel="stylesheet" href="contact.css">',()=>`<style>${embeddedContactStyles}</style>`);
   const scripts=[];
   for(const script of ['config.js','app.js','site-extras.js','mobile.js']) {
     const tag=`<script src="${script}" defer></script>`;

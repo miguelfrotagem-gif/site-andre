@@ -82,19 +82,6 @@
  .m-faq-item summary > span { color: #d2ba7c; font-size: 20px; font-weight: 400; }
  .m-faq-item[open] summary > span { transform: rotate(45deg); }
  .m-faq-item > p { margin: 0; padding: 0 15px 17px; font-size: 12px; color: #c3c9bc; line-height: 1.7; }
- .m-contact { background: linear-gradient(#09110dbe,#09110ddc),url('assets/hensec/mobile/arquitetura-ambiente.webp') center / cover; }
- .m-contact > .m-button { margin-top: 28px; }
- .m-contact-form { padding: 22px 18px; margin-top: 26px; border: 1px solid #b6a16880; border-radius: 20px; background: #0e1812; }
- .m-contact-form h3 { font-weight: 700; font-size: 21px; line-height: 1.3; margin-bottom: 24px; }
- .m-contact-form label { display: block; font-size: 14px; line-height: 1.5; margin: 18px 0 8px; }
- .m-contact-form input,.m-contact-form select { display: block; width: 100%; min-width: 0; min-height: 52px; padding: 12px; background: #0a120e; border: 1px solid #6f7f6a80; border-radius: 11px; color: #f6f0e3; font: 16px/1.5 Manrope,Arial,sans-serif; }
- .m-contact-form input:focus-visible,.m-contact-form select:focus-visible { outline: 2px solid #e6c678; outline-offset: 3px; }
- .m-contact-form small { display: block; color: #aab3a2; font-size: 10px; line-height: 1.5; margin-top: 7px; }
- .m-contact-form .m-button { margin-top: 30px; font-size: 13px; }
- .m-contact-form .m-note { margin-top: 18px; }
- .m-contact-form .m-note a { text-decoration: underline; text-underline-offset: 3px; }
- .m-form-status:empty { display: none; }
- .m-form-status { color: #edcf86; font-size: 12px; line-height: 1.6; margin-top: 15px; }
  .mobile-footer { padding-top: 40px; padding-bottom: 32px; }
  .mobile-footer > .m-button { margin-top: 26px; }
  .mobile-footer nav,.m-footer-privacy { position: static; display: grid; margin: 30px 0 0; padding: 24px 0 0; border: 0; border-top: 1px solid #c5b27a38; border-radius: 0; background: transparent; gap: 0; align-items: start; }

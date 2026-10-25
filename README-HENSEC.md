@@ -25,7 +25,7 @@ chromium --headless --no-sandbox --disable-gpu --remote-debugging-address=127.0.
 
 ## Layout compartilhado
 
-Os PDFs desktop atualizado (11 composições) e mobile (12 composições) orientam o layout. Textos, fotos, botões, formulário e perguntas são elementos reais. Uma única árvore de seções e um único formulário atendem desktop e mobile; somente frases específicas e links de navegação mudam por breakpoint.
+Os PDFs desktop atualizado (11 composições) e mobile (12 composições) orientam o layout. Textos, fotos, botões e perguntas são elementos reais. Uma única árvore de seções atende desktop e mobile; somente frases específicas e links de navegação mudam por breakpoint.
 
 Ordem: início, cinco soluções, alarmes, câmeras, cerca elétrica, interfonia, facial, sobre, quatro etapas, dúvidas, contato e rodapé. Biometria digital e fechaduras ficam em um bloco complementar opcional depois da quinta prioridade.
 
@@ -33,7 +33,7 @@ Ordem: início, cinco soluções, alarmes, câmeras, cerca elétrica, interfonia
 
 `app.js` mantém um único `aria-current=location`, calculado pela maior área visível abaixo do cabeçalho. Os produtos pertencem a Tecnologias no desktop; o mobile destaca cada categoria. Etapas pertence a Sobre no desktop; dúvidas e rodapé pertencem a Contato. Cliques, interrupção manual, redimensionamento e mudanças de altura mantêm o menu sincronizado. As âncoras são iguais nos dois formatos.
 
-`mobile.js` mantém os comportamentos compartilhados: formulário, teclado do menu, estado das dúvidas, CTA da hero por breakpoint e prevenção de sobreposição do WhatsApp flutuante. As revelações usam transform/opacity e respeitam movimento reduzido; o conteúdo continua disponível sem animação.
+`mobile.js` mantém os comportamentos compartilhados: links de contato, teclado do menu, estado das dúvidas, CTA da hero por breakpoint e prevenção de sobreposição do WhatsApp flutuante. As revelações usam transform/opacity e respeitam movimento reduzido; o conteúdo continua disponível sem animação.
 
 ## Conteúdo e origem dos materiais
 
@@ -47,7 +47,7 @@ O manifesto dos seis arquivos originais permanece em `docs/henseg-provided-produ
 
 ## Contato, privacidade e cookies
 
-O formulário prepara uma mensagem com nome, WhatsApp e ambiente. A descrição opcional do projeto aparece no desktop. A validação preserva os campos; a abertura do contato não simula envio. Não há armazenamento local de dados pessoais nem envio a um backend do site. A mensagem é revisada e enviada pelo visitante no WhatsApp.
+O contato não tem formulário ou campos de dados pessoais. Segue a nova referência enviada: fundo fotográfico diurno com celular à direita, título “Sua segurança começa aqui.”, card “Vamos conversar?”, CTA “Chamar a Henseg” e links de dúvidas/projeto. Textos e ações são HTML, separados da fotografia limpa, em `contact.css`. Os links abrem o WhatsApp oficial com mensagem inicial, revisada e enviada pelo visitante no aplicativo. Não há envio automático nem armazenamento de dados pessoais.
 
 `site-extras.js` mantém apenas a preferência `henseg_privacy_v1` no armazenamento local após confirmação, com versão e expiração de até 180 dias. Sem cookies próprios, análise, publicidade ou embeds automáticos. Preferências reabrem no rodapé e nas políticas; apagar a escolha remove o registro. Expiração, armazenamento bloqueado e retorno de foco são tratados. `privacidade.html` e `cookies.html` descrevem esses recursos reais.
 
@@ -61,4 +61,4 @@ Site: `https://miguelfrotagem-gif.github.io/site-andre/hensec.html`.
 
 ## Cobertura atual
 
-Desktop: 1672 × 941, 1920 × 1080, 1600 × 900, 1440 × 900, 1366 × 768, 1280 × 720, 1280 × 600 e tablets. Mobile: 320, 360, 375, 390, 414 e 430 px; telas baixas; horizontal 740 × 360 e 844 × 390; texto ampliado. Testes cobrem sequência comercial, proporção/resolução das fotos, ausência de cortes/overflow/sobreposições, menu e foco, FAQ e aria-expanded, complementares, formulário e mensagem real, cookies, políticas, ausência de requisições externas automáticas e console limpo. Capturas em `/tmp/henseg-desktop-checks` e `/tmp/henseg-mobile-checks`.
+Desktop: 1672 × 941, 1920 × 1080, 1600 × 900, 1440 × 900, 1366 × 768, 1280 × 720, 1280 × 600 e tablets. Mobile: 320, 360, 375, 390, 414 e 430 px; telas baixas; horizontal 740 × 360 e 844 × 390; texto ampliado. Testes cobrem sequência comercial, proporção/resolução das fotos, ausência de cortes/overflow/sobreposições, menu e foco, FAQ e aria-expanded, complementares, ausência de formulário e links reais de contato, cookies, políticas, ausência de requisições externas automáticas e console limpo. Capturas em `/tmp/henseg-desktop-checks` e `/tmp/henseg-mobile-checks`.
