@@ -1,7 +1,6 @@
 /* Shared semantic components: mobile layout follows the supplied 390px references. */
 .technology-anchor { position: absolute; top: 0; left: 0; scroll-margin-top: 0; }
 .desktop-copy,.m-desktop-hero-visual,.m-solution-photo,.m-solution-action,.site-header #navigation .mobile-nav { display: none; }
-.floating-contact[data-mobile-obscured] { visibility: hidden; pointer-events: none; }
 @media (max-width: 767px), (max-width: 1023px) and (max-height: 500px) {
  body:not(.privacy-page) { background: #0b120d; }
  main > .mobile-section,.mobile-footer { display: block; }
@@ -91,9 +90,8 @@
  .m-footer-privacy button { border: 0; background: transparent; text-align: left; cursor: pointer; }
  .mobile-footer > .m-note { margin-top: 28px; }
  .mobile-footer .m-note a { display: inline-block; padding: 10px 0; }
- /* The floating action yields to full-width actions, forms, footer and privacy UI. */
+ /* WhatsApp stays fixed and visible; the script reserves space above privacy notices. */
  .floating-contact { width: 48px; height: 48px; right: max(12px,env(safe-area-inset-right)); bottom: max(12px,env(safe-area-inset-bottom)); padding: 10px; }
- .floating-contact[data-mobile-obscured] { visibility: hidden; pointer-events: none; }
  .floating-tooltip { display: none; }
  .cookie-notice { left: max(12px,env(safe-area-inset-left)); right: max(12px,env(safe-area-inset-right)); width: auto; bottom: max(12px,env(safe-area-inset-bottom)); max-height: calc(100dvh - 24px); overflow-y: auto; }
  @media (hover: hover) {
