@@ -1,82 +1,64 @@
-# HENSEG — segurança eletrônica e controle de acesso
+# HENSEG — segurança eletrônica
 
-Aplicação estática, sem dependências npm, backend, coleta biométrica ou scripts de publicidade/análise. A página da HENSEG está em **`hensec.html`**. A raiz `index.html` contém o projeto Ademicon de uma atualização remota e foi preservada, assim como seus assets, código e testes.
+Aplicação estática, sem dependências npm, backend, coleta biométrica ou scripts de publicidade/análise. Entrada HENSEG: **`hensec.html`**. A raiz `index.html` pertence ao Ademicon e deve ser preservada, assim como os demais projetos publicados.
 
 ## Desenvolvimento e validação
 
 ```sh
-cd /workspace/site-andre
 npm run dev
-```
-
-Acesse `/hensec.html`. Para usar a raiz local como HENSEG, inicie com `SITE=hensec npm run dev`. Use o checkout existente; tarefas na nuvem já são isoladas, sem necessidade de worktree.
-
-```sh
 npm run lint
 npm run build
 npm run test:hensec
-npm test
+npm run test:mobile
+npm run test:navigation
 ```
 
-Os testes usam Chromium CDP na porta 9222 e o servidor local na porta 3000. Inicie Chromium, se necessário:
+Acesse `/hensec.html`. Para servir HENSEG na raiz local: `SITE=hensec npm run dev`. O build mantém Ademicon em `dist/index.html`. Para testar o build: `SERVE_DIST=1 PORT=3001 npm start`, usando `TEST_URL=http://127.0.0.1:3001/hensec.html` nos comandos de teste.
+
+As suítes de navegador usam Chromium CDP na porta 9222. Execute-as sequencialmente para preservar foco e renderização:
 
 ```sh
 chromium --headless --no-sandbox --disable-gpu --remote-debugging-address=127.0.0.1 --remote-debugging-port=9222 --user-data-dir=/tmp/hensec-chrome about:blank
 ```
 
-`npm run test:hensec` executa a suíte HENSEG, com `TEST_URL=http://127.0.0.1:3000/hensec.html` por padrão. `npm test` preserva a suíte Ademicon. Para verificar o build, inicie `SERVE_DIST=1 PORT=3001 npm start` e use `TEST_URL=http://127.0.0.1:3001/hensec.html npm run test:hensec`.
+`npm test` continua executando a suíte independente do Ademicon.
 
-## Conteúdo e comportamento
+## Layout compartilhado
 
-A hero apresenta “A segurança evoluiu. O seu acesso também.”, com reconhecimento facial, biometria e controle de acesso. A Intelbras foi informada pelo usuário como marca do portfólio. A entrada é curta e integrada: conteúdo e CTAs não aguardam uma abertura em tela inteira.
+Os PDFs desktop atualizado (11 composições) e mobile (12 composições) orientam o layout. Textos, fotos, botões, formulário e perguntas são elementos reais. Uma única árvore de seções e um único formulário atendem desktop e mobile; somente frases específicas e links de navegação mudam por breakpoint.
 
-A seção Tecnologias mantém quatro etapas principais com os materiais do ZIP: controle facial, alarmes, biometria e câmeras. A foto sticky acompanha o texto ativo por crossfade reversível no desktop. Tablet, celular, telas baixas e movimento reduzido mostram cada foto junto ao conteúdo. Interfonia e fechadura têm blocos complementares e suas próprias imagens. Os textos e as mensagens de WhatsApp são centralizados em `technologyReferences` e `messages` no `config.js`, com fallback sem JavaScript no HTML.
+Ordem: início, cinco soluções, alarmes, câmeras, cerca elétrica, interfonia, facial, sobre, quatro etapas, dúvidas, contato e rodapé. Biometria digital e fechaduras ficam em um bloco complementar opcional depois da quinta prioridade.
 
-Todas as áreas que continham equipamentos fictícios foram atualizadas: hero, soluções e fundos, tecnologias, ambientes, sobre, contato, galeria, miniaturas e versões mobile. As composições de fundo anteriores foram retiradas por completo quando incluíam equipamentos incorporados. O inventário ativo e as identificações estão em `docs/henseg-substituicao-fotos-reais.md` e `docs/henseg-media-audit.json`.
+`styles.css` mantém a base e as políticas; `mobile.css` compõe o celular; `desktop.css` adapta os mesmos componentes para as referências desktop. Mobile: até 767 px, incluindo horizontal até 1023 px quando a altura é de até 500 px. As fotos mantêm proporção, `contain` e resolução original. Em telas baixas, as seções crescem naturalmente. Não há scroll obrigatório, sticky de produtos, zoom ou carrossel automático.
 
-A galeria tem seis fontes fornecidas, navegação nativa por gesto, contador, miniaturas e ampliação com Escape/retorno de foco. Cada arquivo é exibido inteiro, sem filtros e sem superar suas dimensões nativas, inclusive no modal. As abas residencial e empresarial continuam com materiais e mensagens diferentes. FAQ, cabeçalho e botão verde do WhatsApp foram preservados.
+`app.js` mantém um único `aria-current=location`, calculado pela maior área visível abaixo do cabeçalho. Os produtos pertencem a Tecnologias no desktop; o mobile destaca cada categoria. Etapas pertence a Sobre no desktop; dúvidas e rodapé pertencem a Contato. Cliques, interrupção manual, redimensionamento e mudanças de altura mantêm o menu sincronizado. As âncoras são iguais nos dois formatos.
 
-## Dados confirmados e imagens pendentes
+`mobile.js` mantém os comportamentos compartilhados: formulário, teclado do menu, estado das dúvidas, CTA da hero por breakpoint e prevenção de sobreposição do WhatsApp flutuante. As revelações usam transform/opacity e respeitam movimento reduzido; o conteúdo continua disponível sem animação.
 
-- Marca: HENSEG, com a logomarca enviada pelo usuário.
-- WhatsApp: **+55 11 94554-9849**, normalizado como `5511945549849` em `config.js`.
-- CNPJ informado pelo usuário: **61.285.070/0001-28**. Os dígitos verificadores foram conferidos; não foi feita consulta cadastral externa.
-- Equipamentos Intelbras: marca informada pelo usuário; modelos de referência fornecidos no briefing, sujeitos à confirmação comercial e de ficha técnica.
-- A razão social completa não foi fornecida. Não foi inventada identificação cadastral, certificação ou condição de atendimento.
+## Conteúdo e origem dos materiais
 
-As seis imagens atuais foram selecionadas e fornecidas pelo usuário no ZIP. Não foram geradas, buscadas na internet ou retocadas nesta atualização. A procedência fotográfica de todos os materiais não foi verificada: não são apresentadas como instalações comprovadas de clientes. Os hashes e dimensões originais estão em `docs/henseg-provided-products.json`.
+Marca HENSEG, WhatsApp **+55 11 94554-9849** e CNPJ **61.285.070/0001-28** foram informados pelo usuário. A razão social completa não foi fornecida e não é inventada.
 
-O controlador biométrico está identificado na própria imagem como **SS 3430 MF BIO**. Terminal facial, central Sistema 8000, câmera, componentes do kit e fechadura ficam identificados por categoria até a confirmação dos códigos. A fechadura foi autorizada pelo usuário para apresentação, mas não é identificada como Intelbras/IFR 7000+. A câmera não recebe alegações de IA, microfone ou reconhecimento facial sem uma ficha técnica confirmada.
+As fotos de alarme, câmera, facial, interfonia, biometria e fechadura vêm do kit de produtos fornecido. O kit mobile fornece a central de cerca e a referência de arquitetura. Somente o trecho fotográfico da arquitetura é usado, sem textos, interface ou equipamento no teto; a legenda o identifica como ambientação, sem alegação de obra ou instalação da HENSEG. Nenhum equipamento foi gerado ou redesenhado.
 
-Os endereços Grupo Extrema e Verisure enviados pelo usuário retornaram bloqueio HTTP 403 no ambiente, inclusive após verificar a permissão de rede. O briefing fornecido guiou a implementação; não se afirma que as páginas dos concorrentes foram inspecionadas.
+Identificações: Sistema 8000; câmera Intelbras e terminal facial sem código confirmado; central de cerca como referência de categoria; montagem de interfonia sem promessa de kit comercial único; biometria **SS 3430 MF BIO**; fechadura autorizada no portfólio sem atribuição a Intelbras/IFR 7000+. Não são anunciados recursos técnicos não confirmados.
 
-## Privacidade e cookies
+O manifesto dos seis arquivos originais permanece em `docs/henseg-provided-products.json`. Os documentos de galeria, abas e narrativa da versão anterior são históricos. A implementação atual está descrita em [docs/henseg-desktop.md](docs/henseg-desktop.md) e [docs/henseg-mobile.md](docs/henseg-mobile.md).
 
-`privacidade.html` e `cookies.html` descrevem os recursos efetivos da HENSEG. Não há cookies definidos pelo código, análise, publicidade, embeds externos automáticos, formulários ou transmissão de dados biométricos. Fotos de reconhecimento facial não solicitam acesso à câmera do visitante.
+## Contato, privacidade e cookies
 
-`site-extras.js` mantém somente `henseg_privacy_v1` no `localStorage` depois da confirmação. O registro contém versão, confirmação, data e expiração de até 180 dias; não é enviado a um servidor. Não há categorias opcionais fictícias. O site funciona sem confirmar. Preferências reabrem no rodapé e nas políticas; apagar a escolha remove a chave e faz o aviso reaparecer. A implementação trata armazenamento bloqueado, expiração e retorno por bfcache. O aviso fica separado do WhatsApp e não é uma barreira de navegação.
+O formulário prepara uma mensagem com nome, WhatsApp e ambiente. A descrição opcional do projeto aparece no desktop. A validação preserva os campos; a abertura do contato não simula envio. Não há armazenamento local de dados pessoais nem envio a um backend do site. A mensagem é revisada e enviada pelo visitante no WhatsApp.
 
-WhatsApp e GitHub são descritos como serviços externos, com seus links oficiais de privacidade. Mensagens só são enviadas por decisão do usuário no WhatsApp. O texto técnico não é uma certificação automática de conformidade jurídica; a revisão da empresa continua recomendada, sem inventar razão social ou processos internos.
+`site-extras.js` mantém apenas a preferência `henseg_privacy_v1` no armazenamento local após confirmação, com versão e expiração de até 180 dias. Sem cookies próprios, análise, publicidade ou embeds automáticos. Preferências reabrem no rodapé e nas políticas; apagar a escolha remove o registro. Expiração, armazenamento bloqueado e retorno de foco são tratados. `privacidade.html` e `cookies.html` descrevem esses recursos reais.
 
-## Build, exportação e publicação
+## Publicação e exportação
 
-O build preserva Ademicon em `dist/index.html` e coloca HENSEG em `dist/hensec.html`, com as duas políticas, scripts e imagens locais. As páginas recebem URLs de CSS/JS com hash de conteúdo. O servidor continua compatível com ambas as aplicações.
+`npm run build` inclui CSS/JS com hash de conteúdo e mantém as duas aplicações. `npm run export -- /tmp/henseg-export/HENSEG.html` incorpora os recursos e escreve as duas políticas ao lado; distribua os três HTMLs juntos.
 
-`npm run export -- /tmp/henseg-export/HENSEG.html` gera uma versão com assets incorporados e as duas políticas ao lado, com links de retorno corretos. Distribua os três HTMLs juntos. O ZIP do build mantém a aplicação completa.
+O código fica em `main`; o build HENSEG é publicado em `gh-pages` sem substituir Ademicon, projetos de energia solar, demais diretórios ou um CNAME existente. As regras do ambiente usam publicação nativa pela branch.
 
-O repositório usa a branch `gh-pages` para publicação nativa. As regras existentes impedem deploy direto pela `main`. O código fica em `main`; o conteúdo compilado é enviado para `gh-pages` sem remover o outro projeto ou um eventual CNAME. Endereço HENSEG: `https://miguelfrotagem-gif.github.io/site-andre/hensec.html`.
+Site: `https://miguelfrotagem-gif.github.io/site-andre/hensec.html`.
 
-## Cobertura dos testes
+## Cobertura atual
 
-A suíte verifica 320–1920 px, incluindo 360, 390, 430, 768, 1280 e 1440, desktop com pouca altura, ausência de overflow/cortes, navegação e WhatsApp oficiais. Testa progressão e troca de fotos reversíveis, área sticky segura, seis identificações/mensagens, apenas materiais do ZIP nas imagens de equipamentos, limites nativos de resolução e ausência de filtros, fluxo com movimento reduzido, abas pelo teclado, mensagens contextuais, seleção e gesto de galeria, Escape e foco, FAQ por Enter, persistência/apagamento/expiração das preferências, páginas legais e ausência de pedidos externos automáticos. Capturas ficam em `/tmp/hensec-checks`.
-
-
-## Indicação da seção no menu
-
-O scrollspy da HENSEG mantém um único `aria-current=location` no menu principal. A seleção considera a maior área realmente visível abaixo do cabeçalho fixo; as áreas secundárias continuam nos seus grupos de navegação, e o rodapé mantém Contato. O clique em uma âncora destaca o destino durante o scroll suave nativo, com liberação ao chegar, ao interromper por gesto/teclado ou no limite de segurança. Não altera o scroll do navegador. Um único requestAnimationFrame coalesce os eventos, sem cancelamentos contínuos. ResizeObserver e eventos de carga/fontes/histórico atualizam as medidas quando o conteúdo muda de altura. Hover não cria um segundo sublinhado de seção ativa.
-
-## Composição mobile do kit
-
-A versão mobile segue as 12 composições fornecidas, com as cinco soluções na ordem comercial solicitada, cabeçalho compartilhado, fotos de produtos e formulário para continuar pelo WhatsApp. O desktop mantém sua composição. Implementação em `mobile.css`, `mobile.js` e seções responsivas de `hensec.html`; detalhes de origem dos materiais, breakpoints e contato em [docs/henseg-mobile.md](docs/henseg-mobile.md).
-
-Execute `npm run test:mobile` para a suíte das novas telas. `npm run test:hensec` verifica a composição desktop e os recursos compartilhados; `npm run test:navigation` verifica a navegação desktop. As verificações mobile incluem telas baixas, horizontal, texto ampliado, teclado, validação e conteúdo real da mensagem de WhatsApp.
+Desktop: 1672 × 941, 1920 × 1080, 1600 × 900, 1440 × 900, 1366 × 768, 1280 × 720, 1280 × 600 e tablets. Mobile: 320, 360, 375, 390, 414 e 430 px; telas baixas; horizontal 740 × 360 e 844 × 390; texto ampliado. Testes cobrem sequência comercial, proporção/resolução das fotos, ausência de cortes/overflow/sobreposições, menu e foco, FAQ e aria-expanded, complementares, formulário e mensagem real, cookies, políticas, ausência de requisições externas automáticas e console limpo. Capturas em `/tmp/henseg-desktop-checks` e `/tmp/henseg-mobile-checks`.
