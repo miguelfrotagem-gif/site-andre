@@ -108,8 +108,8 @@
     references.forEach(item => {
       const article = articles.find(element => element.dataset.technologyReference === item.id);
       if (!article) return;
-      article.querySelector('[data-reference-model]').textContent = item.model;
-      article.querySelector('.technology-reference > span').textContent = item.confirmed ? 'Modelo informado · Intelbras' : 'Modelo de referência · Intelbras';
+      article.querySelector('[data-reference-model]').textContent = item.identification || item.model || item.category;
+      article.querySelector('.technology-reference > span').textContent = item.model ? `Identificação visível${item.brand ? ' · '+item.brand : ''}` : item.brand ? `${item.brand} · Modelo a confirmar` : item.id==='videoporteiro' ? 'Conjunto apresentado' : 'Modelo a confirmar';
       article.querySelector('.technology-description').textContent = item.description;
       article.querySelector('.technology-label').textContent = item.category;
       const heading = article.querySelector('h3');
@@ -130,6 +130,7 @@
     });
     const steps = [...technology.querySelectorAll('[data-technology-step]')];
     const indicators = [...technology.querySelectorAll('[data-technology-go]')];
+    const productFrames = [...technology.querySelectorAll('[data-provided-tech-image]')];
     const desktop = matchMedia('(min-width:1024px)');
     let frame = 0;
     function draw() {
@@ -143,6 +144,9 @@
       const active=Math.min(steps.length-1,Math.round(position));
       indicators.forEach((element,i)=>i===active?element.setAttribute('aria-current','step'):element.removeAttribute('aria-current'));
       steps.forEach((element,i)=>element.classList.toggle('technology-active',i===active));
+      const base=Math.floor(position), fraction=Math.max(0,Math.min(1,((position-base)-.2)/.6));
+      const blend=fraction*fraction*(3-2*fraction);
+      productFrames.forEach((element,i)=>{element.style.opacity=String(i===base?1:i===base+1?blend:0);element.style.zIndex=String(i);element.setAttribute('aria-hidden',String(i!==active));});
       const progress=Math.max(0,Math.min(1,(line-rects[0].top)/Math.max(1,rects.at(-1).bottom-rects[0].top)));
       technology.style.setProperty('--tech-progress',progress);
     }
@@ -187,6 +191,8 @@
     expand.addEventListener('click',()=>{
       const image=slides[current].querySelector('img'),zoom=modal.querySelector('img');
       zoom.src=image.currentSrc||image.src;zoom.alt=image.alt;
+      zoom.style.setProperty('--photo-width',`${image.naturalWidth||image.width}px`);
+      zoom.style.setProperty('--photo-height',`${image.naturalHeight||image.height}px`);
       modal.querySelector('h2').textContent=slides[current].querySelector('strong').textContent;
       modal.querySelector('p').textContent=slides[current].querySelector('figcaption > span').textContent;
       modal.showModal();
