@@ -30,7 +30,7 @@ for(let i=0;i<sources.length;i++) {
   const scripts=[];
   for(const script of ['config.js','app.js','site-extras.js','mobile.js','entry.js']) {
     const tag=`<script src="${script}" defer></script>`;
-    if(html.includes(tag)){html=html.replace(tag,'');scripts.push(await readFile(script,'utf8'));}
+    if(html.includes(tag)){html=html.replace(tag,'');scripts.push(script==='entry.js'?await embed(await readFile(script,'utf8')):await readFile(script,'utf8'));}
   }
   html=await embed(html);
   html=html.replace('</body>',()=>`<script>${scripts.join('\n')}</script></body>`);
