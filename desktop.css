@@ -4,7 +4,7 @@
  .desktop-copy { display: inline; }
  .mobile-copy { display: none !important; }
  .site-header { top: 22px; left: 4.8%; right: 4.8%; min-height: 76px; height: auto; padding: 7px 22px; gap: 24px; border-radius: 12px; border-color: #cbb16c7a; background: #0a110ee6; }
- .site-header .brand { margin: 0; min-width: 58px; }
+ .site-header .brand { margin: 0; min-width: 58px; gap: 10px; }
  .site-header .brand-logo { display: block; width: 58px; height: 60px; max-width: none; object-fit: contain; border-radius: 0; }
  .site-header #navigation { display: flex; position: static; margin: 0 auto; padding: 0; border: 0; background: none; gap: clamp(20px,2.4vw,45px); flex-direction: row; align-items: center; }
  .site-header #navigation a { padding: 12px 0; font-size: 13px; white-space: nowrap; }
