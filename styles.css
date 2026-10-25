@@ -577,3 +577,8 @@
  .technology-provided .technology-step-nav a { font-size: 12px; min-height: 60px; }
  .technology-provided .technology-step-nav a > span { min-width: 0; max-width: 100%; overflow-wrap: anywhere; }
 }
+/* Only the actual active section receives the persistent navigation underline. */
+.site-header #navigation a::after { transform: scaleX(0); }
+.site-header #navigation a:not([aria-current])::after { transition: none; }
+.site-header #navigation a[aria-current="location"]::after { transform: scaleX(1); transition: transform .2s; }
+.site-header #navigation a:hover { color: #ead49e; }
