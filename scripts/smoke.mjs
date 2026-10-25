@@ -64,6 +64,7 @@ try {
  assert.equal(await evaluate('document.querySelectorAll("h1").length'),1);
  assert.equal(await evaluate('document.querySelector("h1").textContent.includes("90%")'),false);
  assert.equal(await evaluate(`document.querySelector('#contato form')`),null,'contato sem formulário');
+ assert.equal(await evaluate(`document.querySelector('#contato .contact-portrait,#contato .owner-portrait,#contato .owner-caption')`),null,'contato sem retrato ou legenda pessoal');
  assert.equal(await evaluate(`document.querySelector('#contact-context')`),null,'mensagem contextual fora da apresentação');
  assert.equal(await evaluate(`document.querySelector('#contact-status').hidden`),true,'sem aviso permanente');
  assert.equal(await evaluate(`/Olá!|configuração|número oficial|será direcionado/.test(document.querySelector('#contato').innerText)`),false,'contato inicial sem mensagens internas');
@@ -79,21 +80,19 @@ try {
   const images=await evaluate(`(()=>[...document.querySelectorAll('.scene-visual img')].filter(i=>i.getBoundingClientRect().width>0).map(i=>{const r=i.getBoundingClientRect(),s=getComputedStyle(i);return {path:i.currentSrc.split('/').pop(),ratioOK:Math.abs(r.width/r.height-i.naturalWidth/i.naturalHeight)<.003,inside:r.left>=-.5&&r.right<=innerWidth+.5,contain:s.objectFit==='contain',noZoom:s.transform==='none'}}))()`);
   for(const img of images)for(const k of ['ratioOK','inside','contain','noZoom'])assert.equal(img[k],true,`${width}: ${img.path} ${k}`);
   assert.equal(await evaluate(`document.querySelector('.hero-photo').currentSrc.includes('/mobile/')`),width<1024,'picture seleciona enquadramento próprio');
-  assert.equal(await evaluate(`(()=>{const p=document.querySelector('.owner-portrait').getBoundingClientRect(),n=document.querySelector('.owner-caption').getBoundingClientRect();return n.top>=p.bottom-.5&&n.top-p.bottom<=16})()`),true,`nome junto ao retrato, sem sobreposição ${width}`);
 
   assert.equal(await evaluate(`(()=>{const r=document.querySelector('h1').getBoundingClientRect();return r.left>=0&&r.right<=innerWidth+1})()`),true,`h1 ${width}`);
   assert.equal(await evaluate(`(()=>{const a=document.querySelector('.brand').getBoundingClientRect(),b=document.querySelector('${width<1024?'.menu-toggle':'#navigation'}').getBoundingClientRect();return a.right+5<=b.left})()`),true,`cabeçalho sem colisão ${width}`);
-  assert.equal(await evaluate(`(()=>{const r=document.querySelector('.owner-portrait').getBoundingClientRect(),i=document.querySelector('.owner-portrait');return r.width>0&&r.height>0&&Math.abs(r.width/r.height-i.naturalWidth/i.naturalHeight)<.003})()`),true,`Eude inteiro e proporcional ${width}`);
   if(width>=1100&&height>=760){
    assert.equal(await evaluate(`[...document.querySelectorAll('.scene-visual img')].every(i=>(getComputedStyle(i).maskImage.includes('linear-gradient')||i.matches('.solution-camera')&&getComputedStyle(i.parentElement).maskImage.includes('linear-gradient')))`),true,'transição suave somente nas bordas do cenário');
    assert.equal(await evaluate(`parseFloat(getComputedStyle(document.querySelector('#navigation a')).fontSize)>=14`),true,'menu legível');
    assert.equal(await evaluate(`[...document.querySelectorAll('.solution-options small,.timeline p,.project-panel p:not(.fine)')].every(e=>parseFloat(getComputedStyle(e).fontSize)>=16)`),true,'descrições legíveis');
-   const fit=await evaluate(`(()=>{const header=document.querySelector('.site-header').getBoundingClientRect().height;return [...document.querySelectorAll('main>section')].map(s=>{const r=s.getBoundingClientRect(),content=[...s.querySelectorAll('h1,h2,h3,p,a,button,input,.owner-portrait,.scene-visual img')].map(e=>e.getBoundingClientRect()).filter(r=>r.height>0);return {id:s.id,fits:Math.abs(r.height-(innerHeight-header))<1,inside:content.every(c=>c.top>=r.top-.5&&c.bottom<=r.bottom+.5&&c.left>=r.left-.5&&c.right<=r.right+.5),noClipping:s.scrollHeight<=s.clientHeight+1&&!['hidden','clip','scroll','auto'].includes(getComputedStyle(s).overflowY)}})})()`);
+   const fit=await evaluate(`(()=>{const header=document.querySelector('.site-header').getBoundingClientRect().height;return [...document.querySelectorAll('main>section')].map(s=>{const r=s.getBoundingClientRect(),content=[...s.querySelectorAll('h1,h2,h3,p,a,button,input,.scene-visual img')].map(e=>e.getBoundingClientRect()).filter(r=>r.height>0);return {id:s.id,fits:Math.abs(r.height-(innerHeight-header))<1,inside:content.every(c=>c.top>=r.top-.5&&c.bottom<=r.bottom+.5&&c.left>=r.left-.5&&c.right<=r.right+.5),noClipping:s.scrollHeight<=s.clientHeight+1&&!['hidden','clip','scroll','auto'].includes(getComputedStyle(s).overflowY)}})})()`);
    for(const section of fit)for(const k of ['fits','inside','noClipping'])assert.equal(section[k],true,`${width}x${height}: ${section.id} ${k}`);
   }
   if(width<1024){
    assert.equal(await evaluate(`[...document.querySelectorAll('.button,.solution-options button,.project-types button')].filter(b=>b.getBoundingClientRect().width>0).every(b=>b.getBoundingClientRect().height>=44)`),true,`toque ${width}`);
-   assert.equal(await evaluate(`(()=>{const portrait=document.querySelector('.owner-portrait').getBoundingClientRect(),cta=document.querySelector('#whatsapp-cta').getBoundingClientRect(),title=document.querySelector('#contato .section-intro').getBoundingClientRect();return title.bottom<=portrait.top+1&&portrait.bottom<cta.top})()`),true,`retrato livre de texto e CTA ${width}`);
+   assert.equal(await evaluate(`(()=>{const cta=document.querySelector('#whatsapp-cta').getBoundingClientRect(),title=document.querySelector('#contato .section-intro').getBoundingClientRect();return title.bottom<cta.top})()`),true,`CTA após o título do contato ${width}`);
   }
   console.log(`PASS: ${width}x${height}, fotos inteiras nas proporções próprias, sem zoom/overflow; cabeçalho livre e controles tocáveis`);
  }
@@ -218,7 +217,7 @@ try {
  assert.equal(await evaluate(`[...document.querySelectorAll('[data-brand]')].every(e=>e.textContent==='Inovar')`),true);
  console.log('PASS: número normalizado e mensagens hero/solução/projeto/FAQ, com configuração exclusiva de teste e sem navegação externa');
  // Record native animation calls without changing their behavior, then verify entry once.
- const animationProbe=await send('Page.addScriptToEvaluateOnNewDocument',{source:`const nativeAnimate=Element.prototype.animate;window.__animationLog=[];Element.prototype.animate=function(frames,options){window.__animationLog.push({tag:this.tagName,classes:this.className,photo:this.matches('.scene-visual,.contact-portrait'),frames,options});return nativeAnimate.call(this,frames,options);};`});
+ const animationProbe=await send('Page.addScriptToEvaluateOnNewDocument',{source:`const nativeAnimate=Element.prototype.animate;window.__animationLog=[];Element.prototype.animate=function(frames,options){window.__animationLog.push({tag:this.tagName,classes:this.className,photo:this.matches('.scene-visual'),frames,options});return nativeAnimate.call(this,frames,options);};`});
  await send('Emulation.setEmulatedMedia',{features:[{name:'prefers-reduced-motion',value:'no-preference'}]});
  await viewport(1366,768);await send('Page.navigate',{url:base});await wait(200);
  assert.equal(await evaluate(`window.__animationLog.some(a=>a.classes==='site-header'&&a.options.duration===400&&a.frames[0].translate==='0 -8px')`),true,'entrada do cabeçalho');
@@ -242,10 +241,10 @@ try {
   assert.match(await evaluate('document.title'),/Energia Solar/);
   await evaluate(`document.querySelector('#question-2').click()`);
   assert.equal(await evaluate(`document.querySelector('#answer-2').hidden`),false,'FAQ no arquivo exportado');
-  assert.equal(await evaluate(`document.querySelector('.owner-portrait').naturalWidth>0`),true,'retrato embutido');
+  assert.equal(await evaluate(`document.querySelector('.owner-portrait')`),null,'exportação sem retrato');
   assert.equal(await evaluate(`document.querySelector('.hero-photo').naturalWidth`),934,'cena mobile embutida');
   assert.equal(await evaluate(`document.documentElement.scrollWidth<=innerWidth`),true);
-  console.log('PASS: arquivo HTML independente com fotografia e retrato embutidos e FAQ funcional');
+  console.log('PASS: arquivo HTML independente com fotografias embutidas e FAQ funcional');
  }
  assert.deepEqual(errors,[],'erros de execução ou console');
  console.log(`PASS: suíte solar concluída; capturas em ${output}`);

@@ -330,14 +330,9 @@ footer .brand-logo { height: 72px; max-width: 120px; }
 .faq-section .actions { justify-content: center; text-align: center; }
 
 .contact-section { background: none; }
-.contact-section .section-content { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); grid-template-rows: auto auto auto; align-content: center; gap: 24px 6%; }
+.contact-section .section-content { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); align-content: center; gap: 24px 6%; }
 .contact-section .section-intro { grid-area: 1 / 1; align-self: end; margin-bottom: 0; }
 .contact-section .section-intro p:not(.eyebrow) { max-width: 530px; }
-.contact-portrait { grid-area: 1 / 2 / 4 / 3; display: grid; gap: 12px; align-self: center; justify-self: end; width: min(100%, 680px); margin: 0; }
-.owner-portrait { display: block; width: 100%; height: auto; object-fit: contain; }
-.owner-caption { padding-inline: 20px; text-align: center; text-shadow: 0 2px 6px #071a2a; }
-.owner-caption p { margin: 0; font-size: 1.0625rem; line-height: 1.5; color: #e5eff7; }
-.owner-caption .owner { color: var(--text); font-size: 1.5rem; line-height: 1.3; font-weight: 700; margin-bottom: 2px; }
 .contact-native { grid-area: 2 / 1; align-self: start; width: fit-content; max-width: 100%; text-shadow: 0 2px 6px #071a2a; }
 .contact-native .whatsapp { width: fit-content; text-shadow: none; }
 .contact-native .fine { margin-bottom: 0; text-align: left; }
@@ -458,7 +453,6 @@ footer > a { min-height: 44px; display: inline-flex; align-items: center; }
   .faq-item h3 button { min-height: 56px; padding-block: 12px; font-size: 1rem; }
   .faq-item p { font-size: 1rem; padding-bottom: 16px; }
   .contact-section .section-content { gap: 20px 6%; }
-  .contact-portrait { width: min(100%, 680px, calc((var(--screen-height) - var(--screen-padding) - var(--screen-padding) - 5rem) * 730 / 910)); }
   .contact-native .fine { margin-top: 10px; }
 }
 
@@ -522,13 +516,13 @@ footer > a { min-height: 44px; display: inline-flex; align-items: center; }
   .faq-surface { grid-area: 2 / 1; align-self: start; margin-block: 20px 0; padding: 20px 16px; }
   .search-row > span { display: none; }
   .faq-section .actions { grid-area: 3 / 1; display: grid; justify-content: stretch; gap: 16px; margin-block: 20px 32px; }
+  .contact-section { grid-template-rows: auto auto minmax(0, 1fr); }
   .contact-background { grid-area: 1 / 1 / 4 / 2; }
   .contact-section .section-intro { grid-area: 1 / 1; padding-top: 36px; }
   .contact-section .section-intro h2 { font-size: clamp(2.1875rem, 9vw, 3.25rem); }
-  .contact-portrait { grid-area: 2 / 1; justify-self: center; align-self: end; z-index: 1; width: min(480px, calc(100% - 24px)); margin-top: 16px; }
-  .contact-native { grid-area: 3 / 1; margin-block: 24px 48px; }
+  .contact-native { grid-area: 2 / 1; margin-block: 24px 48px; }
   .contact-native .whatsapp { width: 100%; font-size: clamp(0.875rem, 4vw, 1rem); gap: 10px; padding-left: 14px; }
-  #contact-status { grid-area: 4 / 1; margin-block: 0 48px; }
+  #contact-status { grid-area: 3 / 1; margin-block: 0 48px; }
   footer { grid-template-columns: minmax(0, 1fr); justify-items: center; gap: 16px; padding-block: 28px; }
   footer .brand { justify-self: center; }
   footer > .fine { text-align: center; }
