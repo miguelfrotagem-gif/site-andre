@@ -14,7 +14,6 @@ if (validNumber) $$('[data-phone]').forEach(el => {
  el.href = `tel:+${number}`;
  el.textContent = /^55\d{11}$/.test(number) ? `(${number.slice(2,4)}) ${number.slice(4,9)}-${number.slice(9)}` : `+${number}`;
 });
-$$('[data-owner]').forEach(el => { el.textContent = config.ownerName || 'Eude Militão'; });
 if (config.logoUrl) $$('[data-logo]').forEach(img => { img.src = config.logoUrl; });
 if (config.savingsClaim?.validated === true && Number(config.savingsClaim.percentage) > 0 && Number(config.savingsClaim.percentage) <= 100) {
  const percent = document.createElement('em');
@@ -266,11 +265,11 @@ $('#faq-search').addEventListener('input',filterFaq);$('#clear-search').addEvent
 const motion = matchMedia('(prefers-reduced-motion:reduce)');
 const entered = new WeakSet();
 let entranceObserver;
-const entranceTargets = $$('.hero-copy > .eyebrow, .hero-copy h1, .hero-support > .lead, .hero-support .actions > a, .hero-disclaimer, .section-intro .eyebrow, .section-intro h2, .section-intro p:not(.eyebrow), .solution-options button, .solution-note, .timeline li, .process-section .actions, .project-types, .project-panel, .faq-surface, .faq-section .actions, .contact-native, .contact-portrait, .scene-visual');
+const entranceTargets = $$('.hero-copy > .eyebrow, .hero-copy h1, .hero-support > .lead, .hero-support .actions > a, .hero-disclaimer, .section-intro .eyebrow, .section-intro h2, .section-intro p:not(.eyebrow), .solution-options button, .solution-note, .timeline li, .process-section .actions, .project-types, .project-panel, .faq-surface, .faq-section .actions, .contact-native, .scene-visual');
 function enter(element) {
  if (entered.has(element) || motion.matches) return;
  entered.add(element);
- const photo = element.matches('.scene-visual, .contact-portrait');
+ const photo = element.matches('.scene-visual');
  let delay = 0;
  if (element.matches('h1, h2')) delay = 60;
  else if (element.matches('.lead, .section-intro p:not(.eyebrow)')) delay = 120;
