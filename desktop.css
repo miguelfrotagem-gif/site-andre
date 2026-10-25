@@ -118,22 +118,6 @@
  .m-faq-item[open] { border-color: #d4b671; background: #1a2519ed; }
  .m-faq-item[open] summary > span { transform: rotate(45deg); }
  .m-faq-item > p { padding: 0 20px 20px; margin: 0; font-size: 14px; line-height: 1.65; color: #c7cdbf; }
- main > .m-contact { display: grid; grid-template-columns: minmax(0,49%) minmax(0,43%); column-gap: 8%; grid-template-rows: repeat(4,min-content); align-content: center; background: linear-gradient(90deg,#08110ed4,#08110e8f 45%,#08110ed1),url('assets/hensec/mobile/arquitetura-ambiente.webp') center / cover; }
- .m-contact > :not(form) { grid-column: 1; }
- .m-contact h2 em { display: block; }
- .m-contact > .m-button { margin-top: 30px; }
- .m-contact-form { grid-column: 2; grid-row: 1 / 6; align-self: center; padding: 25px; border: 1px solid #cfb16b85; border-radius: 17px; background: #0e1812ed; }
- .m-contact-form h3 { font-size: 23px; font-weight: 700; margin: 0 0 15px; }
- .m-contact-form label { display: block; margin: 11px 0 6px; font-size: 12px; line-height: 1.4; color: #e1e3d8; }
- .m-contact-form input,.m-contact-form select,.m-contact-form textarea { display: block; width: 100%; min-width: 0; min-height: 44px; padding: 10px 12px; border: 1px solid #7f8d7175; border-radius: 8px; background: #09120df2; color: #f4f0e3; font: 14px/1.5 Manrope,Arial,sans-serif; }
- .m-contact-form textarea { resize: vertical; min-height: 65px; }
- .m-contact-form input:focus-visible,.m-contact-form select:focus-visible,.m-contact-form textarea:focus-visible { outline: 2px solid #efcb7e; outline-offset: 3px; }
- .m-contact-form small { display: block; font-size: 10px; line-height: 1.5; color: #a6b49b; margin-top: 5px; }
- .m-project-field.desktop-copy { display: block; }
- .m-contact-form .m-button { width: 100%; margin-top: 20px; min-height: 52px; }
- .m-contact-form .m-note { margin-top: 13px; font-size: 10px; }
- .m-form-status:empty { display: none; }
- .m-form-status { color: #e9cd86; font-size: 12px; line-height: 1.5; margin-top: 12px; }
  .mobile-footer { display: grid; grid-template-columns: 90px 1fr 1fr; align-items: start; gap: 25px 35px; padding: 25px 5.4%; border-top: 1px solid #c2aa6a45; background: #08110d; color: #c2cab8; }
  .m-footer-brand.desktop-copy { display: block; }
  .m-footer-brand img { display: block; width: 65px; height: 68px; object-fit: contain; }
@@ -169,8 +153,6 @@
   .m-process-route.desktop-copy { gap: 8px; font-size: 14px; }
   .m-process-list h3 { font-size: 16px; }
   .m-process-list p { font-size: 12px; }
-  .m-contact-form { padding: 18px; }
-  .m-contact-form .m-button { font-size: 11px; gap: 10px; }
  }
  @media (max-height: 760px) {
   main > .mobile-section { padding-top: 120px; padding-bottom: 36px; }
@@ -180,7 +162,6 @@
   .m-benefits { margin-block: 20px; }
   .m-process-list { margin-top: 25px; }
   .m-process-list li { min-height: 95px; padding: 17px; }
-  .m-contact-form { padding: 20px; }
  }
 }
 @media (prefers-reduced-motion: reduce) {

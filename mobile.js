@@ -6,7 +6,6 @@
  const toggle=header.querySelector('.menu-toggle');
  const floating=document.querySelector('.floating-contact');
  const notice=document.querySelector('#cookie-notice');
- const form=document.querySelector('#contact-form');
  const number=String(window.HENSEC_CONFIG?.whatsappNumber||'').replace(/\D/g,'');
  const explore=document.querySelector('[data-hero-explore]');
  function responsiveLinks(){explore.hash=mobile.matches?'solucoes':'tecnologias';syncFloating();}
@@ -25,28 +24,15 @@
   if(event.shiftKey&&i===0){event.preventDefault();items.at(-1).focus();}
   else if(!event.shiftKey&&i===items.length-1){event.preventDefault();toggle.focus();}
  });
- const phone=form.elements.telefone,name=form.elements.nome;
- phone.addEventListener('input',()=>phone.setCustomValidity(''));
- name.addEventListener('input',()=>name.setCustomValidity(''));
- form.addEventListener('submit',event=>{
-  event.preventDefault();
-  name.setCustomValidity(name.value.trim()?'':'Informe seu nome.');
-  const digits=phone.value.replace(/\D/g,'').replace(/^55(?=\d{10,11}$)/,'');
-  phone.setCustomValidity(/^[1-9]\d{9,10}$/.test(digits)?'':'Informe um WhatsApp válido com DDD.');
-  if(!form.reportValidity())return;
-  if(!/^[1-9]\d{9,14}$/.test(number)){document.querySelector('#m-form-status').textContent='Não foi possível abrir o contato. Tente novamente em breve.';return;}
-  const detail=form.elements.projeto.value.trim();
-  const message=`Olá! Meu nome é ${name.value.trim()}. Gostaria de conversar sobre um projeto de segurança para ${form.elements.ambiente.value.toLowerCase()}. Meu WhatsApp com DDD: ${phone.value.trim()}.${detail?' Meu projeto: '+detail:''}`;
-  window.open(`https://wa.me/${number}?text=${encodeURIComponent(message)}`,'_blank','noopener,noreferrer');
-  document.querySelector('#m-form-status').textContent='Continue no WhatsApp para revisar e enviar sua mensagem. Seus campos continuam preenchidos aqui.';
- });
+ const contactMessages={geral:'Olá! Gostaria de uma solução de segurança para o meu espaço.',projeto:'Olá! Gostaria de planejar a segurança do meu espaço com a Henseg.'};
+ if(/^[1-9]\d{9,14}$/.test(number))document.querySelectorAll('[data-contact-link]').forEach(link=>{link.href=`https://wa.me/${number}?text=${encodeURIComponent(contactMessages[link.dataset.contactLink])}`;});
  document.querySelectorAll('.m-faq-item,.m-complementary').forEach(item=>{const sync=()=>item.querySelector('summary').setAttribute('aria-expanded',String(item.open));item.addEventListener('toggle',sync);sync();});
- // Never cover a field, button, footer, open menu or privacy control with the bubble.
+ // Never cover contact actions, footer, open menu or privacy controls with the bubble.
  let floatingFrame=0;
  function syncFloating(){if(!floatingFrame)floatingFrame=requestAnimationFrame(()=>{
   floatingFrame=0;
   const r=floating.getBoundingClientRect();
-  const overlaps=[...document.querySelectorAll('.mobile-section .m-button,.m-contact-form,.mobile-footer,.m-solution-link,.m-faq-item summary')].some(el=>{
+  const overlaps=[...document.querySelectorAll('.mobile-section .m-button,.contact-whatsapp-panel,.contact-auxiliary,.contact-signature-pill,.mobile-footer,.m-solution-link,.m-faq-item summary')].some(el=>{
    const b=el.getBoundingClientRect();return b.width&&b.top<r.bottom+8&&b.bottom>r.top-8&&b.left<r.right+8&&b.right>r.left-8;
   });
   floating.toggleAttribute('data-mobile-obscured',overlaps||!notice.hidden||menu.classList.contains('open')||document.querySelector('#privacy-dialog').open);
@@ -56,5 +42,5 @@
  new MutationObserver(syncFloating).observe(menu,{attributes:true,attributeFilter:['class']});
  new MutationObserver(syncFloating).observe(document.querySelector('#privacy-dialog'),{attributes:true,attributeFilter:['open']});
  const layoutObserver=new ResizeObserver(syncFloating);
- [form,document.querySelector('main'),document.querySelector('.mobile-footer')].forEach(el=>layoutObserver.observe(el));responsiveLinks();
+ [document.querySelector('main'),document.querySelector('.mobile-footer')].forEach(el=>layoutObserver.observe(el));responsiveLinks();
 })();
