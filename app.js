@@ -67,7 +67,7 @@ function updateSection(){
  frame=0;
  const viewportBottom=innerHeight;
  const viewportTop=Math.min(viewportBottom-1,Math.max(0,siteHeader.getBoundingClientRect().bottom+12));
- const measured=sections.map(section=>({section,rect:section.getBoundingClientRect()}));
+ const measured=sections.filter(section=>section.getClientRects().length).map(section=>({section,rect:section.getBoundingClientRect()}));
  let current=null,largestVisible=0;
  for(const {section,rect} of measured){
   const visible=Math.max(0,Math.min(viewportBottom,rect.bottom)-Math.max(viewportTop,rect.top));
@@ -75,7 +75,7 @@ function updateSection(){
  }
  if(!current)current=measured.filter(({rect})=>rect.top<=viewportTop).at(-1)?.section || sections[0];
  // The footer belongs to the final contact section, including on short screens.
- if(scrollY+innerHeight>=document.documentElement.scrollHeight-2)current=sections.at(-1);
+ if(scrollY+innerHeight>=document.documentElement.scrollHeight-2)current=measured.at(-1)?.section;
  if(pendingNavigation){
   const rect=pendingNavigation.target.getBoundingClientRect();
   const margin=parseFloat(getComputedStyle(pendingNavigation.target).scrollMarginTop)||0;
