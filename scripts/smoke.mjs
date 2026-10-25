@@ -115,12 +115,16 @@ try {
   assert.equal(await evaluate(`document.querySelector('#contact-status').hidden`),true,'escolha mantém contato limpo');
   assert.equal(await evaluate(`document.querySelector('[data-solution="${type}"]').getAttribute('aria-pressed')`),'true');
  }
+ const unavailable=await send('Page.addScriptToEvaluateOnNewDocument',{source:`Object.defineProperty(window,'SOLAR_CONFIG',{configurable:true,set(v){v.whatsappNumber='';Object.defineProperty(window,'SOLAR_CONFIG',{value:v,configurable:true});}});`});
+ await send('Page.navigate',{url:base});await wait(300);
  await evaluate(`document.querySelector('#whatsapp-cta').click()`);
  assert.equal(await evaluate(`document.activeElement.id`),'contact-status');
  assert.equal(await evaluate(`document.querySelector('#contact-status').hidden`),false);
  assert.match(await evaluate(`document.querySelector('#contact-status').textContent`),/ainda não está disponível/);
  assert.equal(await evaluate(`document.querySelector('#contact-status').textContent.includes('configuração')`),false);
  assert.equal(await evaluate(`document.querySelector('#whatsapp-cta').href.includes('wa.me')`),false);
+ await send('Page.removeScriptToEvaluateOnNewDocument',{identifier:unavailable.identifier});
+ await send('Page.navigate',{url:base});await wait(300);
  console.log('PASS: menu por teclado, Escape/retorno de foco, seleção/fechamento, proposta, scroll livre e três mensagens de solução');
  assert.equal(await evaluate(`document.querySelector('#answer-1').hidden`),false);
  await evaluate(`document.querySelector('#question-1').click()`);
@@ -210,7 +214,8 @@ try {
  }
  await send('Page.removeScriptToEvaluateOnNewDocument',{identifier:injection.identifier});
  await send('Page.navigate',{url:base});await wait(300);
- assert.equal(await evaluate(`document.querySelector('#whatsapp-cta').href.includes('wa.me')`),false);
+ assert.equal(await evaluate(`new URL(document.querySelector('#whatsapp-cta').href).pathname`),'/5586988464618');
+ assert.equal(await evaluate(`[...document.querySelectorAll('[data-brand]')].every(e=>e.textContent==='Inovar')`),true);
  console.log('PASS: número normalizado e mensagens hero/solução/projeto/FAQ, com configuração exclusiva de teste e sem navegação externa');
  // Record native animation calls without changing their behavior, then verify entry once.
  const animationProbe=await send('Page.addScriptToEvaluateOnNewDocument',{source:`const nativeAnimate=Element.prototype.animate;window.__animationLog=[];Element.prototype.animate=function(frames,options){window.__animationLog.push({tag:this.tagName,classes:this.className,photo:this.matches('.scene-visual,.contact-portrait'),frames,options});return nativeAnimate.call(this,frames,options);};`});

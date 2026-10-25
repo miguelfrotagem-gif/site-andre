@@ -1,7 +1,7 @@
 window.SOLAR_CONFIG = {
-  brandName: 'Energia Solar',
+  brandName: 'Inovar',
   logoUrl: '',
-  whatsappNumber: '',
+  whatsappNumber: '5586988464618',
   ownerName: 'Eude Militão',
   savingsClaim: { validated: false, percentage: 90 },
   // Normalized image coordinates: center, full region to retain, maximum zoom.
@@ -32,7 +32,7 @@ window.SOLAR_CONFIG = {
     empresarial: 'Olá! Quero avaliar uma solução solar para minha empresa.',
     rural: 'Olá! Gostaria de conversar sobre energia solar para uma propriedade rural.',
     project: 'Olá! Vi os projetos no site e gostaria de uma solução para o meu imóvel.',
-    contact: 'Olá! Gostaria de falar com a equipe sobre energia solar.',
+    contact: 'Olá! Gostaria de falar com a Inovar sobre energia solar.',
     proposal: 'Olá! Gostaria de solicitar uma proposta de energia solar para o meu imóvel.',
     analysis: 'Olá! Gostaria de começar uma análise do meu consumo de energia.',
     faq: 'Olá! Gostaria de tirar uma dúvida sobre energia solar.'

@@ -1,4 +1,4 @@
-# Energia Solar
+# Inovar — Energia Solar
 
 Site estático em HTML, CSS e JavaScript, sem dependências npm. Node.js 24 e Chromium já estão disponíveis no ambiente.
 
@@ -43,9 +43,9 @@ A câmera usa uma transição CSS de 780 ms, que parte do enquadramento corrente
 
 ## Configuração e pendências
 
-Em `config.js`: marca provisória, logotipo, nome do proprietário, `whatsappNumber`, mensagens por origem e alegação de economia. O número oficial continua pendente (`whatsappNumber` vazio). A apresentação inicial não mostra aviso de configuração nem a mensagem preparada para o atendimento. Ao clicar no CTA sem número, surge apenas “O WhatsApp ainda não está disponível. Tente novamente em breve.” em uma região de status com foco acessível; não há navegação externa ou falso sucesso. A escolha de um novo contexto limpa esse aviso. A mensagem contextual existe somente na configuração/estado e no link quando há número válido. Com o número oficial, use dígitos com código do país; os links são normalizados e usam `encodeURIComponent`. Mensagens variam entre hero, casa, empresa, campo, projeto e contato.
+Em `config.js`: marca Inovar, logotipo, nome do proprietário, `whatsappNumber`, mensagens por origem e alegação de economia. O WhatsApp informado pelo usuário é **(86) 98846-4618**, configurado com DDI como `5586988464618`. O telefone também aparece no contato com link para ligação. O CTA principal prepara a conversa no WhatsApp; a escolha de contexto mantém o mesmo destino e altera somente a mensagem. A apresentação inicial não mostra aviso de configuração nem a mensagem preparada para o atendimento. Ao clicar no CTA sem número, surge apenas “O WhatsApp ainda não está disponível. Tente novamente em breve.” em uma região de status com foco acessível; não há navegação externa ou falso sucesso. A escolha de um novo contexto limpa esse aviso. A mensagem contextual existe somente na configuração/estado e no link quando há número válido. Com o número oficial, use dígitos com código do país; os links são normalizados e usam `encodeURIComponent`. Mensagens variam entre hero, casa, empresa, campo, projeto e contato.
 
-A promessa de 90% está desativada (`savingsClaim.validated: false`). O título utiliza “Menos gastos na sua conta de luz.”. Só habilitar o percentual depois de validação comercial; a ressalva de variação por consumo e projeto muda junto. Antes de publicar, confirmar marca/logotipo, WhatsApp e respostas da FAQ com a empresa.
+A promessa de 90% está desativada (`savingsClaim.validated: false`). O título utiliza “Menos gastos na sua conta de luz.”. Só habilitar o percentual depois de validação comercial; a ressalva de variação por consumo e projeto muda junto. A marca e o WhatsApp foram informados pelo usuário; logotipo e respostas da FAQ continuam configuráveis.
 
 Há apenas uma cena de projeto conceitual, com “Imagens ilustrativas” discreto e legível. A contagem e as setas inativas foram removidas. O grande painel opaco foi substituído por texto e um gradiente radial localizado e transparente nas extremidades, preservando a arquitetura. As abas selecionam o perfil de solução; não simulam outras fotos ou instalações entregues. Não existe carrossel fictício.
 
@@ -65,7 +65,7 @@ Capturas integrais e de viewport das seis seções em 360×800, 390×844, 768×1
 HTML independente:
 
 ```sh
-npm run export -- /tmp/Energia-Solar.html
+npm run export -- /tmp/Inovar.html
 ```
 
-A exportação inclui CSS, JavaScript, fontes, cenas mobile/desktop e retrato sem perdas. Depois de `npm run export` (saída padrão `dist/Energia-Solar.html`), use `EXPORT_URL=http://127.0.0.1:3001/Energia-Solar.html npm test` com o servidor de build ativo para testar também a interatividade do HTML único. Nenhum desses comandos publica o site ou cria uma URL pública.
+A exportação inclui CSS, JavaScript, fontes, cenas mobile/desktop e retrato sem perdas. Depois de `npm run export` (saída padrão `dist/Inovar.html`), use `EXPORT_URL=http://127.0.0.1:3001/Inovar.html npm test` com o servidor de build ativo para testar também a interatividade do HTML único. Nenhum desses comandos publica o site ou cria uma URL pública.

@@ -9,7 +9,11 @@ let solution = null;
 let project = 'residencial';
 const messages = config.messages || {};
 let message = messages.contact || config.generalMessage || 'Olá! Gostaria de conversar sobre energia solar.';
-$$('[data-brand]').forEach(el => { el.textContent = config.brandName || 'Energia Solar'; });
+$$('[data-brand]').forEach(el => { el.textContent = config.brandName || 'Inovar'; });
+if (validNumber) $$('[data-phone]').forEach(el => {
+ el.href = `tel:+${number}`;
+ el.textContent = /^55\d{11}$/.test(number) ? `(${number.slice(2,4)}) ${number.slice(4,9)}-${number.slice(9)}` : `+${number}`;
+});
 $$('[data-owner]').forEach(el => { el.textContent = config.ownerName || 'Eude Militão'; });
 if (config.logoUrl) {
  const img = document.createElement('img'); img.src = config.logoUrl; img.alt = ''; img.width = 36; img.height = 36;
