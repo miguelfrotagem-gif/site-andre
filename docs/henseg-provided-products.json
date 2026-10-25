@@ -1,0 +1,71 @@
+{
+  "products": [
+    {
+      "id": 1,
+      "path": "assets/hensec/produtos/01_controle_acesso_facial_biometria.png",
+      "width": 336,
+      "height": 667,
+      "sha256": "976eb4729cd7d1fce94eff4ce52b6d3a153650d4c61c6395ddb18305b35e57ac",
+      "sourceFile": "01_controle_acesso_facial_biometria.png",
+      "status": "user-provided",
+      "pixelsModified": false,
+      "photographicOriginVerified": false
+    },
+    {
+      "id": 2,
+      "path": "assets/hensec/produtos/02_kit_alarme_sistema_8000.png",
+      "width": 500,
+      "height": 293,
+      "sha256": "105302eb54659a26be76f1baaf93526a045843ff291ea4a126e7b343fde74a6c",
+      "sourceFile": "02_kit_alarme_sistema_8000.png",
+      "status": "user-provided",
+      "pixelsModified": false,
+      "photographicOriginVerified": false
+    },
+    {
+      "id": 3,
+      "path": "assets/hensec/produtos/03_controlador_biometrico_ss_3430_mf_bio.png",
+      "width": 483,
+      "height": 481,
+      "sha256": "b84ad13031ebfbe3f639c672ca427ae3206ddd8124ffdd736b6a3a26f81fa357",
+      "sourceFile": "03_controlador_biometrico_ss_3430_mf_bio.png",
+      "status": "user-provided",
+      "pixelsModified": false,
+      "photographicOriginVerified": false
+    },
+    {
+      "id": 4,
+      "path": "assets/hensec/produtos/04_camera_seguranca_intelbras.png",
+      "width": 845,
+      "height": 576,
+      "sha256": "46257bccf03df8f561f9e9fa492210d81e920f1be1f2833dd7236b74dcc4e496",
+      "sourceFile": "04_camera_seguranca_intelbras.png",
+      "status": "user-provided",
+      "pixelsModified": false,
+      "photographicOriginVerified": false
+    },
+    {
+      "id": 5,
+      "path": "assets/hensec/produtos/05_kit_interfonia_controle_acesso.webp",
+      "width": 309,
+      "height": 339,
+      "sha256": "7f497c37f99658bd53a92da2473a75f41c0b89e68afa1221f767af1a569e05ab",
+      "sourceFile": "05_kit_interfonia_controle_acesso.webp",
+      "status": "user-provided",
+      "pixelsModified": false,
+      "photographicOriginVerified": false
+    },
+    {
+      "id": 6,
+      "path": "assets/hensec/produtos/06_fechadura_eletronica.webp",
+      "width": 309,
+      "height": 411,
+      "sha256": "c736a2cb38fc16c2cb94a8c1499bea857a1b7866c39899d82dcc9a9612544803",
+      "sourceFile": "06_fechadura_eletronica.webp",
+      "status": "user-provided",
+      "pixelsModified": false,
+      "photographicOriginVerified": false
+    }
+  ],
+  "lockPortfolioConfirmedByUser": true
+}

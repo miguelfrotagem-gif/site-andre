@@ -1,0 +1,906 @@
+[
+  {
+    "width": 1440,
+    "height": 900,
+    "tab": "residencia",
+    "sections": [
+      {
+        "section": "inicio",
+        "media": [
+          {
+            "type": "img",
+            "file": "/assets/hensec/produtos/01_controle_acesso_facial_biometria.png",
+            "selector": "access-hero-visual supplied-hero",
+            "visible": true
+          }
+        ]
+      },
+      {
+        "section": "tecnologias",
+        "media": [
+          {
+            "type": "img",
+            "file": "/assets/hensec/produtos/01_controle_acesso_facial_biometria.png",
+            "selector": "provided-tech-frame",
+            "visible": false
+          },
+          {
+            "type": "img",
+            "file": "/assets/hensec/produtos/02_kit_alarme_sistema_8000.png",
+            "selector": "provided-tech-frame",
+            "visible": false
+          },
+          {
+            "type": "img",
+            "file": "/assets/hensec/produtos/03_controlador_biometrico_ss_3430_mf_bio.png",
+            "selector": "provided-tech-frame",
+            "visible": false
+          },
+          {
+            "type": "img",
+            "file": "/assets/hensec/produtos/04_camera_seguranca_intelbras.png",
+            "selector": "provided-tech-frame",
+            "visible": false
+          },
+          {
+            "type": "img",
+            "file": "/assets/hensec/produtos/01_controle_acesso_facial_biometria.png",
+            "selector": "provided-material technology-mobile-product",
+            "visible": true
+          },
+          {
+            "type": "img",
+            "file": "/assets/hensec/produtos/02_kit_alarme_sistema_8000.png",
+            "selector": "provided-material technology-mobile-product",
+            "visible": true
+          },
+          {
+            "type": "img",
+            "file": "/assets/hensec/produtos/03_controlador_biometrico_ss_3430_mf_bio.png",
+            "selector": "provided-material technology-mobile-product",
+            "visible": true
+          },
+          {
+            "type": "img",
+            "file": "/assets/hensec/produtos/04_camera_seguranca_intelbras.png",
+            "selector": "provided-material technology-mobile-product",
+            "visible": true
+          },
+          {
+            "type": "img",
+            "file": "/assets/hensec/produtos/05_kit_interfonia_controle_acesso.webp",
+            "selector": "provided-material technology-extra-product",
+            "visible": true
+          },
+          {
+            "type": "img",
+            "file": "/assets/hensec/produtos/06_fechadura_eletronica.webp",
+            "selector": "provided-material technology-extra-product",
+            "visible": true
+          }
+        ]
+      },
+      {
+        "section": "solucoes",
+        "media": [
+          {
+            "type": "img",
+            "file": "/assets/hensec/produtos/04_camera_seguranca_intelbras.png",
+            "selector": "product product-provided camera",
+            "visible": true
+          },
+          {
+            "type": "img",
+            "file": "/assets/hensec/produtos/02_kit_alarme_sistema_8000.png",
+            "selector": "product product-provided alarm",
+            "visible": true
+          },
+          {
+            "type": "img",
+            "file": "/assets/hensec/produtos/03_controlador_biometrico_ss_3430_mf_bio.png",
+            "selector": "product product-provided access",
+            "visible": true
+          }
+        ]
+      },
+      {
+        "section": "ambientes",
+        "media": [
+          {
+            "type": "img",
+            "file": "/assets/hensec/produtos/04_camera_seguranca_intelbras.png",
+            "selector": "provided-material application-product",
+            "visible": true
+          },
+          {
+            "type": "img",
+            "file": "/assets/hensec/produtos/03_controlador_biometrico_ss_3430_mf_bio.png",
+            "selector": "provided-material application-product",
+            "visible": false
+          }
+        ]
+      },
+      {
+        "section": "sobre",
+        "media": [
+          {
+            "type": "img",
+            "file": "/assets/hensec/produtos/04_camera_seguranca_intelbras.png",
+            "selector": "provided-material about-device-media",
+            "visible": true
+          }
+        ]
+      },
+      {
+        "section": "galeria",
+        "media": [
+          {
+            "type": "img",
+            "file": "/assets/hensec/produtos/01_controle_acesso_facial_biometria.png",
+            "selector": "gallery-product-surface",
+            "visible": true
+          },
+          {
+            "type": "img",
+            "file": "/assets/hensec/produtos/02_kit_alarme_sistema_8000.png",
+            "selector": "gallery-product-surface",
+            "visible": true
+          },
+          {
+            "type": "img",
+            "file": "/assets/hensec/produtos/03_controlador_biometrico_ss_3430_mf_bio.png",
+            "selector": "gallery-product-surface",
+            "visible": true
+          },
+          {
+            "type": "img",
+            "file": "/assets/hensec/produtos/04_camera_seguranca_intelbras.png",
+            "selector": "gallery-product-surface",
+            "visible": true
+          },
+          {
+            "type": "img",
+            "file": "/assets/hensec/produtos/05_kit_interfonia_controle_acesso.webp",
+            "selector": "gallery-product-surface",
+            "visible": true
+          },
+          {
+            "type": "img",
+            "file": "/assets/hensec/produtos/06_fechadura_eletronica.webp",
+            "selector": "gallery-product-surface",
+            "visible": true
+          },
+          {
+            "type": "img",
+            "file": "/assets/hensec/produtos/01_controle_acesso_facial_biometria.png",
+            "selector": "",
+            "visible": true
+          },
+          {
+            "type": "img",
+            "file": "/assets/hensec/produtos/02_kit_alarme_sistema_8000.png",
+            "selector": "",
+            "visible": true
+          },
+          {
+            "type": "img",
+            "file": "/assets/hensec/produtos/03_controlador_biometrico_ss_3430_mf_bio.png",
+            "selector": "",
+            "visible": true
+          },
+          {
+            "type": "img",
+            "file": "/assets/hensec/produtos/04_camera_seguranca_intelbras.png",
+            "selector": "",
+            "visible": true
+          },
+          {
+            "type": "img",
+            "file": "/assets/hensec/produtos/05_kit_interfonia_controle_acesso.webp",
+            "selector": "",
+            "visible": true
+          },
+          {
+            "type": "img",
+            "file": "/assets/hensec/produtos/06_fechadura_eletronica.webp",
+            "selector": "",
+            "visible": true
+          }
+        ]
+      },
+      {
+        "section": "duvidas",
+        "media": []
+      },
+      {
+        "section": "contato",
+        "media": [
+          {
+            "type": "img",
+            "file": "/assets/hensec/produtos/05_kit_interfonia_controle_acesso.webp",
+            "selector": "provided-material contact-device-media",
+            "visible": true
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "width": 1440,
+    "height": 900,
+    "tab": "empresa",
+    "sections": [
+      {
+        "section": "inicio",
+        "media": [
+          {
+            "type": "img",
+            "file": "/assets/hensec/produtos/01_controle_acesso_facial_biometria.png",
+            "selector": "access-hero-visual supplied-hero",
+            "visible": true
+          }
+        ]
+      },
+      {
+        "section": "tecnologias",
+        "media": [
+          {
+            "type": "img",
+            "file": "/assets/hensec/produtos/01_controle_acesso_facial_biometria.png",
+            "selector": "provided-tech-frame",
+            "visible": false
+          },
+          {
+            "type": "img",
+            "file": "/assets/hensec/produtos/02_kit_alarme_sistema_8000.png",
+            "selector": "provided-tech-frame",
+            "visible": false
+          },
+          {
+            "type": "img",
+            "file": "/assets/hensec/produtos/03_controlador_biometrico_ss_3430_mf_bio.png",
+            "selector": "provided-tech-frame",
+            "visible": false
+          },
+          {
+            "type": "img",
+            "file": "/assets/hensec/produtos/04_camera_seguranca_intelbras.png",
+            "selector": "provided-tech-frame",
+            "visible": false
+          },
+          {
+            "type": "img",
+            "file": "/assets/hensec/produtos/01_controle_acesso_facial_biometria.png",
+            "selector": "provided-material technology-mobile-product",
+            "visible": true
+          },
+          {
+            "type": "img",
+            "file": "/assets/hensec/produtos/02_kit_alarme_sistema_8000.png",
+            "selector": "provided-material technology-mobile-product",
+            "visible": true
+          },
+          {
+            "type": "img",
+            "file": "/assets/hensec/produtos/03_controlador_biometrico_ss_3430_mf_bio.png",
+            "selector": "provided-material technology-mobile-product",
+            "visible": true
+          },
+          {
+            "type": "img",
+            "file": "/assets/hensec/produtos/04_camera_seguranca_intelbras.png",
+            "selector": "provided-material technology-mobile-product",
+            "visible": true
+          },
+          {
+            "type": "img",
+            "file": "/assets/hensec/produtos/05_kit_interfonia_controle_acesso.webp",
+            "selector": "provided-material technology-extra-product",
+            "visible": true
+          },
+          {
+            "type": "img",
+            "file": "/assets/hensec/produtos/06_fechadura_eletronica.webp",
+            "selector": "provided-material technology-extra-product",
+            "visible": true
+          }
+        ]
+      },
+      {
+        "section": "solucoes",
+        "media": [
+          {
+            "type": "img",
+            "file": "/assets/hensec/produtos/04_camera_seguranca_intelbras.png",
+            "selector": "product product-provided camera",
+            "visible": true
+          },
+          {
+            "type": "img",
+            "file": "/assets/hensec/produtos/02_kit_alarme_sistema_8000.png",
+            "selector": "product product-provided alarm",
+            "visible": true
+          },
+          {
+            "type": "img",
+            "file": "/assets/hensec/produtos/03_controlador_biometrico_ss_3430_mf_bio.png",
+            "selector": "product product-provided access",
+            "visible": true
+          }
+        ]
+      },
+      {
+        "section": "ambientes",
+        "media": [
+          {
+            "type": "img",
+            "file": "/assets/hensec/produtos/04_camera_seguranca_intelbras.png",
+            "selector": "provided-material application-product",
+            "visible": false
+          },
+          {
+            "type": "img",
+            "file": "/assets/hensec/produtos/03_controlador_biometrico_ss_3430_mf_bio.png",
+            "selector": "provided-material application-product",
+            "visible": true
+          }
+        ]
+      },
+      {
+        "section": "sobre",
+        "media": [
+          {
+            "type": "img",
+            "file": "/assets/hensec/produtos/04_camera_seguranca_intelbras.png",
+            "selector": "provided-material about-device-media",
+            "visible": true
+          }
+        ]
+      },
+      {
+        "section": "galeria",
+        "media": [
+          {
+            "type": "img",
+            "file": "/assets/hensec/produtos/01_controle_acesso_facial_biometria.png",
+            "selector": "gallery-product-surface",
+            "visible": true
+          },
+          {
+            "type": "img",
+            "file": "/assets/hensec/produtos/02_kit_alarme_sistema_8000.png",
+            "selector": "gallery-product-surface",
+            "visible": true
+          },
+          {
+            "type": "img",
+            "file": "/assets/hensec/produtos/03_controlador_biometrico_ss_3430_mf_bio.png",
+            "selector": "gallery-product-surface",
+            "visible": true
+          },
+          {
+            "type": "img",
+            "file": "/assets/hensec/produtos/04_camera_seguranca_intelbras.png",
+            "selector": "gallery-product-surface",
+            "visible": true
+          },
+          {
+            "type": "img",
+            "file": "/assets/hensec/produtos/05_kit_interfonia_controle_acesso.webp",
+            "selector": "gallery-product-surface",
+            "visible": true
+          },
+          {
+            "type": "img",
+            "file": "/assets/hensec/produtos/06_fechadura_eletronica.webp",
+            "selector": "gallery-product-surface",
+            "visible": true
+          },
+          {
+            "type": "img",
+            "file": "/assets/hensec/produtos/01_controle_acesso_facial_biometria.png",
+            "selector": "",
+            "visible": true
+          },
+          {
+            "type": "img",
+            "file": "/assets/hensec/produtos/02_kit_alarme_sistema_8000.png",
+            "selector": "",
+            "visible": true
+          },
+          {
+            "type": "img",
+            "file": "/assets/hensec/produtos/03_controlador_biometrico_ss_3430_mf_bio.png",
+            "selector": "",
+            "visible": true
+          },
+          {
+            "type": "img",
+            "file": "/assets/hensec/produtos/04_camera_seguranca_intelbras.png",
+            "selector": "",
+            "visible": true
+          },
+          {
+            "type": "img",
+            "file": "/assets/hensec/produtos/05_kit_interfonia_controle_acesso.webp",
+            "selector": "",
+            "visible": true
+          },
+          {
+            "type": "img",
+            "file": "/assets/hensec/produtos/06_fechadura_eletronica.webp",
+            "selector": "",
+            "visible": true
+          }
+        ]
+      },
+      {
+        "section": "duvidas",
+        "media": []
+      },
+      {
+        "section": "contato",
+        "media": [
+          {
+            "type": "img",
+            "file": "/assets/hensec/produtos/05_kit_interfonia_controle_acesso.webp",
+            "selector": "provided-material contact-device-media",
+            "visible": true
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "width": 390,
+    "height": 844,
+    "tab": "residencia",
+    "sections": [
+      {
+        "section": "inicio",
+        "media": [
+          {
+            "type": "img",
+            "file": "/assets/hensec/produtos/01_controle_acesso_facial_biometria.png",
+            "selector": "access-hero-visual supplied-hero",
+            "visible": true
+          }
+        ]
+      },
+      {
+        "section": "tecnologias",
+        "media": [
+          {
+            "type": "img",
+            "file": "/assets/hensec/produtos/01_controle_acesso_facial_biometria.png",
+            "selector": "provided-tech-frame",
+            "visible": false
+          },
+          {
+            "type": "img",
+            "file": "/assets/hensec/produtos/02_kit_alarme_sistema_8000.png",
+            "selector": "provided-tech-frame",
+            "visible": false
+          },
+          {
+            "type": "img",
+            "file": "/assets/hensec/produtos/03_controlador_biometrico_ss_3430_mf_bio.png",
+            "selector": "provided-tech-frame",
+            "visible": false
+          },
+          {
+            "type": "img",
+            "file": "/assets/hensec/produtos/04_camera_seguranca_intelbras.png",
+            "selector": "provided-tech-frame",
+            "visible": false
+          },
+          {
+            "type": "img",
+            "file": "/assets/hensec/produtos/01_controle_acesso_facial_biometria.png",
+            "selector": "provided-material technology-mobile-product",
+            "visible": true
+          },
+          {
+            "type": "img",
+            "file": "/assets/hensec/produtos/02_kit_alarme_sistema_8000.png",
+            "selector": "provided-material technology-mobile-product",
+            "visible": true
+          },
+          {
+            "type": "img",
+            "file": "/assets/hensec/produtos/03_controlador_biometrico_ss_3430_mf_bio.png",
+            "selector": "provided-material technology-mobile-product",
+            "visible": true
+          },
+          {
+            "type": "img",
+            "file": "/assets/hensec/produtos/04_camera_seguranca_intelbras.png",
+            "selector": "provided-material technology-mobile-product",
+            "visible": true
+          },
+          {
+            "type": "img",
+            "file": "/assets/hensec/produtos/05_kit_interfonia_controle_acesso.webp",
+            "selector": "provided-material technology-extra-product",
+            "visible": true
+          },
+          {
+            "type": "img",
+            "file": "/assets/hensec/produtos/06_fechadura_eletronica.webp",
+            "selector": "provided-material technology-extra-product",
+            "visible": true
+          }
+        ]
+      },
+      {
+        "section": "solucoes",
+        "media": [
+          {
+            "type": "img",
+            "file": "/assets/hensec/produtos/04_camera_seguranca_intelbras.png",
+            "selector": "product product-provided camera",
+            "visible": true
+          },
+          {
+            "type": "img",
+            "file": "/assets/hensec/produtos/02_kit_alarme_sistema_8000.png",
+            "selector": "product product-provided alarm",
+            "visible": true
+          },
+          {
+            "type": "img",
+            "file": "/assets/hensec/produtos/03_controlador_biometrico_ss_3430_mf_bio.png",
+            "selector": "product product-provided access",
+            "visible": true
+          }
+        ]
+      },
+      {
+        "section": "ambientes",
+        "media": [
+          {
+            "type": "img",
+            "file": "/assets/hensec/produtos/04_camera_seguranca_intelbras.png",
+            "selector": "provided-material application-product",
+            "visible": true
+          },
+          {
+            "type": "img",
+            "file": "/assets/hensec/produtos/03_controlador_biometrico_ss_3430_mf_bio.png",
+            "selector": "provided-material application-product",
+            "visible": false
+          }
+        ]
+      },
+      {
+        "section": "sobre",
+        "media": [
+          {
+            "type": "img",
+            "file": "/assets/hensec/produtos/04_camera_seguranca_intelbras.png",
+            "selector": "provided-material about-device-media",
+            "visible": true
+          }
+        ]
+      },
+      {
+        "section": "galeria",
+        "media": [
+          {
+            "type": "img",
+            "file": "/assets/hensec/produtos/01_controle_acesso_facial_biometria.png",
+            "selector": "gallery-product-surface",
+            "visible": true
+          },
+          {
+            "type": "img",
+            "file": "/assets/hensec/produtos/02_kit_alarme_sistema_8000.png",
+            "selector": "gallery-product-surface",
+            "visible": true
+          },
+          {
+            "type": "img",
+            "file": "/assets/hensec/produtos/03_controlador_biometrico_ss_3430_mf_bio.png",
+            "selector": "gallery-product-surface",
+            "visible": true
+          },
+          {
+            "type": "img",
+            "file": "/assets/hensec/produtos/04_camera_seguranca_intelbras.png",
+            "selector": "gallery-product-surface",
+            "visible": true
+          },
+          {
+            "type": "img",
+            "file": "/assets/hensec/produtos/05_kit_interfonia_controle_acesso.webp",
+            "selector": "gallery-product-surface",
+            "visible": true
+          },
+          {
+            "type": "img",
+            "file": "/assets/hensec/produtos/06_fechadura_eletronica.webp",
+            "selector": "gallery-product-surface",
+            "visible": true
+          },
+          {
+            "type": "img",
+            "file": "/assets/hensec/produtos/01_controle_acesso_facial_biometria.png",
+            "selector": "",
+            "visible": true
+          },
+          {
+            "type": "img",
+            "file": "/assets/hensec/produtos/02_kit_alarme_sistema_8000.png",
+            "selector": "",
+            "visible": true
+          },
+          {
+            "type": "img",
+            "file": "/assets/hensec/produtos/03_controlador_biometrico_ss_3430_mf_bio.png",
+            "selector": "",
+            "visible": true
+          },
+          {
+            "type": "img",
+            "file": "/assets/hensec/produtos/04_camera_seguranca_intelbras.png",
+            "selector": "",
+            "visible": true
+          },
+          {
+            "type": "img",
+            "file": "/assets/hensec/produtos/05_kit_interfonia_controle_acesso.webp",
+            "selector": "",
+            "visible": true
+          },
+          {
+            "type": "img",
+            "file": "/assets/hensec/produtos/06_fechadura_eletronica.webp",
+            "selector": "",
+            "visible": true
+          }
+        ]
+      },
+      {
+        "section": "duvidas",
+        "media": []
+      },
+      {
+        "section": "contato",
+        "media": [
+          {
+            "type": "img",
+            "file": "/assets/hensec/produtos/05_kit_interfonia_controle_acesso.webp",
+            "selector": "provided-material contact-device-media",
+            "visible": true
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "width": 390,
+    "height": 844,
+    "tab": "empresa",
+    "sections": [
+      {
+        "section": "inicio",
+        "media": [
+          {
+            "type": "img",
+            "file": "/assets/hensec/produtos/01_controle_acesso_facial_biometria.png",
+            "selector": "access-hero-visual supplied-hero",
+            "visible": true
+          }
+        ]
+      },
+      {
+        "section": "tecnologias",
+        "media": [
+          {
+            "type": "img",
+            "file": "/assets/hensec/produtos/01_controle_acesso_facial_biometria.png",
+            "selector": "provided-tech-frame",
+            "visible": false
+          },
+          {
+            "type": "img",
+            "file": "/assets/hensec/produtos/02_kit_alarme_sistema_8000.png",
+            "selector": "provided-tech-frame",
+            "visible": false
+          },
+          {
+            "type": "img",
+            "file": "/assets/hensec/produtos/03_controlador_biometrico_ss_3430_mf_bio.png",
+            "selector": "provided-tech-frame",
+            "visible": false
+          },
+          {
+            "type": "img",
+            "file": "/assets/hensec/produtos/04_camera_seguranca_intelbras.png",
+            "selector": "provided-tech-frame",
+            "visible": false
+          },
+          {
+            "type": "img",
+            "file": "/assets/hensec/produtos/01_controle_acesso_facial_biometria.png",
+            "selector": "provided-material technology-mobile-product",
+            "visible": true
+          },
+          {
+            "type": "img",
+            "file": "/assets/hensec/produtos/02_kit_alarme_sistema_8000.png",
+            "selector": "provided-material technology-mobile-product",
+            "visible": true
+          },
+          {
+            "type": "img",
+            "file": "/assets/hensec/produtos/03_controlador_biometrico_ss_3430_mf_bio.png",
+            "selector": "provided-material technology-mobile-product",
+            "visible": true
+          },
+          {
+            "type": "img",
+            "file": "/assets/hensec/produtos/04_camera_seguranca_intelbras.png",
+            "selector": "provided-material technology-mobile-product",
+            "visible": true
+          },
+          {
+            "type": "img",
+            "file": "/assets/hensec/produtos/05_kit_interfonia_controle_acesso.webp",
+            "selector": "provided-material technology-extra-product",
+            "visible": true
+          },
+          {
+            "type": "img",
+            "file": "/assets/hensec/produtos/06_fechadura_eletronica.webp",
+            "selector": "provided-material technology-extra-product",
+            "visible": true
+          }
+        ]
+      },
+      {
+        "section": "solucoes",
+        "media": [
+          {
+            "type": "img",
+            "file": "/assets/hensec/produtos/04_camera_seguranca_intelbras.png",
+            "selector": "product product-provided camera",
+            "visible": true
+          },
+          {
+            "type": "img",
+            "file": "/assets/hensec/produtos/02_kit_alarme_sistema_8000.png",
+            "selector": "product product-provided alarm",
+            "visible": true
+          },
+          {
+            "type": "img",
+            "file": "/assets/hensec/produtos/03_controlador_biometrico_ss_3430_mf_bio.png",
+            "selector": "product product-provided access",
+            "visible": true
+          }
+        ]
+      },
+      {
+        "section": "ambientes",
+        "media": [
+          {
+            "type": "img",
+            "file": "/assets/hensec/produtos/04_camera_seguranca_intelbras.png",
+            "selector": "provided-material application-product",
+            "visible": false
+          },
+          {
+            "type": "img",
+            "file": "/assets/hensec/produtos/03_controlador_biometrico_ss_3430_mf_bio.png",
+            "selector": "provided-material application-product",
+            "visible": true
+          }
+        ]
+      },
+      {
+        "section": "sobre",
+        "media": [
+          {
+            "type": "img",
+            "file": "/assets/hensec/produtos/04_camera_seguranca_intelbras.png",
+            "selector": "provided-material about-device-media",
+            "visible": true
+          }
+        ]
+      },
+      {
+        "section": "galeria",
+        "media": [
+          {
+            "type": "img",
+            "file": "/assets/hensec/produtos/01_controle_acesso_facial_biometria.png",
+            "selector": "gallery-product-surface",
+            "visible": true
+          },
+          {
+            "type": "img",
+            "file": "/assets/hensec/produtos/02_kit_alarme_sistema_8000.png",
+            "selector": "gallery-product-surface",
+            "visible": true
+          },
+          {
+            "type": "img",
+            "file": "/assets/hensec/produtos/03_controlador_biometrico_ss_3430_mf_bio.png",
+            "selector": "gallery-product-surface",
+            "visible": true
+          },
+          {
+            "type": "img",
+            "file": "/assets/hensec/produtos/04_camera_seguranca_intelbras.png",
+            "selector": "gallery-product-surface",
+            "visible": true
+          },
+          {
+            "type": "img",
+            "file": "/assets/hensec/produtos/05_kit_interfonia_controle_acesso.webp",
+            "selector": "gallery-product-surface",
+            "visible": true
+          },
+          {
+            "type": "img",
+            "file": "/assets/hensec/produtos/06_fechadura_eletronica.webp",
+            "selector": "gallery-product-surface",
+            "visible": true
+          },
+          {
+            "type": "img",
+            "file": "/assets/hensec/produtos/01_controle_acesso_facial_biometria.png",
+            "selector": "",
+            "visible": true
+          },
+          {
+            "type": "img",
+            "file": "/assets/hensec/produtos/02_kit_alarme_sistema_8000.png",
+            "selector": "",
+            "visible": true
+          },
+          {
+            "type": "img",
+            "file": "/assets/hensec/produtos/03_controlador_biometrico_ss_3430_mf_bio.png",
+            "selector": "",
+            "visible": true
+          },
+          {
+            "type": "img",
+            "file": "/assets/hensec/produtos/04_camera_seguranca_intelbras.png",
+            "selector": "",
+            "visible": true
+          },
+          {
+            "type": "img",
+            "file": "/assets/hensec/produtos/05_kit_interfonia_controle_acesso.webp",
+            "selector": "",
+            "visible": true
+          },
+          {
+            "type": "img",
+            "file": "/assets/hensec/produtos/06_fechadura_eletronica.webp",
+            "selector": "",
+            "visible": true
+          }
+        ]
+      },
+      {
+        "section": "duvidas",
+        "media": []
+      },
+      {
+        "section": "contato",
+        "media": [
+          {
+            "type": "img",
+            "file": "/assets/hensec/produtos/05_kit_interfonia_controle_acesso.webp",
+            "selector": "provided-material contact-device-media",
+            "visible": true
+          }
+        ]
+      }
+    ]
+  }
+]

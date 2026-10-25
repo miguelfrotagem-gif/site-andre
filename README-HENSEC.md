@@ -30,22 +30,11 @@ chromium --headless --no-sandbox --disable-gpu --remote-debugging-address=127.0.
 
 A hero apresenta “A segurança evoluiu. O seu acesso também.”, com reconhecimento facial, biometria e controle de acesso. A Intelbras foi informada pelo usuário como marca do portfólio. A entrada é curta e integrada: conteúdo e CTAs não aguardam uma abertura em tela inteira.
 
-A seção Tecnologias é uma composição editorial **sem imagens**, intitulada “Tecnologia que transforma a sua segurança.”. A coluna de título e navegação permanece sticky temporariamente no desktop. As quatro etapas principais são reconhecimento facial e biometria, alarmes sem fio, biometria digital e câmeras com IA. O scroll nativo atualiza a etapa ativa e uma linha de progresso; cada indicador também é uma âncora acessível. Videoporteiros e fechaduras aparecem em dois blocos complementares. No celular, o fluxo é vertical e não há sticky prolongado. Movimento reduzido remove os deslocamentos e mantém todo o conteúdo legível. Em desktops muito baixos, a coluna deixa de ser fixa para evitar cortes.
+A seção Tecnologias mantém quatro etapas principais com os materiais do ZIP: controle facial, alarmes, biometria e câmeras. A foto sticky acompanha o texto ativo por crossfade reversível no desktop. Tablet, celular, telas baixas e movimento reduzido mostram cada foto junto ao conteúdo. Interfonia e fechadura têm blocos complementares e suas próprias imagens. Os textos e as mensagens de WhatsApp são centralizados em `technologyReferences` e `messages` no `config.js`, com fallback sem JavaScript no HTML.
 
-Nenhuma imagem foi gerada, pesquisada, baixada ou adicionada a esta atualização. Não há imagens, fundos fotográficos, slots vazios ou avisos de foto futura na seção Tecnologias. As imagens das outras seções permanecem como estavam. Os IDs e artigos semânticos permitem inserir fotografias fornecidas pelo responsável depois, sem reservar espaços vazios agora.
+Todas as áreas que continham equipamentos fictícios foram atualizadas: hero, soluções e fundos, tecnologias, ambientes, sobre, contato, galeria, miniaturas e versões mobile. As composições de fundo anteriores foram retiradas por completo quando incluíam equipamentos incorporados. O inventário ativo e as identificações estão em `docs/henseg-substituicao-fotos-reais.md` e `docs/henseg-media-audit.json`.
 
-As seis referências, textos, benefícios e CTAs são centralizados em `config.js`, em `technologyReferences`; os textos também constam no HTML como fallback sem JavaScript. Se o portfólio for alterado, sincronize esse fallback. Os seis registros têm `confirmed:false`: a marca Intelbras foi informada pela empresa, mas os modelos específicos e suas configurações ainda são referências a confirmar. A VIP 3240 IA G2 não é apresentada como solução de reconhecimento facial. As mensagens de WhatsApp são específicas por solução e não afirmam disponibilidade, preço ou prazo.
-
-Referências fornecidas no briefing:
-
-- SS 3542 MF W — reconhecimento facial e biometria.
-- AMT 8000 PRO — alarmes sem fio.
-- SS 3420 MF BIO — biometria digital.
-- VIP 3240 IA G2 — videomonitoramento com IA.
-- XPE 3200 PLUS IP — videoporteiro.
-- IFR 7000+ — fechadura inteligente.
-
-A galeria tem quatro fontes de imagem distintas, miniaturas, setas, contador, gesto horizontal nativo e ampliação em diálogo com Escape e retorno de foco. As abas de ambientes alteram fotografia, texto e mensagem do WhatsApp entre residências e empresas/comércios. FAQ usa `details/summary`, teclado nativo e uma resposta por vez. Menu móvel, estado ativo e cabeçalho depois da rolagem são preservados.
+A galeria tem seis fontes fornecidas, navegação nativa por gesto, contador, miniaturas e ampliação com Escape/retorno de foco. Cada arquivo é exibido inteiro, sem filtros e sem superar suas dimensões nativas, inclusive no modal. As abas residencial e empresarial continuam com materiais e mensagens diferentes. FAQ, cabeçalho e botão verde do WhatsApp foram preservados.
 
 ## Dados confirmados e imagens pendentes
 
@@ -55,7 +44,9 @@ A galeria tem quatro fontes de imagem distintas, miniaturas, setas, contador, ge
 - Equipamentos Intelbras: marca informada pelo usuário; modelos de referência fornecidos no briefing, sujeitos à confirmação comercial e de ficha técnica.
 - A razão social completa não foi fornecida. Não foi inventada identificação cadastral, certificação ou condição de atendimento.
 
-As fotos atuais são ilustrações/conceitos, identificados na interface. Não representam instalações comprovadas ou modelos comerciais Intelbras específicos. Para substituir os visuais conceituais, fornecer fotos dos terminais faciais e leitores biométricos realmente comercializados, seus modelos, sensores em detalhe e instalações reais autorizadas para divulgação. Nenhuma foto de concorrente foi publicada.
+As seis imagens atuais foram selecionadas e fornecidas pelo usuário no ZIP. Não foram geradas, buscadas na internet ou retocadas nesta atualização. A procedência fotográfica de todos os materiais não foi verificada: não são apresentadas como instalações comprovadas de clientes. Os hashes e dimensões originais estão em `docs/henseg-provided-products.json`.
+
+O controlador biométrico está identificado na própria imagem como **SS 3430 MF BIO**. Terminal facial, central Sistema 8000, câmera, componentes do kit e fechadura ficam identificados por categoria até a confirmação dos códigos. A fechadura foi autorizada pelo usuário para apresentação, mas não é identificada como Intelbras/IFR 7000+. A câmera não recebe alegações de IA, microfone ou reconhecimento facial sem uma ficha técnica confirmada.
 
 Os endereços Grupo Extrema e Verisure enviados pelo usuário retornaram bloqueio HTTP 403 no ambiente, inclusive após verificar a permissão de rede. O briefing fornecido guiou a implementação; não se afirma que as páginas dos concorrentes foram inspecionadas.
 
@@ -77,4 +68,4 @@ O repositório usa a branch `gh-pages` para publicação nativa. As regras exist
 
 ## Cobertura dos testes
 
-A suíte verifica 320–1920 px, incluindo 360, 390, 430, 768, 1280 e 1440, desktop com pouca altura, ausência de overflow/cortes, navegação e WhatsApp oficiais. Testa progressão reversível, título sticky e área segura, seis referências/mensagens, ausência de mídias e slots vazios na seção Tecnologias, fluxo com movimento reduzido, abas pelo teclado, mensagens contextuais, seleção e gesto de galeria, Escape e foco, FAQ por Enter, persistência/apagamento/expiração das preferências, páginas legais e ausência de pedidos externos automáticos. Capturas ficam em `/tmp/hensec-checks`.
+A suíte verifica 320–1920 px, incluindo 360, 390, 430, 768, 1280 e 1440, desktop com pouca altura, ausência de overflow/cortes, navegação e WhatsApp oficiais. Testa progressão e troca de fotos reversíveis, área sticky segura, seis identificações/mensagens, apenas materiais do ZIP nas imagens de equipamentos, limites nativos de resolução e ausência de filtros, fluxo com movimento reduzido, abas pelo teclado, mensagens contextuais, seleção e gesto de galeria, Escape e foco, FAQ por Enter, persistência/apagamento/expiração das preferências, páginas legais e ausência de pedidos externos automáticos. Capturas ficam em `/tmp/hensec-checks`.
