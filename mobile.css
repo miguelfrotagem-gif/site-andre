@@ -145,3 +145,18 @@
  .site-header .brand-identity strong { font-size: 16px; }
  .site-header .brand-identity small { font-size: 6.5px; }
 }
+/* Opening signature: logo, name, rule, then the requested promise. */
+.henseg-entry { touch-action: none; overscroll-behavior: contain; position: fixed; inset: 0; z-index: 1000; display: grid; place-items: center; background: radial-gradient(ellipse at 50% 42%,#22291e,#0b120e 58%,#050906); color: #fff8e7; }
+.entry-identity { display: flex; flex-direction: column; align-items: center; padding: 28px; text-align: center; }
+.entry-identity img { width: min(230px,42vw,30svh); height: auto; object-fit: contain; animation: henseg-entry-reveal .8s both; }
+.entry-name { margin-top: 18px; font: 800 clamp(30px,5vw,51px)/1.1 Manrope,Arial,sans-serif; letter-spacing: .16em; padding-left: .16em; animation: henseg-entry-reveal .7s .5s both; }
+.entry-rule { width: clamp(130px,24vw,270px); height: 1px; margin-top: 26px; background: linear-gradient(90deg,#e8c67833,#f2d58b,#e8c67833); transform-origin: center; animation: henseg-entry-rule .8s 1.15s both; }
+.entry-signature { margin-top: 23px; color: #e7d6b0; font: 500 clamp(13px,2.8vw,18px)/1.6 Manrope,Arial,sans-serif; letter-spacing: .09em; animation: henseg-entry-reveal .7s 1.8s both; }
+.entry-skip { position: absolute; right: max(24px,env(safe-area-inset-right)); bottom: max(24px,env(safe-area-inset-bottom)); min-height: 44px; padding: 10px 15px; border: 1px solid #c4aa665c; border-radius: 8px; background: #111c1280; color: #d6ccaf; font: 12px/1.5 Manrope,Arial,sans-serif; cursor: pointer; }
+.entry-skip span { margin-left: 15px; }
+.entry-skip:hover { color: #fff2cf; border-color: #e9c778; }
+.henseg-entry.is-leaving { animation: henseg-entry-exit .7s ease both; }
+@keyframes henseg-entry-reveal { from { opacity: 0; transform: translateY(14px); } to { opacity: 1; transform: translateY(0); } }
+@keyframes henseg-entry-rule { from { opacity: 0; transform: scaleX(0); } to { opacity: 1; transform: scaleX(1); } }
+@keyframes henseg-entry-exit { to { opacity: 0; transform: translateY(-10px); } }
+@media (prefers-reduced-motion: reduce) { .henseg-entry { display: none; } }

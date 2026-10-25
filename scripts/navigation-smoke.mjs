@@ -20,6 +20,7 @@ try{
   await send('Emulation.setDeviceMetricsOverride',{width,height,deviceScaleFactor:1,mobile:false});
   await send('Emulation.setEmulatedMedia',{features:[{name:'prefers-reduced-motion',value:'no-preference'}]});
   await send('Page.navigate',{url:base});await wait(300);await evaluate('document.fonts.ready');
+  await evaluate(`new Promise(resolve=>{const poll=()=>document.querySelector('.henseg-entry')?setTimeout(poll,60):resolve();poll()})`);
   await evaluate(`(()=>{const n=document.querySelector('#cookie-notice');if(!n.hidden)n.querySelector('[data-confirm-privacy]').click()})()`);
   for(const id of ['contato','solucoes','tecnologias','sobre','inicio','contato']){
    await clickNav(id);await wait(60);

@@ -62,3 +62,7 @@ Site: `https://miguelfrotagem-gif.github.io/site-andre/hensec.html`.
 ## Cobertura atual
 
 Desktop: 1672 × 941, 1920 × 1080, 1600 × 900, 1440 × 900, 1366 × 768, 1280 × 720, 1280 × 600 e tablets. Mobile: 320, 360, 375, 390, 414 e 430 px; telas baixas; horizontal 740 × 360 e 844 × 390; texto ampliado. Testes cobrem sequência comercial, proporção/resolução das fotos, ausência de cortes/overflow/sobreposições, menu e foco, FAQ e aria-expanded, complementares, ausência de formulário e links reais de contato, cookies, políticas, ausência de requisições externas automáticas e console limpo. Capturas em `/tmp/henseg-desktop-checks` e `/tmp/henseg-mobile-checks`.
+
+## Entrada da marca
+
+`entry.js` apresenta logo, HENSEG, linha dourada e “Sua segurança sua paz” em sequência, seguida por uma transição suave para a hero. A abertura dura cerca de 4,3 segundos, pode ser pulada por botão ou Escape e libera os controles mesmo se uma animação falhar. Movimento reduzido e links diretos para seções pulam a abertura. Não usa armazenamento nem impede visitas posteriores.
