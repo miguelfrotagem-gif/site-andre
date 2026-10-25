@@ -36,7 +36,7 @@ try {
    check(await active()===`#${products.includes(id)?'tecnologias':id==='etapas'?'sobre':(id==='duvidas'||id==='instagram')?'contato':id}`,`seção ativa ${id} ${width}`);
    check(await ev(`(()=>{const s=document.querySelector('#${id}'),r=s.getBoundingClientRect();return [...s.querySelectorAll('h1,h2,h3,a,input,select,button,summary')].every(e=>{const b=e.getBoundingClientRect();return !b.width||(b.left>=r.left-1&&b.right<=r.right+1&&b.top>=r.top-1&&b.bottom<=r.bottom+1)})})()`),`conteúdo contido sem cortes ${id} ${width}`);
    if(width===390&&height===844){const shot=await send('Page.captureScreenshot',{format:'png'});await writeFile(`${output}/${id}-390.png`,Buffer.from(shot.data,'base64'));}
-   check(await ev(`(()=>{const f=document.querySelector('.floating-contact');if(getComputedStyle(f).visibility==='hidden')return true;const r=f.getBoundingClientRect();return [...document.querySelectorAll('.mobile-section .m-button,.contact-whatsapp-panel,.contact-auxiliary,.mobile-footer,.instagram-profile-card,.m-solution-link,.m-faq-item summary')].every(e=>{const b=e.getBoundingClientRect();return !b.width||b.bottom<=r.top||b.top>=r.bottom||b.right<=r.left||b.left>=r.right})})()`),`flutuante sem sobreposição ${id} ${width}`);
+   check(await ev(`(()=>{const f=document.querySelector('.floating-contact'),r=f.getBoundingClientRect();return getComputedStyle(f).visibility==='visible'&&getComputedStyle(f).display!=='none'&&r.top>=0&&r.bottom<=innerHeight+1&&f.href.includes('wa.me/5511945549849')})()`),`WhatsApp permanece visível durante a rolagem ${id} ${width}`);
   }
   await ev(`document.querySelector('.menu-toggle').click()`);
   check(await ev(`document.querySelector('.menu-toggle').getAttribute('aria-expanded')==='true'`),'menu abre');

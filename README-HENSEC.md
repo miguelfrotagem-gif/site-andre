@@ -33,7 +33,7 @@ Ordem: início, cinco soluções, alarmes, câmeras, cerca elétrica, interfonia
 
 `app.js` mantém um único `aria-current=location`, calculado pela maior área visível abaixo do cabeçalho. O menu segue Início, Soluções, Tecnologias, Sobre nós e Contato em ambos os formatos; as seções de produto pertencem a Tecnologias. Etapas pertence a Sobre; dúvidas e rodapé pertencem a Contato. Cliques, interrupção manual, redimensionamento e mudanças de altura mantêm o menu sincronizado. As âncoras são iguais nos dois formatos.
 
-`mobile.js` mantém os comportamentos compartilhados: links de contato, teclado do menu, estado das dúvidas, CTA da hero por breakpoint e prevenção de sobreposição do WhatsApp flutuante. As revelações usam transform/opacity e respeitam movimento reduzido; o conteúdo continua disponível sem animação.
+`mobile.js` mantém os comportamentos compartilhados: links de contato, teclado do menu, estado das dúvidas, CTA da hero por breakpoint e posicionamento do WhatsApp flutuante acima do aviso de privacidade. As revelações usam transform/opacity e respeitam movimento reduzido; o conteúdo continua disponível sem animação.
 
 ## Conteúdo e origem dos materiais
 
@@ -68,3 +68,5 @@ Desktop: 1672 × 941, 1920 × 1080, 1600 × 900, 1440 × 900, 1366 × 768, 1280 
 `entry.js` apresenta logo, HENSEG, linha dourada e “Sua segurança sua paz” em sequência, seguida por uma transição suave para a hero. A abertura dura cerca de 4,3 segundos, pode ser pulada por botão ou Escape e libera os controles mesmo se uma animação falhar. Movimento reduzido e links diretos para seções pulam a abertura. Não usa armazenamento nem impede visitas posteriores.
 
 A seção Instagram aparece imediatamente antes do contato, com o perfil fornecido `https://www.instagram.com/henseg.24hs/`. É um link externo comum, sem embed, API, postagens simuladas ou carregamento de rastreadores do Instagram. O destaque do menu permanece no grupo Contato.
+
+O WhatsApp flutuante permanece visível ao passar por botões, cards e rodapé. Não usa mais ocultação por colisão; quando o aviso de privacidade aparece, o botão sobe para a área disponível acima dele.
