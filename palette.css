@@ -1,0 +1,87 @@
+/* HENSEG: mist white surfaces, graphite typography and neutral gray details.
+   Equipment files keep their original colors. WhatsApp keeps its familiar green. */
+:root { --cream: #202124; --gold: #52565c; --muted: #595e65; --line: #cdd0d4; color-scheme: light; color: #202124; background: #f1f2f3; }
+body:not(.privacy-page),body.privacy-page { background: #f1f2f3; }
+::selection { background: #cdd1d7; color: #161719; }
+a:focus-visible,button:focus-visible,summary:focus-visible,[tabindex]:focus-visible { outline-color: #52565c; }
+.site-header { color: #222428; border-color: #cdd0d4; background: #f7f8f9ed; box-shadow: inset 0 1px 0 #fff,0 8px 28px #1111110c; }
+.site-header .brand-identity small { color: #5c6066; }
+.site-header .brand-logo,.m-footer-brand img,.policy-header img { border-radius: 8px; }
+.site-header #navigation a,.site-header #navigation a:hover { color: #292c30; }
+.site-header #navigation a[aria-current] { color: #111214; background: #292c3009; }
+.site-header #navigation a::after { background: #303338; }
+.site-header .header-cta,.site-header .header-cta:hover { color: #fff; background: #25272b; border-color: #25272b; box-shadow: 0 3px 10px #11111116; }
+.site-header .menu-toggle { color: #25272b; }
+main > .mobile-section,.mobile-footer { color: #202124; background: #f1f2f3; }
+main > .m-hero { background: linear-gradient(110deg,#f2f3f4f7,#f2f3f4eb 50%,#f2f3f4be),url('assets/hensec/mobile/arquitetura-ambiente.webp') center / cover; }
+main > #solucoes,main > .m-process,main > .m-faq { background: #e8eaed; }
+main > .m-product { background: #f5f6f7; }
+main > .m-product:nth-of-type(even) { background: #edeff1; }
+main > .m-about { background: #f1f2f3; }
+.mobile-section h1 em,.mobile-section h2 em,.mobile-footer h2 em { color: #62676e; }
+.m-kicker,.m-product-index,.m-product-index > span { color: #5c6168; }
+.m-lead,.m-note,.m-footnote,.m-benefits,.m-about-values,.m-hero-benefits li { color: #535960; }
+.m-footnote a,.m-note a,.m-complementary article a { color: #33383f; }
+.m-hero-benefits.desktop-copy { border-color: #c9cdd2; }
+.m-hero-benefits li::before,.m-benefits li::before,.m-about-values li::before { color: #464c53; }
+.m-button,.m-button:hover,.instagram-follow,.button,.button:hover { color: #fff; background: #292c30; border-color: #292c30; box-shadow: 0 4px 14px #20212414; }
+.m-button > span[aria-hidden],.instagram-follow > span { color: #fff; background: #ffffff1f; }
+.m-secondary,.m-secondary:hover { color: #292c30; background: #ffffffb8; border-color: #b8bdc4; }
+.m-secondary > span[aria-hidden] { color: #292c30; background: #e7e9ec; border-color: #cdd0d4; }
+.m-button:focus-visible,.m-solution-link:focus-visible,.m-faq-item summary:focus-visible { outline-color: #52565c; }
+.m-solution-link,.instagram-profile-card { color: #202124; background: #fafbfc; border-color: #cdd1d6; box-shadow: 0 4px 18px #20212405; }
+.m-solution-link:hover,.instagram-profile-card:hover { border-color: #9299a2; box-shadow: 0 12px 32px #20212412; }
+.m-solution-photo,.m-photo,.m-product-facial .m-photo,.m-hero-products img { background: #e3e5e8; border-color: #c8cdd3; box-shadow: 0 12px 32px #2021240b; }
+.m-solution-link small,.m-product-figure figcaption,.m-architecture figcaption,.m-desktop-hero-visual figcaption,.m-hero-products figcaption { color: #555b63; }
+.m-solution-link svg,.m-solution-link > b,.m-solution-action { color: #454b53; }
+.m-solution-action,#solucoes > .m-lead,.m-architecture img { border-color: #c8cdd3; }
+.m-complementary,.m-process-list li,.m-faq-item,.m-faq-item[open] { background: #fafbfc; border-color: #cdd1d6; }
+.m-complementary > summary,.m-complementary p,.m-process-list p,.m-faq-item > p { color: #555b63; }
+.m-process-list li > span,.m-process-route.desktop-copy,.m-process-route > span,.m-faq-item summary > span { color: #535a63; }
+.m-process-list li > div,.m-faq-item summary > span { border-color: #cdd1d6; }
+.mobile-footer { background: #e3e5e8; border-color: #c8cdd3; }
+.mobile-footer h3,.mobile-footer nav a,.m-footer-privacy a,.m-footer-privacy button { color: #41474f; }
+.mobile-footer nav,.m-footer-privacy { border-color: #c8cdd3; }
+main > .instagram-section { background: #e8eaed; border-color: #cdd1d6; }
+.instagram-copy > p:last-child,.instagram-account small { color: #555b63; }
+.instagram-account strong { color: #202124; }
+.instagram-icon { background: #edf0f3; border-color: #c8cdd3; color: #3d434b; }
+#contato.contact-composition { background: #f1f2f3; color: #202124; }
+.contact-photo { background-color: #f1f2f3; filter: grayscale(1); }
+/* The light veil is part of the photographic layer and reveals with that layer. */
+.contact-photo::after { content: ''; position: absolute; inset: 0; background: linear-gradient(90deg,#f1f2f3fc 0%,#f1f2f3f2 32%,#f1f2f3d9 43%,#f1f2f318 69%,#f1f2f308); }
+#contato .contact-kicker { color: #535960; }
+.contact-kicker::before { background: #62676e; }
+#contato h2 em { color: #62676e; }
+.contact-description,.contact-panel-heading p,.contact-panel-note { color: #51575f; }
+.contact-whatsapp-panel { background: #fafbfcde; border-color: #b7bdc5; box-shadow: inset 0 1px 0 #fff,0 12px 38px #2021240c; }
+.contact-whatsapp-symbol { background: #e4e7eb; border-color: #c5cad1; color: #333940; }
+#contato .contact-whatsapp-button { color: #fff; background: #292c30; border-color: #292c30; box-shadow: 0 4px 14px #20212414; }
+#contato .contact-whatsapp-button > .contact-button-arrow { color: #fff; background: #ffffff20; }
+.contact-auxiliary a,.contact-auxiliary a:hover { color: #343a42; }
+.contact-auxiliary a + a { border-color: #b5bbc3; }
+.contact-auxiliary svg,.contact-signature-pill svg { color: #474e57; }
+.contact-signature-pill { color: #292e35; background: #f5f6f7ed; border-color: #b9bfc7; }
+.henseg-entry { color: #202124; background: radial-gradient(ellipse at 50% 42%,#fff,#eff0f2 65%,#e1e4e8); }
+.entry-rule { background: linear-gradient(90deg,#62676e22,#62676e,#62676e22); }
+.entry-signature { color: #535960; }
+.entry-skip,.entry-skip:hover { background: #ffffff9c; color: #41474f; border-color: #bfc5cc; }
+.cookie-notice,.privacy-dialog { color: #202124; background: #f8f9faf7; border-color: #c5cad1; box-shadow: 0 10px 40px #20212420; }
+.cookie-copy > p:last-child,.privacy-dialog > p,.privacy-categories dd { color: #535960; }
+.cookie-copy a,.privacy-policy-link,.privacy-categories dt { color: #343a42; }
+.cookie-confirm,.cookie-confirm:hover { color: #fff; background: #292c30; border-color: #292c30; }
+.cookie-settings,.cookie-settings:hover,.privacy-close { color: #343a42; border-color: #bfc5cc; background: #ffffff80; }
+.privacy-categories > div { border-color: #cdd1d6; }
+.privacy-dialog::backdrop { background: #20212470; }
+.policy-header,.policy-index,.policy-sections section,.policy-footer { border-color: #cdd1d6; }
+.policy-intro > p:not(.eyebrow),.policy-intro > span,.policy-sections p,.policy-footer { color: #535960; }
+.policy-index a,.policy-sections a,.inline-privacy-button,.policy-footer button { color: #343a42; }
+@media (max-width: 767px), (max-width: 1023px) and (max-height: 500px) {
+ .site-header #navigation { background: #f7f8f9fc; border-color: #cdd0d4; }
+ .contact-photo::after { background: linear-gradient(0deg,#f1f2f3,transparent 40%); }
+}
+.site-header.is-scrolled { background: #f7f8f9f5; border-color: #cdd0d4; box-shadow: 0 8px 28px #11111110; }
+.site-header .brand-logo,.m-footer-brand img,.policy-header img,.entry-identity img { background: #292c30; padding: 4px; border-radius: 8px; }
+.entry-identity img { padding: 14px; border-radius: 22px; }
+.skip { background: #fff; color: #202124; }
+.floating-tooltip { background: #292c30; }
