@@ -339,6 +339,7 @@ em { color: var(--cyan); font-style: normal; }
 .contact-native { grid-area: 2 / 1; align-self: start; width: fit-content; max-width: 100%; text-shadow: 0 2px 6px #071a2a; }
 .contact-native .whatsapp { width: fit-content; text-shadow: none; }
 .contact-native .fine { margin-bottom: 0; text-align: left; }
+.phone-link { display: inline-flex; align-items: center; min-height: 44px; color: var(--text); font-size: 1rem; }
 #contact-status { grid-area: 3 / 1; align-self: start; margin: 0; font-size: 1rem; color: var(--text); line-height: 1.5; text-shadow: 0 2px 6px #071a2a; }
 
 /* The decorative panel photograph also supports content below the main scenes.
