@@ -31,7 +31,7 @@ Ordem: início, cinco soluções, alarmes, câmeras, cerca elétrica, interfonia
 
 `styles.css` mantém a base e as políticas; `mobile.css` compõe o celular; `desktop.css` adapta os mesmos componentes para as referências desktop. Mobile: até 767 px, incluindo horizontal até 1023 px quando a altura é de até 500 px. As fotos mantêm proporção, `contain` e resolução original. Em telas baixas, as seções crescem naturalmente. Não há scroll obrigatório, sticky de produtos, zoom ou carrossel automático.
 
-`app.js` mantém um único `aria-current=location`, calculado pela maior área visível abaixo do cabeçalho. Os produtos pertencem a Tecnologias no desktop; o mobile destaca cada categoria. Etapas pertence a Sobre no desktop; dúvidas e rodapé pertencem a Contato. Cliques, interrupção manual, redimensionamento e mudanças de altura mantêm o menu sincronizado. As âncoras são iguais nos dois formatos.
+`app.js` mantém um único `aria-current=location`, calculado pela maior área visível abaixo do cabeçalho. Os produtos pertencem a Soluções no desktop; o mobile destaca cada categoria. Etapas pertence a Sobre no desktop; dúvidas e rodapé pertencem a Contato. Cliques, interrupção manual, redimensionamento e mudanças de altura mantêm o menu sincronizado. As âncoras são iguais nos dois formatos.
 
 `mobile.js` mantém os comportamentos compartilhados: links de contato, teclado do menu, estado das dúvidas, CTA da hero por breakpoint e prevenção de sobreposição do WhatsApp flutuante. As revelações usam transform/opacity e respeitam movimento reduzido; o conteúdo continua disponível sem animação.
 
