@@ -1,5 +1,7 @@
 # Inovar — Energia Solar
 
+A logomarca enviada pelo usuário aparece inteira no cabeçalho e no rodapé em `assets/solar/inovar-logo.webp`, mantendo o fundo azul e sem duplicar a palavra Inovar ao lado. `config.logoUrl` aponta para o mesmo arquivo. A exportação incorpora também as referências de imagens da configuração, preservando a logo no HTML independente.
+
 Site estático em HTML, CSS e JavaScript, sem dependências npm. Node.js 24 e Chromium já estão disponíveis no ambiente.
 
 ```sh

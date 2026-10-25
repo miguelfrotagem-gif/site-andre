@@ -15,10 +15,7 @@ if (validNumber) $$('[data-phone]').forEach(el => {
  el.textContent = /^55\d{11}$/.test(number) ? `(${number.slice(2,4)}) ${number.slice(4,9)}-${number.slice(9)}` : `+${number}`;
 });
 $$('[data-owner]').forEach(el => { el.textContent = config.ownerName || 'Eude Militão'; });
-if (config.logoUrl) {
- const img = document.createElement('img'); img.src = config.logoUrl; img.alt = ''; img.width = 36; img.height = 36;
- $('.brand .sun').replaceWith(img);
-}
+if (config.logoUrl) $$('[data-logo]').forEach(img => { img.src = config.logoUrl; });
 if (config.savingsClaim?.validated === true && Number(config.savingsClaim.percentage) > 0 && Number(config.savingsClaim.percentage) <= 100) {
  const percent = document.createElement('em');
  percent.className = 'savings-percent';

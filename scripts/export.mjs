@@ -18,7 +18,7 @@ html = html.replace('<link rel="stylesheet" href="styles.css">', () => `<style>$
 const scripts = [];
 for (const script of ['config.js', 'app.js']) {
   html = html.replace(`<script src="${script}" defer></script>`, '');
-  scripts.push(await readFile(script, 'utf8'));
+  scripts.push(await embed(await readFile(script, 'utf8')));
 }
 html = await embed(html);
 html = html.replace('</body>', () => `<script>${scripts.join('\n')}</script></body>`);

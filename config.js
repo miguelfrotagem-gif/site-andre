@@ -1,6 +1,6 @@
 window.SOLAR_CONFIG = {
   brandName: 'Inovar',
-  logoUrl: '',
+  logoUrl: 'assets/solar/inovar-logo.webp',
   whatsappNumber: '5586988464618',
   ownerName: 'Eude Militão',
   savingsClaim: { validated: false, percentage: 90 },
