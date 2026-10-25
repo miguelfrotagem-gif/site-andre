@@ -101,5 +101,5 @@ document.querySelectorAll('.reveal').forEach(el=>revealObserver.observe(el));
 function motion(){document.body.classList.toggle('motion-reduced',reduced.matches);if(reduced.matches){animations.forEach(a=>a.cancel());sections.forEach(s=>s.style.removeProperty('--parallax'));}}
 reduced.addEventListener('change',motion);motion();
 
-// Content and calls to action are available immediately; the hero handles its own short reveal.
+// The page initializes independently; entry.js handles the optional opening.
 document.body.classList.add('brand-ready');
