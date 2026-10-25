@@ -87,17 +87,35 @@ new ResizeObserver(syncSection).observe(document.querySelector('main'));
 const sectionSizes=new ResizeObserver(syncSection);sections.forEach(section=>sectionSizes.observe(section));sectionSizes.observe(siteHeader);
 const sectionObserver=new IntersectionObserver(syncSection,{threshold:[0,.25,.5,.75,1]});sections.forEach(section=>sectionObserver.observe(section));
 document.fonts.ready.then(syncSection);syncSection();
-const animations=new Set();
-const revealObserver=new IntersectionObserver(entries=>entries.forEach(entry=>{
- if(!entry.isIntersecting)return;
- const element=entry.target;revealObserver.unobserve(element);
+// One reveal controller owns all page entrances, including the hero.
+const animations=new Set(),revealed=new WeakSet();
+let revealsStarted=false;
+function revealOnce(element){
+ revealObserver.unobserve(element);
+ if(revealed.has(element))return;
+ revealed.add(element);
  if(reduced.matches)return;
  const siblings=[...element.parentElement.children].filter(e=>e.classList.contains('reveal'));
- const delay=Math.min(siblings.indexOf(element)*110,440);
- const animation=element.animate([{opacity:0,transform:'translateY(20px)'},{opacity:1,transform:'translateY(0)'}],{duration:700,delay,easing:'cubic-bezier(.2,.65,.3,1)',fill:'backwards'});
- animations.add(animation);animation.finished.then(()=>animations.delete(animation)).catch(()=>{});
+ const delay=Math.min(Math.max(0,siblings.indexOf(element))*80,240);
+ const animation=element.animate([{opacity:0,transform:'translateY(10px)'},{opacity:1,transform:'translateY(0)'}],{duration:550,delay,easing:'cubic-bezier(.2,.65,.3,1)',fill:'backwards'});
+ animations.add(animation);
+ const complete=()=>animations.delete(animation);animation.finished.then(complete,complete);
+}
+const revealObserver=new IntersectionObserver(entries=>entries.forEach(entry=>{
+ if(entry.isIntersecting)revealOnce(entry.target);
 }),{threshold:.12});
-document.querySelectorAll('.reveal').forEach(el=>revealObserver.observe(el));
+function startReveals(fromOpening=false){
+ if(revealsStarted||(!fromOpening&&document.body.classList.contains('intro-running')))return;
+ revealsStarted=true;
+ document.querySelectorAll('.m-hero-copy > .m-kicker,.m-hero-copy > h1,.m-hero-copy > .m-lead,.m-hero-copy > .m-actions').forEach(el=>{
+  el.classList.add('reveal');
+  const rect=el.getBoundingClientRect();
+  if(rect.bottom>0&&rect.top<innerHeight)revealOnce(el);
+ });
+ document.querySelectorAll('.reveal').forEach(el=>{if(!revealed.has(el))revealObserver.observe(el);});
+}
+document.addEventListener('henseg:entry-reveal',()=>startReveals(true),{once:true});
+startReveals();
 function motion(){document.body.classList.toggle('motion-reduced',reduced.matches);if(reduced.matches){animations.forEach(a=>a.cancel());sections.forEach(s=>s.style.removeProperty('--parallax'));}}
 reduced.addEventListener('change',motion);motion();
 

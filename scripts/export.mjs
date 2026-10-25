@@ -28,7 +28,7 @@ for(let i=0;i<sources.length;i++) {
   html=html.replace('<link rel="stylesheet" href="desktop.css">',()=>`<style>${embeddedDesktopStyles}</style>`);
   html=html.replace('<link rel="stylesheet" href="contact.css">',()=>`<style>${embeddedContactStyles}</style>`);
   const scripts=[];
-  for(const script of ['config.js','app.js','site-extras.js','mobile.js','entry.js']) {
+  for(const script of ['config.js','entry.js','app.js','site-extras.js','mobile.js']) {
     const tag=`<script src="${script}" defer></script>`;
     if(html.includes(tag)){html=html.replace(tag,'');scripts.push(script==='entry.js'?await embed(await readFile(script,'utf8')):await readFile(script,'utf8'));}
   }
