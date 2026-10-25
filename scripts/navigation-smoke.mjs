@@ -21,7 +21,7 @@ try{
   await send('Emulation.setEmulatedMedia',{features:[{name:'prefers-reduced-motion',value:'no-preference'}]});
   await send('Page.navigate',{url:base});await wait(300);await evaluate('document.fonts.ready');
   await evaluate(`(()=>{const n=document.querySelector('#cookie-notice');if(!n.hidden)n.querySelector('[data-confirm-privacy]').click()})()`);
-  for(const id of ['contato','solucoes','sobre','inicio','contato']){
+  for(const id of ['contato','solucoes','tecnologias','sobre','inicio','contato']){
    await clickNav(id);await wait(60);
    check(await current()===`#${id}`,`destino destacado durante a rolagem ${id} ${width}`);
    await wait(1450);
@@ -35,7 +35,7 @@ try{
    check(await evaluate(`getComputedStyle(document.querySelector('#navigation a:not(.mobile-nav)[href="#solucoes"]'),'::after').transform==='matrix(0, 0, 0, 1, 0, 0)'`),'Soluções sem sublinhado falso por hover');
   }
   // Native manual movement, including upward travel from contact.
-  for(const [id,hash] of [['sobre','sobre'],['solucoes','solucoes'],['tecnologias','solucoes'],['contato','contato']]){
+  for(const [id,hash] of [['sobre','sobre'],['solucoes','solucoes'],['tecnologias','tecnologias'],['contato','contato']]){
    await evaluate(`document.querySelector('#${id}').scrollIntoView({behavior:'instant'})`);await wait(100);
    check(await current()===`#${hash}`,`rolagem manual reversível ${id} ${width}`);
   }

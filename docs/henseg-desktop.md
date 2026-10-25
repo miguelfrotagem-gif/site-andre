@@ -4,7 +4,7 @@ Referência principal: `HENSEG_REFERENCIA_DESKTOP_ATUALIZADA.pdf`, 11 páginas, 
 
 A página foi reconstruída com as mesmas seções semânticas do mobile, sem duplicar o site ou publicar páginas do PDF como imagens. `desktop.css` organiza hero e produtos com texto à esquerda/fotografia à direita, cinco cards de soluções, fotografia à esquerda no Sobre, quatro etapas em ordem, FAQ em duas colunas e contato conforme a nova referência fotográfica diurna. O rodapé reúne navegação, privacidade, cookies e identificação real.
 
-A ordem é alarme, câmera, cerca, interfone e facial nos cards, links e seções. O desktop agrupa as seções de produto no item Soluções do cabeçalho; o mobile preserva os cinco links comerciais individuais. O mesmo scrollspy é responsável pelo destaque em ambos os formatos. Biometria e fechadura permanecem opcionais depois do facial, com suas fotos originais.
+A ordem é alarme, câmera, cerca, interfone e facial nos cards, links e seções. O menu segue Início, Soluções, Tecnologias, Sobre nós e Contato em ambos os formatos. As seções de produto pertencem a Tecnologias. O mesmo scrollspy é responsável pelo destaque em ambos os formatos. Biometria e fechadura permanecem opcionais depois do facial, com suas fotos originais.
 
 A hero mantém a frase desktop “A segurança evoluiu. O seu acesso também.”; no mobile permanece “Sua proteção também.” O texto desktop contempla as cinco prioridades atuais. Fotos e CTAs são elementos independentes, sem textos duplicados de mockups. O fundo usa apenas o recorte fotográfico limpo do kit anterior; sem interfaces, texto ou dispositivo no teto. No Sobre, a legenda identifica ambientação.
 

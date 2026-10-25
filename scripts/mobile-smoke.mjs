@@ -25,7 +25,7 @@ try {
   await ev(`Promise.all([...document.querySelectorAll('.mobile-section img')].map(i=>{i.loading='eager';return i.decode()}))`);
   assert.deepEqual(await ev(`[...document.querySelectorAll('main>section')].filter(e=>e.getClientRects().length).map(e=>e.id)`),ids.map(id=>id));count++;
   assert.deepEqual(await ev(`[...document.querySelectorAll('.m-solution-list>a')].map(e=>e.hash)`),products.map(id=>'#'+id));count++;
-  assert.deepEqual(await ev(`[...document.querySelectorAll('#navigation .mobile-nav-product')].map(e=>e.hash)`),products.map(id=>'#'+id));count++;
+  assert.deepEqual(await ev(`[...document.querySelectorAll('#navigation .mobile-nav')].map(e=>e.hash)`),['#inicio','#solucoes','#tecnologias','#sobre','#contato']);count++;
   check(await ev(`document.documentElement.scrollWidth<=innerWidth`),`sem overflow ${width}x${height}`);
   check(await ev(`[...document.querySelectorAll('h1')].filter(e=>e.getClientRects().length).length===1`),'um título principal visível');
   check(await ev(`document.querySelectorAll('.site-header').length===1&&document.querySelectorAll('.site-header .brand img').length===1&&!document.querySelector('.brand-wordmark')`),'um cabeçalho e marca sem repetição');
@@ -33,16 +33,16 @@ try {
   check(await ev(`[...document.querySelectorAll('.mobile-section .m-button')].every(a=>{const r=a.getBoundingClientRect();return r.height>=52&&r.left>=0&&r.right<=innerWidth+1&&(!a.href||a.hash||new URL(a.href).pathname==='/5511945549849')})`),`botões confortáveis e contato real ${width}`);
   for(const id of ids){
    await jump(id);
-   check(await active()===`#${id==='duvidas'?'contato':id}`,`seção ativa ${id} ${width}`);
+   check(await active()===`#${products.includes(id)?'tecnologias':id==='etapas'?'sobre':id==='duvidas'?'contato':id}`,`seção ativa ${id} ${width}`);
    check(await ev(`(()=>{const s=document.querySelector('#${id}'),r=s.getBoundingClientRect();return [...s.querySelectorAll('h1,h2,h3,a,input,select,button,summary')].every(e=>{const b=e.getBoundingClientRect();return !b.width||(b.left>=r.left-1&&b.right<=r.right+1&&b.top>=r.top-1&&b.bottom<=r.bottom+1)})})()`),`conteúdo contido sem cortes ${id} ${width}`);
    if(width===390&&height===844){const shot=await send('Page.captureScreenshot',{format:'png'});await writeFile(`${output}/${id}-390.png`,Buffer.from(shot.data,'base64'));}
    check(await ev(`(()=>{const f=document.querySelector('.floating-contact');if(getComputedStyle(f).visibility==='hidden')return true;const r=f.getBoundingClientRect();return [...document.querySelectorAll('.mobile-section .m-button,.contact-whatsapp-panel,.contact-auxiliary,.mobile-footer,.m-solution-link,.m-faq-item summary')].every(e=>{const b=e.getBoundingClientRect();return !b.width||b.bottom<=r.top||b.top>=r.bottom||b.right<=r.left||b.left>=r.right})})()`),`flutuante sem sobreposição ${id} ${width}`);
   }
   await ev(`document.querySelector('.menu-toggle').click()`);
   check(await ev(`document.querySelector('.menu-toggle').getAttribute('aria-expanded')==='true'`),'menu abre');
-  await ev(`document.querySelector('#navigation a[href="#cerca"]').click()`);await wait(100);
-  check(await ev(`document.querySelector('.menu-toggle').getAttribute('aria-expanded')==='false'&&document.activeElement.id==='cerca'`),'menu fecha e foco vai ao destino');
-  check(await active()==='#cerca','categoria correta após menu');
+  await ev(`document.querySelector('#navigation a[href="#tecnologias"]').click()`);await wait(100);
+  check(await ev(`document.querySelector('.menu-toggle').getAttribute('aria-expanded')==='false'&&document.activeElement.id==='tecnologias'`),'menu fecha e foco vai ao destino');
+  check(await active()==='#tecnologias','categoria correta após menu');
   await jump('contato');
   check(await ev(`document.querySelectorAll('form,input,select,textarea').length===0&&document.querySelector('.contact-whatsapp-button').getBoundingClientRect().height>=56`),'contato sem formulário e com ação confortável');
  }

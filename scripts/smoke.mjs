@@ -31,7 +31,7 @@ try {
   check(await ev(`[...document.querySelectorAll('.m-product img,.m-solution-photo img,.m-desktop-hero-visual img')].every(i=>{const r=i.getBoundingClientRect();return !r.width||(i.complete&&i.naturalWidth&&r.width<=i.naturalWidth+1&&r.height<=i.naturalHeight+1&&getComputedStyle(i).objectFit==='contain'&&Math.abs(r.width/r.height-i.naturalWidth/i.naturalHeight)<.03)})`),`equipamentos completos e sem ampliação ${width}`);
   check(await ev(`[...document.querySelectorAll('.m-button')].filter(e=>e.getClientRects().length).every(e=>e.getBoundingClientRect().height>=52&&(!e.href||e.hash||new URL(e.href).pathname==='/5511945549849'))`),'botões acessíveis e WhatsApp oficial');
   for(const id of ids){
-   await jump(id);const expected=products.includes(id)?'solucoes':id==='etapas'?'sobre':id==='duvidas'?'contato':id;
+   await jump(id);const expected=products.includes(id)?'tecnologias':id==='etapas'?'sobre':id==='duvidas'?'contato':id;
    check(await active()===`#${expected}`,`menu ${id} ${width}`);
    check(await ev(`document.querySelectorAll('#navigation [aria-current="location"]').length===1`),'apenas um item ativo');
    check(await ev(`(()=>{const s=document.querySelector('#${id}'),r=s.getBoundingClientRect();return [...s.querySelectorAll('h1,h2,h3,.m-button,input,select,textarea,summary')].filter(e=>e.getClientRects().length).every(e=>{const b=e.getBoundingClientRect();return b.left>=r.left-1&&b.right<=r.right+1&&b.top>=r.top-1&&b.bottom<=r.bottom+1})})()`),`conteúdo sem corte ${id} ${width}`);
