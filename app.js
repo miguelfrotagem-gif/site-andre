@@ -90,20 +90,38 @@ document.fonts.ready.then(syncSection);syncSection();
 // One reveal controller owns all page entrances, including the hero.
 const animations=new Set(),revealed=new WeakSet();
 let revealsStarted=false;
+const canAnimate=()=>!reduced.matches&&document.documentElement.dataset.motionBootstrapped==='true'&&document.documentElement.dataset.motionFallback!=='true';
+function showImmediately(element){
+ revealed.add(element);revealObserver.unobserve(element);element.classList.add('is-revealed');
+}
 function revealOnce(element){
  revealObserver.unobserve(element);
  if(revealed.has(element))return;
  revealed.add(element);
- if(reduced.matches)return;
- const siblings=[...element.parentElement.children].filter(e=>e.classList.contains('reveal'));
- const delay=Math.min(Math.max(0,siblings.indexOf(element))*80,240);
- const animation=element.animate([{opacity:0,transform:'translateY(10px)'},{opacity:1,transform:'translateY(0)'}],{duration:550,delay,easing:'cubic-bezier(.2,.65,.3,1)',fill:'backwards'});
- animations.add(animation);
- const complete=()=>animations.delete(animation);animation.finished.then(complete,complete);
+ const images=[...(element.matches('img')?[element]:element.querySelectorAll('img'))];
+ const media=images.length>0||element.classList.contains('contact-photo');
+ function show(){
+  if(element.classList.contains('is-revealed'))return;
+  element.classList.add('is-revealed');
+  if(!canAnimate()||typeof element.animate!=='function')return;
+  const siblings=[...element.parentElement.children].filter(e=>e.classList.contains('reveal'));
+  const delay=Math.min(Math.max(0,siblings.indexOf(element))*80,240);
+  const animation=element.animate([{opacity:0,transform:`translateY(${media?18:10}px)`},{opacity:1,transform:'translateY(0)'}],{duration:media?800:550,delay,easing:'cubic-bezier(.2,.65,.3,1)',fill:'backwards'});
+  animations.add(animation);
+  const complete=()=>animations.delete(animation);animation.finished.then(complete,complete);
+ }
+ if(images.some(img=>!img.complete)&&canAnimate()){
+  // Keep the photo hidden while decoding instead of popping it in mid-animation.
+  let done=false;
+  const ready=()=>{if(done)return;done=true;clearTimeout(fallback);show();};
+  const fallback=setTimeout(ready,2000);
+  Promise.allSettled(images.map(img=>typeof img.decode==='function'?img.decode():Promise.resolve())).then(ready);
+ }else show();
 }
 const revealObserver=new IntersectionObserver(entries=>entries.forEach(entry=>{
  if(entry.isIntersecting)revealOnce(entry.target);
-}),{threshold:.12});
+}),{threshold:.12,rootMargin:'0px 0px -32px 0px'});
+document.documentElement.dataset.motionInitialized='true';
 function startReveals(fromOpening=false){
  if(revealsStarted||(!fromOpening&&document.body.classList.contains('intro-running')))return;
  revealsStarted=true;
@@ -116,7 +134,21 @@ function startReveals(fromOpening=false){
 }
 document.addEventListener('henseg:entry-reveal',()=>startReveals(true),{once:true});
 startReveals();
-function motion(){document.body.classList.toggle('motion-reduced',reduced.matches);if(reduced.matches){animations.forEach(a=>a.cancel());sections.forEach(s=>s.style.removeProperty('--parallax'));}}
+function motion(){
+ document.body.classList.toggle('motion-reduced',reduced.matches);
+ document.documentElement.classList.toggle('motion-ready',canAnimate());
+ if(!canAnimate()){
+  animations.forEach(a=>a.cancel());
+  document.querySelectorAll('.reveal').forEach(showImmediately);
+  sections.forEach(s=>s.style.removeProperty('--parallax'));
+ }
+}
+document.addEventListener('focusin',event=>{
+ const element=event.target.closest('.reveal');
+ if(!element)return;
+ showImmediately(element);
+ animations.forEach(animation=>{if(animation.effect?.target===element)animation.cancel();});
+});
 reduced.addEventListener('change',motion);motion();
 
 // The page initializes independently; entry.js handles the optional opening.

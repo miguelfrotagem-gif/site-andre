@@ -72,3 +72,5 @@ A seção Instagram aparece imediatamente antes do contato, com o perfil forneci
 O WhatsApp flutuante permanece visível ao passar por botões, cards e rodapé. Não usa mais ocultação por colisão; quando o aviso de privacidade aparece, o botão sobe para a área disponível acima dele.
 
 As revelações do conteúdo são controladas apenas por `app.js`, uma vez por elemento a cada carregamento. `entry.js` sinaliza a saída da abertura para uma única transição coordenada; não anima a hero por conta própria. Isso evita entradas atrás do overlay e a repetição ao abrir o site ou retornar a uma seção. O deslocamento foi reduzido para 10 px, com duração de 550 ms e sequência curta.
+
+As imagens com revelação começam transparentes antes da primeira pintura, sem colapsar seu espaço. Um bootstrap pequeno habilita esse estado apenas com JavaScript e movimento permitido; se a inicialização falhar, há fallback visível. A entrada dispara com a imagem já dentro da tela, dura 800 ms e ocorre uma vez. Movimento reduzido mostra o conteúdo diretamente, e o foco de teclado nunca fica oculto.

@@ -154,3 +154,8 @@
 @keyframes henseg-entry-rule { from { opacity: 0; transform: scaleX(0); } to { opacity: 1; transform: scaleX(1); } }
 @keyframes henseg-entry-exit { to { opacity: 0; transform: translateY(-10px); } }
 @media (prefers-reduced-motion: reduce) { .henseg-entry { display: none; } }
+
+/* Progressive enhancement: reserve the image's space without showing it early. */
+@media (prefers-reduced-motion: no-preference) {
+ html.motion-ready .reveal:not(.is-revealed) { opacity: 0; }
+}
