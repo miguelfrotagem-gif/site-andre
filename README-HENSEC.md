@@ -30,7 +30,20 @@ chromium --headless --no-sandbox --disable-gpu --remote-debugging-address=127.0.
 
 A hero apresenta “A segurança evoluiu. O seu acesso também.”, com reconhecimento facial, biometria e controle de acesso. A Intelbras foi informada pelo usuário como marca do portfólio. A entrada é curta e integrada: conteúdo e CTAs não aguardam uma abertura em tela inteira.
 
-A seção Tecnologias tem quatro etapas: identificação facial, biometria digital, controle de acesso e câmeras. No desktop, a fotografia permanece sticky junto ao conteúdo que rola naturalmente. O crossfade é calculado pela posição dos textos e funciona nos dois sentidos. Indicadores são âncoras acessíveis. Tablet, celular e movimento reduzido mostram todas as etapas em fluxo normal, com fotos completas.
+A seção Tecnologias é uma composição editorial **sem imagens**, intitulada “Tecnologia que transforma a sua segurança.”. A coluna de título e navegação permanece sticky temporariamente no desktop. As quatro etapas principais são reconhecimento facial e biometria, alarmes sem fio, biometria digital e câmeras com IA. O scroll nativo atualiza a etapa ativa e uma linha de progresso; cada indicador também é uma âncora acessível. Videoporteiros e fechaduras aparecem em dois blocos complementares. No celular, o fluxo é vertical e não há sticky prolongado. Movimento reduzido remove os deslocamentos e mantém todo o conteúdo legível. Em desktops muito baixos, a coluna deixa de ser fixa para evitar cortes.
+
+Nenhuma imagem foi gerada, pesquisada, baixada ou adicionada a esta atualização. Não há imagens, fundos fotográficos, slots vazios ou avisos de foto futura na seção Tecnologias. As imagens das outras seções permanecem como estavam. Os IDs e artigos semânticos permitem inserir fotografias fornecidas pelo responsável depois, sem reservar espaços vazios agora.
+
+As seis referências, textos, benefícios e CTAs são centralizados em `config.js`, em `technologyReferences`; os textos também constam no HTML como fallback sem JavaScript. Se o portfólio for alterado, sincronize esse fallback. Os seis registros têm `confirmed:false`: a marca Intelbras foi informada pela empresa, mas os modelos específicos e suas configurações ainda são referências a confirmar. A VIP 3240 IA G2 não é apresentada como solução de reconhecimento facial. As mensagens de WhatsApp são específicas por solução e não afirmam disponibilidade, preço ou prazo.
+
+Referências fornecidas no briefing:
+
+- SS 3542 MF W — reconhecimento facial e biometria.
+- AMT 8000 PRO — alarmes sem fio.
+- SS 3420 MF BIO — biometria digital.
+- VIP 3240 IA G2 — videomonitoramento com IA.
+- XPE 3200 PLUS IP — videoporteiro.
+- IFR 7000+ — fechadura inteligente.
 
 A galeria tem quatro fontes de imagem distintas, miniaturas, setas, contador, gesto horizontal nativo e ampliação em diálogo com Escape e retorno de foco. As abas de ambientes alteram fotografia, texto e mensagem do WhatsApp entre residências e empresas/comércios. FAQ usa `details/summary`, teclado nativo e uma resposta por vez. Menu móvel, estado ativo e cabeçalho depois da rolagem são preservados.
 
@@ -39,7 +52,7 @@ A galeria tem quatro fontes de imagem distintas, miniaturas, setas, contador, ge
 - Marca: HENSEG, com a logomarca enviada pelo usuário.
 - WhatsApp: **+55 11 94554-9849**, normalizado como `5511945549849` em `config.js`.
 - CNPJ informado pelo usuário: **61.285.070/0001-28**. Os dígitos verificadores foram conferidos; não foi feita consulta cadastral externa.
-- Equipamentos Intelbras: marca informada pelo usuário; modelos exatos e fichas técnicas ainda não fornecidos.
+- Equipamentos Intelbras: marca informada pelo usuário; modelos de referência fornecidos no briefing, sujeitos à confirmação comercial e de ficha técnica.
 - A razão social completa não foi fornecida. Não foi inventada identificação cadastral, certificação ou condição de atendimento.
 
 As fotos atuais são ilustrações/conceitos, identificados na interface. Não representam instalações comprovadas ou modelos comerciais Intelbras específicos. Para substituir os visuais conceituais, fornecer fotos dos terminais faciais e leitores biométricos realmente comercializados, seus modelos, sensores em detalhe e instalações reais autorizadas para divulgação. Nenhuma foto de concorrente foi publicada.
@@ -64,4 +77,4 @@ O repositório usa a branch `gh-pages` para publicação nativa. As regras exist
 
 ## Cobertura dos testes
 
-A suíte verifica 320–1920 px, incluindo 360, 390, 430, 768, 1280 e 1440, desktop com pouca altura, ausência de overflow/cortes, navegação e WhatsApp oficiais. Testa crossfade real intermediário e reversível, área sticky, fluxo com movimento reduzido, abas pelo teclado, mensagens contextuais, seleção e gesto de galeria, Escape e foco, FAQ por Enter, persistência/apagamento/expiração das preferências, páginas legais e ausência de pedidos externos automáticos. Capturas ficam em `/tmp/hensec-checks`.
+A suíte verifica 320–1920 px, incluindo 360, 390, 430, 768, 1280 e 1440, desktop com pouca altura, ausência de overflow/cortes, navegação e WhatsApp oficiais. Testa progressão reversível, título sticky e área segura, seis referências/mensagens, ausência de mídias e slots vazios na seção Tecnologias, fluxo com movimento reduzido, abas pelo teclado, mensagens contextuais, seleção e gesto de galeria, Escape e foco, FAQ por Enter, persistência/apagamento/expiração das preferências, páginas legais e ausência de pedidos externos automáticos. Capturas ficam em `/tmp/hensec-checks`.

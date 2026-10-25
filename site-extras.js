@@ -100,41 +100,59 @@
     }
   });
 
-  const technology = document.querySelector('.technology-layout');
+  const technology = document.querySelector('.technology-text');
   if (technology) {
+    // The supplied model references stay editable in config.js; HTML remains a no-JS fallback.
+    const references = window.HENSEC_CONFIG?.technologyReferences || [];
+    const articles = [...technology.querySelectorAll('[data-technology-reference]')];
+    references.forEach(item => {
+      const article = articles.find(element => element.dataset.technologyReference === item.id);
+      if (!article) return;
+      article.querySelector('[data-reference-model]').textContent = item.model;
+      article.querySelector('.technology-reference > span').textContent = item.confirmed ? 'Modelo informado · Intelbras' : 'Modelo de referência · Intelbras';
+      article.querySelector('.technology-description').textContent = item.description;
+      article.querySelector('.technology-label').textContent = item.category;
+      const heading = article.querySelector('h3');
+      const split = item.highlight ? item.title.indexOf(item.highlight) : -1;
+      if (split >= 0) {
+        const emphasis = document.createElement('em');emphasis.textContent = item.highlight;
+        heading.replaceChildren(document.createTextNode(item.title.slice(0,split)),emphasis,document.createTextNode(item.title.slice(split+item.highlight.length)));
+      } else heading.textContent = item.title;
+      const list = article.querySelector('.technology-benefits');
+      list.replaceChildren(...item.features.map(text => {const li=document.createElement('li');li.textContent=text;return li;}));
+      const button = article.querySelector('[data-whatsapp]');
+      const arrow = document.createElement('span');arrow.setAttribute('aria-hidden','true');arrow.textContent='↗';
+      button.replaceChildren(document.createTextNode(item.cta+' '),arrow);
+      button.dataset.whatsapp = item.messageKey;
+      const config = window.HENSEC_CONFIG;
+      const number = String(config.whatsappNumber || '').replace(/\D/g,'');
+      if (/^[1-9]\d{9,14}$/.test(number))button.href=`https://wa.me/${number}?text=${encodeURIComponent(config.messages[item.messageKey] || config.messages.geral)}`;
+    });
     const steps = [...technology.querySelectorAll('[data-technology-step]')];
-    const frames = [...technology.querySelectorAll('[data-technology-image]')];
     const indicators = [...technology.querySelectorAll('[data-technology-go]')];
-    const enabled = matchMedia('(min-width:1024px) and (prefers-reduced-motion:no-preference)');
+    const desktop = matchMedia('(min-width:1024px)');
     let frame = 0;
     function draw() {
-      frame = 0;
-      if (!enabled.matches) return;
-      const centers = steps.map(step => {const r=step.getBoundingClientRect();return r.top+r.height/2;});
-      const line = innerHeight * .52;
-      let position = 0;
-      if (line >= centers.at(-1)) position = steps.length-1;
-      else for (let i=0;i<centers.length-1;i++) {
-        if (line >= centers[i] && line < centers[i+1]) {position=i+(line-centers[i])/(centers[i+1]-centers[i]);break;}
-      }
-      const base=Math.floor(position);
-      const t=Math.max(0,Math.min(1,((position-base)-.22)/.56));
-      const blend=t*t*(3-2*t), active=Math.min(steps.length-1,Math.round(position));
-      frames.forEach((element,i) => {
-        element.style.opacity=String(i===base?1:i===base+1?blend:0);
-        element.style.setProperty('--tech-layer',i);
-        element.style.setProperty('--tech-offset',`${(position-i)*-6}px`);
-        element.setAttribute('aria-hidden',String(i!==active));
-      });
+      frame=0;
+      const rects=steps.map(step=>step.getBoundingClientRect());
+      const centers=rects.map(rect=>rect.top+rect.height/2);
+      const line=innerHeight*.5;
+      let position=0;
+      if(line>=centers.at(-1))position=steps.length-1;
+      else for(let i=0;i<centers.length-1;i++)if(line>=centers[i]&&line<centers[i+1]){position=i+(line-centers[i])/(centers[i+1]-centers[i]);break;}
+      const active=Math.min(steps.length-1,Math.round(position));
       indicators.forEach((element,i)=>i===active?element.setAttribute('aria-current','step'):element.removeAttribute('aria-current'));
       steps.forEach((element,i)=>element.classList.toggle('technology-active',i===active));
-      technology.style.setProperty('--tech-progress',(position+1)/steps.length);
+      const progress=Math.max(0,Math.min(1,(line-rects[0].top)/Math.max(1,rects.at(-1).bottom-rects[0].top)));
+      technology.style.setProperty('--tech-progress',progress);
     }
     function schedule(){if(!frame)frame=requestAnimationFrame(draw);}
-    addEventListener('scroll',schedule,{passive:true});addEventListener('resize',schedule);
-    enabled.addEventListener('change',schedule); schedule();
+    function configure(){technology.classList.toggle('technology-enhanced',desktop.matches&&!media.matches);schedule();}
+    addEventListener('scroll',schedule,{passive:true});addEventListener('resize',configure);
+    desktop.addEventListener('change',configure);media.addEventListener('change',configure);
+    configure();
     addEventListener('pagehide',()=>{cancelAnimationFrame(frame);frame=0;});
-    addEventListener('pageshow',schedule);
+    addEventListener('pageshow',configure);
   }
 
   const track=document.querySelector('.gallery-track');

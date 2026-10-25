@@ -57,6 +57,14 @@ try {
    check(await evaluate(`document.querySelector('.menu-toggle').getAttribute('aria-expanded')==='false'`),'menu móvel fecha');
   }
  }
+ // The technology section is complete without media or empty photo placeholders.
+ check(await evaluate(`document.querySelectorAll('#tecnologias .technology-step').length===4&&document.querySelectorAll('#tecnologias .technology-extra').length===2`),'quatro etapas e dois blocos complementares');
+ check(await evaluate(`document.querySelector('#technology-title').textContent==='Tecnologia que transforma a sua segurança.'`),'novo título completo');
+ check(await evaluate(`!document.querySelector('#tecnologias img,#tecnologias picture,#tecnologias video,#tecnologias svg,#tecnologias canvas,#tecnologias .technology-visual,#tecnologias .technology-frames')`),'tecnologias sem imagens ou espaços de fotografia');
+ check(await evaluate(`[...document.querySelectorAll('#tecnologias *')].every(e=>getComputedStyle(e).backgroundImage==='none')`),'nenhuma imagem de fundo na seção');
+ check(await evaluate(`window.HENSEC_CONFIG.technologyReferences.length===6&&window.HENSEC_CONFIG.technologyReferences.every(r=>r.confirmed===false)`),'modelos editáveis tratados como referências');
+ check(await evaluate(`(()=>{const refs=window.HENSEC_CONFIG.technologyReferences;return refs.every(r=>{const a=document.querySelector('[data-technology-reference="'+r.id+'"]');return a.querySelector('[data-reference-model]').textContent===r.model&&new URL(a.querySelector('[data-whatsapp]').href).searchParams.get('text').includes(r.model)&&a.querySelector('[data-whatsapp]').href.startsWith('https://wa.me/5511945549849?text=')})})()`),'seis referências e seis mensagens corretas');
+ check(await evaluate(`!document.querySelector('[data-technology-reference="cameras-ia"]').textContent.toLowerCase().includes('reconhecimento facial')`),'câmera IA sem atribuição de reconhecimento facial');
  // Desktop narrative follows real content position, including reversal.
  await send('Emulation.setDeviceMetricsOverride',{width:1440,height:900,deviceScaleFactor:1,mobile:false});
  await send('Emulation.setEmulatedMedia',{features:[{name:'prefers-reduced-motion',value:'no-preference'}]});
@@ -65,13 +73,15 @@ try {
  for(const i of [0,1,2,3,2,1,0]) {
   await evaluate(`(()=>{const e=document.querySelector('[data-technology-step="${i}"]'),r=e.getBoundingClientRect();scrollTo({top:scrollY+r.top+r.height/2-innerHeight*.52,behavior:'instant'})})()`);await wait(100);
   check(await evaluate(`document.querySelector('[data-technology-go][aria-current]')?.dataset.technologyGo==='${i}'`),`tecnologia ativa e reversível ${i}`);
-  check(await evaluate(`getComputedStyle(document.querySelector('.technology-visual')).position==='sticky'`),'imagem sticky');
-  check(await evaluate(`Math.abs(document.querySelector('.technology-visual').getBoundingClientRect().top-(parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--nav-height'))+18))<3`),'sticky na área segura');
+  check(await evaluate(`getComputedStyle(document.querySelector('.technology-story-rail')).position==='sticky'`),'título temporariamente sticky');
+  check(await evaluate(`(()=>{const r=document.querySelector('.technology-story-rail').getBoundingClientRect(),safe=parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--nav-height'))+18;return r.top>=safe-2&&r.bottom<=innerHeight})()`),'sticky na área segura');
  }
- await evaluate(`(()=>{const a=document.querySelector('[data-technology-step="0"]').getBoundingClientRect(),b=document.querySelector('[data-technology-step="1"]').getBoundingClientRect();scrollTo({top:scrollY+(a.top+a.height/2+b.top+b.height/2)/2-innerHeight*.52,behavior:'instant'})})()`);await wait(100);
- check(await evaluate(`Number(document.querySelector('[data-technology-image="0"]').style.opacity)===1&&Number(document.querySelector('[data-technology-image="1"]').style.opacity)>.2&&Number(document.querySelector('[data-technology-image="1"]').style.opacity)<.8`),'crossfade intermediário sem escurecer a base');
+ const lateProgress=await evaluate(`document.querySelector('#tecnologias').style.getPropertyValue('--tech-progress')`);
+ await evaluate(`document.querySelector('[data-technology-go="3"]').click()`);await wait(1200);
+ check(await evaluate(`document.querySelector('[data-technology-go][aria-current]')?.dataset.technologyGo==='3'`),'indicador clicável leva à quarta etapa');
+ check(await evaluate(`Number(document.querySelector('#tecnologias').style.getPropertyValue('--tech-progress'))>Number('${lateProgress}')`),'linha acompanha avanço real do scroll');
  await send('Emulation.setEmulatedMedia',{features:[{name:'prefers-reduced-motion',value:'reduce'}]});await wait(100);
- check(await evaluate(`getComputedStyle(document.querySelector('.technology-visual')).display==='none'&&[...document.querySelectorAll('.technology-mobile')].every(e=>getComputedStyle(e).display!=='none')`),'movimento reduzido mostra todos os equipamentos estáticos');
+ check(await evaluate(`!document.querySelector('#tecnologias').classList.contains('technology-enhanced')&&[...document.querySelectorAll('#tecnologias .technology-copy')].every(e=>getComputedStyle(e).opacity==='1'&&getComputedStyle(e).transform==='none')`),'movimento reduzido mantém os seis conteúdos estáticos e legíveis');
  // Distinct images and messages for actual supported environments.
  await evaluate(`document.querySelector('#tab-empresa').click()`);
  check(await evaluate(`!document.querySelector('#panel-empresa').hidden&&document.querySelector('#panel-residencia').hidden`),'aba troca conteúdo');
