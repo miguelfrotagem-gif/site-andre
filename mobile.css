@@ -127,14 +127,10 @@
 .site-header .brand-identity { display: flex; flex-direction: column; gap: 4px; white-space: nowrap; }
 .site-header .brand-identity strong { font: 800 26px/1 Manrope,Arial,sans-serif; letter-spacing: .055em; }
 .site-header .brand-identity small { margin: 0; font: 500 9px/1.4 Manrope,Arial,sans-serif; letter-spacing: .015em; color: #dfd5bc; }
-.header-label-short { display: none; }
-.header-label-full,.header-label-short { font: inherit; }
 @media (max-width: 767px), (max-width: 1023px) and (max-height: 500px) {
  .site-header .brand { gap: 8px; }
  .site-header .brand-identity strong { font-size: 18px; }
  .site-header .brand-identity small { font-size: 7px; }
- .site-header .header-label-full { display: none; }
- .site-header .header-label-short { display: inline; }
  .site-header .header-cta { padding-inline: 10px; gap: 8px; }
 }
 @media (max-width: 374px) {
