@@ -72,7 +72,3 @@ Não há CRM, scoring, cálculo comercial, promessa de contemplação, WhatsApp 
 ## GitHub Pages
 
 A publicação usa a branch `gh-pages`, na raiz. A prévia Ademicon fica em https://miguelfrotagem-gif.github.io/site-andre/ e o HENSEC preservado em https://miguelfrotagem-gif.github.io/site-andre/hensec.html . O código-fonte fica em `main`. Publicar requer autorização explícita; `npm run build` apenas prepara `dist/`. Ao atualizar `gh-pages`, preserve os outros projetos existentes na branch, `.nojekyll` e um eventual `CNAME`.
-
-### Paleta HENSEG
-
-`palette.css` centraliza o tema claro: branco acinzentado (#f1f2f3), superfícies cinza, texto grafite e ações em preto. A folha é carregada após os estilos de layout no site e nas políticas, incluída no build com versão de cache e incorporada na exportação. Equipamentos preservam suas fotos originais; o botão flutuante do WhatsApp permanece verde. A fotografia do contato usa apresentação em tons de cinza com véu claro para manter a leitura.
