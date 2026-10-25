@@ -85,3 +85,31 @@
 @media (prefers-reduced-motion: reduce) {
  #contato .contact-whatsapp-button:hover,#contato .contact-whatsapp-button:active { transform: none; }
 }
+
+/* Instagram invitation, immediately before the final contact section. */
+main > .instagram-section { display: grid; grid-template-columns: 1fr 1fr; align-items: center; gap: 60px; min-height: 0; padding: 80px 6.1%; background: radial-gradient(ellipse at 88% 50%,#68543223,transparent 60%),#0b130e; border-top: 1px solid #dbc0802e; border-bottom: 1px solid #dbc0802e; scroll-margin-top: calc(var(--nav-height,98px) + 18px); }
+.instagram-copy .m-kicker { margin-bottom: 17px; }
+.instagram-section h2 { font-size: clamp(31px,3.2vw,52px); }
+.instagram-section h2 em { display: block; }
+.instagram-copy > p:last-child { max-width: 42ch; margin-top: 20px; font-size: clamp(13px,1.1vw,17px); line-height: 1.7; color: #c3cbbb; }
+.instagram-profile-card { display: grid; grid-template-columns: 70px 1fr; align-items: center; gap: 19px; min-width: 0; padding: 28px; border: 1px solid #d0b37170; border-radius: 20px; background: linear-gradient(130deg,#29332399,#121c14); box-shadow: inset 0 1px 1px #efdc9a12; transition: border-color .2s,transform .2s,box-shadow .2s; }
+.instagram-icon { display: grid; place-items: center; width: 70px; height: 70px; border: 1px solid #debd7166; border-radius: 19px; color: #f3d58c; background: radial-gradient(ellipse at 5% 100%,#e5b75c22,#b0557422 70%); }
+.instagram-icon svg { width: 40px; height: 40px; }
+.instagram-account { display: grid; gap: 7px; min-width: 0; }
+.instagram-account small { color: #b4bfaa; font-size: 12px; }
+.instagram-account strong { color: #f9f3e4; font: 750 clamp(19px,2vw,30px)/1.3 Manrope,Arial,sans-serif; overflow-wrap: anywhere; }
+.instagram-follow { display: flex; align-items: center; justify-content: space-between; gap: 20px; grid-column: 1 / -1; min-height: 54px; padding: 10px 14px 10px 18px; border: 1px solid #f1d18c; border-radius: 10px; color: #12190e; background: linear-gradient(115deg,#f8df9c,#e6bd64); font: 750 14px/1.4 Manrope,Arial,sans-serif; }
+.instagram-follow > span { display: grid; place-items: center; width: 30px; height: 30px; flex-shrink: 0; border-radius: 50%; background: #111b10; color: #e9c77a; font-size: 21px; }
+.instagram-profile-card:hover { border-color: #efcb7d; transform: translateY(-3px); box-shadow: 0 10px 30px #d8b46914; }
+@media (max-width: 767px), (max-width: 1023px) and (max-height: 500px) {
+ main > .instagram-section { grid-template-columns: 1fr; gap: 28px; padding: 40px max(24px,env(safe-area-inset-right)) 40px max(24px,env(safe-area-inset-left)); }
+ .instagram-section h2 { font-size: clamp(29px,7.7vw,35px); }
+ .instagram-copy > p:last-child { font-size: 14px; margin-top: 17px; }
+ .instagram-profile-card { padding: 21px; grid-template-columns: 57px 1fr; gap: 16px; }
+ .instagram-icon { width: 57px; height: 57px; border-radius: 15px; }
+ .instagram-icon svg { width: 33px; height: 33px; }
+ .instagram-account strong { font-size: clamp(18px,5.4vw,23px); }
+ .instagram-account small { font-size: 11px; }
+ .instagram-follow { font-size: 13px; }
+}
+@media (prefers-reduced-motion: reduce) { .instagram-profile-card:hover { transform: none; } }

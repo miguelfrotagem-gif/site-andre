@@ -27,7 +27,7 @@ chromium --headless --no-sandbox --disable-gpu --remote-debugging-address=127.0.
 
 Os PDFs desktop atualizado (11 composições) e mobile (12 composições) orientam o layout. Textos, fotos, botões e perguntas são elementos reais. Uma única árvore de seções atende desktop e mobile; somente frases específicas e links de navegação mudam por breakpoint.
 
-Ordem: início, cinco soluções, alarmes, câmeras, cerca elétrica, interfonia, facial, sobre, quatro etapas, dúvidas, contato e rodapé. Biometria digital e fechaduras ficam em um bloco complementar opcional depois da quinta prioridade.
+Ordem: início, cinco soluções, alarmes, câmeras, cerca elétrica, interfonia, facial, sobre, quatro etapas, dúvidas, Instagram, contato e rodapé. Biometria digital e fechaduras ficam em um bloco complementar opcional depois da quinta prioridade.
 
 `styles.css` mantém a base e as políticas; `mobile.css` compõe o celular; `desktop.css` adapta os mesmos componentes para as referências desktop. Mobile: até 767 px, incluindo horizontal até 1023 px quando a altura é de até 500 px. As fotos mantêm proporção, `contain` e resolução original. Em telas baixas, as seções crescem naturalmente. Não há scroll obrigatório, sticky de produtos, zoom ou carrossel automático.
 
@@ -66,3 +66,5 @@ Desktop: 1672 × 941, 1920 × 1080, 1600 × 900, 1440 × 900, 1366 × 768, 1280 
 ## Entrada da marca
 
 `entry.js` apresenta logo, HENSEG, linha dourada e “Sua segurança sua paz” em sequência, seguida por uma transição suave para a hero. A abertura dura cerca de 4,3 segundos, pode ser pulada por botão ou Escape e libera os controles mesmo se uma animação falhar. Movimento reduzido e links diretos para seções pulam a abertura. Não usa armazenamento nem impede visitas posteriores.
+
+A seção Instagram aparece imediatamente antes do contato, com o perfil fornecido `https://www.instagram.com/henseg.24hs/`. É um link externo comum, sem embed, API, postagens simuladas ou carregamento de rastreadores do Instagram. O destaque do menu permanece no grupo Contato.

@@ -32,7 +32,7 @@
  function syncFloating(){if(!floatingFrame)floatingFrame=requestAnimationFrame(()=>{
   floatingFrame=0;
   const r=floating.getBoundingClientRect();
-  const overlaps=[...document.querySelectorAll('.mobile-section .m-button,.contact-whatsapp-panel,.contact-auxiliary,.contact-signature-pill,.mobile-footer,.m-solution-link,.m-faq-item summary')].some(el=>{
+  const overlaps=[...document.querySelectorAll('.mobile-section .m-button,.contact-whatsapp-panel,.contact-auxiliary,.contact-signature-pill,.mobile-footer,.instagram-profile-card,.m-solution-link,.m-faq-item summary')].some(el=>{
    const b=el.getBoundingClientRect();return b.width&&b.top<r.bottom+8&&b.bottom>r.top-8&&b.left<r.right+8&&b.right>r.left-8;
   });
   floating.toggleAttribute('data-mobile-obscured',overlaps||!notice.hidden||menu.classList.contains('open')||document.querySelector('#privacy-dialog').open);

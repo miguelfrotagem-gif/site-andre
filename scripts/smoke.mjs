@@ -10,7 +10,7 @@ const send=(method,params={})=>new Promise((resolve,reject)=>{pending.set(++n,{r
 const ev=async expression=>{const r=await send('Runtime.evaluate',{expression,awaitPromise:true,returnByValue:true});if(r.exceptionDetails)throw Error(JSON.stringify(r.exceptionDetails));return r.result.value};
 const wait=ms=>new Promise(r=>setTimeout(r,ms));
 const check=(v,msg)=>{assert.ok(v,msg);count++};
-const ids=['inicio','solucoes','alarmes','cameras','cerca','interfone','facial','sobre','etapas','duvidas','contato'];
+const ids=['inicio','solucoes','alarmes','cameras','cerca','interfone','facial','sobre','etapas','duvidas','instagram','contato'];
 const products=['alarmes','cameras','cerca','interfone','facial'];
 const active=()=>ev(`document.querySelector('#navigation [aria-current="location"]')?.hash`);
 async function jump(id){await ev(`document.querySelector('#${id}').scrollIntoView({behavior:'instant'})`);await wait(90);}
@@ -31,7 +31,7 @@ try {
   check(await ev(`[...document.querySelectorAll('.m-product img,.m-solution-photo img,.m-desktop-hero-visual img')].every(i=>{const r=i.getBoundingClientRect();return !r.width||(i.complete&&i.naturalWidth&&r.width<=i.naturalWidth+1&&r.height<=i.naturalHeight+1&&getComputedStyle(i).objectFit==='contain'&&Math.abs(r.width/r.height-i.naturalWidth/i.naturalHeight)<.03)})`),`equipamentos completos e sem ampliação ${width}`);
   check(await ev(`[...document.querySelectorAll('.m-button')].filter(e=>e.getClientRects().length).every(e=>e.getBoundingClientRect().height>=52&&(!e.href||e.hash||new URL(e.href).pathname==='/5511945549849'))`),'botões acessíveis e WhatsApp oficial');
   for(const id of ids){
-   await jump(id);const expected=products.includes(id)?'tecnologias':id==='etapas'?'sobre':id==='duvidas'?'contato':id;
+   await jump(id);const expected=products.includes(id)?'tecnologias':id==='etapas'?'sobre':(id==='duvidas'||id==='instagram')?'contato':id;
    check(await active()===`#${expected}`,`menu ${id} ${width}`);
    check(await ev(`document.querySelectorAll('#navigation [aria-current="location"]').length===1`),'apenas um item ativo');
    check(await ev(`(()=>{const s=document.querySelector('#${id}'),r=s.getBoundingClientRect();return [...s.querySelectorAll('h1,h2,h3,.m-button,input,select,textarea,summary')].filter(e=>e.getClientRects().length).every(e=>{const b=e.getBoundingClientRect();return b.left>=r.left-1&&b.right<=r.right+1&&b.top>=r.top-1&&b.bottom<=r.bottom+1})})()`),`conteúdo sem corte ${id} ${width}`);
@@ -39,7 +39,7 @@ try {
     check(await ev(`(()=>{const s=document.querySelector('#${id}'),r=s.getBoundingClientRect();return r.height<=innerHeight+2&&[...s.querySelectorAll('h1,h2,.m-button,.m-product-figure,.contact-whatsapp-panel,.contact-auxiliary')].filter(e=>e.getClientRects().length).every(e=>{const b=e.getBoundingClientRect();return b.top>=document.querySelector('.site-header').getBoundingClientRect().bottom+8&&b.bottom<=innerHeight-8})})()`),`elementos essenciais na tela de referência ${id}`);
     const shot=await send('Page.captureScreenshot',{format:'png'});await writeFile(`${output}/${id}-1672.png`,Buffer.from(shot.data,'base64'));
    }
-   check(await ev(`(()=>{const f=document.querySelector('.floating-contact');if(getComputedStyle(f).visibility==='hidden')return true;const r=f.getBoundingClientRect();return [...document.querySelectorAll('.m-button,.contact-whatsapp-panel,.contact-auxiliary,.mobile-footer,.m-solution-link,.m-faq-item summary')].every(e=>{const b=e.getBoundingClientRect();return !b.width||b.bottom<=r.top||b.top>=r.bottom||b.right<=r.left||b.left>=r.right})})()`),`WhatsApp não cobre conteúdo ${id} ${width}`);
+   check(await ev(`(()=>{const f=document.querySelector('.floating-contact');if(getComputedStyle(f).visibility==='hidden')return true;const r=f.getBoundingClientRect();return [...document.querySelectorAll('.m-button,.contact-whatsapp-panel,.contact-auxiliary,.mobile-footer,.instagram-profile-card,.m-solution-link,.m-faq-item summary')].every(e=>{const b=e.getBoundingClientRect();return !b.width||b.bottom<=r.top||b.top>=r.bottom||b.right<=r.left||b.left>=r.right})})()`),`WhatsApp não cobre conteúdo ${id} ${width}`);
   }
  }
  check(await ev(`[...document.querySelectorAll('a[href^="#"]')].every(a=>document.getElementById(a.hash.slice(1)))`),'todos os links internos têm destino');
