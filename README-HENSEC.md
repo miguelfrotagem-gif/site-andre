@@ -39,7 +39,7 @@ Ordem: início, cinco soluções, alarmes, câmeras, cerca elétrica, interfonia
 
 Marca HENSEG, WhatsApp **+55 11 94554-9849** e CNPJ **61.285.070/0001-28** foram informados pelo usuário. A razão social completa não foi fornecida e não é inventada.
 
-As fotos de alarme, câmera, facial, interfonia, biometria e fechadura vêm do kit de produtos fornecido. O kit mobile fornece a central de cerca e a referência de arquitetura. Somente o trecho fotográfico da arquitetura é usado, sem textos, interface ou equipamento no teto; a legenda o identifica como ambientação, sem alegação de obra ou instalação da HENSEG. Nenhum equipamento foi gerado ou redesenhado.
+As fotos de alarme, câmera, facial, interfonia, biometria e fechadura vêm do kit de produtos fornecido. A referência de arquitetura vem do kit mobile; a foto atual de cerca elétrica vem do ZIP enviado posteriormente pelo usuário. Somente o trecho fotográfico da arquitetura é usado, sem textos, interface ou equipamento no teto; a legenda o identifica como ambientação, sem alegação de obra ou instalação da HENSEG. Nenhum equipamento foi gerado ou redesenhado.
 
 Identificações: Sistema 8000; câmera Intelbras e terminal facial sem código confirmado; central de cerca como referência de categoria; montagem de interfonia sem promessa de kit comercial único; biometria **SS 3430 MF BIO**; fechadura autorizada no portfólio sem atribuição a Intelbras/IFR 7000+. Não são anunciados recursos técnicos não confirmados.
 
@@ -74,3 +74,5 @@ O WhatsApp flutuante permanece visível ao passar por botões, cards e rodapé. 
 As revelações do conteúdo são controladas apenas por `app.js`, uma vez por elemento a cada carregamento. `entry.js` sinaliza a saída da abertura para uma única transição coordenada; não anima a hero por conta própria. Isso evita entradas atrás do overlay e a repetição ao abrir o site ou retornar a uma seção. O deslocamento foi reduzido para 10 px, com duração de 550 ms e sequência curta.
 
 As imagens com revelação começam transparentes antes da primeira pintura, sem colapsar seu espaço. Um bootstrap pequeno habilita esse estado apenas com JavaScript e movimento permitido; se a inicialização falhar, há fallback visível. A entrada dispara com a imagem já dentro da tela, dura 800 ms e ocorre uma vez. Movimento reduzido mostra o conteúdo diretamente, e o foco de teclado nunca fica oculto.
+
+A foto de cerca elétrica foi substituída no card e na seção pelo arquivo original de `imagem_png.zip`, preservado sem alteração em `assets/hensec/produtos/07_cerca_eletrica_conjunto.png` (1073 × 1126). A imagem apresenta um conjunto de componentes; composição comercial, modelo e configuração continuam sujeitos à avaliação, sem prometer todos os itens como kit único.
