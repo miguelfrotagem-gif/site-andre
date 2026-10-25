@@ -69,3 +69,8 @@ O repositório usa a branch `gh-pages` para publicação nativa. As regras exist
 ## Cobertura dos testes
 
 A suíte verifica 320–1920 px, incluindo 360, 390, 430, 768, 1280 e 1440, desktop com pouca altura, ausência de overflow/cortes, navegação e WhatsApp oficiais. Testa progressão e troca de fotos reversíveis, área sticky segura, seis identificações/mensagens, apenas materiais do ZIP nas imagens de equipamentos, limites nativos de resolução e ausência de filtros, fluxo com movimento reduzido, abas pelo teclado, mensagens contextuais, seleção e gesto de galeria, Escape e foco, FAQ por Enter, persistência/apagamento/expiração das preferências, páginas legais e ausência de pedidos externos automáticos. Capturas ficam em `/tmp/hensec-checks`.
+
+
+## Indicação da seção no menu
+
+O scrollspy da HENSEG mantém um único `aria-current=location` no menu principal. A seleção considera a maior área realmente visível abaixo do cabeçalho fixo; as áreas secundárias continuam nos seus grupos de navegação, e o rodapé mantém Contato. O clique em uma âncora destaca o destino durante o scroll suave nativo, com liberação ao chegar, ao interromper por gesto/teclado ou no limite de segurança. Não altera o scroll do navegador. Um único requestAnimationFrame coalesce os eventos, sem cancelamentos contínuos. ResizeObserver e eventos de carga/fontes/histórico atualizam as medidas quando o conteúdo muda de altura. Hover não cria um segundo sublinhado de seção ativa.

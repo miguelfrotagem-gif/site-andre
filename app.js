@@ -45,18 +45,75 @@ function closeMenu(){toggle.setAttribute('aria-expanded','false');nav.classList.
 links.forEach(link=>link.addEventListener('click',closeMenu));
 document.addEventListener('keydown',event=>{if(event.key==='Escape' && nav.classList.contains('open')){closeMenu();toggle.focus();}});
 document.addEventListener('click',event=>{if(!event.target.closest('.site-header'))closeMenu();});
-let frame;
-function syncSection(){
- cancelAnimationFrame(frame);
- frame=requestAnimationFrame(()=>{
- const line=innerHeight*.42;
- const current=sections.find(s=>{const r=s.getBoundingClientRect();return r.top<=line&&r.bottom>line}) || sections.filter(s=>s.getBoundingClientRect().top<=line).at(-1) || sections[0];
- links.forEach(a=>a.hash===`#${current.dataset.navSection || current.id}`?a.setAttribute('aria-current','location'):a.removeAttribute('aria-current'));
- if(!reduced.matches)sections.forEach(s=>{const r=s.getBoundingClientRect();if(r.bottom>0&&r.top<innerHeight)s.style.setProperty('--parallax',`${Math.max(-20,Math.min(20,-r.top*.025))}px`)});
- });
+// A single writer selects the menu from the visible page, not the URL hash.
+const siteHeader=document.querySelector('.site-header');
+const menuHashes=new Set(links.map(link=>link.hash));
+let frame=0, pendingNavigation=null, navigationDeadline=0, activeHash='';
+function sectionHash(section){
+ const hash=`#${section.dataset.navSection || section.id}`;
+ return menuHashes.has(hash)?hash:null;
 }
-const sectionObserver=new IntersectionObserver(syncSection,{threshold:[0,.25,.5,.75,1]});sections.forEach(s=>sectionObserver.observe(s));
-addEventListener('scroll',syncSection,{passive:true});addEventListener('resize',syncSection);syncSection();
+function markSection(section){
+ const hash=sectionHash(section);
+ if(!hash||hash===activeHash)return;
+ activeHash=hash;
+ links.forEach(link=>link.hash===hash?link.setAttribute('aria-current','location'):link.removeAttribute('aria-current'));
+}
+function clearNavigationIntent(){
+ pendingNavigation=null;clearTimeout(navigationDeadline);syncSection();
+}
+function syncSection(){if(!frame)frame=requestAnimationFrame(updateSection);}
+function updateSection(){
+ frame=0;
+ const viewportBottom=innerHeight;
+ const viewportTop=Math.min(viewportBottom-1,Math.max(0,siteHeader.getBoundingClientRect().bottom+12));
+ const measured=sections.map(section=>({section,rect:section.getBoundingClientRect()}));
+ let current=null,largestVisible=0;
+ for(const {section,rect} of measured){
+  const visible=Math.max(0,Math.min(viewportBottom,rect.bottom)-Math.max(viewportTop,rect.top));
+  if(visible>largestVisible){current=section;largestVisible=visible;}
+ }
+ if(!current)current=measured.filter(({rect})=>rect.top<=viewportTop).at(-1)?.section || sections[0];
+ // The footer belongs to the final contact section, including on short screens.
+ if(scrollY+innerHeight>=document.documentElement.scrollHeight-2)current=sections.at(-1);
+ if(pendingNavigation){
+  const rect=pendingNavigation.target.getBoundingClientRect();
+  const margin=parseFloat(getComputedStyle(pendingNavigation.target).scrollMarginTop)||0;
+  if(Math.abs(rect.top-margin)<3){pendingNavigation=null;clearTimeout(navigationDeadline);}
+  else current=pendingNavigation.section;
+ }
+ markSection(current);
+ if(!reduced.matches)for(const {section,rect} of measured){
+  if(rect.bottom>0&&rect.top<innerHeight)section.style.setProperty('--parallax',`${Math.max(-20,Math.min(20,-rect.top*.025))}px`);
+ }
+}
+// Keep the clicked destination selected during native smooth scrolling. Manual
+// interaction releases it immediately, so an interrupted jump cannot leave stale state.
+document.addEventListener('click',event=>{
+ if(event.defaultPrevented||event.button>0||event.metaKey||event.ctrlKey||event.shiftKey||event.altKey)return;
+ const link=event.target.closest('a[href^="#"]');
+ if(!link)return;
+ const target=document.getElementById(link.hash.slice(1));
+ const section=target?.closest('main > section');
+ if(!target||!section||!sectionHash(section))return;
+ clearTimeout(navigationDeadline);
+ pendingNavigation={target,section,startedAt:performance.now()};
+ markSection(section);
+ navigationDeadline=setTimeout(clearNavigationIntent,1800);
+ syncSection();
+});
+for(const event of ['wheel','touchstart','pointerdown'])addEventListener(event,()=>{if(pendingNavigation)clearNavigationIntent();},{passive:true});
+addEventListener('keydown',event=>{if(pendingNavigation&&['ArrowUp','ArrowDown','PageUp','PageDown','Home','End',' ','Escape','Tab'].includes(event.key))clearNavigationIntent();});
+addEventListener('scroll',syncSection,{passive:true});
+addEventListener('scrollend',()=>{if(pendingNavigation&&performance.now()-pendingNavigation.startedAt>100)clearNavigationIntent();else syncSection();});
+addEventListener('resize',clearNavigationIntent);
+addEventListener('hashchange',syncSection);addEventListener('popstate',syncSection);
+addEventListener('pageshow',event=>event.persisted?clearNavigationIntent():syncSection());
+document.addEventListener('load',syncSection,true);
+new ResizeObserver(syncSection).observe(document.querySelector('main'));
+const sectionSizes=new ResizeObserver(syncSection);sections.forEach(section=>sectionSizes.observe(section));sectionSizes.observe(siteHeader);
+const sectionObserver=new IntersectionObserver(syncSection,{threshold:[0,.25,.5,.75,1]});sections.forEach(section=>sectionObserver.observe(section));
+document.fonts.ready.then(syncSection);syncSection();
 const animations=new Set();
 const revealObserver=new IntersectionObserver(entries=>entries.forEach(entry=>{
  if(!entry.isIntersecting)return;
