@@ -175,3 +175,8 @@ main > .testimonials-section { display: block; min-height: 100svh; padding: max(
  .site-header .brand-identity small { font-size: 8px; }
  .site-header .header-cta { padding-inline: 12px; }
 }
+/* The company history keeps its full text readable at every viewport. */
+@media (min-width: 1024px), (min-width: 768px) and (min-height: 501px) {
+ .m-about h2 { font-size: clamp(27px,min(2.55vw,4.9svh),44px); }
+ .m-about .m-lead { font-size: clamp(14px,1.1vw,18px); }
+}
