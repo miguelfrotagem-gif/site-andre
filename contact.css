@@ -163,3 +163,15 @@ main > .testimonials-section { display: block; min-height: 100svh; padding: max(
  .testimonial-card blockquote p { font-size: 14px; }
  .testimonial-card strong { font-size: 13px; }
 }
+/* Six independent destinations fit beside the brand and contact action. */
+@media (min-width: 1024px) and (max-width: 1350px) {
+ .site-header #navigation { gap: clamp(12px,1.65vw,22px); }
+}
+@media (min-width: 768px) and (max-width: 1023px) and (min-height: 501px) {
+ .site-header { gap: 10px; padding-inline: 12px; }
+ .site-header #navigation { gap: 10px; }
+ .site-header #navigation a { font-size: 10px; }
+ .site-header .brand-identity strong { font-size: 22px; }
+ .site-header .brand-identity small { font-size: 8px; }
+ .site-header .header-cta { padding-inline: 12px; }
+}
