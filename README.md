@@ -1,6 +1,6 @@
 # FS Perfuração
 
-Site estático em português, sem dependências npm ou backend. Node.js 24 executa o servidor, build e testes. A entrada principal contém as cinco seções do kit aprovado: Início, Sobre nós, Serviços, Projetos e Contato com rodapé integrado.
+Site estático em português, sem dependências npm ou backend. Node.js 24 executa o servidor, build e testes. A entrada principal preserva Início, Sobre nós, Serviços, Projetos e Contato com rodapé integrado. Entre Serviços e Projetos, a experiência interativa “Por baixo da superfície” acrescenta um corte ilustrativo do terreno.
 
 ## Executar e verificar
 
@@ -35,11 +35,19 @@ npm test
 
 ## Validação realizada
 
-Lint e build concluídos. A atualização mobile passou em **578 verificações FS** nas dimensões 320×740, 360×800, 390×844, 430×932, 768×1024, 844×390 (horizontal), 1900×650, 1900×500, 1366×768, 1440×900, 1672×941 e 1920×1080. A suíte abre o menu em cada uma das cinco seções em todas as dimensões compactas. Foram exercitados teclado, foco, Escape, X, clique fora, posição preservada, scroll interno do painel horizontal, último CTA, cliques rápidos e limpeza ao mudar para desktop. A ampliação de conteúdo foi simulada duplicando os tamanhos de títulos e parágrafos por CSS; não equivale a teste em todos os navegadores ou leitor de tela.
+Lint e build concluídos. A regressão do site integrado passou em **644 verificações FS** nas dimensões 320×740, 360×800, 390×844, 430×932, 768×1024, 844×390 (horizontal), 1900×650, 1900×500, 1366×768, 1440×900, 1672×941 e 1920×1080. A suíte abre o menu em cada uma das cinco seções em todas as dimensões compactas. Foram exercitados teclado, foco, Escape, X, clique fora, posição preservada, scroll interno do painel horizontal, último CTA, cliques rápidos e limpeza ao mudar para desktop. A ampliação de conteúdo foi simulada duplicando os tamanhos de títulos e parágrafos por CSS; não equivale a teste em todos os navegadores ou leitor de tela.
 
 A correção de enquadramento mede também o topo real (`scrollY=0`), retorno pelo link Início, limites completos da faixa de valores antes de Sobre, composição desktop na primeira tela e redimensionamento sem recarregar. A hero usa Grid em fluxo normal, reserva global da altura do cabeçalho e limites de fonte que consideram largura e altura. Em 1900×500, cresce naturalmente; em 1900×650, 1366×768, 1440×900, 1672×941 e 1920×1080, a composição completa cabe na primeira tela. Diagnóstico e medidas em [docs/fs-enquadramento.md](docs/fs-enquadramento.md).
 
 As capturas desktop foram conferidas com as referências existentes; o mobile foi revisado segundo o briefing escrito, porque os arquivos mobile citados não estão no ZIP enviado. Os relatórios não registraram exceções de JavaScript ou falhas de assets locais. Os projetos Ademicon e HENSEC não foram alterados nesta atualização; a suíte Ademicon havia passado anteriormente em 116 verificações.
+
+## Por baixo da superfície
+
+Nova experiência entre Serviços e Projetos, sem item adicional no cabeçalho. O scrollspy mantém Serviços ativo durante a exploração. A fotografia já existente se integra a um corte de solo em SVG, sem biblioteca 3D, novos ativos fotográficos ou animação contínua.
+
+Estrutura, Operação e Detalhes possuem marcadores de 48px, controles por teclado com setas/Home/End, indicação do estado ativo e um único painel de explicação. Cada estado altera também o destaque e a linha dourada da cena; Detalhes inclui um recorte ampliado da mesma imagem. A introdução acontece uma vez, acompanha a visibilidade real do corte e cede imediatamente a qualquer escolha. Há reduced motion e fallback textual sem JavaScript.
+
+Execute `npm run test:surface` para a suíte específica (489 verificações em dez dimensões). `npm test` executa a regressão FS e a suíte da experiência. Capturas e relatório específicos ficam em `/tmp/fs-surface-checks/`. Veja [docs/fs-superficie.md](docs/fs-superficie.md) para os estados, acessibilidade e limites da representação.
 
 ## WhatsApp
 

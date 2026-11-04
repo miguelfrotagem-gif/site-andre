@@ -6,16 +6,19 @@ for(const file of ['index.html','ademicon.html','fs','hensec.html','privacidade.
   await cp(file,`dist/${file}`,{recursive:true});
 }
 const pages={
-  'index.html':['fs/styles.css','fs/app.js'],
+  'index.html':['fs/styles.css','fs/surface.css','fs/app.js'],
   'ademicon.html':['ademicon/styles.css','ademicon/dialogs.css','ademicon/app.js'],
   'hensec.html':['styles.css','mobile.css','desktop.css','contact.css','entry.js','mobile.js','config.js','app.js','site-extras.js'],
   'privacidade.html':['styles.css','site-extras.js'],
   'cookies.html':['styles.css','site-extras.js']
 };
-// Version the configuration import too, so a phone update bypasses stale CDN caches.
-const fsConfigVersion=createHash('sha256').update(await readFile('fs/config.js')).digest('hex').slice(0,12);
-const fsApp=await readFile('dist/fs/app.js','utf8');
-await writeFile('dist/fs/app.js',fsApp.replace(/'\.\/config\.js(?:\?[^']*)?'/,`'./config.js?v=${fsConfigVersion}'`));
+// Version both imports so configuration and component updates bypass stale CDN caches.
+let fsApp=await readFile('dist/fs/app.js','utf8');
+for(const dependency of ['config','surface']) {
+  const version=createHash('sha256').update(await readFile(`fs/${dependency}.js`)).digest('hex').slice(0,12);
+  fsApp=fsApp.replace(new RegExp(`'\\./${dependency}\\.js(?:\\?[^']*)?'`),`'./${dependency}.js?v=${version}'`);
+}
+await writeFile('dist/fs/app.js',fsApp);
 for(const [page,files] of Object.entries(pages)) {
   let html=await readFile(`dist/${page}`,'utf8');
   for(const file of files) {

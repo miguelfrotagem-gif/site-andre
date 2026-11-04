@@ -17,7 +17,7 @@ async function until(expression,label){for(let i=0;i<100;i++){if(await ev(expres
 async function key(key, {shift=false}={}){const windowsVirtualKeyCode={Enter:13,Escape:27,Tab:9}[key]||0;const params={key,code:key,windowsVirtualKeyCode,modifiers:shift?8:0};await send('Input.dispatchKeyEvent',{type:'keyDown',...params,...(key==='Enter'?{text:'\r'}:{})});await send('Input.dispatchKeyEvent',{type:'keyUp',...params});}
 async function click(selector){await ev(`(()=>{const e=document.querySelector(${JSON.stringify(selector)});if(!e.closest('.site-header'))e.scrollIntoView({block:'center',behavior:'instant'});else if(e.closest('.menu-panel'))e.scrollIntoView({block:'nearest',behavior:'instant'})})()`);const p=await ev(`(()=>{const r=document.querySelector(${JSON.stringify(selector)}).getBoundingClientRect();return {x:r.x+r.width/2,y:r.y+r.height/2}})()`);await send('Input.dispatchMouseEvent',{type:'mousePressed',...p,button:'left',clickCount:1});await send('Input.dispatchMouseEvent',{type:'mouseReleased',...p,button:'left',clickCount:1});}
 async function shot(name){const r=await send('Page.captureScreenshot',{format:'png',captureBeyondViewport:false});await writeFile(`${output}/${name}.png`,Buffer.from(r.data,'base64'));}
-const ids=['inicio','sobre','servicos','projetos','contato'];
+const ids=['inicio','sobre','servicos','por-baixo','projetos','contato'];
 const viewports=[[320,740],[360,800],[390,844],[430,932],[768,1024],[844,390],[1900,650],[1900,500],[1366,768],[1440,900],[1672,941],[1920,1080]];
 async function closed(){await until(`document.querySelector('.header-layer').dataset.menuState==='closed'`,'menu fully closed');}
 async function open(){await click('.menu-toggle');await until(`document.querySelector('.header-layer').dataset.menuState==='open'`,'menu open');}
@@ -43,7 +43,7 @@ try{
   if(width<=1100)check(await ev(`(()=>{const c=document.querySelector('.hero-copy').getBoundingClientRect(),p=document.querySelector('.hero .scene-photo').getBoundingClientRect(),v=document.querySelector('.hero-bottom').getBoundingClientRect();return c.bottom<=p.top-16&&v.top>=p.bottom})()`),`mobile reading order is copy actions photo values ${tag}`);
   await shot(`top-${tag}`);
   check(await ev(`document.documentElement.scrollWidth<=innerWidth`),`no horizontal overflow ${tag}`);
-  check(await ev(`JSON.stringify([...document.querySelectorAll('main>section')].map(s=>s.id))===${JSON.stringify(JSON.stringify(ids))}`),`five ordered sections ${tag}`);
+  check(await ev(`JSON.stringify([...document.querySelectorAll('main>section')].map(s=>s.id))===${JSON.stringify(JSON.stringify(ids))}`),`six ordered sections including cutaway ${tag}`);
   check(await ev(`document.querySelectorAll('header').length===1&&document.querySelectorAll('footer').length===1&&document.querySelectorAll('nav').length===1&&document.querySelectorAll('h1').length===1`),`single global header nav footer and h1 ${tag}`);
   check(await ev(`document.fonts.check('800 24px Manrope')&&[...document.images].every(i=>i.complete&&i.naturalWidth>0)`),`fonts and photos loaded ${tag}`);
   check(await ev(`(()=>{const r=document.querySelector('.brand img').getBoundingClientRect(),h=document.querySelector('header').getBoundingClientRect();return r.top>h.top&&r.bottom<h.bottom&&r.left>=h.left&&r.right<=h.right})()`),`logo fits header ${tag}`);
@@ -56,7 +56,7 @@ try{
   const headerRect=await ev(`JSON.stringify(document.querySelector('header').getBoundingClientRect())`);
   for(const id of ids){
    await jump(id);
-   check(await ev(`document.querySelector('#navigation [aria-current]')?.hash==='#${id}'`),`scrollspy ${id} ${tag}`);
+   check(await ev(`document.querySelector('#navigation [aria-current]')?.hash==='#${id==='por-baixo'?'servicos':id}'`),`scrollspy ${id} ${tag}`);
    check(await ev(`getComputedStyle(document.querySelector('header')).position==='fixed'&&Math.abs(document.querySelector('header').getBoundingClientRect().top-${JSON.parse(headerRect).top})<1`),`header stays fixed in ${id} ${tag}`);
    if(id!=='inicio')check(await ev(`document.querySelector('#${id} h2').getBoundingClientRect().top>=document.querySelector('header').getBoundingClientRect().bottom`),`anchor title not hidden ${id} ${tag}`);
    await shot(`${id}-${tag}`);
