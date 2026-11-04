@@ -15,13 +15,14 @@ const pages={
 // Version the configuration import too, so a phone update bypasses stale CDN caches.
 const fsConfigVersion=createHash('sha256').update(await readFile('fs/config.js')).digest('hex').slice(0,12);
 const fsApp=await readFile('dist/fs/app.js','utf8');
-await writeFile('dist/fs/app.js',fsApp.replace("'./config.js'",`'./config.js?v=${fsConfigVersion}'`));
+await writeFile('dist/fs/app.js',fsApp.replace(/'\.\/config\.js(?:\?[^']*)?'/,`'./config.js?v=${fsConfigVersion}'`));
 for(const [page,files] of Object.entries(pages)) {
   let html=await readFile(`dist/${page}`,'utf8');
   for(const file of files) {
     const version=createHash('sha256').update(await readFile(`dist/${file}`)).digest('hex').slice(0,12);
     const attribute=file.endsWith('.css')?'href':'src';
-    html=html.replace(`${attribute}="${file}"`,()=>`${attribute}="${file}?v=${version}"`);
+    const escapedFile=file.replace(/[.*+?^${}()|[\]\\]/g,'\\$&');
+    html=html.replace(new RegExp(`${attribute}="${escapedFile}(?:\\?[^\"]*)?"`),()=>`${attribute}="${file}?v=${version}"`);
   }
   await writeFile(`dist/${page}`,html);
 }
