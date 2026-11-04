@@ -7,7 +7,8 @@ http.createServer(async (req,res) => {
   try {
     const url = new URL(req.url, 'http://localhost');
     const pathname = decodeURIComponent(url.pathname);
-    const file = path.resolve(root, '.' + (pathname === '/' ? (process.env.SITE === 'hensec' ? '/hensec.html' : '/index.html') : pathname));
+    const entry = process.env.SITE === 'hensec' ? '/hensec.html' : process.env.SITE === 'ademicon' ? '/ademicon.html' : '/index.html';
+    const file = path.resolve(root, '.' + (pathname === '/' ? entry : pathname));
     if (!file.startsWith(root + path.sep) || /(?:^|\/)\./.test(pathname)) {res.writeHead(403);res.end();return;}
     const content = await readFile(file);
     res.writeHead(200, {'Content-Type':types[path.extname(file)] || 'application/octet-stream','X-Content-Type-Options':'nosniff'});res.end(content);

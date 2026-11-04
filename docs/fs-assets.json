@@ -1,0 +1,213 @@
+{
+  "reference_dimensions": [
+    1672,
+    941
+  ],
+  "sources": [
+    {
+      "file": "fs-perfuracao-leve.pdf",
+      "sha256": "65e8c4ab5d93b068afa2100aa263f7b030d1ac4da5fd1ceb9821a1d928ab813d"
+    },
+    {
+      "file": "marca/FS_PERFURACAO_LOGO_ORIGINAL.png",
+      "sha256": "abfe4ee095b2b6f30a7e32a7c43eba5936aee4553efd6728d253e02c28325312"
+    },
+    {
+      "file": "referencias/01-hero-menu-unico.jpg",
+      "sha256": "b3ffa11eacee368a8e59903ec14f35716350360de2a4b6a01a92a7dd64554488"
+    },
+    {
+      "file": "referencias/02-sobre-sem-menu.jpg",
+      "sha256": "ab032d4df4a30210891aacb240bbefb630e1e2a7b4c674fb31469e67fdc73129"
+    },
+    {
+      "file": "referencias/03-servicos-sem-menu.jpg",
+      "sha256": "833164e2fa236a8f121871ebfe31b3a77fa2040ed6f73b81f4c1d6ac8487eec6"
+    },
+    {
+      "file": "referencias/04-projetos-sem-menu.jpg",
+      "sha256": "f774c039e60d7041be8f5fbce9dab44163dd7f2d148c83d89181a782d66741c6"
+    },
+    {
+      "file": "referencias/05-contato-rodape-sem-menu.jpg",
+      "sha256": "c795cb0e54ee0932f4645ab8e74abcb84fac2c9b9afc218dfc28a16708c19244"
+    }
+  ],
+  "photo_preparation": "Image editing removed embedded interface from photographic areas; clean regions were extracted into WebP. No complete reference screenshot is rendered. Small reconstruction differences remain possible.",
+  "crops": {
+    "servico-pocos": [
+      29,
+      267,
+      825,
+      788
+    ],
+    "servico-operacao": [
+      837,
+      267,
+      1232,
+      788
+    ],
+    "servico-atendimento": [
+      1246,
+      267,
+      1644,
+      788
+    ],
+    "projeto-estrutura": [
+      38,
+      235,
+      1072,
+      807
+    ],
+    "projeto-detalhes": [
+      1089,
+      235,
+      1635,
+      495
+    ],
+    "projeto-execucao": [
+      1089,
+      513,
+      1635,
+      806
+    ],
+    "contato": [
+      0,
+      0,
+      1672,
+      742
+    ],
+    "hero-mobile": [
+      680,
+      0,
+      1672,
+      941
+    ],
+    "sobre-mobile": [
+      0,
+      0,
+      890,
+      941
+    ],
+    "contato-mobile": [
+      690,
+      0,
+      1672,
+      742
+    ]
+  },
+  "logo_preparation": "Original preserved. Edge-connected gray background made transparent; display version resized proportionally. No redesign.",
+  "font": "Montserrat via @fontsource/montserrat 5.2.8, SIL OFL; existing local Manrope for body copy.",
+  "assets": [
+    {
+      "file": "assets/fs/OFL-Montserrat.txt",
+      "bytes": 4509,
+      "sha256": "f429f739351287574c0c3175a9222bb3e49c7cad3f568a04f2c08d74c107724e"
+    },
+    {
+      "file": "assets/fs/contato-mobile.webp",
+      "bytes": 189646,
+      "sha256": "9e04ffd1614096d123e0304e523a04e304ce464cfb8bd21afd0e2bbc7f4cc2ce"
+    },
+    {
+      "file": "assets/fs/contato.webp",
+      "bytes": 232080,
+      "sha256": "139f8760a45eeabf2d99316741343ea5635035c9dc887563187c0881ff285a80"
+    },
+    {
+      "file": "assets/fs/favicon.png",
+      "bytes": 11055,
+      "sha256": "cb8d84237dee7ff4931293fa7ce85251ab7844e56fd2f086c6dd974f414498eb"
+    },
+    {
+      "file": "assets/fs/hero-mobile.webp",
+      "bytes": 240300,
+      "sha256": "fbb90a0b0e3e43eaf6309a87e96117e43a53d52e79ed2ceb7b8248cb3a916d27"
+    },
+    {
+      "file": "assets/fs/hero.webp",
+      "bytes": 306658,
+      "sha256": "724aa76dca25a74b9baa5e7acd7cfb3c25647b56c83212d09c5608d0a2485466"
+    },
+    {
+      "file": "assets/fs/logo-original.png",
+      "bytes": 925084,
+      "sha256": "abfe4ee095b2b6f30a7e32a7c43eba5936aee4553efd6728d253e02c28325312"
+    },
+    {
+      "file": "assets/fs/logo.png",
+      "bytes": 839443,
+      "sha256": "ab7143432cc268529edf4f0ee68fae63fd4e44e294ff0a2736565b9b2e240cb5"
+    },
+    {
+      "file": "assets/fs/logo.webp",
+      "bytes": 118732,
+      "sha256": "90fad47fe026628c9935a4d65ee150e90dc2dcf1aa90e8bb55c8cd6004e7ea86"
+    },
+    {
+      "file": "assets/fs/montserrat-400.woff2",
+      "bytes": 18780,
+      "sha256": "e66bcd2761ab6924b25ce70dafe10e57a39193c4fea1516730bd9cb5240af6c8"
+    },
+    {
+      "file": "assets/fs/montserrat-500.woff2",
+      "bytes": 18748,
+      "sha256": "2b53300fb9471520df2f4905847fb7a209879b2029ae893c05c6ee346b1320cd"
+    },
+    {
+      "file": "assets/fs/montserrat-600.woff2",
+      "bytes": 18688,
+      "sha256": "d857325c360f7128b347ca924c1974967aaa886ba47dad22e4042d6c38b26a83"
+    },
+    {
+      "file": "assets/fs/montserrat-700.woff2",
+      "bytes": 18824,
+      "sha256": "f9d9e65b15372cebcafc3acd1e664a564c5c4b23278de4d5760de9a13c530371"
+    },
+    {
+      "file": "assets/fs/montserrat-800.woff2",
+      "bytes": 19012,
+      "sha256": "ba826fb84c2e961578adf3a08b5778b87905d4443445d1d56d84f9f157d5ea4b"
+    },
+    {
+      "file": "assets/fs/projeto-detalhes.webp",
+      "bytes": 41494,
+      "sha256": "7a53441ee0b607c6164bd45f30a4a6491997d5cedc9a822e5bcc88670caf2ae1"
+    },
+    {
+      "file": "assets/fs/projeto-estrutura.webp",
+      "bytes": 207234,
+      "sha256": "f4266e6f75463c3fd21bac399ba87dad64ceba87129c0eeb1a9924ba95b65268"
+    },
+    {
+      "file": "assets/fs/projeto-execucao.webp",
+      "bytes": 43514,
+      "sha256": "41df7001763a52153f33237b727a8ec8623d85739ee4af0f04c03f55e6655990"
+    },
+    {
+      "file": "assets/fs/servico-atendimento.webp",
+      "bytes": 49236,
+      "sha256": "c48ba2c05464be6997ed0f6acf528ce31fc3c04727a5b7a1d47d04119f110df1"
+    },
+    {
+      "file": "assets/fs/servico-operacao.webp",
+      "bytes": 52454,
+      "sha256": "09c4133697796f58dff53a59ed22dd306d9fd7e832d2348ffc9a166b4c730a72"
+    },
+    {
+      "file": "assets/fs/servico-pocos.webp",
+      "bytes": 162566,
+      "sha256": "23ffcb5bb2a753fc6508d034b8e2a902a05f5e5f57939f523395d275e7d2b487"
+    },
+    {
+      "file": "assets/fs/sobre-mobile.webp",
+      "bytes": 167664,
+      "sha256": "ba062b7c40ffb6d72d3aadee93bb2539b1d49354b9e897da4c6009f48a9f8374"
+    },
+    {
+      "file": "assets/fs/sobre.webp",
+      "bytes": 182320,
+      "sha256": "0bf35284e9b4ff74720bdeb4f7b2c826f0436742d50a3ea8fc7ceba89cee0fde"
+    }
+  ]
+}
