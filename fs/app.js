@@ -1,6 +1,8 @@
 import {getBudgetUrl} from './config.js?v=900f68ec7c6f';
 
 document.documentElement.classList.add('js');
+// Remove legacy notices if an older HTML response is paired with the latest script.
+document.querySelectorAll('p.illustrative').forEach(note => note.remove());
 const budgetUrl = getBudgetUrl();
 document.querySelectorAll('[data-budget]').forEach(link => {link.href = budgetUrl;});
 const whatsapp = document.querySelector('[data-whatsapp]');
