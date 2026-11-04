@@ -12,10 +12,14 @@ const pages={
   'privacidade.html':['styles.css','site-extras.js'],
   'cookies.html':['styles.css','site-extras.js']
 };
+// Version the configuration import too, so a phone update bypasses stale CDN caches.
+const fsConfigVersion=createHash('sha256').update(await readFile('fs/config.js')).digest('hex').slice(0,12);
+const fsApp=await readFile('dist/fs/app.js','utf8');
+await writeFile('dist/fs/app.js',fsApp.replace("'./config.js'",`'./config.js?v=${fsConfigVersion}'`));
 for(const [page,files] of Object.entries(pages)) {
   let html=await readFile(`dist/${page}`,'utf8');
   for(const file of files) {
-    const version=createHash('sha256').update(await readFile(file)).digest('hex').slice(0,12);
+    const version=createHash('sha256').update(await readFile(`dist/${file}`)).digest('hex').slice(0,12);
     const attribute=file.endsWith('.css')?'href':'src';
     html=html.replace(`${attribute}="${file}"`,()=>`${attribute}="${file}?v=${version}"`);
   }

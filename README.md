@@ -31,17 +31,19 @@ chromium --headless --no-sandbox --disable-gpu \
 npm test
 ```
 
-`TEST_URL` e `CDP_URL` permitem outros endereços. A suíte FS verifica dez dimensões, incluindo mobile horizontal, cabeçalho fixo em todas as seções, âncoras, scrollspy, menu modal, foco contido, retorno do foco, clique fora, bloqueio e restauração da rolagem, cliques rápidos, mudança para desktop, galeria e WhatsApp indisponível. Também verifica fontes, imagens, ausência de overflow, ampliação de texto, movimento reduzido e fallback sem JavaScript. Capturas e relatório ficam em `/tmp/fs-mobile-checks/`.
+`TEST_URL` e `CDP_URL` permitem outros endereços. A suíte FS verifica dez dimensões, incluindo mobile horizontal, cabeçalho fixo em todas as seções, âncoras, scrollspy, menu modal, foco contido, retorno do foco, clique fora, bloqueio e restauração da rolagem, cliques rápidos, mudança para desktop, galeria e destinos de WhatsApp. Também verifica fontes, imagens, ausência de overflow, ampliação de texto, movimento reduzido e fallback sem JavaScript. Capturas e relatório ficam em `/tmp/fs-mobile-checks/`.
 
 ## Validação realizada
 
-Lint e build concluídos. A atualização mobile passou em **446 verificações FS** nas dimensões 320×740, 360×800, 390×844, 430×932, 768×1024, 844×390 (horizontal), 1366×768, 1440×900, 1672×941 e 1920×1080. A suíte abre o menu em cada uma das cinco seções em todas as dimensões compactas. Foram exercitados teclado, foco, Escape, X, clique fora, posição preservada, scroll interno do painel horizontal, último CTA, cliques rápidos e limpeza ao mudar para desktop. A ampliação de conteúdo foi simulada duplicando os tamanhos de títulos e parágrafos por CSS; não equivale a teste em todos os navegadores ou leitor de tela.
+Lint e build concluídos. A atualização mobile passou em **451 verificações FS** nas dimensões 320×740, 360×800, 390×844, 430×932, 768×1024, 844×390 (horizontal), 1366×768, 1440×900, 1672×941 e 1920×1080. A suíte abre o menu em cada uma das cinco seções em todas as dimensões compactas. Foram exercitados teclado, foco, Escape, X, clique fora, posição preservada, scroll interno do painel horizontal, último CTA, cliques rápidos e limpeza ao mudar para desktop. A ampliação de conteúdo foi simulada duplicando os tamanhos de títulos e parágrafos por CSS; não equivale a teste em todos os navegadores ou leitor de tela.
 
 As capturas desktop foram conferidas com as referências existentes; o mobile foi revisado segundo o briefing escrito, porque os arquivos mobile citados não estão no ZIP enviado. Os relatórios não registraram exceções de JavaScript ou falhas de assets locais. Os projetos Ademicon e HENSEC não foram alterados nesta atualização; a suíte Ademicon havia passado anteriormente em 116 verificações.
 
-## WhatsApp pendente
+## WhatsApp
 
-Configure **somente o número real confirmado da FS** em `fs/config.js`, no campo `WHATSAPP_PHONE`, com DDI e DDD. O kit não fornece telefone. Os números dos projetos HENSEC e Ademicon não foram reaproveitados por pertencerem a outras empresas. Enquanto vazio ou inválido, todos os CTAs de orçamento levam a `#contato`. A ação externa “Falar no WhatsApp” permanece sem `href`, com `aria-disabled="true"` e aviso visível “WhatsApp indisponível no momento.”. Não simula envio. Não há simulação de envio, formulário, mapa, CRM ou captura de dados. A mensagem é codificada com `encodeURIComponent`.
+O número confirmado pelo usuário é **+55 98 8831-0153**, centralizado como `559888310153` em `fs/config.js`. Todos os CTAs de orçamento e a ação “Falar no WhatsApp” usam esse destino, com a mensagem codificada por `encodeURIComponent`. O número foi mantido exatamente como fornecido, sem adicionar dígitos. O link foi verificado; a existência da conta e o atendimento no WhatsApp não são simulados nem confirmados pelo teste local.
+
+O build versiona a importação de `fs/config.js` para evitar que uma configuração anterior fique em cache no GitHub Pages. Se o campo ficar vazio ou inválido, os CTAs voltam a `#contato` e a ação externa fica indisponível com aviso. Não há envio automático, formulário ou captura de dados.
 
 ## Referências e mídia
 
@@ -53,7 +55,7 @@ As áreas fotográficas foram limpas com edição de imagem para retirar a inter
 
 A marca original foi preservada em `assets/fs/logo-original.png`. O fundo cinza conectado às bordas foi removido para transparência sem redesenhar o brasão; a versão de exibição é `logo.webp`. A fonte Manrope local é usada no mobile e nos textos; os títulos desktop mantêm Montserrat local, com licença em `assets/fs/OFL-Montserrat.txt`.
 
-As cenas e pessoas são ilustrativas; a galeria mantém essa identificação. Não foram adicionados depoimentos, obras reais, métricas, endereço ou serviços além dos três fornecidos. O único cabeçalho global permanece fixo até o rodapé. Sua altura alimenta os offsets de âncoras e a altura máxima do painel. O menu compacto entra até 1100px e usa navegação modal com fundo inerte, bloqueio da rolagem e transições reversíveis; em telas baixas o painel rola internamente. Sem JavaScript, a navegação permanece visível em fluxo normal e todo o conteúdo continua acessível.
+As cenas e pessoas são ilustrativas. A pedido do usuário, os avisos visíveis “Imagens ilustrativas” foram removidos; as legendas apenas identificam o conteúdo, sem alegar obras reais. Não foram adicionados depoimentos, obras reais, métricas, endereço ou serviços além dos três fornecidos. O único cabeçalho global permanece fixo até o rodapé. Sua altura alimenta os offsets de âncoras e a altura máxima do painel. O menu compacto entra até 1100px e usa navegação modal com fundo inerte, bloqueio da rolagem e transições reversíveis; em telas baixas o painel rola internamente. Sem JavaScript, a navegação permanece visível em fluxo normal e todo o conteúdo continua acessível.
 
 ## Projetos anteriores preservados
 
