@@ -1,4 +1,4 @@
-import {getBudgetUrl} from './config.js';
+import {getBudgetUrl} from './config.js?v=900f68ec7c6f';
 
 document.documentElement.classList.add('js');
 const budgetUrl = getBudgetUrl();
