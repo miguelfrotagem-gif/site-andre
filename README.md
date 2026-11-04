@@ -31,27 +31,29 @@ chromium --headless --no-sandbox --disable-gpu \
 npm test
 ```
 
-`TEST_URL` e `CDP_URL` permitem outros endereços. A suíte FS verifica as nove dimensões solicitadas, seções, carregamento de fontes e imagens, ausência de overflow, menu mobile por teclado, scrollspy durante transições e no rodapé, galeria ampliada com Escape e retorno do foco, CTAs sem telefone inventado, movimento reduzido e conteúdo visível sem JavaScript. Capturas e relatório da execução ficam em `/tmp/fs-checks/`.
+`TEST_URL` e `CDP_URL` permitem outros endereços. A suíte FS verifica dez dimensões, incluindo mobile horizontal, cabeçalho fixo em todas as seções, âncoras, scrollspy, menu modal, foco contido, retorno do foco, clique fora, bloqueio e restauração da rolagem, cliques rápidos, mudança para desktop, galeria e WhatsApp indisponível. Também verifica fontes, imagens, ausência de overflow, ampliação de texto, movimento reduzido e fallback sem JavaScript. Capturas e relatório ficam em `/tmp/fs-mobile-checks/`.
 
 ## Validação realizada
 
-Lint e build concluídos. A rodada final sobre `dist/` passou em **183 verificações FS**, nas dimensões 1672×941, 1920×1080, 1440×900, 1366×768, 768×1024, 360×800, 390×844, 430×932 e 320×800. Capturas foram comparadas visualmente com as referências, com inspeção adicional de menu, fotos ampliadas e composição mobile. O relatório não registrou exceções de JavaScript ou falhas de assets locais. Os pares opacos principais de contraste passaram em 4,5:1; isso não equivale a uma auditoria completa de acessibilidade ou teste de leitor de tela.
+Lint e build concluídos. A atualização mobile passou em **446 verificações FS** nas dimensões 320×740, 360×800, 390×844, 430×932, 768×1024, 844×390 (horizontal), 1366×768, 1440×900, 1672×941 e 1920×1080. A suíte abre o menu em cada uma das cinco seções em todas as dimensões compactas. Foram exercitados teclado, foco, Escape, X, clique fora, posição preservada, scroll interno do painel horizontal, último CTA, cliques rápidos e limpeza ao mudar para desktop. A ampliação de conteúdo foi simulada duplicando os tamanhos de títulos e parágrafos por CSS; não equivale a teste em todos os navegadores ou leitor de tela.
 
-A suíte Ademicon preservada passou nas **116 verificações**. As rotas de FS, Ademicon e HENSEC responderam HTTP 200 no build. As suítes específicas HENSEC não foram reexecutadas nesta implementação.
+As capturas desktop foram conferidas com as referências existentes; o mobile foi revisado segundo o briefing escrito, porque os arquivos mobile citados não estão no ZIP enviado. Os relatórios não registraram exceções de JavaScript ou falhas de assets locais. Os projetos Ademicon e HENSEC não foram alterados nesta atualização; a suíte Ademicon havia passado anteriormente em 116 verificações.
 
 ## WhatsApp pendente
 
-Configure **somente o número real confirmado da FS** em `fs/config.js`, no campo `WHATSAPP_PHONE`, com DDI e DDD. O kit não fornece telefone. Os números dos projetos HENSEC e Ademicon não foram reaproveitados por pertencerem a outras empresas. Enquanto vazio ou inválido, todos os CTAs de orçamento levam a `#contato`. Não há simulação de envio, formulário, mapa, CRM ou captura de dados. A mensagem é codificada com `encodeURIComponent`.
+Configure **somente o número real confirmado da FS** em `fs/config.js`, no campo `WHATSAPP_PHONE`, com DDI e DDD. O kit não fornece telefone. Os números dos projetos HENSEC e Ademicon não foram reaproveitados por pertencerem a outras empresas. Enquanto vazio ou inválido, todos os CTAs de orçamento levam a `#contato`. A ação externa “Falar no WhatsApp” permanece sem `href`, com `aria-disabled="true"` e aviso visível “WhatsApp indisponível no momento.”. Não simula envio. Não há simulação de envio, formulário, mapa, CRM ou captura de dados. A mensagem é codificada com `encodeURIComponent`.
 
 ## Referências e mídia
+
+O novo `FS_PERFURACAO mobhile.zip` contém as mesmas cinco imagens desktop e o mesmo PDF do kit anterior. Não contém `referencias/mobile`, `referencias/desktop`, PDF mobile ou `06-menu-aberto-mobile.jpg`; por isso, a composição mobile e o painel seguem as especificações escritas, sem alegação de reprodução dessa imagem ausente.
 
 Base: `FS_PERFURACAO.zip`, PDF `fs-perfuracao-leve.pdf` (cinco páginas) e as cinco imagens desktop 1672 × 941. Textos, botões, ícones, cabeçalho, bordas e legendas são elementos HTML/SVG/CSS. Nenhuma seção é renderizada como screenshot.
 
 As áreas fotográficas foram limpas com edição de imagem para retirar a interface gravada e depois extraídas em WebP. A limpeza recompõe as regiões removidas e pode introduzir pequenas diferenças visuais; não se trata de reprodução fotográfica pixel a pixel. Os objetos e as composições de referência orientam o enquadramento. A imagem de Contato usa somente a região fotográfica anterior ao rodapé original. As variantes mobile retiram espaço vazio lateral e preservam os sujeitos da cena. `docs/fs-assets.json` registra origens, recortes e hashes dos assets finais.
 
-A marca original foi preservada em `assets/fs/logo-original.png`. O fundo cinza conectado às bordas foi removido para transparência sem redesenhar o brasão; a versão de exibição é `logo.webp`. A fonte Montserrat é servida localmente, com licença em `assets/fs/OFL-Montserrat.txt`.
+A marca original foi preservada em `assets/fs/logo-original.png`. O fundo cinza conectado às bordas foi removido para transparência sem redesenhar o brasão; a versão de exibição é `logo.webp`. A fonte Manrope local é usada no mobile e nos textos; os títulos desktop mantêm Montserrat local, com licença em `assets/fs/OFL-Montserrat.txt`.
 
-As cenas e pessoas são ilustrativas; a galeria mantém essa identificação. Não foram adicionados depoimentos, obras reais, métricas, endereço ou serviços além dos três fornecidos. O cabeçalho único aparece na hero e não é fixo, evitando sobreposição dos títulos. O menu mobile funciona com JavaScript; sem JavaScript, seus links ficam visíveis e o conteúdo permanece acessível.
+As cenas e pessoas são ilustrativas; a galeria mantém essa identificação. Não foram adicionados depoimentos, obras reais, métricas, endereço ou serviços além dos três fornecidos. O único cabeçalho global permanece fixo até o rodapé. Sua altura alimenta os offsets de âncoras e a altura máxima do painel. O menu compacto entra até 1100px e usa navegação modal com fundo inerte, bloqueio da rolagem e transições reversíveis; em telas baixas o painel rola internamente. Sem JavaScript, a navegação permanece visível em fluxo normal e todo o conteúdo continua acessível.
 
 ## Projetos anteriores preservados
 

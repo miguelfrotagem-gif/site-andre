@@ -209,5 +209,17 @@
       "bytes": 182320,
       "sha256": "0bf35284e9b4ff74720bdeb4f7b2c826f0436742d50a3ea8fc7ceba89cee0fde"
     }
-  ]
+  ],
+  "mobile_update_kit": {
+    "filename": "FS_PERFURACAO mobhile.zip",
+    "sha256": "80d600508640e89a21ec3732d8a3b886ed05fe861f3a51d2e74288fb63ab3bf6",
+    "available": "same five desktop references, desktop PDF and original logo",
+    "not_in_archive": [
+      "referencias/mobile",
+      "referencias/desktop",
+      "06-menu-aberto-mobile.jpg",
+      "mobile PDF"
+    ],
+    "implementation_basis": "existing clean photographs and detailed user-written mobile requirements"
+  }
 }

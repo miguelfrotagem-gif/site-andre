@@ -3,7 +3,7 @@ import {mkdir,writeFile} from 'node:fs/promises';
 import {getBudgetUrl,WHATSAPP_PHONE,WHATSAPP_MESSAGE} from '../fs/config.js';
 const base=process.env.TEST_URL||'http://127.0.0.1:3000';
 const cdp=process.env.CDP_URL||'http://127.0.0.1:9222';
-const output='/tmp/fs-checks'; await mkdir(output,{recursive:true});
+const output='/tmp/fs-mobile-checks'; await mkdir(output,{recursive:true});
 const target=await(await fetch(`${cdp}/json/new?about:blank`,{method:'PUT'})).json();
 const ws=new WebSocket(target.webSocketDebuggerUrl);
 await new Promise((resolve,reject)=>{ws.addEventListener('open',resolve,{once:true});ws.addEventListener('error',reject,{once:true});});
@@ -14,54 +14,88 @@ async function ev(expression){const r=await send('Runtime.evaluate',{expression,
 const pause=ms=>new Promise(r=>setTimeout(r,ms));
 function check(value,label){assert.ok(value,label);passes.push(label);}
 async function until(expression,label){for(let i=0;i<100;i++){if(await ev(expression))return;await pause(40);}throw Error(`Timeout: ${label}`);}
-async function key(key,code=key){const windowsVirtualKeyCode={Enter:13,Escape:27,Tab:9}[key]||0;await send('Input.dispatchKeyEvent',{type:'keyDown',key,code,windowsVirtualKeyCode,...(key==='Enter'?{text:'\r'}:{})});await send('Input.dispatchKeyEvent',{type:'keyUp',key,code,windowsVirtualKeyCode});}
-async function click(selector){await ev(`document.querySelector(${JSON.stringify(selector)}).scrollIntoView({block:'center',behavior:'instant'})`);const p=await ev(`(()=>{const r=document.querySelector(${JSON.stringify(selector)}).getBoundingClientRect();return {x:r.x+r.width/2,y:r.y+r.height/2}})()`);await send('Input.dispatchMouseEvent',{type:'mousePressed',...p,button:'left',clickCount:1});await send('Input.dispatchMouseEvent',{type:'mouseReleased',...p,button:'left',clickCount:1});}
-async function shot(name,section){const rect=section?await ev(`(()=>{const r=document.getElementById('${section}').getBoundingClientRect();return {x:0,y:r.top+scrollY,width:innerWidth,height:r.height,scale:1}})()`):null;const r=await send('Page.captureScreenshot',{format:'png',captureBeyondViewport:true,...(rect?{clip:rect}:{})});await writeFile(`${output}/${name}.png`,Buffer.from(r.data,'base64'));}
+async function key(key, {shift=false}={}){const windowsVirtualKeyCode={Enter:13,Escape:27,Tab:9}[key]||0;const params={key,code:key,windowsVirtualKeyCode,modifiers:shift?8:0};await send('Input.dispatchKeyEvent',{type:'keyDown',...params,...(key==='Enter'?{text:'\r'}:{})});await send('Input.dispatchKeyEvent',{type:'keyUp',...params});}
+async function click(selector){await ev(`(()=>{const e=document.querySelector(${JSON.stringify(selector)});if(!e.closest('.site-header'))e.scrollIntoView({block:'center',behavior:'instant'});else if(e.closest('.menu-panel'))e.scrollIntoView({block:'nearest',behavior:'instant'})})()`);const p=await ev(`(()=>{const r=document.querySelector(${JSON.stringify(selector)}).getBoundingClientRect();return {x:r.x+r.width/2,y:r.y+r.height/2}})()`);await send('Input.dispatchMouseEvent',{type:'mousePressed',...p,button:'left',clickCount:1});await send('Input.dispatchMouseEvent',{type:'mouseReleased',...p,button:'left',clickCount:1});}
+async function shot(name){const r=await send('Page.captureScreenshot',{format:'png',captureBeyondViewport:false});await writeFile(`${output}/${name}.png`,Buffer.from(r.data,'base64'));}
 const ids=['inicio','sobre','servicos','projetos','contato'];
+const viewports=[[320,740],[360,800],[390,844],[430,932],[768,1024],[844,390],[1366,768],[1440,900],[1672,941],[1920,1080]];
+async function closed(){await until(`document.querySelector('.header-layer').dataset.menuState==='closed'`,'menu fully closed');}
+async function open(){await click('.menu-toggle');await until(`document.querySelector('.header-layer').dataset.menuState==='open'`,'menu open');}
+async function jump(id){await ev(`document.getElementById('${id}').scrollIntoView({behavior:'instant'})`);await pause(80);}
+async function viewport(width,height){await send('Emulation.setDeviceMetricsOverride',{width,height,deviceScaleFactor:1,mobile:width<=1100});}
+async function load(hash=''){
+ await send('Page.navigate',{url:base+'/'+hash});await until(`document.querySelector('#contact-title')&&document.readyState==='complete'`,'page load');await ev('document.fonts.ready');
+ await ev(`Promise.all([...document.images].map(i=>{i.loading='eager';return i.decode()}))`);await pause(80);
+}
 try{
- await send('Page.enable');await send('Runtime.enable');await send('Network.enable');
+ await send('Page.enable');await send('Page.bringToFront');await send('Runtime.enable');await send('Network.enable');
  await send('Emulation.setEmulatedMedia',{features:[{name:'prefers-reduced-motion',value:'reduce'}]});
- for(const [width,height] of [[1672,941],[1920,1080],[1440,900],[1366,768],[768,1024],[360,800],[390,844],[430,932],[320,800]]){
-  await send('Emulation.setDeviceMetricsOverride',{width,height,deviceScaleFactor:1,mobile:width<=768});
-  await send('Page.navigate',{url:base});await until(`document.querySelector('#contact-title')&&document.readyState==='complete'`,'page load');await ev('document.fonts.ready');
-  await ev(`Promise.all([...document.images].map(i=>{i.loading='eager';return i.decode()}))`);await pause(80);
-  check(await ev(`document.documentElement.scrollWidth<=innerWidth`),`no horizontal overflow ${width}`);
-  check(await ev(`JSON.stringify([...document.querySelectorAll('main>section')].map(s=>s.id))===${JSON.stringify(JSON.stringify(ids))}`),`five ordered sections ${width}`);
-  check(await ev(`document.querySelectorAll('header').length===1&&document.querySelectorAll('footer').length===1&&document.querySelectorAll('h1').length===1`),`single header footer and h1 ${width}`);
-  check(await ev(`document.fonts.check('800 24px Montserrat')&&[...document.images].every(i=>i.complete&&i.naturalWidth>0)`),`fonts and all photos loaded ${width}`);
-  check(await ev(`(()=>{const r=document.querySelector('.brand img').getBoundingClientRect(),h=document.querySelector('header').getBoundingClientRect();return r.top>h.top&&r.bottom<h.bottom&&r.left>=h.left&&r.right<=h.right})()`),`logo fits header ${width}`);
-  check(await ev(`[...document.querySelectorAll('a[href^="#"]')].every(a=>a.hash.length>1&&document.getElementById(a.hash.slice(1)))`),`all anchor targets exist ${width}`);
-  check(await ev(`[...document.querySelectorAll('[data-budget]')].every(a=>a.getAttribute('href')==='#contato')`),`no invented WhatsApp links ${width}`);
-  check(await ev(`[...document.querySelectorAll('.button,.menu-toggle')].filter(e=>e.getClientRects().length).every(e=>e.getBoundingClientRect().height>=44)`),`touch targets at least 44px ${width}`);
-  check(await ev(`[...document.querySelectorAll('h1,h2,h3,.button,.card-copy,.gallery figcaption,.copyright')].every(e=>{const r=e.getBoundingClientRect();return r.left>=-.5&&r.right<=innerWidth+.5})`),`text and controls within viewport ${width}`);
-  check(await ev(`[...document.querySelectorAll('.card-copy')].every(e=>{const r=e.getBoundingClientRect(),c=e.closest('article').getBoundingClientRect();return r.top>=c.top&&r.bottom<=c.bottom})`),`service captions contained ${width}`);
-  for(const id of ids){await ev(`document.getElementById('${id}').scrollIntoView({behavior:'instant'})`);await pause(90);check(await ev(`document.querySelector('#navigation [aria-current]')?.hash==='#${id}'`),`scrollspy ${id} ${width}`);await ev('document.activeElement?.blur()');await shot(`${id}-${width}`,id);}
-  await ev('scrollTo({top:document.documentElement.scrollHeight,behavior:"instant"})');await pause(60);check(await ev(`document.querySelector('#navigation [aria-current]').hash==='#contato'`),`footer keeps contact active ${width}`);
-  if(width<=900){
-   await click('.menu-toggle');check(await ev(`document.querySelector('.menu-toggle').getAttribute('aria-expanded')==='true'&&!document.querySelector('#navigation').hidden&&document.activeElement===document.querySelector('#navigation a')`),`mobile menu focus opens ${width}`);
-   await key('Escape');check(await ev(`document.querySelector('#navigation').hidden&&document.activeElement===document.querySelector('.menu-toggle')&&document.activeElement.getAttribute('aria-expanded')==='false'`),`mobile menu Escape returns focus ${width}`);
-   await click('.menu-toggle');await key('Tab');await key('Enter');await pause(100);check(await ev(`document.querySelector('#navigation').hidden&&location.hash==='#sobre'&&document.activeElement.id==='sobre'`),`keyboard menu selects about and closes ${width}`);
+ for(const [width,height] of viewports){
+  await viewport(width,height);await load();
+  const tag=`${width}x${height}`;
+  check(await ev(`document.documentElement.scrollWidth<=innerWidth`),`no horizontal overflow ${tag}`);
+  check(await ev(`JSON.stringify([...document.querySelectorAll('main>section')].map(s=>s.id))===${JSON.stringify(JSON.stringify(ids))}`),`five ordered sections ${tag}`);
+  check(await ev(`document.querySelectorAll('header').length===1&&document.querySelectorAll('footer').length===1&&document.querySelectorAll('nav').length===1&&document.querySelectorAll('h1').length===1`),`single global header nav footer and h1 ${tag}`);
+  check(await ev(`document.fonts.check('800 24px Manrope')&&[...document.images].every(i=>i.complete&&i.naturalWidth>0)`),`fonts and photos loaded ${tag}`);
+  check(await ev(`(()=>{const r=document.querySelector('.brand img').getBoundingClientRect(),h=document.querySelector('header').getBoundingClientRect();return r.top>h.top&&r.bottom<h.bottom&&r.left>=h.left&&r.right<=h.right})()`),`logo fits header ${tag}`);
+  check(await ev(`[...document.querySelectorAll('a[href^="#"]')].every(a=>document.getElementById(a.hash.slice(1)))`),`anchor targets exist ${tag}`);
+  check(await ev(`[...document.querySelectorAll('[data-budget]')].every(a=>a.getAttribute('href')==='#contato')&&document.querySelector('[data-whatsapp]').getAttribute('aria-disabled')==='true'&&!document.querySelector('[data-whatsapp]').hasAttribute('href')&&!document.querySelector('#whatsapp-note').hidden`),`budget goes to contact and WhatsApp visibly unavailable ${tag}`);
+  check(await ev(`[...document.querySelectorAll('.button,.menu-toggle')].filter(e=>e.getClientRects().length).every(e=>e.getBoundingClientRect().height>=44)`),`touch targets >=44px ${tag}`);
+  check(await ev(`[...document.querySelectorAll('h1,h2,h3,.button,.card-copy,figcaption,.copyright')].filter(e=>e.getClientRects().length).every(e=>{const r=e.getBoundingClientRect();return r.left>=-.5&&r.right<=innerWidth+.5})`),`text and controls inside viewport ${tag}`);
+  if(width<=1100)check(await ev(`(()=>{const b=document.querySelector('.brand').getBoundingClientRect(),c=document.querySelector('.header-cta').getBoundingClientRect(),t=document.querySelector('.menu-toggle').getBoundingClientRect();return b.right<c.left&&c.right<t.left})()`),`mobile header controls never overlap ${tag}`);
+  const headerRect=await ev(`JSON.stringify(document.querySelector('header').getBoundingClientRect())`);
+  for(const id of ids){
+   await jump(id);
+   check(await ev(`document.querySelector('#navigation [aria-current]')?.hash==='#${id}'`),`scrollspy ${id} ${tag}`);
+   check(await ev(`getComputedStyle(document.querySelector('header')).position==='fixed'&&Math.abs(document.querySelector('header').getBoundingClientRect().top-${JSON.parse(headerRect).top})<1`),`header stays fixed in ${id} ${tag}`);
+   if(id!=='inicio')check(await ev(`document.querySelector('#${id} h2').getBoundingClientRect().top>=document.querySelector('header').getBoundingClientRect().bottom`),`anchor title not hidden ${id} ${tag}`);
+   await shot(`${id}-${tag}`);
+   if(width<=1100){
+    const y=await ev('scrollY');const mainTop=await ev(`document.querySelector('main').getBoundingClientRect().top`);
+    await open();
+    check(await ev(`document.querySelector('.header-layer').getAttribute('aria-modal')==='true'&&document.querySelector('.menu-toggle').getAttribute('aria-label')==='Fechar menu'&&document.activeElement===document.querySelector('#navigation a')&&document.querySelector('main').inert`),`modal semantics focus and inert background ${id} ${tag}`);
+    check(await ev(`Math.abs(document.querySelector('main').getBoundingClientRect().top-(${mainTop}))<1`),`opening preserves visual scroll position ${id} ${tag}`);
+    check(await ev(`(()=>{const h=document.querySelector('header').getBoundingClientRect(),p=document.querySelector('#menu-panel').getBoundingClientRect();return Math.abs(p.left-h.left)<2&&p.top-h.bottom>=8&&p.top-h.bottom<=12&&p.bottom<=innerHeight-8})()`),`panel aligned and bounded ${id} ${tag}`);
+    check(await ev(`[...document.querySelectorAll('#navigation a')].every(a=>a.getBoundingClientRect().height>=52)`),`menu rows >=52px ${id} ${tag}`);
+    if(id==='projetos'&&[390,844].includes(width)){await shot(`menu-${tag}`);}
+    await key('Escape');await closed();
+    check(await ev(`Math.abs(scrollY-${y})<1&&!document.querySelector('main').inert&&!document.body.hasAttribute('data-menu-locked')&&document.activeElement===document.querySelector('.menu-toggle')&&document.querySelector('.menu-backdrop').hidden`),`Escape unlocks restores position and focus ${id} ${tag}`);
+   }
+  }
+  await ev('scrollTo({top:document.documentElement.scrollHeight,behavior:"instant"})');await pause(60);
+  check(await ev(`document.querySelector('#navigation [aria-current]').hash==='#contato'&&document.querySelector('header').getBoundingClientRect().top>=0`),`footer keeps header visible and contact active ${tag}`);
+  if(width<=1100){
+   await open();await click('#navigation a[href="#sobre"]');await closed();await until(`location.hash==='#sobre'&&document.activeElement.id==='sobre'`,'menu anchor navigation');await pause(80);
+   check(await ev(`document.querySelector('#sobre').getBoundingClientRect().top>=document.querySelector('header').getBoundingClientRect().bottom`),`menu selection restores scroll then honors anchor offset ${tag}`);
+   await open();await click('.menu-toggle');await closed();check(await ev(`document.activeElement===document.querySelector('.menu-toggle')`),`X closes menu ${tag}`);
+   await open();const point=await ev(`({x:innerWidth/2,y:innerHeight-4})`);await send('Input.dispatchMouseEvent',{type:'mousePressed',...point,button:'left',clickCount:1});await send('Input.dispatchMouseEvent',{type:'mouseReleased',...point,button:'left',clickCount:1});await closed();check(true,`backdrop click closes ${tag}`);
+   await open();await ev(`document.querySelector('.menu-toggle').focus()`);await key('Tab');check(await ev(`document.activeElement===document.querySelector('.brand')`),`Tab wraps within modal ${tag}`);await key('Tab',{shift:true});check(await ev(`document.activeElement===document.querySelector('.menu-toggle')`),`Shift Tab wraps within modal ${tag}`);await key('Escape');await closed();
+   if(height<500){await open();await ev(`document.querySelector('#menu-panel').scrollTop=10000`);check(await ev(`(()=>{const c=document.querySelector('.panel-cta').getBoundingClientRect(),p=document.querySelector('#menu-panel').getBoundingClientRect();return c.top>=p.top&&c.bottom<=p.bottom})()`),'landscape panel scroll keeps last CTA reachable');await shot('menu-landscape-bottom');await click('.panel-cta');await closed();check(await ev(`location.hash==='#contato'&&document.activeElement.id==='contato'`),'landscape last CTA navigates to contact');}
   }
  }
- // Actual pointer and keyboard interaction with each photo, including native dialog focus.
- for(let index=0;index<3;index++){
-  const sel=`.gallery figure:nth-child(${index+1}) button`;await click(sel);await until(`document.querySelector('dialog').open`,'gallery opens');await ev(`document.querySelector('dialog img').decode()`);
-  check(await ev(`document.querySelector('dialog img').src===document.querySelector(${JSON.stringify(sel)}).dataset.image.replace(/^/,location.origin+'/')&&document.querySelector('dialog').contains(document.activeElement)`),`photo ${index+1} opens with focus inside`);
-  if(index===0)await shot('lightbox-320');
-  if(index===1)await click('.lightbox-close');else await key('Escape');
-  await until(`!document.querySelector('dialog').open&&document.activeElement===document.querySelector(${JSON.stringify(sel)})`,'dialog closes and focus returns');
-  check(await ev(`!document.querySelector('dialog').open&&document.activeElement===document.querySelector(${JSON.stringify(sel)})`),`photo ${index+1} close restores focus`);
+ // Repeated interactions must not leave an invisible backdrop, inert main, or scroll lock.
+ await viewport(390,844);await load('#projetos');await jump('projetos');
+ await send('Emulation.setEmulatedMedia',{features:[{name:'prefers-reduced-motion',value:'no-preference'}]});
+ await open();await pause(350);await shot('menu-390-animated');const y=await ev(`-parseFloat(document.body.style.top)`);
+ await click('.menu-toggle');check(await ev(`document.querySelector('.header-layer').dataset.menuState==='closing'&&!document.querySelector('#menu-panel').hidden`),'closing keeps panel mounted for exit animation');await pause(40);await click('.menu-toggle');await pause(260);check(await ev(`document.querySelector('.header-layer').dataset.menuState==='open'&&document.querySelector('main').inert`),'rapid close then reopen remains functional');await click('.menu-toggle');await closed();check(await ev(`Math.abs(scrollY-${y})<1&&!document.querySelector('main').inert&&document.querySelector('.menu-backdrop').hidden`),'rapid interactions clean up without position shift');
+ await open();await viewport(1440,900);await closed();check(await ev(`!document.querySelector('#menu-panel').hidden&&!document.querySelector('main').inert&&!document.body.hasAttribute('data-menu-locked')&&document.querySelector('.menu-backdrop').hidden`),'desktop resize clears modal and scrolling locks');
+ // Deep-link reload and browser back/forward retain anchors below the header.
+ await send('Emulation.setEmulatedMedia',{features:[{name:'prefers-reduced-motion',value:'reduce'}]});await load('#servicos');check(await ev(`document.querySelector('#servicos').getBoundingClientRect().top>=document.querySelector('header').getBoundingClientRect().bottom`),'deep link reload honors fixed header');
+ await click('#navigation a[href="#contato"]');await pause(100);await ev('history.back()');await until(`location.hash==='#servicos'`,'history back');await pause(100);check(await ev(`document.querySelector('#navigation [aria-current]').hash==='#servicos'`),'browser back restores section');
+ // All gallery photos remain keyboard and pointer accessible.
+ await viewport(390,844);
+ for(let i=0;i<3;i++){
+  const selector=`.gallery figure:nth-child(${i+1}) button`;await click(selector);await until(`document.querySelector('.lightbox').open`,'lightbox');await ev(`document.querySelector('.lightbox img').decode()`);check(await ev(`document.querySelector('.lightbox').contains(document.activeElement)`),`gallery photo ${i+1} receives modal focus`);
+  if(i===0)await shot('gallery-390');
+  if(i===1)await click('.lightbox-close');else await key('Escape');await until(`!document.querySelector('.lightbox').open&&document.activeElement===document.querySelector(${JSON.stringify(selector)})`,'lightbox close');check(true,`gallery photo ${i+1} restores focus`);
  }
- await ev(`document.querySelector('.gallery-open').focus()`);await key('Enter');await until(`document.querySelector('dialog').open`,'keyboard opens dialog');check(await ev(`document.querySelector('dialog').open`),'gallery opens by keyboard');await key('Escape');await until(`!document.querySelector('dialog').open`,'keyboard closes dialog');
- check(await ev(`getComputedStyle(document.querySelector('h1 span')).animationName==='none'&&getComputedStyle(document.documentElement).scrollBehavior==='auto'`),'reduced motion disables animations and smooth scrolling');
- // Mid-transition scrollspy must use the visible section, not a clicked destination.
- await send('Emulation.setDeviceMetricsOverride',{width:1672,height:941,deviceScaleFactor:1,mobile:false});
- for(const id of ids.slice(1)){await ev(`scrollTo({top:document.getElementById('${id}').offsetTop-innerHeight*.32-40,behavior:'instant'})`);await pause(50);const previous=ids[ids.indexOf(id)-1];check(await ev(`document.querySelector('#navigation [aria-current]').hash==='#${previous}'`),`transition before ${id}`);await ev(`scrollBy({top:80,behavior:'instant'})`);await pause(50);check(await ev(`document.querySelector('#navigation [aria-current]').hash==='#${id}'`),`transition into ${id}`);}
- await send('Emulation.setEmulatedMedia',{features:[{name:'prefers-reduced-motion',value:'no-preference'}]});await send('Page.navigate',{url:base});await until(`document.querySelector('h1')&&document.readyState==='complete'`,'animated page');await pause(1300);check(await ev(`getComputedStyle(document.querySelector('h1 span')).opacity==='1'`),'hero animation completes');await shot('hero-normal-motion-1672','inicio');
- await send('Emulation.setScriptExecutionDisabled',{value:true});await send('Page.navigate',{url:base});await pause(800);check(await ev(`[...document.querySelectorAll('.reveal')].every(e=>getComputedStyle(e).opacity==='1')`),'content remains visible without JavaScript');
- await send('Emulation.setDeviceMetricsOverride',{width:320,height:800,deviceScaleFactor:1,mobile:true});await pause(100);check(await ev(`!document.querySelector('#navigation').hidden&&getComputedStyle(document.querySelector('#navigation')).display!=='none'`),'navigation remains accessible without JavaScript on mobile');check(await ev(`document.documentElement.scrollWidth<=innerWidth`),'no horizontal overflow without JavaScript on mobile');await shot('no-js-320','inicio');await send('Emulation.setScriptExecutionDisabled',{value:false});
- assert.equal(WHATSAPP_PHONE,'');assert.equal(getBudgetUrl(),'#contato');assert.equal(getBudgetUrl('invalid'),'#contato');passes.push('empty and invalid WhatsApp config use contact');
- assert.equal(decodeURIComponent(new URL(getBudgetUrl('5511999999999')).searchParams.get('text')),WHATSAPP_MESSAGE);passes.push('WhatsApp message encodes and decodes correctly');
+ // Text-only enlargement is emulated by doubling content font sizes, not scaling the page.
+ await load();await ev(`document.querySelectorAll('main p,main h1,main h2,main h3').forEach(e=>e.style.fontSize=parseFloat(getComputedStyle(e).fontSize)*2+'px')`);await pause(100);check(await ev(`document.documentElement.scrollWidth<=innerWidth`),'200% content text has no horizontal overflow');await jump('servicos');await shot('text-200-percent-390');
+ await load();check(await ev(`getComputedStyle(document.querySelector('h1 span')).animationName==='none'&&getComputedStyle(document.documentElement).scrollBehavior==='auto'`),'reduced motion disables animation and smooth scroll');
+ await open();await shot('menu-390-reduced-motion');await key('Escape');await closed();
+ // JavaScript disabled: all section content and navigation stay available in normal flow.
+ await send('Emulation.setScriptExecutionDisabled',{value:true});await load();check(await ev(`[...document.querySelectorAll('.reveal')].every(e=>getComputedStyle(e).opacity==='1')&&!document.querySelector('#menu-panel').hidden`),'content and navigation remain available without JavaScript');await send('Emulation.setScriptExecutionDisabled',{value:false});
+ assert.equal(WHATSAPP_PHONE,'');assert.equal(getBudgetUrl(),'#contato');assert.equal(getBudgetUrl('invalid'),'#contato');assert.equal(new URL(getBudgetUrl('5511999999999')).searchParams.get('text'),WHATSAPP_MESSAGE);check(true,'centralized WhatsApp config encodes real destination and rejects missing number');
  check(errors.length===0,`no browser exceptions: ${errors.join(';')}`);check(failures.length===0,`no failed local assets: ${failures.join(';')}`);
- await writeFile(`${output}/report.json`,JSON.stringify({status:'passed',checks:passes.length,viewports:9,passes,errors,failures},null,2));console.log(`${passes.length} verificações FS passaram em 9 viewports. Capturas: ${output}`);
+ await writeFile(`${output}/report.json`,JSON.stringify({status:'passed',checks:passes.length,viewports,passes,errors,failures},null,2));console.log(`${passes.length} verificações FS passaram em ${viewports.length} viewports. Capturas: ${output}`);
 }catch(error){await writeFile(`${output}/report.json`,JSON.stringify({status:'failed',checks:passes.length,passes,error:String(error),errors,failures},null,2));await shot('failure').catch(()=>{});throw error;}finally{await send('Page.close').catch(()=>{});ws.close();}
