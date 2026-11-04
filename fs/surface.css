@@ -1,0 +1,113 @@
+/* All rules belong to the cutaway component; existing page geometry is untouched. */
+.surface-experience{--surface-accent:#e9b51b;--surface-ink:#f5f3eb;--surface-line:#e9b51b38;position:relative;padding:54px 24px 44px;background:radial-gradient(ellipse at 80% 30%,#3d2b181f,transparent 66%),#141411;color:var(--surface-ink);border-block:1px solid #e9b51b1c;isolation:isolate}
+.surface-experience .surface-inner{max-width:1520px;margin:auto}
+.surface-experience .surface-heading{max-width:780px;margin-bottom:30px}
+.surface-experience .surface-eyebrow{display:flex;align-items:center;gap:14px;color:var(--surface-accent);font-size:11px;letter-spacing:.14em;line-height:1.5;text-transform:uppercase;font-weight:800;margin-bottom:16px}
+.surface-experience .surface-eyebrow::before{content:'';width:25px;height:1px;background:var(--surface-accent);flex:none}
+.surface-experience h2{font-family:Manrope,Arial,sans-serif;font-size:clamp(34px,9.3vw,48px);line-height:1.08;letter-spacing:-.04em;max-width:14ch}
+.surface-experience h2 span{color:var(--surface-accent)}
+.surface-experience .surface-desktop-break{display:none}
+.surface-experience .surface-support{font-size:17px;line-height:1.6;color:#c9c7be;margin-top:20px;max-width:46ch}
+.surface-experience .surface-layout{display:grid;gap:26px;min-width:0}
+.surface-experience .surface-scene{position:relative;min-width:0;overflow:hidden;border:1px solid #a7854145;border-radius:18px;background:#25221c;box-shadow:0 16px 38px #0002}
+.surface-experience .surface-photo{position:relative;isolation:isolate;aspect-ratio:1034/572;line-height:0}
+.surface-experience .surface-photo>img{display:block;width:100%;height:auto;aspect-ratio:1034/572}
+.surface-experience .surface-overlay{position:absolute;inset:0;width:100%;height:100%;pointer-events:none}
+.surface-experience .surface-focus-guide{fill:none;stroke:var(--surface-accent);stroke-width:2;stroke-dasharray:1;stroke-dashoffset:0;opacity:0;transition:opacity .35s ease}
+.surface-experience .surface-machine-focus,.surface-experience .surface-equipment-focus{opacity:0;transition:opacity .35s ease}
+.surface-experience[data-state=estrutura] .surface-machine-focus,.surface-experience[data-state=estrutura] .surface-focus-guide--estrutura{opacity:1}
+.surface-experience[data-state=operacao] .surface-focus-guide--operacao,.surface-experience[data-state=detalhes] .surface-focus-guide--detalhes,.surface-experience[data-state=detalhes] .surface-equipment-focus{opacity:1}
+.surface-experience .surface-lens{position:absolute;left:7%;top:9%;width:clamp(72px,23%,160px);aspect-ratio:1;border:1px solid #e9b51b99;border-radius:12px;overflow:hidden;background:#25221d;box-shadow:0 6px 18px #0006;opacity:0;translate:0 6px;transition:opacity .35s ease,translate .35s ease;pointer-events:none}
+.surface-experience .surface-lens svg{display:block;width:100%;height:100%}
+.surface-experience[data-state=detalhes] .surface-lens{opacity:1;translate:0}
+.surface-experience .surface-ground{position:relative;height:clamp(205px,59vw,280px);margin-top:-10px}.surface-experience .surface-strata{position:relative;isolation:isolate;height:100%;line-height:normal}
+.surface-experience .surface-earth{position:absolute;inset:0;width:100%;height:100%;pointer-events:none}
+.surface-experience .surface-operation-focus{opacity:.15;transition:opacity .4s ease}
+.surface-experience[data-state=operacao] .surface-operation-focus{opacity:1}
+.surface-experience .surface-underground-guide{fill:none;stroke:var(--surface-accent);stroke-width:2;opacity:.3;stroke-dasharray:1;stroke-dashoffset:0;transition:opacity .35s ease,stroke-width .35s ease}
+.surface-experience .surface-underground-end{opacity:.3;transition:opacity .35s ease}
+.surface-experience[data-state=operacao] .surface-underground-guide{opacity:1;stroke-width:3}
+.surface-experience[data-state=operacao] .surface-underground-end{opacity:1}
+.surface-experience .surface-ground-label{position:absolute;left:18px;top:29px;color:#e6d4b5;font-size:10px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;pointer-events:none}
+.surface-experience .surface-soil-note{position:absolute;bottom:18px;left:18px;color:#bdb29b;font-size:11px;line-height:1.4;pointer-events:none}
+.surface-experience .surface-hotspot{position:absolute;z-index:3;display:grid;place-items:center;width:48px;height:48px;padding:5px;border:1px solid transparent;border-radius:50%;background:transparent;color:#f5f3eb;cursor:pointer;translate:-50% -50%;line-height:1}
+.surface-experience .surface-hotspot span{display:grid;place-items:center;width:32px;height:32px;border-radius:50%;border:1px solid #fff8;background:#111110e8;font-size:11px;font-weight:800;box-shadow:0 2px 10px #0004;transition:background .3s,color .3s,border-color .3s,box-shadow .3s}
+.surface-experience .surface-hotspot[aria-pressed=true] span{background:var(--surface-accent);color:#19170c;border-color:#f3d985;box-shadow:0 0 0 5px #e9b51b23}
+.surface-experience .surface-hotspot:hover span{border-color:var(--surface-accent)}
+.surface-experience .surface-hotspot:focus-visible{outline:2px solid #f5f3eb;outline-offset:0;background:#11111066}
+.surface-experience .surface-hotspot--estrutura{left:39%;top:64%}
+.surface-experience .surface-hotspot--detalhes{left:64%;top:37%}
+.surface-experience .surface-hotspot--operacao{left:65.2%;top:32px}
+.surface-experience .surface-exploration{min-width:0}
+.surface-experience .surface-instruction{font-size:13px;line-height:1.6;color:#aaa99e;margin-bottom:14px}
+.surface-experience .surface-instruction-pointer{display:none}
+.surface-experience .surface-tabs{display:flex;gap:6px;padding:5px;border:1px solid #6c603c55;border-radius:13px;background:#1b1b18}
+.surface-experience .surface-tabs button{flex:1;min-width:0;min-height:46px;padding:10px 6px;border:1px solid transparent;border-radius:9px;background:transparent;color:#d0cfc3;font-size:13px;font-weight:700;line-height:1.3;cursor:pointer;transition:background .3s,color .3s,border-color .3s}
+.surface-experience .surface-tabs button[aria-selected=true]{border-color:#e9b51b55;background:#e9b51b19;color:var(--surface-accent)}
+.surface-experience .surface-tabs button:hover{color:var(--surface-accent)}
+.surface-experience .surface-tabs button:focus-visible{outline:2px solid #f5f3eb;outline-offset:2px}
+.surface-experience .surface-info{position:relative;margin-top:24px;min-height:190px;padding:0 0 0 18px;border-left:1px solid #e9b51b66}
+.surface-experience .surface-info:focus-visible{outline:2px solid var(--surface-accent);outline-offset:8px}
+.surface-experience .surface-step{color:var(--surface-accent);font-size:11px;font-weight:700;letter-spacing:.09em;text-transform:uppercase;line-height:1.6;margin-bottom:13px}
+.surface-experience .surface-info-title{font-size:clamp(25px,7vw,34px);font-weight:800;line-height:1.15;letter-spacing:-.03em;margin-bottom:12px}
+.surface-experience .surface-info-text{color:#d0cec3;font-size:17px;line-height:1.6;max-width:34ch}
+.surface-experience .surface-info-copy.is-changing{animation:surfaceCaption .32s ease both}
+.surface-experience .surface-disclaimer{font-size:12px;line-height:1.5;color:#99998d;margin-top:14px}
+.surface-experience .surface-conversation{display:flex;flex-direction:column;align-items:stretch;gap:22px;border-top:1px solid #e9b51b22;margin-top:30px;padding-top:27px}
+.surface-experience .surface-conversation>p{font-size:23px;font-weight:700;line-height:1.3;letter-spacing:-.025em}
+.surface-experience .surface-cta{justify-content:space-between;font-size:15px;gap:14px;min-height:56px;padding:16px;border-radius:12px}
+.surface-experience .surface-cta .icon{width:19px;height:19px}
+.surface-experience .surface-fallback{margin-top:20px;padding-top:16px;border-top:1px solid var(--surface-line);font-size:16px;color:#c9c7be}
+.surface-experience .surface-fallback p+p{margin-top:12px}
+/* A brief once-only introduction. Without this class every layer is fully visible. */
+.surface-experience .surface-heading.surface-heading-appearing{animation:surfaceArrive .5s ease both}
+.surface-experience .surface-photo.surface-photo-appearing>img{animation:surfacePhoto .55s ease both}
+.surface-experience.surface-introducing .surface-strata{animation:surfaceOpen .55s cubic-bezier(.2,.65,.3,1) .18s both}
+.surface-experience.surface-introducing .surface-underground-guide{animation:surfaceTrace .45s ease .45s both}
+.surface-experience.surface-introducing .surface-hotspot{animation:surfaceMarkers .25s ease .66s both}
+@keyframes surfaceArrive{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:translateY(0)}}
+@keyframes surfacePhoto{from{opacity:.1}to{opacity:1}}
+@keyframes surfaceOpen{from{clip-path:inset(0 0 100% 0);opacity:.5}to{clip-path:inset(0);opacity:1}}
+@keyframes surfaceTrace{from{stroke-dashoffset:1}to{stroke-dashoffset:0}}
+@keyframes surfaceMarkers{from{opacity:0}to{opacity:1}}
+@keyframes surfaceCaption{from{opacity:.45;transform:translateY(6px)}to{opacity:1;transform:translateY(0)}}
+@media(min-width:640px){
+  .surface-experience{padding:64px 6% 52px}
+  .surface-experience h2{font-size:52px;max-width:19ch}
+  .surface-experience .surface-eyebrow{font-size:12px}
+  .surface-experience .surface-scene{max-width:900px}
+  .surface-experience .surface-ground{height:270px}
+  .surface-experience .surface-ground-label{font-size:12px;left:28px;top:35px}
+  .surface-experience .surface-soil-note{font-size:12px;left:28px;bottom:24px}
+  .surface-experience .surface-exploration{max-width:660px}
+  .surface-experience .surface-tabs button{font-size:15px;min-height:48px}
+  .surface-experience .surface-info{min-height:190px}
+  .surface-experience .surface-conversation{flex-direction:row;align-items:center;justify-content:space-between;gap:28px;margin-top:36px;padding-top:32px}
+  .surface-experience .surface-conversation>p{font-size:28px}
+  .surface-experience .surface-cta{width:auto;font-size:16px;min-height:56px}
+}
+@media(min-width:1101px){
+  .surface-experience{padding:clamp(54px,5vw,88px) 6.4% 54px}
+  .surface-experience .surface-heading{max-width:980px;margin-bottom:38px}
+  .surface-experience h2{font-size:clamp(48px,4.2vw,72px);max-width:none}
+  .surface-experience .surface-desktop-break{display:initial}
+  .surface-experience .surface-support{font-size:20px;max-width:52ch;margin-top:22px}
+  .surface-experience .surface-layout{grid-template-columns:minmax(0,1fr) minmax(280px,.39fr);gap:clamp(28px,4vw,64px);align-items:center}
+  .surface-experience .surface-ground{height:clamp(210px,19vw,285px)}
+  .surface-experience .surface-scene{max-width:none;border-radius:22px}
+  .surface-experience .surface-hotspot{width:52px;height:52px}
+  .surface-experience .surface-hotspot span{width:34px;height:34px;font-size:12px}
+  .surface-experience .surface-info{min-height:225px;margin-top:32px;padding-left:22px}
+  .surface-experience .surface-info-title{font-size:34px}
+  .surface-experience .surface-info-text{font-size:19px}
+  .surface-experience .surface-disclaimer{font-size:13px}
+  .surface-experience .surface-conversation{margin-top:44px;padding-top:34px}
+  .surface-experience .surface-conversation>p{font-size:32px}
+  .surface-experience .surface-cta{font-size:18px;padding:18px 24px;min-height:60px}
+}
+@media(hover:hover) and (pointer:fine){.surface-experience .surface-instruction-touch{display:none}.surface-experience .surface-instruction-pointer{display:initial}}
+@media(prefers-reduced-motion:reduce){.surface-experience *,.surface-experience *::before,.surface-experience *::after{animation:none!important;transition:none!important}}
+
+.surface-experience :is(button,a,[tabindex]){scroll-margin-block:16px}
+@media(min-width:1101px){.surface-experience .surface-instruction-touch{display:none}.surface-experience .surface-instruction-pointer{display:initial}}
+.surface-experience.surface-introducing .surface-focus-guide{animation:surfaceTrace .45s ease .45s both}

@@ -1,3 +1,4 @@
+import {initSurface} from './surface.js?v=431f94a090c3';
 import {getBudgetUrl} from './config.js?v=900f68ec7c6f';
 
 document.documentElement.classList.add('js');
@@ -144,7 +145,7 @@ function scrollspy() {
     const atBottom = innerHeight + scrollY >= root.scrollHeight - 3;
     const probe = header.getBoundingClientRect().bottom + 40;
     const section = atBottom ? sections.at(-1) : [...sections].reverse().find(item => item.getBoundingClientRect().top <= probe) || sections[0];
-    setActive(section.id);
+    setActive(section.dataset.navSection || section.id);
   });
 }
 addEventListener('scroll', scrollspy, {passive:true});
@@ -205,3 +206,5 @@ if ('IntersectionObserver' in window && !reduced.matches) {
   }), {threshold:.08});
   document.querySelectorAll('.reveal').forEach(element => observer.observe(element));
 }
+
+initSurface();

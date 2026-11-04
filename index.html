@@ -9,7 +9,7 @@
   <link rel="preload" href="assets/fs/montserrat-800.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="preload" href="assets/fs/hero-mobile.webp" as="image" media="(max-width: 1100px)" fetchpriority="high">
   <link rel="preload" href="assets/fs/hero.webp" as="image" media="(min-width: 1101px)" fetchpriority="high">
-  <link rel="stylesheet" href="fs/styles.css?v=2105df71f5fb"><script type="module" src="fs/app.js?v=c170dfe4cf05"></script>
+  <link rel="stylesheet" href="fs/styles.css?v=2105df71f5fb"><link rel="stylesheet" href="fs/surface.css?v=43e09b1b1e4c"><script type="module" src="fs/app.js?v=62823b197201"></script>
 </head>
 <body>
   <a class="skip-link" href="#inicio">Ir para o conteúdo</a>
@@ -61,6 +61,72 @@
         <article class="service-card reveal"><img src="assets/fs/servico-atendimento.webp" width="398" height="521" loading="lazy" alt="Profissional com capacete e prancheta."><span class="card-number" aria-hidden="true">03</span><div class="card-copy"><h3>Atendimento e orçamento</h3><p>Uma conversa para entender o que você precisa.</p></div></article>
       </div>
       <div class="section-bottom reveal"><p>Seu projeto merece atenção desde o primeiro contato.</p><a class="button" href="#contato" data-budget>Solicitar orçamento <svg class="icon" aria-hidden="true"><use href="#arrow"/></svg></a></div>
+    </section>
+    <section class="surface-experience" id="por-baixo" data-nav-section="servicos" data-state="estrutura" tabindex="-1" aria-labelledby="surface-title">
+      <div class="surface-inner">
+        <div class="surface-heading">
+          <p class="surface-eyebrow">Por baixo da superfície</p>
+          <h2 id="surface-title">Veja a perfuração<br class="surface-desktop-break"> por <span>outro ângulo.</span></h2>
+          <p class="surface-support">Explore a estrutura, a operação e os detalhes que fazem parte do trabalho em campo.</p>
+        </div>
+        <div class="surface-layout">
+          <div class="surface-scene" aria-label="Cena interativa ilustrativa de uma perfuratriz e um corte do terreno">
+            <div class="surface-photo">
+              <img src="assets/fs/projeto-estrutura.webp" width="1034" height="572" loading="lazy" alt="Caminhão e perfuratriz amarelos sobre o terreno, ao pôr do sol.">
+              <svg class="surface-overlay" viewBox="0 0 1034 572" aria-hidden="true">
+                <defs><linearGradient id="surface-machine-tint" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#e9b51b" stop-opacity=".12"/><stop offset="1" stop-color="#e9b51b" stop-opacity="0"/></linearGradient></defs>
+                <g class="surface-machine-focus"><path d="M130 270Q170 244 326 251L373 291 529 291 608 228 638 60 707 48 701 488Q560 556 230 541L124 452Z" fill="url(#surface-machine-tint)" stroke="#e9b51b" stroke-width="2" stroke-opacity=".6"/><path d="M190 525Q414 568 650 522" fill="none" stroke="#e9b51b" stroke-width="3"/></g>
+                <path class="surface-focus-guide surface-focus-guide--estrutura" d="M405 350C488 355 510 490 674 525" pathLength="1"/>
+                <path class="surface-focus-guide surface-focus-guide--operacao" d="M674 348V568" pathLength="1"/>
+                <path class="surface-focus-guide surface-focus-guide--detalhes" d="M658 210C530 172 400 125 272 122" pathLength="1"/>
+                <g class="surface-equipment-focus"><rect x="610" y="146" width="99" height="155" rx="12" fill="#e9b51b14" stroke="#e9b51b" stroke-width="2"/><path d="M604 160v-20h22m68 0h22v20m0 128v20h-22m-68 0h-22v-20" fill="none" stroke="#f5d77a" stroke-width="3"/></g>
+              </svg>
+              <div class="surface-lens" aria-hidden="true"><svg viewBox="570 120 190 190"><image data-lens-source="assets/fs/projeto-estrutura.webp" x="0" y="0" width="1034" height="572"/></svg></div>
+              <button type="button" class="surface-hotspot surface-hotspot--estrutura" data-surface-state="estrutura" aria-label="Explorar estrutura do caminhão e da perfuratriz" aria-pressed="true"><span>01</span></button>
+              <button type="button" class="surface-hotspot surface-hotspot--detalhes" data-surface-state="detalhes" aria-label="Explorar detalhes do equipamento" aria-pressed="false"><span>03</span></button>
+            </div>
+            <div class="surface-ground"><div class="surface-strata">
+              <svg class="surface-earth" viewBox="0 0 1034 420" preserveAspectRatio="none" aria-hidden="true">
+                <defs>
+                  <linearGradient id="surface-earth-base" x1="0" y1="0" x2="0" y2="1"><stop stop-color="#67472e"/><stop offset=".6" stop-color="#372a22"/><stop offset="1" stop-color="#171714"/></linearGradient>
+                  <linearGradient id="surface-shaft" x1="0" y1="0" x2="1" y2="0"><stop stop-color="#151512"/><stop offset=".45" stop-color="#ad9060"/><stop offset=".7" stop-color="#3c3324"/><stop offset="1" stop-color="#111110"/></linearGradient>
+                  <radialGradient id="surface-operation-tint"><stop stop-color="#d2a242" stop-opacity=".22"/><stop offset="1" stop-color="#d2a242" stop-opacity="0"/></radialGradient>
+                  <pattern id="surface-grain" width="93" height="71" patternUnits="userSpaceOnUse"><path d="m9 14 5-2 5 3-3 3Zm48 33 7-3 4 6-6 2ZM29 60l3-2 2 3-3 2Z" fill="#c49a71" fill-opacity=".15"/><path d="m41 8 7 2m-38 31 10-2m52-14 13-1m-4 35 8-3" stroke="#0c0d0a" stroke-opacity=".25" stroke-width="1"/><circle cx="33" cy="26" r="1" fill="#d1b18c" fill-opacity=".28"/></pattern>
+                </defs>
+                <path d="M0 12 42 7 83 11 117 5 161 13 209 8 249 13 294 7 339 13 387 6 432 12 477 8 523 13 570 6 614 11 657 4 705 13 750 7 794 12 837 6 884 13 929 7 974 11 1034 6V420H0Z" fill="url(#surface-earth-base)"/>
+                <path d="M0 69C134 46 207 115 349 80S540 61 663 99 870 60 1034 84V179C847 140 786 207 623 167S394 194 267 156 115 192 0 163Z" fill="#523924"/>
+                <path d="M0 169C124 190 194 140 311 178S504 218 636 177 859 204 1034 169V292C897 267 814 315 664 278S429 309 303 270 105 302 0 276Z" fill="#3e3026"/>
+                <path d="M0 292C123 312 205 276 344 301S541 279 669 316 881 286 1034 309V420H0Z" fill="#25221d"/>
+                <path d="M0 67C134 46 207 115 349 80S540 61 663 99 870 60 1034 84M0 170C124 190 194 140 311 178S504 218 636 177 859 204 1034 169M0 292C123 312 205 276 344 301S541 279 669 316 881 286 1034 309" fill="none" stroke="#c69e62" stroke-opacity=".17" stroke-width="2"/>
+                <rect width="1034" height="420" fill="url(#surface-grain)"/>
+                <ellipse class="surface-operation-focus" cx="674" cy="216" rx="178" ry="230" fill="url(#surface-operation-tint)"/>
+                <path d="M662 0H686V342Q674 364 662 342Z" fill="url(#surface-shaft)" stroke="#bca06c" stroke-opacity=".45" stroke-width="1"/>
+                <path d="M674 0V344" stroke="#c5a55e" stroke-opacity=".45" stroke-width="2"/>
+                <path class="surface-underground-guide" d="M674 4V344" pathLength="1"/>
+                <circle class="surface-underground-end" cx="674" cy="344" r="6" fill="#e9b51b"/>
+                <path d="M0 415H1034" stroke="#75613f" stroke-opacity=".3"/>
+              </svg>
+              <span class="surface-ground-label">Sob a superfície</span>
+              <button type="button" class="surface-hotspot surface-hotspot--operacao" data-surface-state="operacao" aria-label="Explorar o percurso ilustrativo da perfuração" aria-pressed="false"><span>02</span></button>
+              <span class="surface-soil-note">Corte ilustrativo do terreno</span>
+            </div></div>
+          </div>
+          <div class="surface-exploration">
+            <p class="surface-instruction"><span class="surface-instruction-touch">Toque nos pontos para explorar.</span><span class="surface-instruction-pointer">Selecione os pontos ou use os controles para explorar.</span></p>
+            <div class="surface-tabs" role="tablist" aria-label="Explorar a perfuração">
+              <button id="surface-tab-estrutura" role="tab" type="button" aria-selected="true" aria-controls="surface-info" data-surface-state="estrutura">Estrutura</button>
+              <button id="surface-tab-operacao" role="tab" type="button" aria-selected="false" aria-controls="surface-info" tabindex="-1" data-surface-state="operacao">Operação</button>
+              <button id="surface-tab-detalhes" role="tab" type="button" aria-selected="false" aria-controls="surface-info" tabindex="-1" data-surface-state="detalhes">Detalhes</button>
+            </div>
+            <div class="surface-info" id="surface-info" role="tabpanel" aria-labelledby="surface-tab-estrutura" tabindex="0">
+              <div class="surface-info-copy" aria-live="polite" aria-atomic="true"><p class="surface-step">01 / Estrutura</p><h3 class="surface-info-title">A estrutura em campo.</h3><p class="surface-info-text">Conheça a estrutura que acompanha o trabalho em campo.</p></div>
+            </div>
+            <p class="surface-disclaimer">Representação ilustrativa.</p>
+            <noscript><div class="surface-fallback"><p>Operação: veja uma representação do percurso da perfuração.</p><p>Detalhes: observe os detalhes que fazem parte de cada etapa.</p></div></noscript>
+          </div>
+        </div>
+        <div class="surface-conversation"><p>Cada projeto começa com<br> uma boa conversa.</p><a class="button surface-cta" href="#contato" data-budget>Conversar sobre meu terreno <svg class="icon" aria-hidden="true"><use href="#arrow"/></svg></a></div>
+      </div>
     </section>
     <section class="projects panel" id="projetos" tabindex="-1" aria-labelledby="projects-title">
       <div class="section-heading reveal"><div><p class="eyebrow">Projetos</p><h2 id="projects-title">Cada terreno.<br class="desktop-break"> <span class="gold">Um novo desafio.</span></h2></div><p>Estrutura, operação e atenção aos detalhes em uma visão do trabalho em campo.</p></div>
