@@ -18,7 +18,7 @@ async function key(key, {shift=false}={}){const windowsVirtualKeyCode={Enter:13,
 async function click(selector){await ev(`(()=>{const e=document.querySelector(${JSON.stringify(selector)});if(!e.closest('.site-header'))e.scrollIntoView({block:'center',behavior:'instant'});else if(e.closest('.menu-panel'))e.scrollIntoView({block:'nearest',behavior:'instant'})})()`);const p=await ev(`(()=>{const r=document.querySelector(${JSON.stringify(selector)}).getBoundingClientRect();return {x:r.x+r.width/2,y:r.y+r.height/2}})()`);await send('Input.dispatchMouseEvent',{type:'mousePressed',...p,button:'left',clickCount:1});await send('Input.dispatchMouseEvent',{type:'mouseReleased',...p,button:'left',clickCount:1});}
 async function shot(name){const r=await send('Page.captureScreenshot',{format:'png',captureBeyondViewport:false});await writeFile(`${output}/${name}.png`,Buffer.from(r.data,'base64'));}
 const ids=['inicio','sobre','servicos','projetos','contato'];
-const viewports=[[320,740],[360,800],[390,844],[430,932],[768,1024],[844,390],[1366,768],[1440,900],[1672,941],[1920,1080]];
+const viewports=[[320,740],[360,800],[390,844],[430,932],[768,1024],[844,390],[1900,650],[1900,500],[1366,768],[1440,900],[1672,941],[1920,1080]];
 async function closed(){await until(`document.querySelector('.header-layer').dataset.menuState==='closed'`,'menu fully closed');}
 async function open(){await click('.menu-toggle');await until(`document.querySelector('.header-layer').dataset.menuState==='open'`,'menu open');}
 async function jump(id){await ev(`document.getElementById('${id}').scrollIntoView({behavior:'instant'})`);await pause(80);}
@@ -33,6 +33,15 @@ try{
  for(const [width,height] of viewports){
   await viewport(width,height);await load();
   const tag=`${width}x${height}`;
+  await ev('scrollTo({top:0,behavior:"instant"})');await pause(80);
+  check(await ev(`scrollY===0&&document.querySelector('.hero h1').getBoundingClientRect().top>=document.querySelector('header').getBoundingClientRect().bottom+16`),`real page top keeps full title below header ${tag}`);
+  check(await ev(`(()=>{const title=document.querySelector('.hero h1').getBoundingClientRect(),description=document.querySelector('.hero-description').getBoundingClientRect(),actions=document.querySelector('.hero-actions').getBoundingClientRect();return description.top-title.bottom>=12&&actions.top-description.bottom>=16})()`),`hero title description and actions have positive gaps ${tag}`);
+  check(await ev(`(()=>{const hero=document.querySelector('.hero').getBoundingClientRect(),values=document.querySelector('.hero-bottom').getBoundingClientRect(),next=document.querySelector('#sobre').getBoundingClientRect();const contentBottom=Math.max(...[...document.querySelector('.hero-bottom').children].map(e=>e.getBoundingClientRect().bottom));return values.bottom<=hero.bottom+.5&&next.top>=values.bottom-.5&&contentBottom<=next.top-16})()`),`values fully enclosed before next section ${tag}`);
+  check(await ev(`['.hero-copy','.hero-actions','.hero-bottom'].every(selector=>!['absolute','fixed'].includes(getComputedStyle(document.querySelector(selector)).position))&&getComputedStyle(document.querySelector('.hero')).overflow==='visible'`),`hero content participates in normal flow without clipping ${tag}`);
+  if(width>1100&&height>=650)check(await ev(`document.querySelector('.hero-bottom').getBoundingClientRect().bottom<=innerHeight-16`),`complete desktop hero fits first viewport ${tag}`);
+  if(width===1900&&height===500)check(await ev(`document.querySelector('.hero').getBoundingClientRect().bottom>innerHeight`),'very low desktop grows naturally rather than clipping');
+  if(width<=1100)check(await ev(`(()=>{const c=document.querySelector('.hero-copy').getBoundingClientRect(),p=document.querySelector('.hero .scene-photo').getBoundingClientRect(),v=document.querySelector('.hero-bottom').getBoundingClientRect();return c.bottom<=p.top-16&&v.top>=p.bottom})()`),`mobile reading order is copy actions photo values ${tag}`);
+  await shot(`top-${tag}`);
   check(await ev(`document.documentElement.scrollWidth<=innerWidth`),`no horizontal overflow ${tag}`);
   check(await ev(`JSON.stringify([...document.querySelectorAll('main>section')].map(s=>s.id))===${JSON.stringify(JSON.stringify(ids))}`),`five ordered sections ${tag}`);
   check(await ev(`document.querySelectorAll('header').length===1&&document.querySelectorAll('footer').length===1&&document.querySelectorAll('nav').length===1&&document.querySelectorAll('h1').length===1`),`single global header nav footer and h1 ${tag}`);
@@ -40,7 +49,7 @@ try{
   check(await ev(`(()=>{const r=document.querySelector('.brand img').getBoundingClientRect(),h=document.querySelector('header').getBoundingClientRect();return r.top>h.top&&r.bottom<h.bottom&&r.left>=h.left&&r.right<=h.right})()`),`logo fits header ${tag}`);
   check(await ev(`[...document.querySelectorAll('a[href^="#"]')].every(a=>document.getElementById(a.hash.slice(1)))`),`anchor targets exist ${tag}`);
   check(await ev(`[...document.querySelectorAll('[data-budget],[data-whatsapp]')].every(a=>new URL(a.href).hostname==='wa.me'&&new URL(a.href).pathname==='/559888310153')&&getComputedStyle(document.querySelector('[data-whatsapp]')).backgroundColor==='rgb(37, 211, 102)'&&!document.querySelector('[data-whatsapp]').hasAttribute('aria-disabled')&&document.querySelector('#whatsapp-note').hidden`),`WhatsApp green and all CTAs use confirmed phone ${tag}`);
-  if(width>1100)check(await ev(`document.querySelector('.hero-bottom').getBoundingClientRect().top-document.querySelector('.hero-actions').getBoundingClientRect().bottom>=47`),`hero buttons and values separated ${tag}`);
+  if(width>1100)check(await ev(`document.querySelector('.hero-bottom').getBoundingClientRect().top-document.querySelector('.hero-actions').getBoundingClientRect().bottom>=27`),`hero buttons and values separated ${tag}`);
   check(await ev(`[...document.querySelectorAll('.button,.menu-toggle')].filter(e=>e.getClientRects().length).every(e=>e.getBoundingClientRect().height>=44)`),`touch targets >=44px ${tag}`);
   check(await ev(`[...document.querySelectorAll('h1,h2,h3,.button,.card-copy,figcaption,.copyright')].filter(e=>e.getClientRects().length).every(e=>{const r=e.getBoundingClientRect();return r.left>=-.5&&r.right<=innerWidth+.5})`),`text and controls inside viewport ${tag}`);
   if(width<=1100)check(await ev(`(()=>{const b=document.querySelector('.brand').getBoundingClientRect(),c=document.querySelector('.header-cta').getBoundingClientRect(),t=document.querySelector('.menu-toggle').getBoundingClientRect();return b.right<c.left&&c.right<t.left})()`),`mobile header controls never overlap ${tag}`);
@@ -65,6 +74,10 @@ try{
   }
   await ev('scrollTo({top:document.documentElement.scrollHeight,behavior:"instant"})');await pause(60);
   check(await ev(`document.querySelector('#navigation [aria-current]').hash==='#contato'&&document.querySelector('header').getBoundingClientRect().top>=0`),`footer keeps header visible and contact active ${tag}`);
+  if(width<=1100)await open();
+  await click('#navigation a[href="#inicio"]');await closed();await until('scrollY===0','Início restores true page top');
+  check(await ev(`document.querySelector('.hero h1').getBoundingClientRect().top>=document.querySelector('header').getBoundingClientRect().bottom+16`),`click Inicio returns to zero without hiding title ${tag}`);
+  await shot(`return-inicio-${tag}`);
   if(width<=1100){
    await open();await click('#navigation a[href="#sobre"]');await closed();await until(`location.hash==='#sobre'&&document.activeElement.id==='sobre'`,'menu anchor navigation');await pause(80);
    check(await ev(`document.querySelector('#sobre').getBoundingClientRect().top>=document.querySelector('header').getBoundingClientRect().bottom`),`menu selection restores scroll then honors anchor offset ${tag}`);
@@ -80,6 +93,10 @@ try{
  await open();await pause(350);await shot('menu-390-animated');const y=await ev(`-parseFloat(document.body.style.top)`);
  await click('.menu-toggle');check(await ev(`document.querySelector('.header-layer').dataset.menuState==='closing'&&!document.querySelector('#menu-panel').hidden`),'closing keeps panel mounted for exit animation');await pause(40);await click('.menu-toggle');await pause(260);check(await ev(`document.querySelector('.header-layer').dataset.menuState==='open'&&document.querySelector('main').inert`),'rapid close then reopen remains functional');await click('.menu-toggle');await closed();check(await ev(`Math.abs(scrollY-${y})<1&&!document.querySelector('main').inert&&document.querySelector('.menu-backdrop').hidden`),'rapid interactions clean up without position shift');
  await open();await viewport(1440,900);await closed();check(await ev(`!document.querySelector('#menu-panel').hidden&&!document.querySelector('main').inert&&!document.body.hasAttribute('data-menu-locked')&&document.querySelector('.menu-backdrop').hidden`),'desktop resize clears modal and scrolling locks');
+ for(const [width,height] of [[1900,650],[1440,900],[390,844],[1900,500],[1920,1080]]){
+  await viewport(width,height);await pause(150);await ev('scrollTo({top:0,behavior:"instant"})');await pause(60);
+  check(await ev(`document.querySelector('.hero h1').getBoundingClientRect().top>=document.querySelector('header').getBoundingClientRect().bottom+16&&document.querySelector('#sobre').getBoundingClientRect().top>=Math.max(...[...document.querySelector('.hero-bottom').children].map(e=>e.getBoundingClientRect().bottom))+16&&!document.body.hasAttribute('data-menu-locked')`),`live resize preserves header reservation and section flow ${width}x${height}`);
+ }
  // Deep-link reload and browser back/forward retain anchors below the header.
  await send('Emulation.setEmulatedMedia',{features:[{name:'prefers-reduced-motion',value:'reduce'}]});await load('#servicos');check(await ev(`document.querySelector('#servicos').getBoundingClientRect().top>=document.querySelector('header').getBoundingClientRect().bottom`),'deep link reload honors fixed header');
  await click('#navigation a[href="#contato"]');await pause(100);await ev('history.back()');await until(`location.hash==='#servicos'`,'history back');await pause(100);check(await ev(`document.querySelector('#navigation [aria-current]').hash==='#servicos'`),'browser back restores section');
