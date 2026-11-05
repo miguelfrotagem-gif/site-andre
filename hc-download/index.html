@@ -1,18 +1,62 @@
-<!doctype html><html lang="pt-BR"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>HC Sistemas de Segurança | Downloads Codex</title><meta name="description" content="Materiais de referência HC Sistemas de Segurança para Codex"><style>:root{color-scheme:light}*{box-sizing:border-box}body{margin:0;font-family:Inter,Arial,sans-serif;background:radial-gradient(circle at 80% 0%,#dceafe,#f7f9fc 52%,#fff);color:#101c32;min-height:100vh}.wrap{max-width:850px;margin:auto;padding:40px 24px}.brand{font-weight:850;font-size:23px;letter-spacing:-1px}.brand span{color:#0c5be9}.tag{margin-top:86px;font-size:13px;font-weight:750;letter-spacing:2px;color:#1264e6}h1{font-size:clamp(36px,6vw,64px);line-height:1.08;letter-spacing:-2px;margin:18px 0}p{font-size:18px;color:#526078;line-height:1.65;max-width:670px}.panel{background:#fff;border:1px solid #e2e9f2;border-radius:22px;padding:30px;margin-top:35px;box-shadow:0 22px 50px #172b4514}.pill{display:inline-block;background:#e8f0ff;color:#0751bf;padding:8px 13px;border-radius:99px;font-weight:700;font-size:12px}.btn{display:inline-flex;align-items:center;gap:8px;justify-content:center;background:#0860ef;color:#fff;border-radius:13px;border:0;padding:18px 26px;font-size:16px;font-weight:700;text-decoration:none;cursor:pointer;box-shadow:0 10px 25px #0c66f72c;margin:20px 10px 0 0}.btn:hover{background:#064fca}.secondary{background:#fff;border:1px solid #c8d2e2;box-shadow:none;color:#152943}.secondary:hover{background:#f4f7fc}.small{font-size:14px;color:#63748d}.line{height:1px;background:#e3eaf3;margin:24px 0}.note{background:#f7f9fc;border-radius:12px;padding:14px;font-size:14px;color:#45546d;margin-top:20px}footer{font-size:12px;color:#8490a3;margin-top:45px}code{background:#f0f4fa;padding:3px 6px;border-radius:5px}@media(max-width:480px){.tag{margin-top:65px}.panel{padding:20px}.btn{width:100%;margin:12px 0 0}}</style></head><body><div class="wrap"><div class="brand"><span>HC</span> | SISTEMAS DE SEGURANÇA</div><div class="tag">KIT DE REFERÊNCIAS PARA CODEX</div><h1>Um site premium<br>começa com uma boa referência.</h1><p>Central de materiais para a reconstrução do site da HC Sistemas de Segurança. O prompt técnico está disponível para download imediato.</p><section class="panel"><span class="pill">DISPONÍVEL AGORA</span><h2>Prompt mestre — Codex</h2><p>Instruções sobre enquadramento sem margens, menu com scrollspy, responsividade, animações, preservação do design aprovado e testes.</p><button class="btn" id="downloadPrompt">↓ Baixar prompt .txt</button><button class="btn secondary" id="copyPrompt">Copiar prompt</button><div class="line"></div><h2>PDF e imagens da HC</h2><p>O pacote original contém 5 imagens aprovadas e um PDF de 5 páginas. O arquivo de imagens ainda precisa ser adicionado a este repositório para que haja um link de download público.</p><div class="note">Para concluir, envie <code>HC_PDF_REFERENCIA_CODEX.zip</code> para a pasta <code>hc-download</code> deste repositório. O botão de download ficará disponível assim que o arquivo estiver publicado.</div><a class="btn secondary" id="assetLink" href="https://github.com/miguelfrotagem-gif/site-andre/tree/main/hc-download" target="_blank" rel="noopener">Abrir pasta no GitHub</a></section><footer>HC SISTEMAS DE SEGURANÇA · Parque Cisper, São Paulo · Página de materiais</footer></div><script>const prompt=`MISSÃO CODEX — HC SISTEMAS DE SEGURANÇA
-
-Você é desenvolvedor front-end sênior. Implemente o site da HC com base nas cinco imagens aprovadas, na ordem: Hero, Soluções, Sobre Nós, Avaliações, Contato.
-
-REGRAS CRÍTICAS:
-1. Reconstrua a interface real com HTML, CSS e componentes; não use screenshots completos como o site.
-2. Sem margens laterais externas ou espaços verticais acidentais. Os fundos preenchem a viewport e o conteúdo interno mantém respiros.
-3. Nada de zoom artificial, imagens distorcidas, cortes de títulos, CTAs ou câmeras.
-4. Menu único, sticky, navegação suave, scrollspy e versão mobile animada.
-5. Desktop e mobile projetados separadamente, sem rolagem horizontal.
-6. Animações sutis com IntersectionObserver e respeito a prefers-reduced-motion.
-7. Visual clean premium: branco, cinza claro, grafite e azul elétrico.
-8. Componentes funcionais, formulários acessíveis e testes em 1440, 1366, 1024, 768, 430, 390 e 360px.
-9. Dados: HC Sistemas de Segurança, Rua São José de Caiana, 172, Parque Cisper, São Paulo - SP, CEP 03819-020. Classificação informada: 4,8 estrelas, 36 avaliações no Google. Validar dados antes de publicar.
-10. Depoimentos ilustrativos dos mockups NÃO são reais. Só usar avaliações reais verificadas.
-11. Executar build, inspecionar screenshots e corrigir todos os desvios.
-
-ENTREGUE O SITE IMPLEMENTADO, NÃO APENAS UM PLANO.`;document.getElementById('downloadPrompt').onclick=()=>{const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([prompt],{type:'text/plain;charset=utf-8'}));a.download='PROMPT_CODEX_HC.txt';a.click();setTimeout(()=>URL.revokeObjectURL(a.href),1000)};document.getElementById('copyPrompt').onclick=async()=>{try{await navigator.clipboard.writeText(prompt);document.getElementById('copyPrompt').textContent='✓ Copiado'}catch(e){alert('Não foi possível copiar. Use o botão Baixar prompt.')}};</script></body></html>
+<!doctype html><html lang="pt-BR"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>HC Sistemas de Segurança | Referências Codex</title><meta name="description" content="Visualize e baixe as cinco imagens aprovadas, o PDF e o kit de referências para Codex.">
+<style>*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:radial-gradient(ellipse at 90% 0%,#dfecff,#f6f9ff 55%,#fff);font-family:Inter,Arial,sans-serif;color:#101d33}.wrap{max-width:1150px;margin:auto;padding:28px 24px}.top{font-size:21px;font-weight:850}.top b{font-style:italic;color:#085dea;font-size:30px;letter-spacing:-2px}.tag{color:#075ce8;font-size:12px;letter-spacing:2px;font-weight:800;margin-top:72px}h1{font-size:clamp(38px,6vw,66px);letter-spacing:-2px;line-height:1.08;margin:15px 0}h1 span{color:#075dec}.intro{color:#586982;line-height:1.7;font-size:18px;max-width:770px}.panel{background:#fff;border:1px solid #e2eaf5;border-radius:23px;padding:28px;margin-top:36px;box-shadow:0 18px 55px #0c305d16}h2{font-size:26px;letter-spacing:-.8px;margin:7px 0 11px}.panel p{color:#60728b;line-height:1.65}.pill{display:inline-block;background:#eaf2ff;border-radius:99px;color:#0856c9;padding:8px 13px;font-size:12px;font-weight:700}.buttons{display:flex;flex-wrap:wrap;gap:10px;margin-top:24px}.btn{border:1px solid #cad8ec;border-radius:12px;background:#fff;color:#172a46;padding:15px 21px;cursor:pointer;font-size:15px;font-weight:730}.btn.primary{color:#fff;background:#075ce8;border-color:#075ce8;box-shadow:0 12px 30px #075de92d}.btn:hover{filter:brightness(.96)}.btn:disabled{opacity:.55;cursor:progress}.status{min-height:22px;color:#546985;font-size:13px;margin-top:18px}.gallery{margin-top:52px}.gallery h2{font-size:33px}.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:20px;margin-top:20px}.item{background:#fff;border-radius:18px;border:1px solid #e4eaf5;overflow:hidden;box-shadow:0 13px 35px #0c2c5710}.preview{aspect-ratio:1672/941;background:linear-gradient(120deg,#e8f0fc,#fff,#dce9f9);display:flex;align-items:center;justify-content:center;color:#627a9a;font-size:14px}.preview canvas{width:100%;height:auto;display:block}.foot{display:flex;gap:10px;justify-content:space-between;align-items:center;padding:15px 17px}.foot h3{font-size:15px;margin:0}.foot button{border:0;color:#0759dc;background:#eaf2ff;padding:9px 12px;border-radius:9px;font-weight:700;cursor:pointer}.hide{display:none}footer{padding:52px 0 18px;color:#728197;font-size:13px}@media(max-width:700px){.wrap{padding:24px 17px}.tag{margin-top:55px}.panel{padding:19px}.buttons{flex-direction:column}.btn{width:100%}.grid{grid-template-columns:1fr}.intro{font-size:16px}}</style></head><body><div class="wrap">
+<div class="top"><b>HC</b> | SISTEMAS DE SEGURANÇA</div><div class="tag">KIT DE REFERÊNCIAS · CODEX</div>
+<h1>Todas as cinco referências.<br><span>Prontas para baixar.</span></h1>
+<p class="intro">As imagens aprovadas da Hero, Soluções, Sobre nós, Avaliações e Contato estão reunidas no PDF sem margens. Você pode visualizar cada seção e salvar os PNGs para o Codex.</p>
+<div class="panel"><span class="pill">ARQUIVO ORIGINAL · 5 PÁGINAS</span><h2>Referências HC Sistemas de Segurança</h2><p>Baixe o PDF dentro de um ZIP, ou gere um kit completo com as cinco imagens PNG e o prompt de implementação.</p>
+<div class="buttons"><button class="btn primary" id="downloadZip">↓ Baixar PDF em ZIP</button><button class="btn" id="showGallery">◉ Ver as cinco imagens</button><button class="btn" id="downloadFull">↓ Baixar ZIP com PNGs + PDF + prompt</button><button class="btn" id="downloadPrompt">↓ Baixar prompt</button></div>
+<div class="status" id="status" role="status">Arquivos disponíveis para carregar.</div></div>
+<section id="gallery" class="gallery hide"><h2>Imagens aprovadas</h2><p class="intro">Uma referência por seção. Use o botão de cada imagem para salvá-la como PNG.</p>
+<div class="grid">
+<div class="item"><div class="preview" id="image1">Carregando imagem…</div><div class="foot"><h3>01. Hero cinematográfica</h3><button data-n="1">Baixar PNG</button></div></div>
+<div class="item"><div class="preview" id="image2">Carregando imagem…</div><div class="foot"><h3>02. Soluções</h3><button data-n="2">Baixar PNG</button></div></div>
+<div class="item"><div class="preview" id="image3">Carregando imagem…</div><div class="foot"><h3>03. Sobre nós</h3><button data-n="3">Baixar PNG</button></div></div>
+<div class="item"><div class="preview" id="image4">Carregando imagem…</div><div class="foot"><h3>04. Avaliações</h3><button data-n="4">Baixar PNG</button></div></div>
+<div class="item"><div class="preview" id="image5">Carregando imagem…</div><div class="foot"><h3>05. Contato</h3><button data-n="5">Baixar PNG</button></div></div>
+</div></section>
+<footer>HC Sistemas de Segurança · Parque Cisper, São Paulo - SP · Referências para implementação. Avaliações ilustrativas dos mockups devem ser substituídas por avaliações reais.</footer>
+</div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+<script>
+(function(){
+'use strict';
+const status=document.getElementById('status');const names=['01_HERO','02_SOLUCOES','03_SOBRE_NOS','04_AVALIACOES','05_CONTATO'];let ap,pp,dp,gp;
+const notify=t=>status.textContent=t;
+function save(blob,name){const u=URL.createObjectURL(blob),a=document.createElement('a');a.href=u;a.download=name;document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(u),60000)}
+async function archive(){if(!ap)ap=(async()=>{
+notify('Baixando as referências do GitHub…');
+const parts=await Promise.all(Array.from({length:8},(_,i)=>fetch('parts/part-'+String(i+1).padStart(2,'0')+'.txt').then(r=>{if(!r.ok)throw Error('Parte '+(i+1)+' indisponível ('+r.status+')');return r.text()})));
+const b64=parts.join('').replace(/\s/g,'');if(b64.length!==15203184)throw Error('Arquivo incompleto, tente atualizar.');
+const pad=b64.endsWith('==')?2:b64.endsWith('=')?1:0;const out=new Uint8Array(b64.length/4*3-pad);let pos=0;
+for(let k=0;k<b64.length;k+=131072){const part=atob(b64.slice(k,k+131072));for(let i=0;i<part.length;i++)out[pos++]=part.charCodeAt(i)}
+if(new DataView(out.buffer).getUint32(0,true)!==0x04034b50)throw Error('ZIP inválido');
+notify('Referências carregadas.');return out;
+})();try{return await ap}catch(e){ap=null;throw e}}
+async function pdf(){if(!pp)pp=(async()=>{
+const zip=await archive();const view=new DataView(zip.buffer);const len=view.getUint32(18,true),method=view.getUint16(8,true),start=30+view.getUint16(26,true)+view.getUint16(28,true);
+if(method!==8||start+len>zip.length)throw Error('Não foi possível extrair o PDF.');
+if(!window.DecompressionStream)throw Error('Navegador sem suporte à descompressão.');
+return new Uint8Array(await new Response(new Blob([zip.subarray(start,start+len)]).stream().pipeThrough(new DecompressionStream('deflate-raw'))).arrayBuffer());
+})();try{return await pp}catch(e){pp=null;throw e}}
+async function documentPDF(){if(!window.pdfjsLib)throw Error('Não foi possível carregar o visualizador. Verifique a internet.');if(!dp)dp=(async()=>{pdfjsLib.GlobalWorkerOptions.workerSrc='https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';return pdfjsLib.getDocument({data:await pdf()}).promise})();return dp}
+async function canvasPage(n,width){const doc=await documentPDF(),page=await doc.getPage(n);const base=page.getViewport({scale:1});const viewport=page.getViewport({scale:width/base.width});const c=document.createElement('canvas');c.width=Math.round(viewport.width);c.height=Math.round(viewport.height);await page.render({canvasContext:c.getContext('2d'),viewport}).promise;return c}
+function toPNG(c){return new Promise((resolve,reject)=>c.toBlob(b=>b?resolve(b):reject(Error('Não foi possível criar PNG')),'image/png'))}
+async function gallery(){if(!gp)gp=(async()=>{
+document.getElementById('gallery').classList.remove('hide');for(let n=1;n<=5;n++){notify('Renderizando imagem '+n+'/5…');const c=await canvasPage(n,920);document.getElementById('image'+n).replaceChildren(c)}notify('As cinco imagens estão disponíveis.');
+})();return gp}
+const PROMPT=['MISSÃO CODEX - HC SISTEMAS DE SEGURANÇA','Implemente o site com base nas 5 referências aprovadas: Hero, Soluções, Sobre Nós, Avaliações e Contato.','Use HTML, CSS e componentes reais; NÃO use screenshots como fundo de cada seção.','Sem margens externas, sem cortes de câmera, textos ou botões.','Crie menu único com scrollspy e responsividade própria para mobile.','Implemente microanimações elegantes, navegação suave, formulários funcionais e testes de enquadramento.','Dados: Rua São José de Caiana, 172, Parque Cisper, São Paulo - SP, CEP 03819-020.','4,8 estrelas e 36 avaliações informadas; valide antes de publicar. Não invente depoimentos.','Teste 1440, 1366, 1024, 768, 430, 390 e 360 pixels.'].join('\n\n');
+function run(f){return async()=>{try{await f()}catch(e){console.error(e);notify('Erro: '+e.message)}}}
+document.getElementById('downloadZip').onclick=run(async()=>{save(new Blob([await archive()],{type:'application/zip'}),'HC_PDF_REFERENCIA_CODEX.zip');notify('Download do ZIP iniciado.')});
+document.getElementById('showGallery').onclick=run(async()=>{await gallery();document.getElementById('gallery').scrollIntoView({behavior:'smooth'})});
+document.getElementById('downloadPrompt').onclick=()=>save(new Blob([PROMPT],{type:'text/plain;charset=utf-8'}),'PROMPT_CODEX_HC.txt');
+document.querySelectorAll('[data-n]').forEach(b=>b.onclick=run(async()=>{const n=Number(b.dataset.n),c=await canvasPage(n,1672);save(await toPNG(c),names[n-1]+'.png');notify('PNG da seção '+n+' salvo.')}));
+document.getElementById('downloadFull').onclick=run(async()=>{
+if(!window.JSZip)throw Error('O criador de ZIP não carregou. Baixe o ZIP do PDF.');
+const z=new JSZip();for(let n=1;n<=5;n++){notify('Preparando imagem '+n+' de 5…');const c=await canvasPage(n,1672),blob=await toPNG(c);z.file('IMAGENS/'+names[n-1]+'.png',blob)}
+z.file('HC_REFERENCIA_DESKTOP_SEM_MARGENS.pdf',await pdf());z.file('PROMPT_CODEX_HC.txt',PROMPT);
+notify('Compactando kit completo…');save(await z.generateAsync({type:'blob',compression:'DEFLATE'}),'HC_KIT_COMPLETO_COM_5_IMAGENS.zip');notify('ZIP completo com PDF e 5 PNGs pronto!');
+});
+})();
+</script>
+</body></html>
