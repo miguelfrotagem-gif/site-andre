@@ -1,0 +1,8 @@
+MISSÃO CODEX — HC SISTEMAS DE SEGURANÇA
+Implemente um site real e responsivo com base nas cinco referências aprovadas:
+Hero, Soluções, Sobre Nós, Avaliações e Contato.
+Enquadramento: nenhuma margem lateral ou vertical acidental, sem cortes,
+sem zoom ou distorção das imagens. Menus reais com scrollspy e animações.
+Desktop e mobile testados, botões e formulários funcionais.
+As imagens de avaliações contêm exemplos ilustrativos; substituir por
+depoimentos reais verificados antes de publicar.
