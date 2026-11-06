@@ -1,0 +1,46 @@
+name: Verificar downloads publicos HC
+on:
+  push:
+    paths:
+      - .github/workflows/verify-hc-download.yml
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Testar pagina publica e arquivos reais
+        shell: bash
+        run: |
+          set -euo pipefail
+          PAGE="https://miguelfrotagem-gif.github.io/site-andre/hc-download/download-direto.html"
+          RAW="https://raw.githubusercontent.com/miguelfrotagem-gif/site-andre/gh-pages/hc-download"
+          for n in $(seq 1 12); do
+            code=$(curl -sSL --max-time 20 -o /tmp/hc-page.html -w '%{http_code}' "$PAGE?v=download-teste-20261105-$n" || true)
+            echo "Acesso publico tentativa $n: HTTP $code"
+            if [ "$code" = "200" ] && grep -q 'HC_KIT_COMPLETO_COM_5_IMAGENS.zip' /tmp/hc-page.html; then
+              break
+            fi
+            sleep 5
+          done
+          test "$code" = 200
+          grep -q 'HC_PDF_REFERENCIA_CODEX.zip' /tmp/hc-page.html
+          grep -q 'HC_KIT_COMPLETO_COM_5_IMAGENS.zip' /tmp/hc-page.html
+          if grep -q '<script' /tmp/hc-page.html; then
+            echo 'ERRO: pagina tem script; esperado apenas links nativos'
+            exit 1
+          fi
+          echo 'Pagina online com links HTML nativos e sem JavaScript'
+          curl -fLsS --retry 3 --retry-all-errors --max-time 120 -o /tmp/hc-pdf.zip "$RAW/HC_PDF_REFERENCIA_CODEX.zip"
+          curl -fLsS --retry 3 --retry-all-errors --max-time 120 -o /tmp/hc-kit.zip "$RAW/HC_KIT_COMPLETO_COM_5_IMAGENS.zip"
+          unzip -t /tmp/hc-pdf.zip | tail -2
+          unzip -t /tmp/hc-kit.zip | tail -2
+          echo "PDF ZIP bytes: $(wc -c < /tmp/hc-pdf.zip)"
+          echo "KIT ZIP bytes: $(wc -c < /tmp/hc-kit.zip)"
+          for name in 01_HERO 02_SOLUCOES 03_SOBRE_NOS 04_AVALIACOES 05_CONTATO; do
+            code=$(curl -sSL --max-time 40 -o /dev/null -w '%{http_code}' "$RAW/IMAGENS/$name.png")
+            echo "$name.png HTTP $code"
+            test "$code" = 200
+          done
+          echo 'TODOS OS DOWNLOADS ONLINE E ZIPs VALIDOS'
