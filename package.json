@@ -7,14 +7,16 @@
     "dev": "node scripts/server.mjs",
     "start": "node scripts/server.mjs",
     "build": "node scripts/build.mjs",
-    "lint": "node --check config.js && node --check app.js && node --check site-extras.js && node --check scripts/server.mjs && node --check scripts/build.mjs && node --check scripts/export.mjs && node --check scripts/interactions.mjs && node --check ademicon/app.js && node --check ademicon/dialogs.js && node --check scripts/ademicon-smoke.mjs && node --check scripts/navigation-smoke.mjs && node --check mobile.js && node --check scripts/mobile-smoke.mjs && node --check entry.js && node --check fs/config.js && node --check fs/app.js && node --check scripts/fs-smoke.mjs && node --check fs/surface.js && node --check scripts/surface-smoke.mjs",
-    "test": "node scripts/fs-smoke.mjs && node scripts/surface-smoke.mjs",
+    "lint": "node --check config.js && node --check app.js && node --check site-extras.js && node --check scripts/server.mjs && node --check scripts/build.mjs && node --check scripts/export.mjs && node --check scripts/interactions.mjs && node --check ademicon/app.js && node --check ademicon/dialogs.js && node --check scripts/ademicon-smoke.mjs && node --check scripts/navigation-smoke.mjs && node --check mobile.js && node --check scripts/mobile-smoke.mjs && node --check entry.js && node --check fs/config.js && node --check fs/app.js && node --check scripts/fs-smoke.mjs && node --check fs/surface.js && node --check scripts/surface-smoke.mjs && node --check hc/config.js && node --check hc/app.js && node --check scripts/hc-smoke.mjs",
+    "test": "node scripts/hc-smoke.mjs",
     "export": "node scripts/export.mjs",
     "test:hensec": "node scripts/smoke.mjs",
     "test:navigation": "node scripts/navigation-smoke.mjs",
     "test:mobile": "node scripts/mobile-smoke.mjs",
     "test:ademicon": "node scripts/ademicon-smoke.mjs",
     "test:fs": "node scripts/fs-smoke.mjs",
-    "test:surface": "node scripts/surface-smoke.mjs"
+    "test:surface": "node scripts/surface-smoke.mjs",
+    "test:hc": "node scripts/hc-smoke.mjs",
+    "test:fs:all": "node scripts/fs-smoke.mjs && node scripts/surface-smoke.mjs"
   }
 }

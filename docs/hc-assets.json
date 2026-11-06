@@ -1,0 +1,54 @@
+{
+  "kit": "HC_KIT_COMPLETO_COM_5_IMAGENS.zip",
+  "method": "Edição assistida pelas imagens de referência; fotografias ilustrativas, sem fidelidade pixel a pixel. UI reconstruída em HTML/CSS.",
+  "files": [
+    {
+      "file": "assets/hc/hero.webp",
+      "source": "01_HERO.png: fotografia reconstruída sem interface",
+      "sha256": "8956cbb34c68b8a0326f82451d7ec26f18fbcb26492b984e35ff0e84e2a5c5c4",
+      "bytes": 100096
+    },
+    {
+      "file": "assets/hc/hero-mobile.webp",
+      "source": "01_HERO.png: recorte da fotografia reconstruída para mobile",
+      "sha256": "fc89d3364380fa6ad53ef4dcf7a3d89fc1665c41658e7dbf0733f0530ba940c3",
+      "bytes": 80946
+    },
+    {
+      "file": "assets/hc/about.webp",
+      "source": "03_SOBRE_NOS.png: fotografia reconstruída sem interface ou marca no uniforme",
+      "sha256": "4d34e8e30c562817cfcbfce4d4f53136c7cc4935a8104630a1fc0879e9faf2fa",
+      "bytes": 116328
+    },
+    {
+      "file": "assets/hc/monitor.webp",
+      "source": "02_SOLUCOES.png: cena superior reconstruída sem interface",
+      "sha256": "48e5564573bb31271f04eabc675e2acccdb4fca79f75adf80e3dce79599b9476",
+      "bytes": 74518
+    },
+    {
+      "file": "assets/hc/cftv.webp",
+      "source": "02_SOLUCOES.png: fotografia de serviço reconstruída individualmente em formato 16:9 e otimizada",
+      "sha256": "cb71473736db174404682525c4a0c190434fb67312eebee0bb48c5902b3b265d",
+      "bytes": 55068
+    },
+    {
+      "file": "assets/hc/alarmes.webp",
+      "source": "02_SOLUCOES.png: fotografia de serviço reconstruída individualmente em formato 16:9 e otimizada",
+      "sha256": "d462abfceda317818279fa16f1fbac5f1c31a7e7f58d292ac4cbdbd208f9696c",
+      "bytes": 63012
+    },
+    {
+      "file": "assets/hc/cerca.webp",
+      "source": "02_SOLUCOES.png: fotografia de serviço reconstruída individualmente em formato 16:9 e otimizada",
+      "sha256": "24bbb8f60a5d9a86bde5593b3ee3b7a70770bf422acf58e158ada198aff54755",
+      "bytes": 68818
+    },
+    {
+      "file": "assets/hc/acesso.webp",
+      "source": "02_SOLUCOES.png: fotografia de serviço reconstruída individualmente em formato 16:9 e otimizada",
+      "sha256": "cf6b2f358a93ef86df5c8a5a7a9409efda9244b6fde9b6fb33dbf3a1d139df40",
+      "bytes": 60114
+    }
+  ]
+}

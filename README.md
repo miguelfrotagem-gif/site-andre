@@ -1,81 +1,67 @@
-# FS Perfuração
+# HC Sistemas de Segurança
 
-Site estático em português, sem dependências npm ou backend. Node.js 24 executa o servidor, build e testes. A entrada principal preserva Início, Sobre nós, Serviços, Projetos e Contato com rodapé integrado. Entre Serviços e Projetos, a experiência interativa “Por baixo da superfície” acrescenta um corte ilustrativo do terreno.
-
-## Executar e verificar
+Site estático em português, reconstruído em HTML, CSS e JavaScript a partir das cinco referências do kit `HC_KIT_COMPLETO_COM_5_IMAGENS.zip`. Node.js 24 executa o servidor, o build e os testes. Não há dependências npm nem instalação de pacotes.
 
 ```sh
 cd /workspace/site-andre
 npm run dev
 ```
 
-A porta padrão é 3000, configurável por `PORT`. Use o checkout existente; tarefas de nuvem já são isoladas e não precisam de worktree.
+A HC ocupa `index.html` e também está disponível em `hc.html`. A porta padrão é 3000, configurável por `PORT`. Use o checkout existente: cada tarefa de nuvem já é isolada; não é necessário criar worktree.
 
 ```sh
 npm run lint
 npm run build
 ```
 
-O build prepara `dist/`, incluindo os projetos preservados, sem publicar. Para conferir a distribuição em outro processo:
+O build prepara `dist/`, sem publicar. Versiona CSS, JavaScript e a importação da configuração da HC para atualizar caches. Para servir a distribuição:
 
 ```sh
 SERVE_DIST=1 PORT=3001 npm start
 ```
 
-Inicie Chromium em um processo separado para os testes funcionais:
+## Testes funcionais
+
+Inicie Chromium em um processo separado:
 
 ```sh
 chromium --headless --no-sandbox --disable-gpu \
   --remote-debugging-address=127.0.0.1 --remote-debugging-port=9222 \
-  --user-data-dir=/tmp/fs-chrome about:blank
+  --user-data-dir=/tmp/hc-chrome about:blank
 npm test
 ```
 
-`TEST_URL` e `CDP_URL` permitem outros endereços. A suíte FS verifica doze dimensões, incluindo mobile horizontal, cabeçalho fixo em todas as seções, âncoras, scrollspy, menu modal, foco contido, retorno do foco, clique fora, bloqueio e restauração da rolagem, cliques rápidos, mudança para desktop, galeria e destinos de WhatsApp. Também verifica fontes, imagens, ausência de overflow, ampliação de texto, movimento reduzido e fallback sem JavaScript. Capturas e relatório ficam em `/tmp/fs-mobile-checks/`.
+`npm test` e `npm run test:hc` executam a suíte HC. `HC_PAGE=index.html` testa a entrada principal; `TEST_URL=http://127.0.0.1:3001 HC_PAGE=index.html npm test` testa a distribuição. `CDP_URL` permite selecionar outro Chromium. A suíte usa CDP nativo, sem Playwright ou bibliotecas extras.
 
-## Validação realizada
+A matriz inclui 360, 375, 390, 430, 768, 1024, 1366, 1440 e 1920px, com alturas adicionais de 500, 568 e 600px. Verifica enquadramento, scrollspy nas cinco seções, menu por teclado, foco contido, Escape, seleção de serviço, validação do formulário, revisão sem envio, estados de integração, fallback sem JavaScript, movimento e ausência de erros locais. Relatório e capturas: `/tmp/hc-checks/`.
 
-Lint e build concluídos. A regressão do site integrado passou em **644 verificações FS** nas dimensões 320×740, 360×800, 390×844, 430×932, 768×1024, 844×390 (horizontal), 1900×650, 1900×500, 1366×768, 1440×900, 1672×941 e 1920×1080. A suíte abre o menu em cada uma das cinco seções em todas as dimensões compactas. Foram exercitados teclado, foco, Escape, X, clique fora, posição preservada, scroll interno do painel horizontal, último CTA, cliques rápidos e limpeza ao mudar para desktop. A ampliação de conteúdo foi simulada duplicando os tamanhos de títulos e parágrafos por CSS; não equivale a teste em todos os navegadores ou leitor de tela.
+Os testes de integração interceptam requisições no navegador e fornecem respostas de teste. Não enviam mensagens reais e não validam um backend de produção.
 
-A correção de enquadramento mede também o topo real (`scrollY=0`), retorno pelo link Início, limites completos da faixa de valores antes de Sobre, composição desktop na primeira tela e redimensionamento sem recarregar. A hero usa Grid em fluxo normal, reserva global da altura do cabeçalho e limites de fonte que consideram largura e altura. Em 1900×500, cresce naturalmente; em 1900×650, 1366×768, 1440×900, 1672×941 e 1920×1080, a composição completa cabe na primeira tela. Diagnóstico e medidas em [docs/fs-enquadramento.md](docs/fs-enquadramento.md).
+## Contato e avaliações
 
-As capturas desktop foram conferidas com as referências existentes; o mobile foi revisado segundo o briefing escrito, porque os arquivos mobile citados não estão no ZIP enviado. Os relatórios não registraram exceções de JavaScript ou falhas de assets locais. Os projetos Ademicon e HENSEC não foram alterados nesta atualização; a suíte Ademicon havia passado anteriormente em 116 verificações.
+Configure apenas valores públicos em `hc/config.js`:
 
-## Por baixo da superfície
+- `CONTACT_ENDPOINT`: URL do backend de contato, vazia por padrão. Recebe POST JSON com `name`, `phone`, `email`, `service` e `message`. Deve responder HTTP 2xx e JSON `{"success":true}` somente após aceitar a solicitação. HTTPS é obrigatório para destinos externos. Requisições têm timeout de 15 segundos; falhas preservam os campos. O servidor precisa implementar validação, proteção contra abuso, limites, tratamento dos dados e CORS quando necessário. Não coloque chaves ou credenciais no JavaScript do site.
+- `GOOGLE_REVIEWS_URL`: perfil correto e confirmado das avaliações, vazio por padrão. Sem URL, o site explica a indisponibilidade e não inventa um link de avaliações.
+- `WHATSAPP_PHONE`: número confirmado em dígitos, com código do país, vazio por padrão. Sem número, os CTAs levam ao formulário.
+- `MAP_URL`: busca do endereço fornecido no Google Maps. O mapa desenhado na página é uma representação ilustrativa, identificada como tal; não afirma coordenadas verificadas.
 
-Nova experiência entre Serviços e Projetos, sem item adicional no cabeçalho. O scrollspy mantém Serviços ativo durante a exploração. A fotografia já existente se integra a um corte de solo em SVG, sem biblioteca 3D, novos ativos fotográficos ou animação contínua.
+Sem backend, o formulário valida e abre uma revisão local, explicitamente sem envio ou persistência. Dados não são gravados em cookies, armazenamento local ou URLs. Os estados reais de envio só são habilitados quando um endpoint válido é configurado.
 
-Estrutura, Operação e Detalhes possuem marcadores de 48px, controles por teclado com setas/Home/End, indicação do estado ativo e um único painel de explicação. Cada estado altera também o destaque e a linha dourada da cena; Detalhes inclui um recorte ampliado da mesma imagem. A introdução acontece uma vez, acompanha a visibilidade real do corte e cede imediatamente a qualquer escolha. Há reduced motion e fallback textual sem JavaScript.
+A nota 4,8 e as 36 avaliações foram informadas no briefing e aparecem como pendentes de confirmação. Não foram adicionados nomes, fotografias ou depoimentos fictícios. Os três cards aguardam conteúdo real autorizado. Confirme nota, quantidade e perfil antes da publicação definitiva.
 
-Execute `npm run test:surface` para a suíte específica (489 verificações em dez dimensões). `npm test` executa a regressão FS e a suíte da experiência. Capturas e relatório específicos ficam em `/tmp/fs-surface-checks/`. Veja [docs/fs-superficie.md](docs/fs-superficie.md) para os estados, acessibilidade e limites da representação.
+## Referências e decisões visuais
 
-## WhatsApp
+Hero com câmera à direita e título à esquerda; soluções com quatro fotografias; sobre com técnico e diferenciais; avaliações com resumo e três cards; contato com formulário, endereço e área de mapa. No mobile, a fotografia da hero passa para um bloco próprio, preservando a câmera e áreas de toque confortáveis. Menu sticky único, scrollspy, foco por teclado e redução de movimento.
 
-O número confirmado pelo usuário é **+55 98 8831-0153**, centralizado como `559888310153` em `fs/config.js`. Todos os CTAs de orçamento e a ação “Falar no WhatsApp” usam esse destino, com a mensagem codificada por `encodeURIComponent`. O número foi mantido exatamente como fornecido, sem adicionar dígitos. O link foi verificado; a existência da conta e o atendimento no WhatsApp não são simulados nem confirmados pelo teste local.
+As imagens de referência não são seções rasterizadas: textos, logomarca tipográfica, controles, ícones e cards são elementos reais. As fotografias foram reconstruídas a partir das referências com edição assistida, removendo os elementos de interface gravados. Essa reconstrução altera detalhes fotográficos e não é uma cópia pixel a pixel. Cenas e equipamentos são ilustrativos, e o técnico não é apresentado como funcionário real. Os arquivos finais estão em `assets/hc/`; consulte `docs/hc-assets.json` para procedência e hashes. Montserrat e Manrope reutilizam fontes locais do projeto. A logomarca tipográfica aproxima a referência; um arquivo vetorial oficial poderá substituí-la quando fornecido.
 
-O build versiona a importação de `fs/config.js` para evitar que uma configuração anterior fique em cache no GitHub Pages. Se o campo ficar vazio ou inválido, os CTAs voltam a `#contato` e a ação externa fica indisponível com aviso. Não há envio automático, formulário ou captura de dados.
+A revisão local não equivale a medição de Core Web Vitals em produção nem a teste em todos os navegadores ou leitores de tela.
 
-## Referências e mídia
+## Projetos preservados
 
-O novo `FS_PERFURACAO mobhile.zip` contém as mesmas cinco imagens desktop e o mesmo PDF do kit anterior. Não contém `referencias/mobile`, `referencias/desktop`, PDF mobile ou `06-menu-aberto-mobile.jpg`; por isso, a composição mobile e o painel seguem as especificações escritas, sem alegação de reprodução dessa imagem ausente.
+- FS Perfuração: `fs-perfuracao.html`, código e assets originais preservados. Documentação anterior em `docs/README-FS.md` (seus links relativos continuam descritos a partir da raiz original). Para usar sua suíte sem alterar os testes: `SITE=fs PORT=3002 npm start` e, em outro processo, `TEST_URL=http://127.0.0.1:3002 npm run test:fs:all`.
+- Ademicon: `ademicon.html`; `README-ADEMICON.md`. Para servir na raiz de um processo separado: `SITE=ademicon PORT=3003 npm start`.
+- HENSEC: `hensec.html`; `README-HENSEC.md`. Para servir na raiz de outro processo: `SITE=hensec PORT=3004 npm start`.
 
-Base: `FS_PERFURACAO.zip`, PDF `fs-perfuracao-leve.pdf` (cinco páginas) e as cinco imagens desktop 1672 × 941. Textos, botões, ícones, cabeçalho, bordas e legendas são elementos HTML/SVG/CSS. Nenhuma seção é renderizada como screenshot.
-
-As áreas fotográficas foram limpas com edição de imagem para retirar a interface gravada e depois extraídas em WebP. A limpeza recompõe as regiões removidas e pode introduzir pequenas diferenças visuais; não se trata de reprodução fotográfica pixel a pixel. Os objetos e as composições de referência orientam o enquadramento. A imagem de Contato usa somente a região fotográfica anterior ao rodapé original. As variantes mobile retiram espaço vazio lateral e preservam os sujeitos da cena. `docs/fs-assets.json` registra origens, recortes e hashes dos assets finais.
-
-A marca original foi preservada em `assets/fs/logo-original.png`. O fundo cinza conectado às bordas foi removido para transparência sem redesenhar o brasão; a versão de exibição é `logo.webp`. A fonte Manrope local é usada no mobile e nos textos; os títulos desktop mantêm Montserrat local, com licença em `assets/fs/OFL-Montserrat.txt`.
-
-As cenas e pessoas são ilustrativas. A pedido do usuário, os avisos visíveis “Imagens ilustrativas” foram removidos; as legendas apenas identificam o conteúdo, sem alegar obras reais. Não foram adicionados depoimentos, obras reais, métricas, endereço ou serviços além dos três fornecidos. O único cabeçalho global permanece fixo até o rodapé. Sua altura alimenta os offsets de âncoras e a altura máxima do painel. O menu compacto entra até 1100px e usa navegação modal com fundo inerte, bloqueio da rolagem e transições reversíveis; em telas baixas o painel rola internamente. Sem JavaScript, a navegação permanece visível em fluxo normal e todo o conteúdo continua acessível.
-
-## Projetos anteriores preservados
-
-- Ademicon: `ademicon.html`, código em `ademicon/`, documentação em `README-ADEMICON.md`.
-- HENSEC: `hensec.html`, documentação em `README-HENSEC.md`.
-
-Para usar a suíte original Ademicon com seus caminhos por hash, execute outro servidor com `SITE=ademicon PORT=3002 npm start` e rode `TEST_URL=http://127.0.0.1:3002 npm run test:ademicon` com Chromium ativo. Os scripts HENSEC existentes continuam disponíveis.
-
-## Publicação no GitHub Pages
-
-Endereço principal: https://miguelfrotagem-gif.github.io/site-andre/ . A FS Perfuração ocupa a raiz; os projetos anteriores ficam em `ademicon.html` e `hensec.html`. O código-fonte é mantido em `main` e a distribuição estática em `gh-pages`.
-
-Para atualizar, gere `dist/` e aplique os arquivos do build sobre a branch `gh-pages` atual, preservando os diretórios dos demais projetos, `.nojekyll` e eventual `CNAME`. Não apague o conteúdo existente da branch. Publicar exige autorização do usuário.
+O build inclui esses três projetos e seus recursos. Nenhuma publicação no GitHub Pages faz parte desta implementação. Para atualizar a distribuição publicada, preserve os demais projetos, `.nojekyll` e eventual `CNAME`; publicação requer autorização explícita.
