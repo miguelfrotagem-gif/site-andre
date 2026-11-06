@@ -1,4 +1,4 @@
-> Documentação anterior da FS Perfuração, preservada em `fs-perfuracao.html`. Para servir este projeto na raiz de um processo local, use `SITE=fs PORT=3002 npm start`. A entrada principal agora é HC. Consulte o README principal para os comandos atuais.
+> Documentação anterior da FS Perfuração, preservada em `fs-perfuracao.html`. Para servir este projeto na raiz de um processo local, use `SITE=fs PORT=3002 npm start`. A FS permanece na entrada principal; a HC está em `hc.html`. Consulte o README principal para os comandos atuais.
 
 # FS Perfuração
 

@@ -7,7 +7,7 @@ cd /workspace/site-andre
 npm run dev
 ```
 
-A HC ocupa `index.html` e também está disponível em `hc.html`. A porta padrão é 3000, configurável por `PORT`. Use o checkout existente: cada tarefa de nuvem já é isolada; não é necessário criar worktree.
+A FS Perfuração permanece na página principal (`index.html`). A HC está em `hc.html`, sem substituir a FS. A porta padrão é 3000, configurável por `PORT`. Use o checkout existente: cada tarefa de nuvem já é isolada; não é necessário criar worktree.
 
 ```sh
 npm run lint
@@ -31,7 +31,7 @@ chromium --headless --no-sandbox --disable-gpu \
 npm test
 ```
 
-`npm test` e `npm run test:hc` executam a suíte HC. `HC_PAGE=index.html` testa a entrada principal; `TEST_URL=http://127.0.0.1:3001 HC_PAGE=index.html npm test` testa a distribuição. `CDP_URL` permite selecionar outro Chromium. A suíte usa CDP nativo, sem Playwright ou bibliotecas extras.
+`npm test` e `npm run test:hc` executam a suíte HC. `npm test` testa a página HC em `hc.html`; `TEST_URL=http://127.0.0.1:3001 npm test` testa a distribuição HC. `CDP_URL` permite selecionar outro Chromium. A suíte usa CDP nativo, sem Playwright ou bibliotecas extras.
 
 A matriz inclui 360, 375, 390, 430, 768, 1024, 1366, 1440 e 1920px, com alturas adicionais de 500, 568 e 600px. Verifica enquadramento, scrollspy nas cinco seções, menu por teclado, foco contido, Escape, seleção de serviço, validação do formulário, revisão sem envio, estados de integração, fallback sem JavaScript, movimento e ausência de erros locais. Relatório e capturas: `/tmp/hc-checks/`.
 
@@ -60,7 +60,7 @@ A revisão local não equivale a medição de Core Web Vitals em produção nem 
 
 ## Projetos preservados
 
-- FS Perfuração: `fs-perfuracao.html`, código e assets originais preservados. Documentação anterior em `docs/README-FS.md` (seus links relativos continuam descritos a partir da raiz original). Para usar sua suíte sem alterar os testes: `SITE=fs PORT=3002 npm start` e, em outro processo, `TEST_URL=http://127.0.0.1:3002 npm run test:fs:all`.
+- FS Perfuração: `index.html` e `fs-perfuracao.html`, código e assets originais preservados. Documentação anterior em `docs/README-FS.md` (seus links relativos continuam descritos a partir da raiz original). Para usar sua suíte sem alterar os testes: `SITE=fs PORT=3002 npm start` e, em outro processo, `TEST_URL=http://127.0.0.1:3002 npm run test:fs:all`.
 - Ademicon: `ademicon.html`; `README-ADEMICON.md`. Para servir na raiz de um processo separado: `SITE=ademicon PORT=3003 npm start`.
 - HENSEC: `hensec.html`; `README-HENSEC.md`. Para servir na raiz de outro processo: `SITE=hensec PORT=3004 npm start`.
 

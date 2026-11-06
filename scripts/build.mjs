@@ -6,7 +6,7 @@ for(const file of ['baixar.html','downloads','index.html','hc.html','hc','fs-per
   await cp(file,`dist/${file}`,{recursive:true});
 }
 const pages={
-  'index.html':['hc/styles.css','hc/app.js'],
+  'index.html':['fs/styles.css','fs/surface.css','fs/app.js'],
   'hc.html':['hc/styles.css','hc/app.js'],
   'fs-perfuracao.html':['fs/styles.css','fs/surface.css','fs/app.js'],
   'ademicon.html':['ademicon/styles.css','ademicon/dialogs.css','ademicon/app.js'],
@@ -35,4 +35,4 @@ for(const [page,files] of Object.entries(pages)) {
   }
   await writeFile(`dist/${page}`,html);
 }
-console.log('Build concluído em dist/: HC na raiz; FS Perfuração, Ademicon e HENSEC preservados em páginas próprias.');
+console.log('Build concluído em dist/: FS Perfuração na raiz; HC, Ademicon e HENSEC em páginas próprias.');
