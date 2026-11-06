@@ -1,0 +1,70 @@
+name: Testar janela Salvar como HC
+on:
+  push:
+    paths:
+      - .github/workflows/test-hc-save-picker.yml
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  browser-test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Preparar Chrome e Playwright
+        shell: bash
+        run: |
+          set -euo pipefail
+          command -v google-chrome || command -v chromium
+          mkdir -p /tmp/hc-picker-tests
+          cd /tmp/hc-picker-tests
+          npm init -y >/dev/null
+          npm install --no-audit --no-fund playwright-core >/dev/null
+      - name: Testar navegador, selecao de pasta e escrita dos arquivos
+        shell: bash
+        run: |
+          set -euo pipefail
+          cd /tmp/hc-picker-tests
+          cat > test.cjs <<'NODE'
+          const {chromium} = require('playwright-core');
+          const assert = require('node:assert/strict');
+          (async()=>{
+            const browser=await chromium.launch({headless:true,executablePath:'/usr/bin/google-chrome',args:['--no-sandbox']});
+            const context=await browser.newContext();
+            await context.addInitScript(()=>{
+              window.__saveCalls=[];
+              Object.defineProperty(window,'showSaveFilePicker',{
+                configurable:true,
+                value:async opts=>{
+                  window.__saveCalls.push({type:'picker',name:opts.suggestedName});
+                  let count=0;
+                  return {createWritable:async()=>new WritableStream({
+                    write(chunk){count+=chunk.byteLength},
+                    close(){window.__saveCalls.push({type:'saved',name:opts.suggestedName,bytes:count})},
+                    abort(){window.__saveCalls.push({type:'aborted',name:opts.suggestedName})}
+                  })};
+                }
+              });
+            });
+            const page=await context.newPage();
+            const url='https://miguelfrotagem-gif.github.io/site-andre/hc-download/index.html?v=save-picker-test-20261106';
+            await page.goto(url,{waitUntil:'domcontentloaded',timeout:60000});
+            assert.equal(await page.locator('a[data-save]').count(),9);
+            const files=['PROMPT_CODEX_HC.txt','HC_PDF_REFERENCIA_CODEX.zip','IMAGENS/01_HERO.png'];
+            for(const file of files){
+              await page.locator('a[data-save="'+file+'"]').click();
+              await page.waitForFunction(f=>{
+                const x=window.__saveCalls;
+                return x.some(v=>v.type==='saved' && v.name===f.split('/').pop());
+              },file,{timeout:90000});
+            }
+            const calls=await page.evaluate(()=>window.__saveCalls);
+            for(const file of files){
+              const name=file.split('/').pop();
+              assert.ok(calls.some(v=>v.type==='picker'&&v.name===name), 'janela de escolha não chamada: '+name);
+              assert.ok(calls.some(v=>v.type==='saved'&&v.name===name&&v.bytes>100), 'bytes não salvos: '+name);
+            }
+            console.log('SUCESSO: Janela Salvar como acionada; prompt, ZIP PDF e PNG gravados pelo navegador:',JSON.stringify(calls));
+            await browser.close();
+          })().catch(e=>{console.error(e);process.exit(1)});
+          NODE
+          node test.cjs
