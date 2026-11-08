@@ -47,7 +47,7 @@ Configure apenas valores públicos em `hc/config.js`:
 
 - `CONTACT_ENDPOINT`: URL do backend de contato, vazia por padrão. Recebe POST JSON com `name`, `phone`, `email`, `service` e `message`. Deve responder HTTP 2xx e JSON `{"success":true}` somente após aceitar a solicitação. HTTPS é obrigatório para destinos externos. Requisições têm timeout de 15 segundos; falhas preservam os campos. O servidor precisa implementar validação, proteção contra abuso, limites, tratamento dos dados e CORS quando necessário. Não coloque chaves ou credenciais no JavaScript do site.
 - `GOOGLE_REVIEWS_URL`: perfil correto e confirmado das avaliações, vazio por padrão. Sem URL, o site explica a indisponibilidade e não inventa um link de avaliações.
-- `WHATSAPP_PHONE`: número confirmado em dígitos, com código do país, vazio por padrão. Sem número, os CTAs levam ao formulário.
+- `WHATSAPP_PHONE`: configurado como `557998139574`, exatamente a partir do número fornecido pelo usuário, +55 79 9813-9574. Os botões de orçamento e especialista abrem o WhatsApp com uma mensagem inicial. Sem número válido, voltam à seção de contato.
 - `MAP_URL`: busca do endereço fornecido no Google Maps. O mapa desenhado na página é uma representação ilustrativa, identificada como tal; não afirma coordenadas verificadas.
 
 Sem backend, o formulário valida e abre uma revisão local, explicitamente sem envio ou persistência. Dados não são gravados em cookies, armazenamento local ou URLs. Os estados reais de envio só são habilitados quando um endpoint válido é configurado.

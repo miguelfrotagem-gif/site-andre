@@ -49,10 +49,20 @@ function httpsUrl(value) { try { const url = new URL(value); return url.protocol
 $('#map-link').href = MAP_URL;
 const reviews = httpsUrl(GOOGLE_REVIEWS_URL);
 if (reviews) { $('#reviews-link').href = reviews; $('#reviews-link').hidden = false; $('#reviews-pending').hidden = true; }
-if (/^\d{10,15}$/.test(WHATSAPP_PHONE)) {
-  const link = $('#specialist-link'); link.href = `https://wa.me/${WHATSAPP_PHONE}?text=${encodeURIComponent('Olá! Gostaria de conhecer as soluções da Jhefinho Security.')}`;
-  link.target = '_blank'; link.rel = 'noopener noreferrer'; $('.specialist p').textContent = 'Converse com a equipe pelo WhatsApp.';
+const hasWhatsApp = /^\d{10,15}$/.test(WHATSAPP_PHONE);
+for (const link of document.querySelectorAll('[data-whatsapp]')) {
+  if (hasWhatsApp) {
+    link.href = `https://wa.me/${WHATSAPP_PHONE}?text=${encodeURIComponent('Olá! Gostaria de conhecer as soluções da Jhefinho Security.')}`;
+    link.target = '_blank'; link.rel = 'noopener noreferrer';
+    link.setAttribute('aria-label', `${link.textContent.trim()} pelo WhatsApp (abre em nova aba)`);
+  } else {
+    link.href = '#contato'; link.removeAttribute('target'); link.removeAttribute('rel');
+  }
 }
+if (hasWhatsApp) {
+  const displayPhone = WHATSAPP_PHONE.startsWith('55') ? WHATSAPP_PHONE.replace(/^55(\d{2})(\d{4,5})(\d{4})$/, '+55 $1 $2-$3') : `+${WHATSAPP_PHONE}`;
+  $('.specialist p').textContent = `WhatsApp: ${displayPhone}.`;
+} else $('.specialist p').textContent = 'Descreva sua necessidade no formulário ao lado.';
 const form = $('#contact-form'), status = $('#form-status'), label = $('#submit-label'), dialog = $('#review-dialog');
 let endpoint = '';
 try { if (CONTACT_ENDPOINT) { const url = new URL(CONTACT_ENDPOINT, location.href); if (url.origin === location.origin || url.protocol === 'https:') endpoint = url.href; } } catch { /* Unconfigured endpoints remain unavailable. */ }
