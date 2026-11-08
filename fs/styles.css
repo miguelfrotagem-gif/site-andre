@@ -95,10 +95,23 @@ html:not(.js) .site-header{position:relative;top:auto;left:auto;right:auto;heigh
 
 .contact-cta:not([aria-disabled="true"]){background:#25d366;color:#062b14;border-color:#37df7a}.contact-cta:not([aria-disabled="true"]):hover{background:#45df7f;box-shadow:0 4px 18px #25d36620}
 
-/* Services: one photograph and the supplied copy, with no numbered cards. */
-.services .services-feature{display:grid;gap:28px;align-items:center}
-.services .service-photo{overflow:hidden;border:1px solid #aa8c4b55;border-radius:16px;margin:0}
-.services .service-photo img{width:100%;height:auto;display:block}
-.services .service-description{min-width:0;font-size:17px;line-height:1.7;color:var(--muted)}
-.services .service-description p+p{margin-top:20px}
-@media(min-width:1101px){.services .services-feature{grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:clamp(28px,3vw,56px);padding:0 1.8%}.services .service-description{font-size:clamp(17px,1.25vw,23px);line-height:1.6}}
+/* Services: reference composition, scoped to preserve all neighboring sections. */
+.services.panel{display:block;min-height:0;padding:48px 24px;background:radial-gradient(ellipse at 88% 90%,#7440141c,transparent 60%),#111110}
+.services .services-feature{display:grid;gap:32px;align-items:center;max-width:1600px;margin:auto}
+.services .service-photo{overflow:hidden;border:1px solid #bb852d;border-radius:24px;margin:0}
+.services .service-photo img{display:block;width:100%;height:auto}
+.services .service-copy{min-width:0}
+.services .service-kicker{display:flex;align-items:center;gap:13px;text-transform:uppercase;letter-spacing:.13em;font-size:12px;line-height:1.6;font-weight:600;color:#efdab7;margin-bottom:20px}
+.services .service-kicker::before{content:'';height:2px;width:30px;background:#eea72b;flex:none}
+.services .service-copy h2{font-family:Manrope,Arial,sans-serif;font-size:clamp(32px,8.5vw,50px);line-height:1.12;letter-spacing:-.035em;white-space:normal;color:var(--warm)}
+.services .service-copy h2 span{display:block;color:#f2b438}
+.services .service-introduction,.services .service-followup{font-size:17px;line-height:1.6;color:#e4e1d8;margin-top:24px}
+.services .service-benefits{display:grid;gap:12px;margin-top:28px}
+.services .service-benefits li{display:flex;align-items:center;gap:18px;padding:18px 20px;min-height:94px;border:1px solid #ad7024;border-radius:18px;background:linear-gradient(125deg,#3d28172b,#191611);box-shadow:inset 0 1px 0 #e6ba6d12}
+.services .service-benefits .icon{color:#f0ad39;width:38px;height:38px;stroke-width:1.8}
+.services .service-benefits li span{border-left:1px solid #99702c;padding-left:18px;font-size:17px;line-height:1.25;font-weight:800}
+.services .service-evaluation{margin-top:28px;min-height:56px;gap:22px;padding:15px 25px;border:1px solid #f7bd44;border-radius:40px;background:linear-gradient(115deg,#ffb518,#dd7900);color:#100d06;font-size:19px;box-shadow:0 6px 24px #b96c0714}
+.services .service-evaluation:hover{background:linear-gradient(115deg,#ffc548,#f18c0b)}
+.services .service-evaluation .icon{width:26px;height:26px}
+@media(min-width:640px){.services.panel{padding:56px 6%}.services .service-benefits{grid-template-columns:repeat(3,minmax(0,1fr))}.services .service-benefits li{padding:16px 12px;gap:10px}.services .service-benefits li span{font-size:14px;padding-left:10px}.services .service-benefits .icon{width:30px;height:30px}}
+@media(min-width:1101px){.services.panel{padding:clamp(56px,4.5vw,88px) 2.6%}.services .services-feature{grid-template-columns:minmax(0,.96fr) minmax(0,1fr);gap:clamp(36px,3.6vw,68px)}.services .service-copy h2{font-size:clamp(36px,3.25vw,60px)}.services .service-kicker{font-size:clamp(12px,1.1vw,19px);margin-bottom:20px}.services .service-introduction,.services .service-followup{font-size:clamp(17px,1.35vw,24px);line-height:1.45;margin-top:24px}.services .service-benefits{gap:12px;margin-top:30px}.services .service-benefits li{padding:20px 15px;min-height:104px;gap:14px}.services .service-benefits li span{font-size:clamp(13px,1.08vw,19px);padding-left:14px}.services .service-benefits .icon{width:clamp(28px,2.4vw,42px);height:clamp(28px,2.4vw,42px)}.services .service-evaluation{font-size:clamp(20px,1.8vw,31px);padding:15px 32px;margin-top:32px}}
