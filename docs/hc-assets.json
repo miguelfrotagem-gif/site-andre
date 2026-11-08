@@ -21,10 +21,10 @@
       "bytes": 116328
     },
     {
-      "file": "assets/hc/monitor.webp",
-      "source": "02_SOLUCOES.png: cena superior reconstruída sem interface",
-      "sha256": "48e5564573bb31271f04eabc675e2acccdb4fca79f75adf80e3dce79599b9476",
-      "bytes": 74518
+      "file": "assets/hc/monitor-sem-marca.webp",
+      "source": "02_SOLUCOES.png: cena superior reconstruída sem interface; remoção da marca antiga dos equipamentos",
+      "sha256": "3533d902b4580dc4292cb5638dbbb6166d9f19116f380f90a2ee6bd0bc1fcea1",
+      "bytes": 73870
     },
     {
       "file": "assets/hc/cftv.webp",
@@ -33,10 +33,10 @@
       "bytes": 55068
     },
     {
-      "file": "assets/hc/alarmes.webp",
-      "source": "02_SOLUCOES.png: fotografia de serviço reconstruída individualmente em formato 16:9 e otimizada",
-      "sha256": "d462abfceda317818279fa16f1fbac5f1c31a7e7f58d292ac4cbdbd208f9696c",
-      "bytes": 63012
+      "file": "assets/hc/alarmes-sem-marca.webp",
+      "source": "02_SOLUCOES.png: fotografia de serviço reconstruída individualmente em formato 16:9 e otimizada; remoção da marca antiga dos equipamentos",
+      "sha256": "47e5778c612190f8ea15082f606ce1555b6891ad8f48d4b1f952cca0d5d33f8e",
+      "bytes": 51308
     },
     {
       "file": "assets/hc/cerca.webp",
@@ -45,10 +45,24 @@
       "bytes": 68818
     },
     {
-      "file": "assets/hc/acesso.webp",
-      "source": "02_SOLUCOES.png: fotografia de serviço reconstruída individualmente em formato 16:9 e otimizada",
-      "sha256": "cf6b2f358a93ef86df5c8a5a7a9409efda9244b6fde9b6fb33dbf3a1d139df40",
-      "bytes": 60114
+      "file": "assets/hc/acesso-sem-marca.webp",
+      "source": "02_SOLUCOES.png: fotografia de serviço reconstruída individualmente em formato 16:9 e otimizada; remoção da marca antiga dos equipamentos",
+      "sha256": "f567ec12fff371991a32d591ad47fe34a46d6dae38b9a404ff321776e9c9908d",
+      "bytes": 50526
+    },
+    {
+      "file": "assets/jhefinho/favicon.png",
+      "source": "Logomarca fornecida pelo usuário, preparada com fundo transparente e exportada para web",
+      "bytes": 21436,
+      "sha256": "480b4fe1aba18f328411d8fae89ac747e96a74d90361bc243687132ad04fb8a9"
+    },
+    {
+      "file": "assets/jhefinho/logo.webp",
+      "source": "Logomarca fornecida pelo usuário, preparada com fundo transparente e exportada para web",
+      "bytes": 55930,
+      "sha256": "a33a7be2a0821dd4581938b582b150b7e432bebd30e24e6efd5247e32af3eb60"
     }
-  ]
+  ],
+  "brand": "Jhefinho Security",
+  "rebrand": "Logomarca preparada a partir da imagem enviada em 08/11/2026; inscrições HC retiradas dos equipamentos e reflexos."
 }

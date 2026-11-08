@@ -50,7 +50,7 @@ $('#map-link').href = MAP_URL;
 const reviews = httpsUrl(GOOGLE_REVIEWS_URL);
 if (reviews) { $('#reviews-link').href = reviews; $('#reviews-link').hidden = false; $('#reviews-pending').hidden = true; }
 if (/^\d{10,15}$/.test(WHATSAPP_PHONE)) {
-  const link = $('#specialist-link'); link.href = `https://wa.me/${WHATSAPP_PHONE}?text=${encodeURIComponent('Olá! Gostaria de conhecer as soluções da HC Sistemas de Segurança.')}`;
+  const link = $('#specialist-link'); link.href = `https://wa.me/${WHATSAPP_PHONE}?text=${encodeURIComponent('Olá! Gostaria de conhecer as soluções da Jhefinho Security.')}`;
   link.target = '_blank'; link.rel = 'noopener noreferrer'; $('.specialist p').textContent = 'Converse com a equipe pelo WhatsApp.';
 }
 const form = $('#contact-form'), status = $('#form-status'), label = $('#submit-label'), dialog = $('#review-dialog');
@@ -58,7 +58,7 @@ let endpoint = '';
 try { if (CONTACT_ENDPOINT) { const url = new URL(CONTACT_ENDPOINT, location.href); if (url.origin === location.origin || url.protocol === 'https:') endpoint = url.href; } } catch { /* Unconfigured endpoints remain unavailable. */ }
 if (endpoint) {
   label.textContent = 'Solicitar atendimento';
-  $('#form-notice').textContent = 'Preencha os campos para solicitar atendimento à HC Sistemas de Segurança.';
+  $('#form-notice').textContent = 'Preencha os campos para solicitar atendimento à Jhefinho Security.';
   $('.form-privacy').textContent = 'Seus dados serão enviados para responder a esta solicitação. Não inclua informações sensíveis na mensagem.';
 }
 const phone = $('#phone');
@@ -91,7 +91,7 @@ form.addEventListener('submit', async event => {
     if (!response.ok) throw Error('Não foi possível enviar.');
     const result = await response.json();
     if (result.success !== true) throw Error('O servidor não confirmou o recebimento.');
-    status.textContent = 'Solicitação enviada. Obrigado por entrar em contato com a HC.'; form.reset();
+    status.textContent = 'Solicitação enviada. Obrigado por entrar em contato com a Jhefinho Security.'; form.reset();
   } catch { status.textContent = 'Não foi possível confirmar o envio. Seus dados continuam no formulário. Tente novamente mais tarde.'; }
   finally { button.disabled = false; form.removeAttribute('aria-busy'); label.textContent = 'Solicitar atendimento'; }
 });

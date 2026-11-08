@@ -1,4 +1,4 @@
-# HC Sistemas de Segurança
+# Jhefinho Security
 
 Site estático em português, reconstruído em HTML, CSS e JavaScript a partir das cinco referências do kit `HC_KIT_COMPLETO_COM_5_IMAGENS.zip`. Node.js 24 executa o servidor, o build e os testes. Não há dependências npm nem instalação de pacotes.
 
@@ -7,14 +7,14 @@ cd /workspace/site-andre
 npm run dev
 ```
 
-A FS Perfuração permanece na página principal (`index.html`). A HC está em `hc.html`, sem substituir a FS. A porta padrão é 3000, configurável por `PORT`. Use o checkout existente: cada tarefa de nuvem já é isolada; não é necessário criar worktree.
+A FS Perfuração permanece na página principal (`index.html`). A Jhefinho Security está em `jhefinho-security.html`; `hc.html` permanece como endereço compatível, sem substituir a FS. A porta padrão é 3000, configurável por `PORT`. Use o checkout existente: cada tarefa de nuvem já é isolada; não é necessário criar worktree.
 
 ```sh
 npm run lint
 npm run build
 ```
 
-O build prepara `dist/`, sem publicar. Versiona CSS, JavaScript e a importação da configuração da HC para atualizar caches. Para servir a distribuição:
+O build prepara `dist/`, sem publicar. Versiona CSS, JavaScript e a importação da configuração da Jhefinho Security para atualizar caches. Para servir a distribuição:
 
 ```sh
 SERVE_DIST=1 PORT=3001 npm start
@@ -31,7 +31,7 @@ chromium --headless --no-sandbox --disable-gpu \
 npm test
 ```
 
-`npm test` e `npm run test:hc` executam a suíte HC. `npm test` testa a página HC em `hc.html`; `TEST_URL=http://127.0.0.1:3001 npm test` testa a distribuição HC. `CDP_URL` permite selecionar outro Chromium. A suíte usa CDP nativo, sem Playwright ou bibliotecas extras.
+`npm test` e `npm run test:hc` executam a suíte Jhefinho Security. `npm test` testa a página Jhefinho Security em `jhefinho-security.html`; `TEST_URL=http://127.0.0.1:3001 npm test` testa a distribuição Jhefinho Security. `CDP_URL` permite selecionar outro Chromium. A suíte usa CDP nativo, sem Playwright ou bibliotecas extras.
 
 A matriz inclui 360, 375, 390, 430, 768, 1024, 1366, 1440 e 1920px, com alturas adicionais de 500, 568 e 600px. Verifica enquadramento, scrollspy nas cinco seções, menu por teclado, foco contido, Escape, seleção de serviço, validação do formulário, revisão sem envio, estados de integração, fallback sem JavaScript, movimento e ausência de erros locais. Relatório e capturas: `/tmp/hc-checks/`.
 
@@ -54,7 +54,7 @@ A nota 4,8 e as 36 avaliações foram informadas no briefing e aparecem como pen
 
 Hero com câmera à direita e título à esquerda; soluções com quatro fotografias; sobre com técnico e diferenciais; avaliações com resumo e três cards; contato com formulário, endereço e área de mapa. No mobile, a fotografia da hero passa para um bloco próprio, preservando a câmera e áreas de toque confortáveis. Menu sticky único, scrollspy, foco por teclado e redução de movimento.
 
-As imagens de referência não são seções rasterizadas: textos, logomarca tipográfica, controles, ícones e cards são elementos reais. As fotografias foram reconstruídas a partir das referências com edição assistida, removendo os elementos de interface gravados. Essa reconstrução altera detalhes fotográficos e não é uma cópia pixel a pixel. Cenas e equipamentos são ilustrativos, e o técnico não é apresentado como funcionário real. Os arquivos finais estão em `assets/hc/`; consulte `docs/hc-assets.json` para procedência e hashes. Montserrat e Manrope reutilizam fontes locais do projeto. A logomarca tipográfica aproxima a referência; um arquivo vetorial oficial poderá substituí-la quando fornecido.
+As imagens de referência não são seções rasterizadas: textos, logomarca tipográfica, controles, ícones e cards são elementos reais. As fotografias foram reconstruídas a partir das referências com edição assistida, removendo os elementos de interface gravados. Essa reconstrução altera detalhes fotográficos e não é uma cópia pixel a pixel. Cenas e equipamentos são ilustrativos, e o técnico não é apresentado como funcionário real. Os arquivos finais estão em `assets/hc/`; consulte `docs/hc-assets.json` para procedência e hashes. Montserrat e Manrope reutilizam fontes locais do projeto. A marca foi atualizada para Jhefinho Security usando a referência enviada pelo usuário. As três fotografias com a antiga marca foram editadas para retirar as inscrições antigas.
 
 A revisão local não equivale a medição de Core Web Vitals em produção nem a teste em todos os navegadores ou leitores de tela.
 

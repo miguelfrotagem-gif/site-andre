@@ -2,12 +2,13 @@ import {cp, mkdir, rm, readFile, writeFile} from 'node:fs/promises';
 import {createHash} from 'node:crypto';
 await rm('dist',{recursive:true,force:true});
 await mkdir('dist',{recursive:true});
-for(const file of ['baixar.html','downloads','index.html','hc.html','hc','fs-perfuracao.html','ademicon.html','fs','hensec.html','privacidade.html','cookies.html','styles.css','mobile.css','desktop.css','contact.css','entry.js','mobile.js','app.js','config.js','site-extras.js','assets','.nojekyll','ademicon','LINKS_CONTEUDOS.json','MANIFESTO_EXTRAIDO.json']) {
+for(const file of ['baixar.html','downloads','index.html','jhefinho-security.html','hc.html','hc','fs-perfuracao.html','ademicon.html','fs','hensec.html','privacidade.html','cookies.html','styles.css','mobile.css','desktop.css','contact.css','entry.js','mobile.js','app.js','config.js','site-extras.js','assets','.nojekyll','ademicon','LINKS_CONTEUDOS.json','MANIFESTO_EXTRAIDO.json']) {
   await cp(file,`dist/${file}`,{recursive:true});
 }
 const pages={
   'index.html':['fs/styles.css','fs/surface.css','fs/app.js'],
   'hc.html':['hc/styles.css','hc/app.js'],
+  'jhefinho-security.html':['hc/styles.css','hc/app.js'],
   'fs-perfuracao.html':['fs/styles.css','fs/surface.css','fs/app.js'],
   'ademicon.html':['ademicon/styles.css','ademicon/dialogs.css','ademicon/app.js'],
   'hensec.html':['styles.css','mobile.css','desktop.css','contact.css','entry.js','mobile.js','config.js','app.js','site-extras.js'],
@@ -35,4 +36,4 @@ for(const [page,files] of Object.entries(pages)) {
   }
   await writeFile(`dist/${page}`,html);
 }
-console.log('Build concluído em dist/: FS Perfuração na raiz; HC, Ademicon e HENSEC em páginas próprias.');
+console.log('Build concluído em dist/: FS Perfuração na raiz; Jhefinho Security, Ademicon e HENSEC em páginas próprias.');
