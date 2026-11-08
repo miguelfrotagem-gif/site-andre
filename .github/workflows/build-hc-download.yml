@@ -1,0 +1,69 @@
+name: Construir downloads reais HC
+on:
+  push:
+    paths:
+      - .github/workflows/build-hc-download.yml
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  build-downloads:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout da branch publicada
+        uses: actions/checkout@v4
+        with:
+          ref: gh-pages
+          persist-credentials: true
+
+      - name: Reconstituir ZIP e PDF a partir das partes existentes
+        shell: bash
+        run: |
+          set -euo pipefail
+          cd hc-download
+          cat parts/part-{01..08}.txt | base64 --decode > HC_PDF_REFERENCIA_CODEX.zip
+          unzip -t HC_PDF_REFERENCIA_CODEX.zip
+          unzip -o HC_PDF_REFERENCIA_CODEX.zip -d .
+          test -s HC_REFERENCIA_DESKTOP_SEM_MARGENS.pdf
+          echo "Arquivo PDF e ZIP reconstruídos"
+
+      - name: Criar PNGs de cada pagina e pacote completo
+        shell: bash
+        run: |
+          set -euo pipefail
+          cd hc-download
+          mkdir -p IMAGENS
+          if ! command -v pdftoppm >/dev/null; then
+            sudo apt-get update -qq
+            sudo apt-get install -y poppler-utils
+          fi
+          pdftoppm -f 1 -l 5 -r 96 -png HC_REFERENCIA_DESKTOP_SEM_MARGENS.pdf IMAGENS/HC
+          mv IMAGENS/HC-1.png IMAGENS/01_HERO.png
+          mv IMAGENS/HC-2.png IMAGENS/02_SOLUCOES.png
+          mv IMAGENS/HC-3.png IMAGENS/03_SOBRE_NOS.png
+          mv IMAGENS/HC-4.png IMAGENS/04_AVALIACOES.png
+          mv IMAGENS/HC-5.png IMAGENS/05_CONTATO.png
+          cat > PROMPT_CODEX_HC.txt <<'PROMPT'
+          MISSÃO CODEX — HC SISTEMAS DE SEGURANÇA
+          Implemente um site real e responsivo com base nas cinco referências aprovadas:
+          Hero, Soluções, Sobre Nós, Avaliações e Contato.
+          Enquadramento: nenhuma margem lateral ou vertical acidental, sem cortes,
+          sem zoom ou distorção das imagens. Menus reais com scrollspy e animações.
+          Desktop e mobile testados, botões e formulários funcionais.
+          As imagens de avaliações contêm exemplos ilustrativos; substituir por
+          depoimentos reais verificados antes de publicar.
+          PROMPT
+          zip -q -9 HC_KIT_COMPLETO_COM_5_IMAGENS.zip             HC_REFERENCIA_DESKTOP_SEM_MARGENS.pdf             PROMPT_CODEX_HC.txt             IMAGENS/*.png
+          unzip -t HC_KIT_COMPLETO_COM_5_IMAGENS.zip
+
+      - name: Publicar arquivos reais no GitHub Pages
+        shell: bash
+        run: |
+          set -euo pipefail
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add hc-download/HC_PDF_REFERENCIA_CODEX.zip             hc-download/HC_REFERENCIA_DESKTOP_SEM_MARGENS.pdf             hc-download/HC_KIT_COMPLETO_COM_5_IMAGENS.zip             hc-download/PROMPT_CODEX_HC.txt             hc-download/IMAGENS
+          git commit -m "Publicar ZIP, PDF e cinco PNGs para download direto"
+          git push origin HEAD:gh-pages

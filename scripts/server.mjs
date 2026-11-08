@@ -7,7 +7,7 @@ http.createServer(async (req,res) => {
   try {
     const url = new URL(req.url, 'http://localhost');
     const pathname = decodeURIComponent(url.pathname);
-    const entry = process.env.SITE === 'hensec' ? '/hensec.html' : process.env.SITE === 'ademicon' ? '/ademicon.html' : '/index.html';
+    const entry = process.env.SITE === 'fs' ? '/fs-perfuracao.html' : process.env.SITE === 'hc' ? '/hc.html' : process.env.SITE === 'hensec' ? '/hensec.html' : process.env.SITE === 'ademicon' ? '/ademicon.html' : '/index.html';
     const file = path.resolve(root, '.' + (pathname === '/' ? entry : pathname));
     if (!file.startsWith(root + path.sep) || /(?:^|\/)\./.test(pathname)) {res.writeHead(403);res.end();return;}
     const content = await readFile(file);
