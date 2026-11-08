@@ -52,6 +52,8 @@ A nota 4,8 e as 36 avaliações foram informadas no briefing e aparecem como pen
 
 ## Referências e decisões visuais
 
+A interface usa preto, dourado e branco da logo Jhefinho Security: dourado escuro nos textos de destaque, dourado claro com texto preto nas ações, superfícies quentes e rodapé preto. As cores próprias do Google e das fotografias dos equipamentos são preservadas.
+
 Hero com câmera à direita e título à esquerda; soluções com quatro fotografias; sobre com técnico e diferenciais; avaliações com resumo e três cards; contato com formulário, endereço e área de mapa. No mobile, a fotografia da hero passa para um bloco próprio, preservando a câmera e áreas de toque confortáveis. Menu sticky único, scrollspy, foco por teclado e redução de movimento.
 
 As imagens de referência não são seções rasterizadas: textos, logomarca tipográfica, controles, ícones e cards são elementos reais. As fotografias foram reconstruídas a partir das referências com edição assistida, removendo os elementos de interface gravados. Essa reconstrução altera detalhes fotográficos e não é uma cópia pixel a pixel. Cenas e equipamentos são ilustrativos, e o técnico não é apresentado como funcionário real. Os arquivos finais estão em `assets/hc/`; consulte `docs/hc-assets.json` para procedência e hashes. Montserrat e Manrope reutilizam fontes locais do projeto. A marca foi atualizada para Jhefinho Security usando a referência enviada pelo usuário. As três fotografias com a antiga marca foram editadas para retirar as inscrições antigas.
