@@ -8,7 +8,7 @@ function menu(open, restore = true) {
   toggle.setAttribute('aria-expanded', String(open));
   nav.classList.toggle('is-open', open);
   document.body.classList.toggle('menu-open', open);
-  for (const el of [$('#conteudo'), $('footer')]) el.inert = open;
+  for (const el of [$('#conteudo'), $('footer')]) el.inert = open || document.documentElement.classList.contains('intro-active');
   $('.brand').inert = open;
   if (open) { previousFocus = document.activeElement; oldScroll = scrollY; nav.querySelector('a[aria-current]')?.focus({preventScroll:true}); }
   else if (restore && previousFocus) { previousFocus.focus({preventScroll:true}); scrollTo({top:oldScroll,behavior:'instant'}); }
@@ -98,3 +98,46 @@ form.addEventListener('submit', async event => {
 for (const close of [$('.dialog-close'), $('#back-to-form')]) close.addEventListener('click', () => dialog.close());
 dialog.addEventListener('click', event => { if (event.target === dialog) { const rect=dialog.getBoundingClientRect(); if(event.clientX<rect.left||event.clientX>rect.right||event.clientY<rect.top||event.clientY>rect.bottom) dialog.close(); } });
 dialog.addEventListener('close', () => form.querySelector('[type=submit]').focus({preventScroll:true}));
+
+// A abertura é um diálogo temporário; o site segue disponível sem JavaScript.
+const intro = $('#brand-intro');
+const motionPreference = matchMedia('(prefers-reduced-motion:reduce)');
+if (intro && !motionPreference.matches && !location.hash) {
+  const background = [$('.skip'), header, $('#conteudo'), $('footer')];
+  const states = background.map(element => element.inert);
+  let finished = false, closing = false, timer;
+  const release = () => {
+    if (finished) return;
+    finished = true;
+    const focusWasInside = intro.contains(document.activeElement);
+    intro.hidden = true;
+    document.documentElement.classList.remove('intro-active');
+    background.forEach((element, index) => { element.inert = states[index]; });
+    document.removeEventListener('keydown', introKeys);
+    motionPreference.removeEventListener('change', motionChange);
+    if (focusWasInside) $('.brand').focus({preventScroll:true});
+  };
+  const dismiss = (immediate = false) => {
+    clearTimeout(timer);
+    if (immediate) { release(); return; }
+    if (closing || finished) return;
+    closing = true;
+    intro.classList.add('is-leaving');
+    // Retém a modalidade até o fim da transição.
+    setTimeout(release, 460);
+  };
+  const introKeys = event => {
+    if (event.key === 'Escape') { event.preventDefault(); dismiss(); }
+    if (event.key === 'Tab') { event.preventDefault(); intro.querySelector('button').focus(); }
+  };
+  const motionChange = () => { if (motionPreference.matches) dismiss(true); };
+  intro.hidden = false;
+  document.documentElement.classList.add('intro-active');
+  background.forEach(element => { element.inert = true; });
+  intro.focus({preventScroll:true});
+  intro.querySelector('button').addEventListener('click', () => dismiss());
+  document.addEventListener('keydown', introKeys);
+  motionPreference.addEventListener('change', motionChange);
+  timer = setTimeout(() => dismiss(), 3900);
+  intro.querySelector('img').decode().catch(() => dismiss(true));
+}

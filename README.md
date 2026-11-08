@@ -37,6 +37,10 @@ A matriz inclui 360, 375, 390, 430, 768, 1024, 1366, 1440 e 1920px, com alturas 
 
 Os testes de integração interceptam requisições no navegador e fornecem respostas de teste. Não enviam mensagens reais e não validam um backend de produção.
 
+## Abertura da marca
+
+Na entrada sem âncora, uma abertura em fundo preto revela a logo, o nome Jhefinho Security, uma linha dourada e a frase “Sua segurança importa”, com “importa” em dourado. A abertura termina automaticamente em cerca de quatro segundos e pode ser pulada pelo botão ou por Escape. O foco permanece na abertura enquanto ela está visível; o site volta a receber foco e rolagem ao terminar. `prefers-reduced-motion`, navegação direta por âncora e JavaScript indisponível deixam o conteúdo acessível sem essa espera.
+
 ## Contato e avaliações
 
 Configure apenas valores públicos em `hc/config.js`:
