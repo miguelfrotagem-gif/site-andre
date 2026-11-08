@@ -94,3 +94,11 @@ html:not(.js) .site-header{position:relative;top:auto;left:auto;right:auto;heigh
 @media(max-width:1100px){.site-footer{padding-bottom:max(24px,env(safe-area-inset-bottom))}}
 
 .contact-cta:not([aria-disabled="true"]){background:#25d366;color:#062b14;border-color:#37df7a}.contact-cta:not([aria-disabled="true"]):hover{background:#45df7f;box-shadow:0 4px 18px #25d36620}
+
+/* Services: one photograph and the supplied copy, with no numbered cards. */
+.services .services-feature{display:grid;gap:28px;align-items:center}
+.services .service-photo{overflow:hidden;border:1px solid #aa8c4b55;border-radius:16px;margin:0}
+.services .service-photo img{width:100%;height:auto;display:block}
+.services .service-description{min-width:0;font-size:17px;line-height:1.7;color:var(--muted)}
+.services .service-description p+p{margin-top:20px}
+@media(min-width:1101px){.services .services-feature{grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:clamp(28px,3vw,56px);padding:0 1.8%}.services .service-description{font-size:clamp(17px,1.25vw,23px);line-height:1.6}}
